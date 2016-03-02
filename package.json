@@ -6,8 +6,8 @@
   "scripts": {
     "build:dev": "mustache config/json/index.dev.json index.mustache > static/index.html",
     "start:dev": "npm run build:dev && node server.js",
-    "build:prod": "mustache config/json/index.prod.json index.mustache > static/index.html && webpack -p --config webpack.config.prod",
-    "start": "http-server public/",
+    "build:prod": "mkdir static && touch static/index.html && mustache config/json/index.prod.json index.mustache > static/index.html && webpack -p --config webpack.config.prod",
+    "start:prod": "npm run build:prod && http-server static/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "ModuloM",
