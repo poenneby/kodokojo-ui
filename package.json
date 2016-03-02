@@ -13,8 +13,8 @@
   "author": "ModuloM",
   "license": "GPL-3.0",
   "engines": {
-    "node": "4.2.x",
-    "npm": "2.14.x"
+    "node": "5.7.x",
+    "npm": "3.6.x"
   },
   "devDependencies": {
     "babel-core": "^6.5.2",
