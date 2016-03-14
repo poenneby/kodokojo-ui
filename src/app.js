@@ -9,9 +9,9 @@ import { syncHistoryWithStore } from 'react-router-redux'
 
 // Application
 import configureStore from './scripts/store/configureStore'
-import HomePage from './scripts/components/homePage/HomePage'
 import App from './scripts/components/app/App'
-import UsersPage from './scripts/components/usersPage/UsersPage'
+import HomePage from './scripts/pages/HomePage'
+import UsersPage from './scripts/pages/UsersPage'
 
 // Application styles
 import './styles/kodokojo.css'
