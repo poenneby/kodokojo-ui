@@ -23,8 +23,7 @@ const all = {
   api: {
     host: `http://${localApiHost}`,
     routes: {
-      initUser: `${api.user}`,
-      putUser: `${api.user}/:id`
+      user: `${api.user}`
     }
   }
 }

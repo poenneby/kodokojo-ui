@@ -4,11 +4,22 @@ import logger from '../config/logger'
 export const initUser = (request, response) => {
   userRepository
     .initUser()
-    .then((res) => {
-      return response.status(201).send(res)
+    .then((data) => {
+      return response.status(201).send(data)
     })
     .catch((err) =>{
-      return res.status(500).send(err)
+      return response.status(500).send(err)
     })
 }
 
+export const putUser = (request, response) => {
+  userRepository
+      .putUser(request.params.id, request.body.email)
+      .then((data) => {
+        return response.status(201).send(data)
+      })
+      .catch((err) => {
+        return response.status(500).send(err)
+      })
+
+}
