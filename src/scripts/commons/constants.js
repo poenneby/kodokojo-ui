@@ -1,2 +1,2 @@
-export const SEND_EMAIL = 'SEND_EMAIL'
+export const EMAIL_INIT = 'EMAIL_INIT'
 export const EMAIL_SENT = 'EMAIL_SENT'

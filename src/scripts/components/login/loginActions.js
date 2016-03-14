@@ -1,18 +1,16 @@
 import fetch from 'isomorphic-fetch'
 
-import { SEND_EMAIL, EMAIL_SENT } from '../../commons/constants'
+import { EMAIL_INIT, EMAIL_SENT } from '../../commons/constants'
 import api from '../../commons/config'
 
 export function emailSend(email) {
-  console.log('send ', email)
   return {
-    type: SEND_EMAIL,
+    type: EMAIL_INIT,
     email: email
   }
 }
 
-export function emailSent(email, data) {
-  console.log(email, 'is sent')
+export function emailSent(email) {
   return {
     type: EMAIL_SENT,
     payload: {
