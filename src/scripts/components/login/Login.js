@@ -34,7 +34,7 @@ export const Login = class Login extends Component {
               onSubmit={ this.handleSubmit }
         >
           <label>email: {email}<br/>
-            <input type="text"
+            <input type="email"
                    placeholder="enter your email"
                    ref={ node => {
                     this.emailInput = node

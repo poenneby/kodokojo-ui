@@ -9,8 +9,7 @@ class App extends Component {
     return (
         <div>
           <header>
-            >>
-            {' '}
+            {'>> '}
             <Link to="/">Home</Link>
             {' > '}
             <Link to="/users">Users</Link>
