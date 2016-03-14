@@ -11,6 +11,7 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import configureStore from './scripts/store/configureStore'
 import App from './scripts/components/app/App'
 import HomePage from './scripts/pages/HomePage'
+import FirstProjectPage from './scripts/pages/FirstProjectPage'
 import UsersPage from './scripts/pages/UsersPage'
 
 // Application styles
@@ -29,6 +30,7 @@ ReactDOM.render(
       <Router history={history}>
         <Route path="/" component={App}>
           <IndexRoute component={HomePage}/>
+          <Route path="project" component={FirstProjectPage}/>
           <Route path="users" component={UsersPage}/>
         </Route>
       </Router>

@@ -1,2 +1,4 @@
 export const EMAIL_INIT = 'EMAIL_INIT'
 export const EMAIL_SENT = 'EMAIL_SENT'
+export const ACCOUNT_INIT = 'ACCOUNT_INIT'
+export const ACCOUNT_CREATED = 'ACCOUNT_CREATED'
