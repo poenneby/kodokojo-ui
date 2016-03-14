@@ -4,9 +4,9 @@
   "description": "",
   "main": "src/app.js",
   "scripts": {
-    "build:dev": "mustache config/json/index.dev.json index.mustache > static/index.html",
+    "build:dev": "webpack -d && mustache config/json/index.dev.json index.mustache > static/index.html",
     "start:dev": "npm run build:dev && node server.js",
-    "build:prod": "mkdir static && touch static/index.html && mustache config/json/index.prod.json index.mustache > static/index.html && webpack -p --config webpack.config.prod",
+    "build:prod": "webpack -p && mustache config/json/index.prod.json index.mustache > static/index.html",
     "start:prod": "npm run build:prod && http-server static/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

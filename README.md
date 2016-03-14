@@ -27,6 +27,7 @@ Working build of [kodokojo](https://github.com/kodokojo/kodokojo) project
 ### Development
 
     npm install
+    eval $(docker-machine env default) // mount docker env variables
     npm run start:dev
     
 Install npm packages, build development files into static/, start webpack dev server on localhost:3000

@@ -1,8 +1,9 @@
-import path from 'path'
-import webpack from 'webpack'
-//var ExtractTextPlugin = require('extract-text-webpack-plugin')
+'use strict'
 
-export default {
+var path = require('path')
+var webpack = require('webpack')
+
+module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: [
     'eventsource-polyfill',
@@ -12,10 +13,9 @@ export default {
   output: {
     path: path.join(__dirname, 'static'),
     filename: 'app.js',
-    publicPath: '/static/'
+    publicPath: '/'
   },
   plugins: [
-    //new ExtractTextPlugin("assets/styles/kodokojo.css"),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],
