@@ -4,7 +4,8 @@ import path from 'path'
 import express from 'express'
 import bodyParser from 'body-parser'
 import webpack from 'webpack'
-import config from './webpack.config.dev'
+import webpackConfig from './webpack.config.dev'
+import config from './config/config'
 import logger from './config/logger'
 
 import apiRoutes from './api/api.server.routes'
@@ -13,6 +14,9 @@ import apiRoutes from './api/api.server.routes'
 const app = express()
 global.__baseDirname = __dirname
 
+// Return error if DOCKER_HOST isn’t set
+config.api.host ? logger.info('host', config.api.host) : logger.error('DOCKER_HOST isn’t set')
+
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -20,10 +24,10 @@ app.use(bodyParser.urlencoded({ extended: true }))
 apiRoutes(app)
 
 // webpack dev server config
-const compiler = webpack(config)
+const compiler = webpack(webpackConfig)
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
-  publicPath: config.output.publicPath
+  publicPath: webpackConfig.output.publicPath
 }));
 app.use(require('webpack-hot-middleware')(compiler))
 
