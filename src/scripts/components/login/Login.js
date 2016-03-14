@@ -1,7 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-class Login extends Component {
+import { sendEmail } from './loginActions'
+
+// Login component
+export const Login = class Login extends Component {
 
   constructor(props) {
     super(props)
@@ -35,7 +39,7 @@ class Login extends Component {
                    ref={ node => {
                     this.emailInput = node
                    }}/><br/>
-            <button type="submit">Start using Kodo Kojo!</button>
+            <button type="submit">Start using Kodo Kojo!!</button>
           </label>
         </form>
     )
@@ -48,4 +52,22 @@ Login.propTypes = {
   sendEmail: PropTypes.func.isRequired
 }
 
-export default Login
+// Login container
+const mapStateProps = (state) => {
+  return {
+    email: state.login.email
+  }
+}
+
+const mapDispatchProps = (dispatch) => {
+  return {
+    sendEmail: (email) => dispatch(sendEmail(email))
+  }
+}
+
+const LoginContainer = connect(
+    mapStateProps,
+    mapDispatchProps
+)(Login)
+
+export default LoginContainer

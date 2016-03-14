@@ -1,7 +1,8 @@
-import { EMAIL_SENT } from '../commons/constants'
+import { EMAIL_SENT } from '../../commons/constants'
 
 const initialState = {
-  email: 'default'
+  email: 'default',
+  uploaded: false
 }
 
 export default function login(state = initialState, action) {

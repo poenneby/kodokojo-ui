@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch'
 
-import { SEND_EMAIL, EMAIL_SENT } from '../commons/constants'
-import api from '../commons/config'
+import { SEND_EMAIL, EMAIL_SENT } from '../../commons/constants'
+import api from '../../commons/config'
 
 export function emailSend(email) {
   console.log('send ', email)
@@ -11,7 +11,7 @@ export function emailSend(email) {
   }
 }
 
-export function emailSent(email) {
+export function emailSent(email, data) {
   console.log(email, 'is sent')
   return {
     type: EMAIL_SENT,
@@ -26,6 +26,7 @@ export function sendEmail(email) {
   return dispatch => {
     dispatch(emailSend(email))
 
+    // TODO remove basic auth
     return fetch(`http://${window.location.host}${api.user}`, {
       method: 'POST',
       headers: {
@@ -39,7 +40,7 @@ export function sendEmail(email) {
       }
       return response.text()
 
-    }).then(data => dispatch(emailSent(email)))
+    }).then(data => dispatch(emailSent(email, data)))
   }
 
 }

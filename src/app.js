@@ -9,9 +9,9 @@ import { syncHistoryWithStore } from 'react-router-redux'
 
 // Application
 import configureStore from './scripts/store/configureStore'
-import Home from './scripts/components/Home'
-import App from './scripts/components/App'
-import Users from './scripts/components/Users'
+import HomePage from './scripts/components/homePage/HomePage'
+import App from './scripts/components/app/App'
+import UsersPage from './scripts/components/usersPage/UsersPage'
 
 // Application styles
 import './styles/kodokojo.css'
@@ -28,8 +28,8 @@ ReactDOM.render(
       { /* Tell the Router to use our enhanced history */ }
       <Router history={history}>
         <Route path="/" component={App}>
-          <IndexRoute component={Home}/>
-          <Route path="users" component={Users}/>
+          <IndexRoute component={HomePage}/>
+          <Route path="users" component={UsersPage}/>
         </Route>
       </Router>
     </Provider>,

@@ -2,7 +2,7 @@ import { createStore, compose, combineReducers, applyMiddleware } from 'redux'
 import { routerReducer, syncHistoryWithStore } from 'react-router-redux'
 import thunk from 'redux-thunk'
 
-import * as reducers from '../reducers/index'
+import reducers from '../commons/reducers'
 
 export default function configureStore(initialState) {
 
@@ -17,13 +17,14 @@ export default function configureStore(initialState) {
         routing: routerReducer
       }), initialState);
 
-  if (module.hot) {
-    // Enable Webpack hot module replacement for reducers
-    module.hot.accept('../reducers', () => {
-      const nextReducer = require('../reducers');
-      store.replaceReducer(nextReducer);
-    });
-  }
+  //if (module.hot) {
+  //  // FIXME doesn't work
+  //  // Enable Webpack hot module replacement for reducers
+  //  module.hot.accept('../reducers', () => {
+  //    const nextReducer = require('../reducers');
+  //    store.replaceReducer(nextReducer);
+  //  });
+  //}
 
   return store;
 }
