@@ -5,7 +5,7 @@ import FirstProject from '../components/project/FirstProject'
 class FirstProjectPage extends Component {
   render() {
     return (
-        <div>
+        <div style={{ width: '500px' }}>
           <FirstProject />
         </div>
     )
