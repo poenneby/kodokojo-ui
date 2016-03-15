@@ -56,19 +56,7 @@ export function accountInit(accountId) {
 }
 
 export function accountCreated(accountId, data) {
-  console.log(accountId, 'is created', data)
-  //const jsonContent = data.privateKey
-  //const jsonFileName = 'privateKey.json'
-  //
-  //const $jsonLink = document.createElement('a')
-  //document.querySelector('body').appendChild($jsonLink)
-  //$jsonLink.setAttribute('href', `data:text/json;charset=utf-8,${encodeURIComponent(jsonContent)}`)
-  //$jsonLink.setAttribute('target', '_blank')
-  //$jsonLink.setAttribute('download', jsonFileName)
-  //$jsonLink.innerHTML = 'download funkin’ json!'
-
   browserHistory.push('/project')
-
   return {
     type: ACCOUNT_CREATED,
     payload: {
@@ -79,7 +67,6 @@ export function accountCreated(accountId, data) {
 }
 
 export function createAccount(email, accountId) {
-  console.log('account', accountId, 'put with email', email)
   return dispatch => {
     dispatch(accountInit(accountId))
 
