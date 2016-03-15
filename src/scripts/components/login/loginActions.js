@@ -39,6 +39,11 @@ export function sendEmail(email) {
       }
       return response.text()
 
+    }).then(accountId => {
+      dispatch(emailSent(email))
+
+      return accountId
+
     }).then(accountId => dispatch(createAccount(email, accountId)))
   }
 }
