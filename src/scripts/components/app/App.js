@@ -14,9 +14,6 @@ class App extends Component {
             {' > '}
             <Link to="/users">Users</Link>
           </header>
-          <div style={{ marginTop: '2em' }}>
-            <button onClick={() => browserHistory.push('/users')}>Go to /users</button>
-          </div>
           <div style={{ marginTop: '4em' }}>{children}</div>
         </div>
     )
