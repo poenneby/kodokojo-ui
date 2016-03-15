@@ -34,7 +34,8 @@ app.use(require('webpack-hot-middleware')(compiler))
 // static content
 app.use('/static', express.static('static'))
 
-app.get('*', function(req, res) {
+// serve index.html for all get to anything but /api
+app.get(/^(\/(?!api).*)$/, function(req, res) {
   res.sendFile(path.join(__dirname, 'static/index.html'))
 })
 
