@@ -1,5 +1,10 @@
-import login from '../components/login/loginReducer';
+import { combineReducers } from 'redux'
+import { routerReducer } from 'react-router-redux'
+import auth from '../components/auth/authReducer'
 
-const reducers = { login }
+const rootReducer = combineReducers({
+  auth,
+  routing: routerReducer
+})
 
-export default reducers
+export default rootReducer
