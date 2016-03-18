@@ -7,8 +7,7 @@ import { ACCOUNT_ID_REQUEST, ACCOUNT_ID_SUCCESS, ACCOUNT_REQUEST, ACCOUNT_SUCCES
 export function initAccountId(email) {
   return {
     type: ACCOUNT_ID_REQUEST,
-    email: email,
-    isFetching: true
+    email: email
   }
 }
 
@@ -19,26 +18,23 @@ export function returnAccountId(accountId) {
       account: {
         id: accountId
       }
-    },
-    isFetching: false
+    }
   }
 }
 
 export function initAccount() {
   return {
-    type: ACCOUNT_REQUEST,
-    isFetching: true
+    type: ACCOUNT_REQUEST
   }
 }
 
-export function returnAccount(accountId, data) {
+export function returnAccount(data) {
   browserHistory.push('/project')
   return {
     type: ACCOUNT_SUCCESS,
     payload: {
       account: data
-    },
-    isFetching: false
+    }
   }
 }
 

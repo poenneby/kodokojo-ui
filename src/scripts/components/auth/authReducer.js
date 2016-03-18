@@ -12,7 +12,8 @@ export default function auth(state = initialState, action) {
       ...state,
       account: {
         email: action.email
-      }
+      },
+      isFetching: true
     }
   }
 
@@ -23,13 +24,17 @@ export default function auth(state = initialState, action) {
         {
           account: {
             id: action.payload.account.id
-          }
+          },
+          isFetching: false
         }
     )
   }
 
   if (action.type === ACCOUNT_REQUEST) {
-    return state
+    return {
+        ...state,
+        isFetching: true
+    }
   }
 
   if (action.type === ACCOUNT_SUCCESS) {
@@ -45,7 +50,8 @@ export default function auth(state = initialState, action) {
             password: action.payload.account.password,
             sshKeyPublic: action.payload.account.sshPublicKey,
             sshKeyPrivate: action.payload.account.privateKey
-          }
+          },
+          isFetching: false
         }
     )
   }
