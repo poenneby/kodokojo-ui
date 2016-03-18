@@ -1,5 +1,3 @@
-import _ from 'lodash'
-
 import api from '../shared/api.endpoints'
 
 let localApiHost
@@ -21,7 +19,7 @@ if (process.env.DOCKER_HOST) {
 
 const all = {
   api: {
-    host: `http://${localApiHost}`,
+    host: localApiHost ? `http://${localApiHost}` : undefined,
     routes: {
       user: `${api.user}`
     }

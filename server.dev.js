@@ -15,7 +15,12 @@ const app = express()
 global.__baseDirname = __dirname
 
 // Return error if DOCKER_HOST isn’t set
-config.api.host ? logger.info('host', config.api.host) : logger.error('DOCKER_HOST isn’t set')
+if (config.api.host) {
+  logger.info('host', config.api.host)
+} else {
+  logger.error('DOCKER_HOST isn’t set')
+  config.api.error = true
+}
 
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -40,13 +45,19 @@ app.get(/^(\/(?!api).*)$/, function(req, res) {
 })
 
 // server config
-app.listen(3000, 'localhost', function(err) {
-  if (err) {
-    logger.error(err)
-    return
-  }
+const port = config.server.port
 
-  logger.info('Listening at http://localhost:3000')
-})
+if (config.api.error) {
+  logger.error('Error: Server can’t be started')
+  throw new Error('Server error')
+} else {
+  app.listen(port, 'localhost', function(err) {
+    if (err) {
+      logger.error(err)
+    } else {
+      logger.info('==> Listening at http://localhost:%s', port)
+    }
+  })
+}
 
 export default app
