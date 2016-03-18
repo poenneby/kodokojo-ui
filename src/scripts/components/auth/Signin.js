@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { Link } from 'react-router'
 
-import { sendEmail } from './loginActions'
+import { createAccount } from './signinActions'
 
-// Login component
-export const Login = class Login extends Component {
+// Signin component
+export const Signin = class Signin extends Component {
 
   constructor(props) {
     super(props)
@@ -14,14 +14,14 @@ export const Login = class Login extends Component {
   }
 
   handleSubmit(event) {
-    const { sendEmail } = this.props
+    const { createAccount } = this.props
 
     if (event) {
       event.preventDefault()
       if (!this.emailInput.value.trim()) {
         return
       }
-      sendEmail(this.emailInput.value)
+      createAccount(this.emailInput.value)
       this.emailInput.value = ''
     }
   }
@@ -30,44 +30,44 @@ export const Login = class Login extends Component {
     const { email } = this.props
 
     return (
-        <form name="login"
+        <form name="signin"
               onSubmit={ this.handleSubmit }
         >
           <label>email: {email}<br/>
             <input type="email"
-                   placeholder="enter your email"
+                   placeholder="your.email@domain.ext"
                    ref={ node => {
                     this.emailInput = node
                    }}/><br/>
-            <button type="submit">Start using Kodo Kojo!!</button>
           </label>
+          <button type="submit">Sing in</button><br/>
+          <Link to="/login">Already a user? Go to login!</Link>
         </form>
     )
   }
 
 }
 
-Login.propTypes = {
-  email: PropTypes.string.isRequired,
-  sendEmail: PropTypes.func.isRequired
+Signin.propTypes = {
+  createAccount: PropTypes.func.isRequired
 }
 
-// Login container
+// Signin container
 const mapStateProps = (state) => {
   return {
-    email: state.login.email
+    email: state.auth.account.email
   }
 }
 
 const mapDispatchProps = (dispatch) => {
   return {
-    sendEmail: (email) => dispatch(sendEmail(email))
+    createAccount: (email) => dispatch(createAccount(email))
   }
 }
 
-const LoginContainer = connect(
+const SigninContainer = connect(
     mapStateProps,
     mapDispatchProps
-)(Login)
+)(Signin)
 
-export default LoginContainer
+export default SigninContainer

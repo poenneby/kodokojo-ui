@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 
-import Login from '../components/login/Login'
+import Signin from '../components/auth/Signin'
 
 class HomePage extends Component {
   render() {
     return (
       <div>
-        <Login />
+        <Signin />
       </div>
     )
   }
