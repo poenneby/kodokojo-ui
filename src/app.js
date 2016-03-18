@@ -13,6 +13,7 @@ import App from './scripts/components/app/App'
 import HomePage from './scripts/pages/HomePage'
 import FirstProjectPage from './scripts/pages/FirstProjectPage'
 import UsersPage from './scripts/pages/UsersPage'
+import NotFoundPage from './scripts/pages/NotFoundPage'
 
 // Application styles
 import './styles/kodokojo.css'
@@ -32,6 +33,10 @@ ReactDOM.render(
           <IndexRoute component={HomePage}/>
           <Route path="project" component={FirstProjectPage}/>
           <Route path="users" component={UsersPage}/>
+          <Route status={404}
+                 path="*"
+                 component={NotFoundPage}
+                 dataTypePage="testDataType"/>
         </Route>
       </Router>
     </Provider>,
