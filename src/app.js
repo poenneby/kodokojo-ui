@@ -11,6 +11,7 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import configureStore from './scripts/store/configureStore'
 import App from './scripts/components/app/App'
 import HomePage from './scripts/pages/HomePage'
+import LoginPage from './scripts/pages/LoginPage'
 import FirstProjectPage from './scripts/pages/FirstProjectPage'
 import UsersPage from './scripts/pages/UsersPage'
 import NotFoundPage from './scripts/pages/NotFoundPage'
@@ -34,6 +35,7 @@ ReactDOM.render(
         <Route path="/" component={App}>
           <IndexRoute component={HomePage}/>
           <Route path="project" component={FirstProjectPage}/>
+          <Route path="login" component={LoginPage}/>
           <Route path="users" component={UsersPage} onEnter={AuthService.checkAuthentication} />
           <Route status={404}
                  path="*"
