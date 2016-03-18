@@ -15,6 +15,8 @@ import FirstProjectPage from './scripts/pages/FirstProjectPage'
 import UsersPage from './scripts/pages/UsersPage'
 import NotFoundPage from './scripts/pages/NotFoundPage'
 
+import AuthService from './scripts/services/authService'
+
 // Application styles
 import './styles/kodokojo.css'
 
@@ -32,7 +34,7 @@ ReactDOM.render(
         <Route path="/" component={App}>
           <IndexRoute component={HomePage}/>
           <Route path="project" component={FirstProjectPage}/>
-          <Route path="users" component={UsersPage}/>
+          <Route path="users" component={UsersPage} onEnter={AuthService.checkAuthentication} />
           <Route status={404}
                  path="*"
                  component={NotFoundPage}
