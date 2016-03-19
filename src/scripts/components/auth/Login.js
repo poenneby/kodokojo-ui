@@ -37,13 +37,13 @@ export const Login = class Login extends Component {
             <input type="email"
                    placeholder="your.email@domain.ext"
                    ref={ node => {
-                    this.loginInput = node
+                     this.loginInput = node
                    }}/><br/>
           </label>
           <label>password:<br/>
             <input type="password"
                    ref={ node => {
-                    this.passwordInput = node
+                     this.passwordInput = node
                    }}/><br/>
           </label>
           <button type="submit">Login</button><br/>
@@ -59,7 +59,7 @@ Login.propTypes = {
 }
 
 // Login container
-const mapStateProps = (state) => {
+const mapStateProps = () => {
   return {}
 }
 

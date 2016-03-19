@@ -1,5 +1,6 @@
+import { CALL_API } from 'redux-api-middleware'
+
 import api from '../../commons/config'
-import { CALL_API } from 'redux-api-middleware';
 // import { user } from '../../commons/schemas'
 import { AUTHENT_REQUEST, AUTHENT_SUCCESS, AUTH_FAILURE } from '../../commons/constants'
 
@@ -12,7 +13,7 @@ export function requestAuthentication(login, psw) {
         {
           type: AUTHENT_REQUEST,
           payload: (action, state) => {
-            console.log(action)
+            // console.log(action)
           }
         },
         AUTHENT_SUCCESS,

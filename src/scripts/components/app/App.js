@@ -1,5 +1,4 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { Component, PropTypes  } from 'react'
 import { Link } from 'react-router'
 
 class App extends Component {
@@ -18,7 +17,10 @@ class App extends Component {
         </div>
     )
   }
+}
 
+App.propTypes = {
+  children : PropTypes.element.isRequired
 }
 
 export default App

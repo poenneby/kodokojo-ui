@@ -1,9 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-//import DocumentMeta from 'react-document-meta';
-
-/* components */
-
+//import DocumentMeta from 'react-document-meta'
 
 //const metaData = {
 //  title: '404 Page Not Found',
@@ -14,7 +11,7 @@ import { connect } from 'react-redux'
 //      keywords: 'homecare, bla, bla',
 //    },
 //  },
-//};
+//}
 
 export const NotFound = class NotFound extends Component {
 
@@ -30,10 +27,16 @@ export const NotFound = class NotFound extends Component {
           <h3>{ status } NotFound</h3>
           <p>{ dataTypePage }</p>
         </div>
-    );
+    )
   }
 }
 
+NotFound.propTypes = {
+  status: PropTypes.number.isRequired,
+  dataTypePage: PropTypes.string.isRequired
+}
+
+// NotFounPage container
 const mapStateProps = (state, ownProps) => {
   return {
     status: ownProps.route.status,

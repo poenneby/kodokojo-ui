@@ -16,7 +16,7 @@ autService.checkAuthentication = () => {
     // FIXME display page before reload, must add check on auth token in each page
     browserHistory.push('/login')
     window.location.reload()
-    return false;
+    return false
   }
 }
 

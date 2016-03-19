@@ -37,7 +37,7 @@ export const Signin = class Signin extends Component {
             <input type="email"
                    placeholder="your.email@domain.ext"
                    ref={ node => {
-                    this.emailInput = node
+                     this.emailInput = node
                    }}/><br/>
           </label>
           <button type="submit">Sing in</button><br/>
@@ -49,6 +49,7 @@ export const Signin = class Signin extends Component {
 }
 
 Signin.propTypes = {
+  email: PropTypes.string,
   createAccount: PropTypes.func.isRequired
 }
 
