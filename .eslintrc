@@ -1,0 +1,60 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "plugins": [
+    "react"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "jsx": true,
+      "arrowFunctions": true,
+      "binaryLiterals": true,
+      "blockBindings": true,
+      "classes": true,
+      "defaultParams": true,
+      "destructuring": true,
+      "forOf": true,
+      "generators": true,
+      "modules": true,
+      "objectLiteralComputedProperties": true,
+      "objectLiteralDuplicateProperties": true,
+      "objectLiteralShorthandMethods": true,
+      "objectLiteralShorthandProperties": true,
+      "octalLiterals": true,
+      "regexUFlag": true,
+      "regexYFlag": true,
+      "spread": true,
+      "rest": true,
+      "superInFunctions": true,
+      "templateStrings": true,
+      "unicodeCodePointEscapes": true,
+      "globalReturn": true,
+      "experimentalObjectRestSpread": true
+    },
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true,
+    "es6": true
+  },
+  "rules": {
+    "indent": [2, 2, {"VariableDeclarator": { "var": 2, "let": 2, "const": 3}}],
+    "quotes": [ 2, "single" ],
+    "linebreak-style": [ 2, "unix" ],
+    "semi": [ 2, "never" ],
+    "no-console": 1,
+    "prefer-const": 1,
+    "no-var": 1,
+    "prefer-arrow-callback": 1,
+    "prefer-spread": 1,
+    "no-unused-vars": 1,
+    "no-const-assign": 2,
+    "no-class-assign": 2,
+    "no-dupe-class-members": 2
+  }
+}
