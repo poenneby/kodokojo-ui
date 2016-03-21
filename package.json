@@ -8,9 +8,9 @@
     "start:dev": "npm run build:dev && node server.js",
     "build:prod": "webpack -p && mustache config/json/index.prod.json index.mustache > static/index.html",
     "start:prod": "npm run build:prod && http-server static/",
+    "lint": "eslint ./src/ --ext .js --ext .jsx",
     "test": "mocha --compilers js:babel-core/register --recursive -R dot './src/**/*.spec.js'",
     "test:watch": "npm test -- --watch",
-    "lint": "eslint . --ext .js --ext .jsx"
   },
   "author": "ModuloM",
   "license": "GPL-3.0",
