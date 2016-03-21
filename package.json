@@ -11,6 +11,7 @@
     "lint": "eslint ./src/ --ext .js --ext .jsx",
     "test": "mocha --compilers js:babel-core/register --recursive -R dot './src/**/*.spec.js'",
     "test:watch": "npm test -- --watch",
+    "coverage": "babel-node node_modules/isparta/bin/isparta cover _mocha --root ./src -x ./src/**/*.spec.js --include-all-sources --default-excludes -- -R dot ./src/**/*.spec.js"
   },
   "author": "ModuloM",
   "license": "GPL-3.0",
@@ -19,6 +20,7 @@
     "npm": "3.6.x"
   },
   "devDependencies": {
+    "babel-cli": "^6.6.5",
     "babel-core": "^6.5.2",
     "babel-loader": "^6.2.3",
     "babel-plugin-react-transform": "^2.0.0",
@@ -41,6 +43,7 @@
     "file-loader": "^0.8.5",
     "gulp": "^3.9.1",
     "http-server": "^0.9.0",
+    "isparta": "^4.0.0",
     "mocha": "^2.4.5",
     "mustache": "^2.2.1",
     "react-transform-hmr": "^1.0.2",
