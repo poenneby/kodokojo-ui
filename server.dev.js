@@ -55,7 +55,7 @@ if (config.api.error) {
     if (err) {
       logger.error(err)
     } else {
-      logger.info('==> Listening at http://localhost:%s', port)
+      logger.info('==> 🌍  Listening at http://localhost:%s', port)
     }
   })
 }
