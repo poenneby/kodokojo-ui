@@ -14,15 +14,21 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"'
+      'process.env.NODE_ENV': '"production"',
+      'process.env.BABEL_ENV': '"production"'
     })
   ],
   module: {
     preLoaders: [
       {
         test: /\.jsx?$/,
+        exclude: /node_modules/,
         loaders: ['eslint'],
-        include: path.join(__dirname, 'src')
+        include: [
+          path.join(__dirname, 'api'),
+          path.join(__dirname, 'config'),
+          path.join(__dirname, 'src')
+        ]
       }
     ],
     loaders: [
