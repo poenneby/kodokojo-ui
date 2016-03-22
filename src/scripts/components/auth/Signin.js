@@ -15,7 +15,6 @@ export const Signin = class Signin extends Component {
 
   handleSubmit(event) {
     const { createAccount } = this.props
-
     if (event) {
       event.preventDefault()
       if (!this.emailInput.value.trim()) {
