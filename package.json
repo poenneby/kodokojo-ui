@@ -9,7 +9,7 @@
     "build:prod": "webpack -p && mustache config/json/index.prod.json index.mustache > static/index.html",
     "start:prod": "npm run build:prod && http-server static/",
     "lint": "eslint ./src/ --ext .js --ext .jsx",
-    "test": "mocha --compilers js:babel-core/register --recursive -R dot './src/**/*.spec.js'",
+    "test": "BABEL_ENV=test mocha --compilers js:babel-core/register --recursive --require ./src/test/utils.js -R dot './src/**/*.spec.js'",
     "test:watch": "npm test -- --watch",
     "coverage": "babel-node node_modules/isparta/bin/isparta cover _mocha --root ./src -x ./src/**/*.spec.js --include-all-sources --default-excludes -- -R dot ./src/**/*.spec.js"
   },
@@ -61,7 +61,6 @@
     "winston": "^2.2.0"
   },
   "dependencies": {
-    "babel": "^6.5.2",
     "babel-polyfill": "^6.5.0",
     "better-console": "^0.2.4",
     "del": "^2.2.0",

@@ -1,5 +1,4 @@
 import { expect } from 'chai'
-import sinon from 'sinon'
 
 import authReducer from './authReducer'
 import * as actions from '../../commons/constants'
