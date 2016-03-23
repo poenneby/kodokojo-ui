@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 
 import authReducer from './authReducer'
-import * as actions from '../../commons/constants'
+import * as ActionsTypes from '../../commons/constants'
 
 describe('auth reducer', () => {
 
@@ -24,7 +24,7 @@ describe('auth reducer', () => {
     // Given
     const state = undefined
     const action = {
-      type: actions.ACCOUNT_ID_REQUEST,
+      type: ActionsTypes.ACCOUNT_ID_REQUEST,
       email: 'email@test.com'
     }
 
@@ -48,7 +48,7 @@ describe('auth reducer', () => {
       }
     }
     const action = {
-      type: actions.ACCOUNT_ID_SUCCESS,
+      type: ActionsTypes.ACCOUNT_ID_SUCCESS,
       payload: {
         account: {
           id: 1
@@ -78,7 +78,7 @@ describe('auth reducer', () => {
       }
     }
     const action = {
-      type: actions.ACCOUNT_REQUEST
+      type: ActionsTypes.ACCOUNT_REQUEST
     }
 
     // When
@@ -103,7 +103,7 @@ describe('auth reducer', () => {
       }
     }
     const action = {
-      type: actions.ACCOUNT_SUCCESS,
+      type: ActionsTypes.ACCOUNT_SUCCESS,
       payload: {
         account: {
           identifier: 2,

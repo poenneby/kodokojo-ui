@@ -39,7 +39,7 @@ describe('<Signin> component', () => {
     expect(component.props().createAccount).to.be.instanceof(Function)
   })
 
-  it('should set email prop value in label', () => {
+  it('should render properly', () => {
     // Given
     const props = {
       email: 'email@test.com',
@@ -50,7 +50,7 @@ describe('<Signin> component', () => {
     const component = render(<Signin {...props}/>)
 
     // Then
-    expect(component.find('label').text()).to.have.equal('email: email@test.com')
+    expect(component.find('label').text()).to.equal('email: email@test.com')
   })
 
   describe ('handle submit', () => {
