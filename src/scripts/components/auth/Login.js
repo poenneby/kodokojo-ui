@@ -1,8 +1,26 @@
 import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
 import { Link } from 'react-router'
+import { reduxForm } from 'redux-form'
+
+// UI
+import TextField from 'material-ui/lib/text-field'
+import RaisedButton from 'material-ui/lib/raised-button'
+import Paper from 'material-ui/lib/paper'
 
 import { authenticate } from './loginActions'
+
+const style = {
+  button : {
+    margin: 12
+  },
+  paper: {
+    width: 300,
+    paddingBottom: '2em',
+    margin: '10% auto auto auto',
+    textAlign: 'center',
+    display: 'block'
+  }
+}
 
 // Login component
 export const Login = class Login extends Component {
@@ -10,57 +28,67 @@ export const Login = class Login extends Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.loginInput
-    this.passwordInput
   }
 
   handleSubmit (event) {
-    const { authenticate } = this.props
+    const { fields: { login, psw }, authenticate } = this.props
 
     if (event) {
       event.preventDefault()
-      if (!this.loginInput.value.trim() || !this.passwordInput.value.trim()) {
+      const nextLogin = login.value,
+            nextPsw = psw.value
+      if (!nextLogin.trim() || !nextPsw.trim()) {
         return
       }
-      authenticate(this.loginInput.value, this.passwordInput.value)
-      this.loginInput.value = ''
-      this.passwordInput.value = ''
+      authenticate(nextLogin.trim(), nextPsw.trim())
     }
   }
 
   render() {
+    const { fields: { login, psw } } = this.props
+
     return (
+      <Paper style={style.paper} zDepth={1}>
         <form name="login"
               onSubmit={ this.handleSubmit }
         >
-          <label>login:<br/>
-            <input type="email"
-                   placeholder="your.email@domain.ext"
-                   ref={ node => {
-                     this.loginInput = node
-                   }}/><br/>
-          </label>
-          <label>password:<br/>
-            <input type="password"
-                   ref={ node => {
-                     this.passwordInput = node
-                   }}/><br/>
-          </label>
-          <button type="submit">Login</button><br/>
+          <TextField
+              { ...login }
+              hintText="your.email@domain.ext"
+              floatingLabelText="Email"
+              type="email"
+          /><br />
+          <TextField
+              { ...psw }
+              floatingLabelText="Password"
+              type="password"
+              ref={ node => {
+                this.passwordInput = node
+              }}
+          /><br />
+          <RaisedButton
+              label="Login"
+              primary={ true }
+              style={ style.button }
+              onTouchTap={ this.handleSubmit }
+          /><br/>
           <Link to="/">Not a user? Sign in!</Link>
         </form>
+      </Paper>
     )
   }
 
 }
 
 Login.propTypes = {
+  fields: PropTypes.object.isRequired,
+  submitting: PropTypes.bool.isRequired,
   authenticate: PropTypes.func.isRequired
 }
 
 // Login container
-const mapStateProps = () => {
-  return {}
+const mapStateProps = (state) => {
+  return { }
 }
 
 const mapDispatchProps = (dispatch) => {
@@ -69,9 +97,13 @@ const mapDispatchProps = (dispatch) => {
   }
 }
 
-const LoginContainer = connect(
-    mapStateProps,
-    mapDispatchProps
+const LoginContainer = reduxForm(
+  {
+    form: 'loginForm',
+    fields: ['login', 'psw']
+  },
+  mapStateProps,
+  mapDispatchProps
 )(Login)
 
 export default LoginContainer
