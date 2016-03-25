@@ -7,6 +7,9 @@ import { Provider } from 'react-redux'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 
+// UI stack
+import injectTapEventPlugin from 'react-tap-event-plugin'
+
 // Application
 import configureStore from './scripts/store/configureStore'
 import App from './scripts/components/app/App'
@@ -27,6 +30,12 @@ const store = configureStore()
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, store)
 
+
+//Needed for onTouchTap
+//Can go away when react 1.0 release
+//Check this repo:
+//https://github.com/zilverline/react-tap-event-plugin
+injectTapEventPlugin()
 
 ReactDOM.render(
     <Provider store={store}>
