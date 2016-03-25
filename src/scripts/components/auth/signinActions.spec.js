@@ -4,133 +4,91 @@ import sinonChai from 'sinon-chai'
 chai.use(sinonChai)
 import nock from 'nock'
 import thunk from 'redux-thunk'
+import { apiMiddleware } from 'redux-api-middleware'
 import configureMockStore from 'redux-mock-store'
 
 import * as actions from './signinActions'
-import * as ActionsTypes from '../../commons/constants'
+import { __RewireAPI__ as  actionsRewireApi } from './signinActions'
+import { ACCOUNT_ID_REQUEST, ACCOUNT_ID_SUCCESS, ACCOUNT_REQUEST, ACCOUNT_SUCCESS } from '../../commons/constants'
 
 // Apply the middleware to the store
-const middlewares = [ thunk ]
+const middlewares = [
+  thunk,
+  apiMiddleware
+]
 const mockStore = configureMockStore(middlewares)
 
-const config = {}
-
 describe('signin actions', () => {
+
   afterEach(() => {
     nock.cleanAll()
+    actionsRewireApi.__ResetDependency__('browserHistory')
   })
 
-  beforeEach(() => {
-
-  })
-
-  it('should return ACCOUNT_ID_REQUEST action', () => {
+  it('should create account', (done) => {
     // Given
     const email = 'test@email.com'
-    const expectedAction = {
-      type: ActionsTypes.ACCOUNT_ID_REQUEST,
-      email: email
-    }
-    // When
-    const action = actions.initAccountId(email)
-
-    // Then
-    expect(action).to.deep.equal(expectedAction)
-  })
-
-  it('should return ACCOUNT_ID_REQUEST action', () => {
-    // Given
-    const accountId = 'accountId'
-    const expectedAction = {
-      type: ActionsTypes.ACCOUNT_ID_SUCCESS,
-      payload: {
-        account: {
-          id: accountId
-        }
+    const id = 'idUs3r'
+    const expectedActions = [
+      {
+        type: ACCOUNT_ID_REQUEST,
+        payload: {
+          email: email
+        },
+        meta: undefined
+      },
+      {
+        type: ACCOUNT_ID_SUCCESS,
+        payload: {
+          account: {
+            id: id
+          }
+        },
+        meta: undefined
+      },
+      {
+        type: ACCOUNT_REQUEST,
+        payload: undefined,
+        meta: undefined
+      },
+      {
+        type: ACCOUNT_SUCCESS,
+        payload: {
+          account: {
+            id: id
+          }
+        },
+        meta: undefined
       }
-    }
+    ]
+    nock('http://localhost/api/v1')
+        .post('/user')
+        .reply(200, (uri, requestBody) => {
+          return id
+        })
+        .put(`/user/${id}`)
+        .reply(200, {id: id })
+    var pushSpy = sinon.spy()
+    actionsRewireApi.__Rewire__('browserHistory', {
+      push: pushSpy
+    })
+    // actionsRewireApi.__Rewire__('window', {
+    //   location: {
+    //     host: 'localhost'
+    //   }
+    // })
+
     // When
-    const action = actions.returnAccountId(accountId)
+    const store = mockStore({})
 
     // Then
-    expect(action).to.deep.equal(expectedAction)
+    return store.dispatch(actions.createAccount(email)).then(() => {
+      expect(store.getActions()).to.deep.equal(expectedActions)
+      expect(pushSpy).to.have.callCount(1)
+      expect(pushSpy).to.have.been.calledWith('/project')
+    }).then(done, done)
   })
 
-  it('should return ACCOUNT_REQUEST action', () => {
-    // Given
-    const expectedAction = {
-      type: ActionsTypes.ACCOUNT_REQUEST
-    }
-    // When
-    const action = actions.initAccount()
-
-    // Then
-    expect(action).to.deep.equal(expectedAction)
-  })
-
-  // FIXME work if npm test, fail on npm coverage
-  it('should return ACCOUNT_SUCCESS action')//, () => {
-  //   // Given
-  //
-  //   let browserHistory = {
-  //     push: () => {}
-  //   }
-  //   const mockPush = sinon.stub(browserHistory, 'push').returns({})
-  //   const data = { data: 'data' }
-  //   const expectedAction = {
-  //     type: ActionsTypes.ACCOUNT_SUCCESS,
-  //     payload: {
-  //       account: data
-  //     }
-  //   }
-  //   // When
-  //   const store = mockStore({})
-  //   store.dispatch(actions.returnAccount(data))
-  //   const actionsFinal = store.getActions()
-  //
-  //   // Then
-  //   expect(actionsFinal).to.deep.equal([expectedAction])
-  //   // FIXME
-  //   // expect(mockPush).to.have.callCount(1)
-  // })
-
-  // FIXME work if npm test, fail on npm coverage
-  it('should return ACCOUNT_SUCCESS action')//, () => {
-  //   // Given
-  //   let browserHistory = {
-  //     push: () => {}
-  //   }
-  //   const mockPush = sinon.stub(browserHistory, 'push').returns({})
-  //   const data = { data: 'data' }
-  //   const expectedAction = {
-  //     type: ActionsTypes.ACCOUNT_SUCCESS,
-  //     payload: {
-  //       account: data
-  //     }
-  //   }
-  //   // When
-  //   const action = actions.returnAccount(data)
-  //
-  //   // Then
-  //   expect(action).to.deep.equal(expectedAction)
-  //   // FIXME
-  //   // expect(mockPush).to.have.callCount(1)
-  // })
-
-  it('should creates account ')//, (done) => {
-  //   console.log('host', window.location.host)
-  //   nock('http://fakeHost.io/api/v1/')
-  //       .post('/user')
-  //       .reply(20000, { body: { todos: ['do something'] } })
-  //
-  //   const expectedActions = [
-  //     { type: ActionsTypes.ACCOUNT_ID_REQUEST, email: '' },
-  //     { type: ActionsTypes.ACCOUNT_ID_SUCCESS, body: { todos: ['do something'] } }
-  //   ]
-  //   const store = mockStore({
-  //     account: {},
-  //     isFetching: false
-  //   }, expectedActions, done)
-  //   store.dispatch(actions.createAccount())
-  // })
 })
+
+//TODO fail cases

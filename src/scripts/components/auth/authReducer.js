@@ -1,5 +1,5 @@
 import merge from 'lodash/merge'
-import { ACCOUNT_ID_REQUEST, ACCOUNT_ID_SUCCESS, ACCOUNT_REQUEST, ACCOUNT_SUCCESS } from '../../commons/constants'
+import { ACCOUNT_ID_REQUEST, ACCOUNT_ID_SUCCESS, ACCOUNT_ID_FAILURE, ACCOUNT_REQUEST, ACCOUNT_SUCCESS, ACCOUNT_FAILURE } from '../../commons/constants'
 
 const initialState = {
   account: {},
@@ -11,7 +11,7 @@ export default function auth(state = initialState, action) {
     return {
       ...state,
       account: {
-        email: action.email
+        email: action.payload.email
       },
       isFetching: true
     }
@@ -30,11 +30,18 @@ export default function auth(state = initialState, action) {
     )
   }
 
+  if (action.type === ACCOUNT_ID_FAILURE) {
+    // TODO
+  }
+
   if (action.type === ACCOUNT_REQUEST) {
-    return {
-      ...state,
-      isFetching: true
-    }
+    return merge(
+      {},
+      state,
+      {
+        isFetching: true
+      }
+    )
   }
 
   if (action.type === ACCOUNT_SUCCESS) {
@@ -54,6 +61,10 @@ export default function auth(state = initialState, action) {
         isFetching: false
       }
     )
+  }
+
+  if (action.type === ACCOUNT_FAILURE) {
+    // TODO
   }
 
   return state

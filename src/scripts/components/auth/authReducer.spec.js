@@ -25,7 +25,9 @@ describe('auth reducer', () => {
     const state = undefined
     const action = {
       type: ActionsTypes.ACCOUNT_ID_REQUEST,
-      email: 'email@test.com'
+      payload: {
+        email: 'email@test.com'
+      }
     }
 
     // When
@@ -134,6 +136,5 @@ describe('auth reducer', () => {
       isFetching: false
     })
   })
-
 
 })
