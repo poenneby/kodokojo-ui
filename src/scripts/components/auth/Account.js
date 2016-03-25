@@ -1,6 +1,20 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
+// UI
+import Paper from 'material-ui/lib/paper'
+
+const style = {
+  paper: {
+    width: 300,
+    paddingTop: '2em',
+    paddingBottom: '2em',
+    margin: '10% auto auto auto',
+    textAlign: 'center',
+    display: 'block'
+  }
+}
+
 // Account component
 export const Account = class Account extends Component {
 
@@ -12,24 +26,25 @@ export const Account = class Account extends Component {
     const { account } = this.props
 
     return (
-      <div>
+      <Paper style={style.paper} zDepth={1}>
         { account.id &&
           <div>
             <p>
-              Merci de vouys êtes inscrit.<br/>
-              Pensez surtout à <strong>enregistrer vos détails de connexion ci-dessous :</strong>
+              Merci pour votre inscription !<br/>
+              Pensez surtout à <strong>enregistrer vos informations de connexion :</strong>
             </p>
-            <div>login:</div>
+            <div>login :</div>
             <div>{account.email}</div>
+            <br/>
             <div>password:</div>
             <div>{account.password}</div>
-            <p><a href={`text/plain;charset=utf-8,${encodeURIComponent(account.sshKeyPublic)}`} download={'kodokojoKey.pub'}>ssh public key</a></p>
-            <p><a href={`text/plain;charset=utf-8,${encodeURIComponent(account.sshKeyPrivate)}`} download={'kodokojoPrivateKey.txt'}>ssh private key</a></p>
+            <p><a href={`data:text/plain;charset=utf-8,${encodeURIComponent(account.sshKeyPublic)}`} download={'kodokojoKey.pub'}>ssh public key</a></p>
+            <p><a href={`data:text/plain;charset=utf-8,${encodeURIComponent(account.sshKeyPrivate)}`} download={'kodokojoPrivateKey.txt'}>ssh private key</a></p>
           </div> }
         { !account.id &&
             <div>No account</div>
         }
-      </div>
+      </Paper>
     )
   }
 
