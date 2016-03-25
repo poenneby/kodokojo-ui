@@ -8,12 +8,15 @@ import sinonChai from 'sinon-chai'
 chai.use(chaiEnzyme())
 chai.use(sinonChai)
 
-import ConnectedSignin, { Signin } from './Signin'
+import { Signin } from './Signin'
 
 describe('<Signin> component', () => {
   it('should render a form', () => {
     // Given
     const props = {
+      fields: {
+        email: {}
+      },
       createAccount: () => {}
     }
 
@@ -27,7 +30,11 @@ describe('<Signin> component', () => {
   it('should set props properly', () => {
     // Given
     const props = {
-      email: 'email@test.com',
+      fields: {
+        email: {
+          value: 'email@test.com'
+        }
+      },
       createAccount: () => {}
     }
 
@@ -35,32 +42,22 @@ describe('<Signin> component', () => {
     const component = mount(<Signin {...props}/>)
 
     // Then
-    expect(component.props().email).to.equal('email@test.com')
+    expect(component.props().fields.email.value).to.equal('email@test.com')
     expect(component.props().createAccount).to.be.instanceof(Function)
-  })
-
-  it('should render properly', () => {
-    // Given
-    const props = {
-      email: 'email@test.com',
-      createAccount: () => {}
-    }
-
-    // When
-    const component = render(<Signin {...props}/>)
-
-    // Then
-    expect(component.find('label').text()).to.equal('email: email@test.com')
   })
 
   describe ('handle submit', () => {
     it('should trigger creatAccount if email input is not empty', () => {
       // Given
       const props = {
-        createAccount: sinon.spy()
+        createAccount: sinon.spy(),
+        fields: {
+          email: {
+            value: 'email@test.com'
+          }
+        }
       }
       const component = mount(<Signin {...props}/>)
-      component.instance().emailInput.value = 'email@test.com'
 
       // When
       component.find('form').simulate('submit', {preventDefault: () => {}})
@@ -73,10 +70,14 @@ describe('<Signin> component', () => {
     it('should not creatAccount if email input is empty', () => {
       // Given
       const props = {
+        fields: {
+          email: {
+            value: ''
+          }
+        },
         createAccount: sinon.spy()
       }
       const component = mount(<Signin {...props}/>)
-      component.instance().emailInput.value = null
 
       // When
       component.find('form').simulate('submit', {preventDefault: () => {}})
