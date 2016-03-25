@@ -5,7 +5,7 @@ import Account from '../components/auth/Account'
 class FirstProjectPage extends Component {
   render() {
     return (
-        <div style={{ width: '500px' }}>
+        <div>
           <Account />
         </div>
     )

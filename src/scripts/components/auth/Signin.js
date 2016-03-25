@@ -1,8 +1,26 @@
 import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
 import { Link } from 'react-router'
+import { reduxForm } from 'redux-form'
+
+// UI
+import Paper from 'material-ui/lib/paper'
+import TextField from 'material-ui/lib/text-field'
+import RaisedButton from 'material-ui/lib/raised-button'
 
 import { createAccount } from './signinActions'
+
+const style = {
+  button : {
+    margin: 12
+  },
+  paper: {
+    width: 300,
+    paddingBottom: '2em',
+    margin: '10% auto auto auto',
+    textAlign: 'center',
+    display: 'block'
+  }
+}
 
 // Signin component
 export const Signin = class Signin extends Component {
@@ -10,53 +28,58 @@ export const Signin = class Signin extends Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.emailInput
   }
 
   handleSubmit(event) {
-    const { createAccount } = this.props
+    const { fields: { email }, createAccount } = this.props
     if (event) {
       event.preventDefault()
-      if (!this.emailInput.value.trim()) {
+      const nextEmail = email.value
+      if (!nextEmail || !nextEmail.trim()) {
         return
       }
-      createAccount(this.emailInput.value)
-      this.emailInput.value = ''
+      createAccount(nextEmail.trim())
     }
   }
 
   render() {
-    const { email } = this.props
+    const { fields: { email } } = this.props
 
     return (
-        <form name="signin"
-              onSubmit={ this.handleSubmit }
-        >
-          <label>email: {email}<br/>
-            <input type="email"
-                   placeholder="your.email@domain.ext"
-                   ref={ node => {
-                     this.emailInput = node
-                   }}/><br/>
-          </label>
-          <button type="submit">Sing in</button><br/>
+      <form name="signin"
+            onSubmit={ this.handleSubmit }
+      >
+        <Paper style={style.paper} zDepth={1}>
+          <TextField
+              { ...email }
+              hintText="your.email@domain.ext"
+              floatingLabelText="Email"
+              type="email"
+              errorText={email.touched && email.error ? email.error : ''}
+          /><br />
+          <RaisedButton
+              label="Sign in"
+              primary={ true }
+              style={ style.button }
+              onTouchTap={ this.handleSubmit }
+          /><br/>
           <Link to="/login">Already a user? Go to login!</Link>
-        </form>
+        </Paper>
+      </form>
     )
   }
 
 }
 
 Signin.propTypes = {
-  email: PropTypes.string,
+  fields: PropTypes.object.isRequired,
+  submitting: PropTypes.bool.isRequired,
   createAccount: PropTypes.func.isRequired
 }
 
 // Signin container
 const mapStateProps = (state) => {
-  return {
-    email: state.auth.account.email
-  }
+  return {}
 }
 
 const mapDispatchProps = (dispatch) => {
@@ -65,9 +88,13 @@ const mapDispatchProps = (dispatch) => {
   }
 }
 
-const SigninContainer = connect(
-    mapStateProps,
-    mapDispatchProps
+const SigninContainer = reduxForm(
+  {
+    form: 'signinForm',
+    fields: ['email']
+  },
+  mapStateProps,
+  mapDispatchProps
 )(Signin)
 
 export default SigninContainer
