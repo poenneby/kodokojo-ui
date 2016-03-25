@@ -9,9 +9,9 @@
     "build:prod": "webpack -p && mustache config/json/index.prod.json index.mustache > static/index.html",
     "start:prod": "npm run build:prod && http-server static/",
     "lint": "eslint ./src/ --ext .js --ext .jsx",
-    "test": "BABEL_ENV=test mocha --compilers js:babel-core/register --recursive --require ./src/test/utils.js -R dot './src/**/*.spec.js'",
+    "test": "BABEL_ENV=test mocha --compilers js:babel-core/register --recursive --require ./test/utils.js -R dot './src/**/*.spec.js'",
     "test:watch": "npm test -- --watch",
-    "coverage": "BABEL_ENV=test babel-node node_modules/isparta/bin/isparta cover _mocha --root src/ --include-all-sources --default-excludes -- --recursive './src/**/*.spec.js' --require ./src/test/utils.js"
+    "coverage": "BABEL_ENV=test babel-node node_modules/isparta/bin/isparta cover _mocha --root src/ --include-all-sources --default-excludes -- --recursive './src/**/*.spec.js' --require ./test/utils.js"
   },
   "author": "ModuloM",
   "license": "GPL-3.0",
