@@ -1,8 +1,7 @@
 import has from 'lodash/has'
 
 import { prefs as prefsDefault } from './prefs'
-
-import { SET_THEME } from '../../commons/constants'
+import { SET_THEME, SET_LOCALE } from '../../commons/constants'
 
 export default function prefs(state = prefsDefault, action) {
   if (action.type === SET_THEME && has(action, 'theme')) {
@@ -11,11 +10,11 @@ export default function prefs(state = prefsDefault, action) {
       theme: action.theme
     }
   }
-  // if (action.type === SET_LOCALE && has(action, 'locale')) {
-  //   return {
-  //     ...state,
-  //     locale: action.locale
-  //   }
-  // }
+  if (action.type === SET_LOCALE && has(action, 'locale')) {
+    return {
+      ...state,
+      locale: action.locale
+    }
+  }
   return state
 }

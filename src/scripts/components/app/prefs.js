@@ -1,3 +1,4 @@
 export const prefs = {
-  theme: 'light'
+  theme: 'light',
+  locale: 'en'
 }
