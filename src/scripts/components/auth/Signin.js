@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react'
+import { compose } from 'redux'
 import { Link } from 'react-router'
 import { reduxForm } from 'redux-form'
+import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 
 // UI
 import Paper from 'material-ui/lib/paper'
@@ -44,6 +46,7 @@ export const Signin = class Signin extends Component {
 
   render() {
     const { fields: { email } } = this.props
+    const { formatMessage }  = this.props.intl
 
     return (
       <form name="signin"
@@ -52,26 +55,26 @@ export const Signin = class Signin extends Component {
         <Paper style={style.paper} zDepth={1}>
           <TextField
               { ...email }
-              hintText="your.email@domain.ext"
-              floatingLabelText="Email"
+              hintText={formatMessage({id:'signin-email-label'})}
+              floatingLabelText={formatMessage({id:'signin-email-hint-label'})}
               type="email"
               errorText={email.touched && email.error ? email.error : ''}
           /><br />
           <RaisedButton
-              label="Sign in"
+              label={formatMessage({id:'signin-button-label'})}
               primary={ true }
-              style={ style.button }
               onTouchTap={ this.handleSubmit }
+              style={ style.button }
           /><br/>
-          <Link to="/login">Already a user? Go to login!</Link>
+          <Link to="/login" title={formatMessage({id:'signin-login-link-label'})}><FormattedMessage id={'signin-login-link-label'}></FormattedMessage></Link>
         </Paper>
       </form>
     )
   }
-
 }
 
 Signin.propTypes = {
+  intl: intlShape.isRequired,
   fields: PropTypes.object.isRequired,
   submitting: PropTypes.bool.isRequired,
   createAccount: PropTypes.func.isRequired
@@ -79,7 +82,7 @@ Signin.propTypes = {
 
 // Signin container
 const mapStateProps = (state) => {
-  return {}
+  // return {}
 }
 
 const mapDispatchProps = (dispatch) => {
@@ -88,13 +91,15 @@ const mapDispatchProps = (dispatch) => {
   }
 }
 
-const SigninContainer = reduxForm(
-  {
-    form: 'signinForm',
-    fields: ['email']
-  },
-  mapStateProps,
-  mapDispatchProps
-)(Signin)
+const SigninContainer = compose(
+  reduxForm(
+    {
+      form: 'signinForm',
+      fields: ['email']
+    },
+    mapStateProps,
+    mapDispatchProps
+  ),
+  injectIntl)(Signin)
 
 export default SigninContainer
