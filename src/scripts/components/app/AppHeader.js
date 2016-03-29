@@ -7,6 +7,8 @@ import AppBar from 'material-ui/lib/app-bar'
 import DropDownMenu from 'material-ui/lib/DropDownMenu'
 import MenuItem from 'material-ui/lib/menus/menu-item'
 
+import './appHeader.less'
+
 // AppHeader
 export const AppHeader = class AppHeader extends Component {
 
@@ -24,10 +26,12 @@ export const AppHeader = class AppHeader extends Component {
         className={'app-bar'}
         iconClassNameRight="muidocs-icon-navigation-expand-more"
       >
-        {'>> '}
-        <Link to="/">Home</Link>
-        {' > '}
-        <Link to="/users">Users</Link>
+        <div className="breadcrumb">
+          {'>> '}
+          <Link to="/">Home</Link>
+          {' > '}
+          <Link to="/users">Users</Link>
+        </div>
         <DropDownMenu className={'locale-selector'} value={languageSelected} onChange={(event,i,v) => onLanguageChange(v)}>
           <MenuItem value="en" primaryText="English"/>
           <MenuItem value="fr" primaryText="Français"/>

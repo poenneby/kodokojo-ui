@@ -8,6 +8,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 
 // UI stack
+import 'normalize-css'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 
 // i18n
@@ -30,9 +31,6 @@ import UsersPage from './scripts/pages/UsersPage'
 import NotFoundPage from './scripts/pages/NotFoundPage'
 
 import AuthService from './scripts/services/authService'
-
-// Application styles
-import './styles/kodokojo.css'
 
 // Add the reducer to your store on the `routing` key
 const store = configureStore(initialState)
