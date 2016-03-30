@@ -10,6 +10,7 @@ import { setTheme, setLocale } from './appActions'
 const lightTheme = getMuiTheme()
 const darkTheme = getMuiTheme(darkBaseTheme)
 
+import './app.less'
 import AppHeader from './AppHeader'
 
 class App extends Component {

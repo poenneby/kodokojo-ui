@@ -1,13 +1,26 @@
 @import (reference) '../../../styles/commons';
 
 .breadcrumb {
-  color: @font-color-neutral-light;
-  a {
-    color: @font-color-neutral-light;
-    font-size: @font-size-standard;
-    text-decoration: underline;
+  display: flex;
+  flex: 1 0 auto;
+  flex-flow: row wrap;
+  align-items: center;
+  color: @color-font-light;
+  a,
+  span {
+    display: flex;
+    margin-left: 1em;
   }
-  &:hover {
-    text-decoration: none;
+  a {
+    color: @color-font-light;
+    font-size: @font-size-regular;
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  Link {
+    display: flex;
+    justify-content: space-around;
   }
 }

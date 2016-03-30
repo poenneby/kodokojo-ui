@@ -9,12 +9,10 @@ import Paper from 'material-ui/lib/paper'
 import TextField from 'material-ui/lib/text-field'
 import RaisedButton from 'material-ui/lib/raised-button'
 
+import './signin.less'
 import { createAccount } from './signinActions'
 
 const style = {
-  button : {
-    margin: 12
-  },
   paper: {
     width: 300,
     paddingBottom: '2em',
@@ -65,7 +63,7 @@ export const Signin = class Signin extends Component {
               label={formatMessage({id:'signin-button-label'})}
               primary={ true }
               onTouchTap={ this.handleSubmit }
-              style={ style.button }
+              className="form-submit"
           /><br/>
           <Link to="/login" title={formatMessage({id:'signin-login-link-label'})}><FormattedMessage id={'signin-login-link-label'}></FormattedMessage></Link>
         </Paper>
