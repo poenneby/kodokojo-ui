@@ -9,9 +9,9 @@
     "build:prod": "webpack -p && mustache config/json/index.prod.json index.mustache > static/index.html",
     "start:prod": "npm run build:prod && http-server static/",
     "lint": "eslint ./src/ --ext .js --ext .jsx",
-    "test": "BABEL_ENV=test mocha --compilers js:babel-core/register --recursive --require ./test/utils.js -R dot './src/**/*.spec.js'",
+    "test": "BABEL_ENV=test mocha --compilers js:babel-core/register --recursive --require intl --require ./test/utils.js -R dot './src/**/*.spec.js'",
     "test:watch": "npm test -- --watch",
-    "coverage": "BABEL_ENV=test babel-node node_modules/isparta/bin/isparta cover _mocha --root src/ --include-all-sources --default-excludes -- --recursive './src/**/*.spec.js' --require ./test/utils.js"
+    "coverage": "BABEL_ENV=test babel-node node_modules/isparta/bin/isparta cover _mocha --root src/ --include-all-sources --default-excludes -- --recursive './src/**/*.spec.js' --require intl --require ./test/utils.js"
   },
   "author": "ModuloM",
   "license": "GPL-3.0",
@@ -51,6 +51,7 @@
     "file-loader": "^0.8.5",
     "gulp": "^3.9.1",
     "http-server": "^0.9.0",
+    "intl": "^1.1.0",
     "isparta": "^4.0.0",
     "jsdom": "^8.1.0",
     "less": "^2.6.1",
