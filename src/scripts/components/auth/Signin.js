@@ -55,6 +55,7 @@ export const Signin = class Signin extends Component {
         <Paper style={style.paper} zDepth={1}>
           <TextField
               { ...email }
+              name="email"
               hintText={formatMessage({id:'signin-email-label'})}
               floatingLabelText={formatMessage({id:'signin-email-hint-label'})}
               type="email"

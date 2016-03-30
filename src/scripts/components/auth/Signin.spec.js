@@ -7,83 +7,164 @@ import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 chai.use(chaiEnzyme())
 chai.use(sinonChai)
+import merge from 'lodash/merge'
+
+import { IntlProvider } from 'react-intl'
+import { IntlProviderContainer } from '../../commons/IntlProviderContainer'
 
 import { Signin } from './Signin'
 
 describe('<Signin> component', () => {
-  it('should render a form', () => {
-    // Given
-    const props = {
+
+  let props,
+      messages,
+      intlProvider
+
+  beforeEach(() => {
+    // TODO find another way to mock IntlProvider
+    const mockFormatFct = options => options.id
+    props = {
       fields: {
-        email: {}
+        email: ''
       },
+      intl: {
+        formatMessage: mockFormatFct,
+        formatDate: mockFormatFct,
+        formatPlural: mockFormatFct,
+        formatTime: mockFormatFct,
+        formatRelative: mockFormatFct,
+        formatNumber: mockFormatFct,
+        formatHTMLMessage: mockFormatFct,
+        now: mockFormatFct
+      },
+      submitting: false,
       createAccount: () => {}
     }
+    messages = {
+      'signin-email-label': 'signin-email-label',
+      'signin-email-hint-label': 'signin-email-hint-label',
+      'signin-button-label': 'signin-button-label',
+      'signin-login-link-label': 'signin-login-link-label'
+    }
+    intlProvider = new IntlProvider({locale:'en'}, {})
+  })
+
+  it('should render a form', () => {
+    // Given
+    const nextProps =  merge(props)
+    const { context } = intlProvider.getChildContext()
 
     // When
-    const component = shallow(<Signin {...props}/>)
+    const component = shallow(
+      <Signin {...nextProps}/>,
+      { context }
+    )
 
     // Then
     expect(component).to.have.descendants('form')
   })
 
-  it('should set props properly', () => {
+  it('should render i18n ids', () => {
     // Given
-    const props = {
-      fields: {
-        email: {
-          value: 'email@test.com'
+    const nextProps = merge(
+      props,
+      {
+        intl: {
+          formatMessage: sinon.stub(props.intl, 'formatMessage', (options) => {
+            return options.id
+          })
         }
-      },
-      createAccount: () => {}
-    }
+      }
+    )
+    const { context } = intlProvider.getChildContext()
 
     // When
-    const component = mount(<Signin {...props}/>)
+    shallow(
+      <Signin {...nextProps}/>,
+        { context }
+    )
 
     // Then
-    expect(component.props().fields.email.value).to.equal('email@test.com')
-    expect(component.props().createAccount).to.be.instanceof(Function)
+    expect(nextProps.intl.formatMessage).to.have.callCount(4)
+    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signin-email-label' })
+    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signin-email-hint-label' })
+    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signin-button-label' })
+    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signin-login-link-label' })
   })
 
-  describe ('handle submit', () => {
-    it('should trigger creatAccount if email input is not empty', () => {
-      // Given
-      const props = {
-        createAccount: sinon.spy(),
+  it('should set props properly', () => {
+    // Given
+    const nextProps = merge(
+      props,
+      {
         fields: {
           email: {
             value: 'email@test.com'
           }
         }
       }
-      const component = mount(<Signin {...props}/>)
+    )
+
+    // When
+    // TODO find another way to mock IntlProvider
+    const component = mount(
+      <IntlProvider locale="en" messages={messages}>
+        <Signin {...nextProps}/>
+      </IntlProvider>
+    )
+
+    // Then
+    expect(component.find(Signin).props().fields.email.value).to.equal('email@test.com')
+    expect(component.find(Signin).props().createAccount).to.be.instanceof(Function)
+  })
+
+  describe ('handle submit', () => {
+    it('should trigger creatAccount if email input is not empty', () => {
+      // Given
+      const nextProps = merge(
+        props,
+        {
+          fields: {
+            email: {
+              value: 'email@test.com'
+            }
+          },
+          createAccount: sinon.spy()
+        }
+      )
+      const component = mount(
+        <IntlProvider locale="en" messages={messages}>
+          <Signin {...nextProps}/>
+        </IntlProvider>
+      )
 
       // When
       component.find('form').simulate('submit', {preventDefault: () => {}})
 
       // Then
-      expect(props.createAccount).to.have.callCount(1)
-      expect(props.createAccount).to.have.been.calledWith('email@test.com')
+      expect(nextProps.createAccount).to.have.callCount(1)
+      expect(nextProps.createAccount).to.have.been.calledWith('email@test.com')
     })
 
     it('should not creatAccount if email input is empty', () => {
       // Given
-      const props = {
-        fields: {
-          email: {
-            value: ''
-          }
-        },
-        createAccount: sinon.spy()
-      }
-      const component = mount(<Signin {...props}/>)
+      const nextProps = merge(
+        props,
+        {
+          createAccount: sinon.spy()
+        }
+      )
+      const component = mount(
+        <IntlProvider locale="en" messages={messages}>
+          <Signin {...nextProps}/>
+        </IntlProvider>
+      )
 
       // When
       component.find('form').simulate('submit', {preventDefault: () => {}})
 
       // Then
-      expect(props.createAccount).to.not.have.been.called
+      expect(nextProps.createAccount).to.not.have.been.called
     })
   })
 })
