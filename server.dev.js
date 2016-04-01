@@ -14,7 +14,7 @@ global.__baseDirname = __dirname
 
 // Return error if DOCKER_HOST isn’t set
 if (config.api.host) {
-  logger.info('host', config.api.host)
+  logger.info('Docker host', config.api.host)
 } else {
   logger.error('DOCKER_HOST isn’t set')
   config.api.error = true

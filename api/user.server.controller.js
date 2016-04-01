@@ -1,5 +1,4 @@
 import * as userRepository from './user.server.repository'
-import logger from '../config/logger'
 
 export const initUser = (request, response) => {
   userRepository

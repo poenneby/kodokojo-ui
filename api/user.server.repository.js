@@ -1,6 +1,5 @@
 import config from '../config/config'
 import logger from '../config/logger'
-import _ from 'lodash'
 
 import { requestWithLog } from './utils.server.service'
 

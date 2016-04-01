@@ -10,7 +10,6 @@ chai.use(sinonChai)
 import merge from 'lodash/merge'
 
 import { IntlProvider } from 'react-intl'
-import { IntlProviderContainer } from '../../commons/IntlProviderContainer'
 
 import { Signin } from './Signin'
 
