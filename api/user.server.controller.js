@@ -11,9 +11,9 @@ export const initUser = (request, response) => {
     })
 }
 
-export const putUser = (request, response) => {
+export const postUser = (request, response) => {
   userRepository
-      .putUser(request.params.id, request.body.email)
+      .postUser(request.params.id, request.body.email)
       .then((data) => {
         return response.status(201).send(data)
       })

@@ -63,20 +63,15 @@ describe('signin actions', () => {
     ]
     nock('http://localhost/api/v1')
         .post('/user')
-        .reply(200, (uri, requestBody) => {
+        .reply(200, () => {
           return id
         })
-        .put(`/user/${id}`)
+        .post(`/user/${id}`)
         .reply(200, {id: id })
     var pushSpy = sinon.spy()
     actionsRewireApi.__Rewire__('browserHistory', {
       push: pushSpy
     })
-    // actionsRewireApi.__Rewire__('window', {
-    //   location: {
-    //     host: 'localhost'
-    //   }
-    // })
 
     // When
     const store = mockStore({})

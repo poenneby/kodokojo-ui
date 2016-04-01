@@ -14,10 +14,10 @@ userRepository.initUser = () => {
   })
 }
 
-userRepository.putUser = (id, email) => {
+userRepository.postUser = (id, email) => {
   logger.debug('putUser', id, 'Email', email)
   return requestWithLog({
-    method: 'PUT',
+    method: 'POST',
     uri: `${config.api.host}${config.api.routes.user}/${id}`,
     json: true,
     body: {
@@ -28,7 +28,7 @@ userRepository.putUser = (id, email) => {
 
 // Public methods
 export const initUser = userRepository.initUser
-export const putUser = userRepository.putUser
+export const postUser = userRepository.postUser
 
 // Service instance
 export default userRepository

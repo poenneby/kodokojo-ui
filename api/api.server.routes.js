@@ -6,7 +6,7 @@ import * as user from './user.server.controller'
 
 router.post(config.api.routes.user, user.initUser)
 
-router.put(`${config.api.routes.user}/:id`, user.putUser)
+router.post(`${config.api.routes.user}/:id`, user.postUser)
 
 export default (app) => {
   app.use(router)
