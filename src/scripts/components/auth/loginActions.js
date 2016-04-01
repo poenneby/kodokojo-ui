@@ -3,6 +3,7 @@ import { CALL_API } from 'redux-api-middleware'
 import api from '../../commons/config'
 // import { user } from '../../commons/schemas'
 import authService from '../../services/authService'
+import ioService from '../../services/ioService'
 import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE, AUTH_RESET } from '../../commons/constants'
 
 export function requestAuthentication(username, password) {
@@ -11,11 +12,7 @@ export function requestAuthentication(username, password) {
     [CALL_API]: {
       method: 'GET',
       endpoint: `http://${window.location.host||'localhost'}${api.user}`,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Basic ${auth}`
-      },
+      headers: ioService.getHeaders(),
       types: [
         AUTH_REQUEST,
         {

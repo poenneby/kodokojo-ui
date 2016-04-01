@@ -12,6 +12,7 @@ import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE, AUTH_RESET } from '../../comm
 
 // dependencies to mock
 import authService from '../../services/authService'
+import ioService from '../../services/ioService'
 
 // Apply the middleware to the store
 const middlewares = [
@@ -29,6 +30,7 @@ describe('login actions', () => {
     afterEach(() => {
       authService.setAuth.restore()
       authService.putAuth.restore()
+      ioService.getHeaders.restore()
     })
 
     it('should request auth', (done) => {
@@ -53,8 +55,14 @@ describe('login actions', () => {
           meta: undefined
         }
       ]
+      const headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${auth}`
+      }
       const setAuthSpy = sinon.stub(authService, 'setAuth').returns(auth)
       const putAuthSpy = sinon.spy(authService, 'putAuth')
+      const getHeadersSpy = sinon.stub(ioService, 'getHeaders').returns(headers)
       nock('http://localhost/api/v1', {
         reqheaders: {
           'Authorization': `Basic ${auth}`
@@ -75,6 +83,7 @@ describe('login actions', () => {
         expect(setAuthSpy).to.have.been.calledWith(username, password)
         expect(putAuthSpy).to.have.callCount(1)
         expect(putAuthSpy).to.have.been.calledWith(account.identifier)
+        expect(getHeadersSpy).to.have.callCount(1)
       }).then(done, done)
     })
 
@@ -105,8 +114,14 @@ describe('login actions', () => {
           meta: undefined
         }
       ]
+      const headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${auth}`
+      }
       const setAuthSpy = sinon.stub(authService, 'setAuth').returns(auth)
       const putAuthSpy = sinon.spy(authService, 'putAuth')
+      const getHeadersSpy = sinon.stub(ioService, 'getHeaders').returns(headers)
       nock('http://localhost/api/v1', {
           reqheaders: {
             'Authorization': `Basic ${auth}`
@@ -123,6 +138,7 @@ describe('login actions', () => {
         expect(setAuthSpy).to.have.callCount(1)
         expect(setAuthSpy).to.have.been.calledWith(username, password)
         expect(putAuthSpy).to.have.callCount(0)
+        expect(getHeadersSpy).to.have.callCount(1)
       }).then(done, done)
     })
   })

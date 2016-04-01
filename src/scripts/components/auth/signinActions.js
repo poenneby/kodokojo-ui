@@ -2,6 +2,7 @@ import { browserHistory } from 'react-router'
 import { CALL_API } from 'redux-api-middleware'
 
 import api from '../../commons/config'
+import { getHeaders } from '../../services/ioService'
 import { ACCOUNT_ID_REQUEST, ACCOUNT_ID_SUCCESS, ACCOUNT_ID_FAILURE, ACCOUNT_REQUEST, ACCOUNT_SUCCESS, ACCOUNT_FAILURE } from '../../commons/constants'
 
 export function requestAccountId(email) {
@@ -9,10 +10,7 @@ export function requestAccountId(email) {
     [CALL_API]: {
       method: 'POST',
       endpoint: `http://${window.location.host||'localhost'}${api.user}`,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
+      headers: getHeaders(),
       types: [
         {
           type: ACCOUNT_ID_REQUEST,
@@ -46,10 +44,7 @@ export function requestAccount(email, data) {
       method: 'POST',
       endpoint: `http://${window.location.host||'localhost'}${api.user}/${data.payload.account.id}`,
       // endpoint: `http://localhost/api/v1/user/${data.payload.account.id}`,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
+      headers: getHeaders(),
       body: JSON.stringify({
         email: email
       }),
@@ -89,7 +84,7 @@ export function createAccount(email) {
         throw new Error(data)
       }
     }).catch(error => {
-      // TODO do something with
+      // TODO do something with error
     })
   }
 }
