@@ -42,6 +42,7 @@ describe('<Login> component', () => {
         username: '',
         password: ''
       },
+      submitting: false,
       login: () => {},
       logout: () => {}
     }
