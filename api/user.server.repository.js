@@ -27,7 +27,7 @@ userRepository.postUser = (id, email) => {
 }
 
 userRepository.getUserAccount = (credentials) => {
-  logger.debug('getUserCredentials', credentials)
+  logger.debug('getUserAccount', credentials)
   return requestWithLog({
     method: 'GET',
     uri: `${config.api.host}${config.api.routes.user}`,
