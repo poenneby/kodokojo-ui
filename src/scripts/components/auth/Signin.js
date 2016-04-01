@@ -5,22 +5,11 @@ import { reduxForm } from 'redux-form'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 
 // UI
-import Paper from 'material-ui/lib/paper'
 import TextField from 'material-ui/lib/text-field'
 import RaisedButton from 'material-ui/lib/raised-button'
 
 import './signin.less'
 import { createAccount } from './signinActions'
-
-const style = {
-  paper: {
-    width: 300,
-    paddingBottom: '2em',
-    margin: '10% auto auto auto',
-    textAlign: 'center',
-    display: 'block'
-  }
-}
 
 // Signin component
 export const Signin = class Signin extends Component {
@@ -47,10 +36,10 @@ export const Signin = class Signin extends Component {
     const { formatMessage }  = this.props.intl
 
     return (
-      <form name="signin"
+      <form id="signinForm"
+            name="signinForm"
             onSubmit={ this.handleSubmit }
       >
-        <Paper style={style.paper} zDepth={1}>
           <TextField
               { ...email }
               name="email"
@@ -66,7 +55,6 @@ export const Signin = class Signin extends Component {
               className="form-submit"
           /><br/>
           <Link to="/login" title={formatMessage({id:'signin-login-link-label'})}><FormattedMessage id={'signin-login-link-label'}></FormattedMessage></Link>
-        </Paper>
       </form>
     )
   }
@@ -99,6 +87,7 @@ const SigninContainer = compose(
     mapStateProps,
     mapDispatchProps
   ),
-  injectIntl)(Signin)
+  injectIntl
+)(Signin)
 
 export default SigninContainer

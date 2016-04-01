@@ -5,22 +5,8 @@ import { reduxForm } from 'redux-form'
 // UI
 import TextField from 'material-ui/lib/text-field'
 import RaisedButton from 'material-ui/lib/raised-button'
-import Paper from 'material-ui/lib/paper'
 
-import { authenticate } from './loginActions'
-
-const style = {
-  button : {
-    margin: 12
-  },
-  paper: {
-    width: 300,
-    paddingBottom: '2em',
-    margin: '10% auto auto auto',
-    textAlign: 'center',
-    display: 'block'
-  }
-}
+import './login.less'
 
 // Login component
 export const Login = class Login extends Component {
@@ -48,7 +34,6 @@ export const Login = class Login extends Component {
     const { fields: { login, psw } } = this.props
 
     return (
-      <Paper style={style.paper} zDepth={1}>
         <form name="login"
               onSubmit={ this.handleSubmit }
         >
@@ -74,7 +59,6 @@ export const Login = class Login extends Component {
           /><br/>
           <Link to="/">Not a user? Sign in!</Link>
         </form>
-      </Paper>
     )
   }
 
