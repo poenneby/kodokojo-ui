@@ -4,12 +4,12 @@ storageService.put = (key, value, scope = 'local') => {
   return window[`${scope}Storage`].setItem(key, value)
 }
 
-storageService.get = (key, value, scope = 'local') => {
-  return window[`${scope}Storage`].getItem(key, value)
+storageService.get = (key, scope = 'local') => {
+  return window[`${scope}Storage`].getItem(key)
 }
 
-storageService.remove = (key, value, scope = 'local') => {
-  return window[`${scope}Storage`].removeItem(key, value)
+storageService.remove = (key, scope = 'local') => {
+  return window[`${scope}Storage`].removeItem(key)
 }
 
 storageService.clear = (scope = 'local') => {
