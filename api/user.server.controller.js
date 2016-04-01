@@ -6,8 +6,8 @@ export const initUser = (request, response) => {
     .then((data) => {
       return response.status(201).send(data)
     })
-    .catch((err) =>{
-      return response.status(500).send(err)
+    .catch((err, resp) =>{
+      return response.status(err.response.statusCode ? err.response.statusCode : 500).send(err)
     })
 }
 
@@ -17,8 +17,8 @@ export const postUser = (request, response) => {
       .then((data) => {
         return response.status(201).send(data)
       })
-      .catch((err) => {
-        return response.status(500).send(err)
+      .catch((err, resp) => {
+        return response.status(err.response.statusCode ? err.response.statusCode : 500).send(err)
       })
 
 }

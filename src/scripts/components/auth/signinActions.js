@@ -76,12 +76,20 @@ export function requestAccount(email, data) {
 export function createAccount(email) {
   return dispatch => {
     return dispatch(requestAccountId(email)
-    ).then(data => dispatch(requestAccount(email, data))
-    ).then(() => {
-      browserHistory.push('/project')
+    ).then(data => {
+      if (!data.error) {
+        return dispatch(requestAccount(email, data))
+      } else {
+        throw new Error(data)
+      }
+    }).then(data => {
+      if (!data.error) {
+        browserHistory.push('/project')
+      } else {
+        throw new Error(data)
+      }
     }).catch(error => {
       // TODO do something with
-      console.log(error)
     })
   }
 }
