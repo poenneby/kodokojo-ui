@@ -20,5 +20,15 @@ export const postUser = (request, response) => {
       .catch((err, resp) => {
         return response.status(err.response.statusCode ? err.response.statusCode : 500).send(err)
       })
+}
 
+export const getUserAccount = (request, response) => {
+  userRepository
+      .getUserAccount(request.headers.authorization)
+      .then((data) => {
+        return response.status(200).send(data)
+      })
+      .catch((err, resp) => {
+        return response.status(err.response.statusCode ? err.response.statusCode : 500).send(err)
+      })
 }

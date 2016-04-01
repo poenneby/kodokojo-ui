@@ -26,9 +26,22 @@ userRepository.postUser = (id, email) => {
   })
 }
 
+userRepository.getUserAccount = (credentials) => {
+  logger.debug('getUserCredentials', credentials)
+  return requestWithLog({
+    method: 'GET',
+    uri: `${config.api.host}${config.api.routes.user}`,
+    headers: {
+      'Authorization': `${credentials}`
+    },
+    json: true
+  })
+}
+
 // Public methods
 export const initUser = userRepository.initUser
 export const postUser = userRepository.postUser
+export const getUserAccount = userRepository.getUserAccount
 
 // Service instance
 export default userRepository
