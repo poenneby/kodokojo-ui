@@ -2,21 +2,32 @@ import { CALL_API } from 'redux-api-middleware'
 
 import api from '../../commons/config'
 // import { user } from '../../commons/schemas'
-import { AUTHENT_REQUEST, AUTHENT_SUCCESS, AUTH_FAILURE } from '../../commons/constants'
+import authService from '../../services/authService'
+import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE, AUTH_RESET } from '../../commons/constants'
 
-export function requestAuthentication(login, psw) {
+export function requestAuthentication(username, password) {
+  const auth = authService.getAuth(username, password)
   return {
     [CALL_API]: {
-      method: 'POST',
-      endpoint: `${api.user}/`,
+      method: 'GET',
+      endpoint: `http://${window.location.host||'localhost'}${api.user}`,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${auth}`
+      },
       types: [
+        AUTH_REQUEST,
         {
-          type: AUTHENT_REQUEST,
-          payload: (action, state) => {
-            // console.log(action)
+          type: AUTH_SUCCESS,
+          payload: (action, state, res) => {
+            return res.json().then(data => {
+              return {
+                account: data
+              }
+            })
           }
         },
-        AUTHENT_SUCCESS,
         AUTH_FAILURE
       ]
 
@@ -25,10 +36,38 @@ export function requestAuthentication(login, psw) {
   }
 }
 
-
-export function authenticate(login, psw) {
+export function login(username, password) {
   return dispatch => {
-    return dispatch(requestAuthentication(login, psw))
+    return dispatch(requestAuthentication(username, password)
+    ).then(data => {
+      if (!data.error) {
+        const userId = data.payload.account.identifier
+        authService.setAuth(userId)
+      }
+    }).catch(error => {
+      // TODO do something with error
+      console.log(error)
+    })
   }
+}
 
+export function resetAuthentication() {
+  return {
+    type: AUTH_RESET
+  }
+}
+
+export function logout() {
+  return dispatch => {
+    return dispatch(resetAuthentication()
+    ).then(data => {
+      if (!data.error) {
+        authService.resetAuth()
+      } else {
+        throw new Error(data)
+      }
+    }).catch(error => {
+      // TODO do something with error
+    })
+  }
 }

@@ -33,6 +33,26 @@ authService.getAuth = (login, password) => {
   return token
 }
 
+
+/**
+ * Set user id & isAuthenticated
+ *
+ * @param id
+ */
+authService.setAuth = (id) => {
+  storageService.put('isAuthenticated', true, 'session')
+  storageService.put('userId', id, 'session')
+}
+
+/**
+ * Reset authentication
+ */
+authService.resetAuth = () => {
+  storageService.remove('isAuthenticated', 'session')
+  storageService.remove('userId', 'session')
+  storageService.remove('token', 'session')
+}
+
 /**
  * Return authenticated state
  *

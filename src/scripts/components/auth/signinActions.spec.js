@@ -9,7 +9,10 @@ import configureMockStore from 'redux-mock-store'
 
 import * as actions from './signinActions'
 import { __RewireAPI__ as  actionsRewireApi } from './signinActions'
-import { ACCOUNT_ID_REQUEST, ACCOUNT_ID_SUCCESS, ACCOUNT_REQUEST, ACCOUNT_SUCCESS } from '../../commons/constants'
+import {
+  ACCOUNT_ID_REQUEST, ACCOUNT_ID_SUCCESS, ACCOUNT_ID_FAILURE,
+  ACCOUNT_REQUEST, ACCOUNT_SUCCESS, ACCOUNT_FAILURE
+} from '../../commons/constants'
 
 // Apply the middleware to the store
 const middlewares = [

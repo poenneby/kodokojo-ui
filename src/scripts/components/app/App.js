@@ -17,13 +17,14 @@ import AppHeader from './AppHeader'
 
 class App extends Component {
   render() {
-    const { children, themeSelected, locale, setLocale } = this.props
+    const { children, themeSelected, locale, setLocale, isAuthenticated } = this.props
     const currentMuiTheme = (themeSelected === 'light') ? lightTheme : darkTheme
 
     return (
       <MuiThemeProvider muiTheme={currentMuiTheme}>
         <div>
           <AppHeader
+            isAuthenticated={isAuthenticated}
             languageSelected={locale}
             onLanguageChange={(value) => setLocale(value)}
           />
@@ -35,16 +36,18 @@ class App extends Component {
 }
 
 App.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
   children: PropTypes.element.isRequired,
-  themeSelected: PropTypes.string,
-  locale: PropTypes.string,
-  setLocale: PropTypes.func
+  themeSelected: PropTypes.string.isRequired,
+  locale: PropTypes.string.isRequired,
+  setLocale: PropTypes.func.isRequired
 }
 
 const mapStateProps = (state) => {
   return {
     locale: state.prefs.locale,
-    themeSelected: state.prefs.theme
+    themeSelected: state.prefs.theme,
+    isAuthenticated: state.auth.isAuthenticated
   }
 }
 
