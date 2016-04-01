@@ -1,37 +1,74 @@
-import { browserHistory } from 'react-router'
+import storageService from './storageService'
 
-const autService = {}
+const authService = {}
 
 /**
- * Redirect to login page
+ * Check auth & redirect to login page
  *
  * @returns {boolean}
  */
-autService.checkAuthentication = () => {
-  console.log('Fake authentication test')
+authService.checkAuth = (nextState, replaceState) => {
+  const isAuthenticated = authService.isAuth()
 
-  const isAuthenticated = false
-
-  if (isAuthenticated) {
-    // FIXME display page before reload, must add check on auth token in each page
-    browserHistory.push('/login')
-    window.location.reload()
-    return false
+  if (!isAuthenticated) {
+    // use react router onEnter callback argument to replace router state
+    replaceState({
+      pathname: '/login',
+      state: { nextPathname: nextState.location.pathname }
+    })
   }
+  return isAuthenticated
 }
 
-autService.encryptBasicAuth = (auth) => {
+/**
+ * Return encrypted authentication
+ *
+ * @param login
+ * @param password
+ * @returns {string}
+ */
+authService.getAuth = (login, password) => {
+  const token = authService._encryptBasicAuth(`${login}:${password}`)
+  storageService.put('token', token, 'session')
+  return token
+}
+
+/**
+ * Return authenticated state
+ *
+ * @returns {boolean}
+ */
+authService.isAuth = () => {
+  return !!storageService.get('isAuthenticated', 'session')
+}
+
+/**
+ * Return encrypted basic auth string
+ *
+ * @param auth
+ * @returns {string}
+ * @private
+ */
+authService._encryptBasicAuth = (auth) => {
   return btoa(auth)
 }
 
-autService.decryptBasicAuth = (auth) => {
+/**
+ * Return decrypted basic auth string
+ *
+ * @param auth
+ * @returns {string}
+ * @private
+ */
+authService._decryptBasicAuth = (auth) => {
   return atob(auth)
 }
 
 
 // public API
-export const checkAuthentication = autService.checkAuthentication
-export const encryptBasicAuth = autService.encryptBasicAuth
-export const decryptBasicAuth = autService.decryptBasicAuth
+export const checkAuth = authService.checkAuth
+export const setAuth = authService.setAuth
+export const resetAuth = authService.resetAuth
+export const isAuth = authService.isAuth
 
-export default autService
+export default authService

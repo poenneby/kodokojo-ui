@@ -54,7 +54,7 @@ ReactDOM.render(
             <IndexRoute component={HomePage}/>
             <Route path="project" component={FirstProjectPage}/>
             <Route path="login" component={LoginPage}/>
-            <Route path="users" component={UsersPage} onEnter={AuthService.checkAuthentication} />
+            <Route path="users" component={UsersPage} onEnter={AuthService.checkAuth} />
             <Route status={404}
                    path="*"
                    component={NotFoundPage}
