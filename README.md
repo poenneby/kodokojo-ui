@@ -51,4 +51,4 @@ Install npm packages, build production files into static/, start webpack dev ser
 Build production version of the project, put static/ content into /delivery/kodokojo-ui-<version>.tar.gz
 
 
-Thanks to all Open source project which made possible to done such project!
+Thanks to all Open source project which made such project possible!
