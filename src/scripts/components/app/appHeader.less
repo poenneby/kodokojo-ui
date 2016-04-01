@@ -1,14 +1,18 @@
 @import (reference) '../../../styles/commons';
 
+.app-header {
+  background-color: @color-primary-dark !important;
+}
+
 .breadcrumb {
   display: flex;
   flex: 1 0 auto;
   flex-flow: row wrap;
   align-items: center;
   color: @color-font-light;
-  a,
-  span {
+  & > span {
     display: flex;
+    margin-right: 1em;
     margin-left: 1em;
   }
   a {

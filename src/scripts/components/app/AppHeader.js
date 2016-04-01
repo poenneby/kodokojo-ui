@@ -19,29 +19,32 @@ export const AppHeader = class AppHeader extends Component {
 
   render() {
     const { languageSelected, onLanguageChange } = this.props
-    const { messages } = this.props.intl
+    const { formatMessage } = this.props.intl
 
     return (
       <AppBar
-        title={<img src="../../../images/logo-kodokojo-bl.svg"/>}
+        title={<img src={ logoKodoKojo } />}
         titleStyle={{paddingTop: '10px', overflow: 'visible'}}
-        className={'app-bar'}
+        className="app-bar app-header"
         showMenuIconButton={false}
-        style={{backgroundColor: '#242424'}}
       >
         <div className="breadcrumb">
-          <Link to="/">Home</Link>
+          <Link to="/">
+            <FormattedMessage id={'app-nav-home-label'}/>
+          </Link>
           {' | '}
-          <Link to="/users">Users</Link>
+          <Link to="/users">
+            <FormattedMessage id={'app-nav-users-label'}/>
+          </Link>
         </div>
         <DropDownMenu
-          className={'locale-selector'}
-          value={languageSelected}
-          labelStyle={{color: '#fff'}}
-          onChange={(event,i,v) => onLanguageChange(v)}
+          className={ 'locale-selector' }
+          value={ languageSelected }
+          labelStyle={ {color: '#fff'} }
+          onChange={ (event,i,v) => onLanguageChange(v) }
         >
-          <MenuItem value="en" primaryText="English"/>
-          <MenuItem value="fr" primaryText="Français"/>
+          <MenuItem value="en" primaryText={ formatMessage({id:'app-lang-en-label'}) }/>
+          <MenuItem value="fr" primaryText={ formatMessage({id:'app-lang-fr-label'}) }/>
         </DropDownMenu>
       </AppBar>
     )
