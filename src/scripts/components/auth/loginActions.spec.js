@@ -21,16 +21,14 @@ const middlewares = [
 const mockStore = configureMockStore(middlewares)
 
 describe('login actions', () => {
-
   afterEach(() => {
     nock.cleanAll()
   })
 
   describe('login', () => {
-
     afterEach(() => {
-      authService.getAuth.restore()
       authService.setAuth.restore()
+      authService.putAuth.restore()
     })
 
     it('should request auth', (done) => {
@@ -55,17 +53,17 @@ describe('login actions', () => {
           meta: undefined
         }
       ]
+      const setAuthSpy = sinon.stub(authService, 'setAuth').returns(auth)
+      const putAuthSpy = sinon.spy(authService, 'putAuth')
       nock('http://localhost/api/v1', {
-          reqheaders: {
-            'Authorization': `Basic ${auth}`
-          }
-        })
-        .get('/user')
-        .reply(200, (uri, requestBody) => {
+        reqheaders: {
+          'Authorization': `Basic ${auth}`
+        }
+      }).get('/user')
+        .reply(200, () => {
           return account
         })
-      const getAuthSpy = sinon.stub(authService, 'getAuth').returns(auth)
-      const setAuthSpy = sinon.spy(authService, 'setAuth')
+
 
       // When
       const store = mockStore({})
@@ -73,10 +71,10 @@ describe('login actions', () => {
       // Then
       return store.dispatch(actions.login(username, password)).then(() => {
         expect(store.getActions()).to.deep.equal(expectedActions)
-        expect(getAuthSpy).to.have.callCount(1)
-        expect(getAuthSpy).to.have.been.calledWith(username, password)
         expect(setAuthSpy).to.have.callCount(1)
-        expect(setAuthSpy).to.have.been.calledWith(account.identifier)
+        expect(setAuthSpy).to.have.been.calledWith(username, password)
+        expect(putAuthSpy).to.have.callCount(1)
+        expect(putAuthSpy).to.have.been.calledWith(account.identifier)
       }).then(done, done)
     })
 
@@ -107,15 +105,14 @@ describe('login actions', () => {
           meta: undefined
         }
       ]
+      const setAuthSpy = sinon.stub(authService, 'setAuth').returns(auth)
+      const putAuthSpy = sinon.spy(authService, 'putAuth')
       nock('http://localhost/api/v1', {
           reqheaders: {
             'Authorization': `Basic ${auth}`
           }
-        })
-        .get('/user')
+      }).get('/user')
         .reply(401)
-      const getAuthSpy = sinon.stub(authService, 'getAuth').returns(auth)
-      const setAuthSpy = sinon.spy(authService, 'setAuth')
 
       // When
       const store = mockStore({})
@@ -123,9 +120,9 @@ describe('login actions', () => {
       // Then
       return store.dispatch(actions.login(username, password)).then(() => {
         expect(store.getActions()).to.deep.equal(expectedActions)
-        expect(getAuthSpy).to.have.callCount(1)
-        expect(getAuthSpy).to.have.been.calledWith(username, password)
-        expect(setAuthSpy).to.have.callCount(0)
+        expect(setAuthSpy).to.have.callCount(1)
+        expect(setAuthSpy).to.have.been.calledWith(username, password)
+        expect(putAuthSpy).to.have.callCount(0)
       }).then(done, done)
     })
   })

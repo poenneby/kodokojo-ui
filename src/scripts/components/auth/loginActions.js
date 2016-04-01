@@ -6,7 +6,7 @@ import authService from '../../services/authService'
 import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE, AUTH_RESET } from '../../commons/constants'
 
 export function requestAuthentication(username, password) {
-  const auth = authService.getAuth(username, password)
+  authService.setAuth(username, password)
   return {
     [CALL_API]: {
       method: 'GET',
@@ -42,7 +42,7 @@ export function login(username, password) {
     ).then(data => {
       if (!data.error) {
         const userId = data.payload.account.identifier
-        authService.setAuth(userId)
+        authService.putAuth(userId)
       }
     }).catch(error => {
       // TODO do something with error
