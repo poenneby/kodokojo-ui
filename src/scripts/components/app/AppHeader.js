@@ -8,6 +8,7 @@ import DropDownMenu from 'material-ui/lib/DropDownMenu'
 import MenuItem from 'material-ui/lib/menus/menu-item'
 
 import './appHeader.less'
+import logoKodoKojo from '../../../images/logo-kodokojo-bl.svg'
 
 // AppHeader
 export const AppHeader = class AppHeader extends Component {
