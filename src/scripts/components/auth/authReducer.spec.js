@@ -38,6 +38,7 @@ describe('auth reducer', () => {
       account: {
         email: 'email@test.com'
       },
+      isAuthenticated: false,
       isFetching: true
     })
   })
@@ -67,6 +68,7 @@ describe('auth reducer', () => {
         id: 1,
         email: 'email@test.com'
       },
+      isAuthenticated: false,
       isFetching: false
     })
   })
@@ -92,11 +94,12 @@ describe('auth reducer', () => {
         id: 1,
         email: 'email@test.com'
       },
+      isAuthenticated: false,
       isFetching: true
     })
   })
 
-  it('should handle ACCOUNT_REQUEST', () => {
+  it('should handle ACCOUNT_SUCCESS', () => {
     // Given
     const state = {
       account: {
@@ -133,6 +136,89 @@ describe('auth reducer', () => {
         sshKeyPublic: 'sshPublicKey',
         sshKeyPrivate: 'privateKey'
       },
+      isAuthenticated: true,
+      isFetching: false
+    })
+  })
+
+  it('should handle AUTH_REQUEST', () => {
+    // Given
+    const state = undefined
+    const action = {
+      type: ActionsTypes.AUTH_REQUEST,
+      payload: {
+        email: 'email@test.com'
+      }
+    }
+
+    // When
+    const nextState = authReducer(state, action)
+
+    // Then
+    expect(nextState).to.deep.equal({
+      account: {},
+      isAuthenticated: false,
+      isFetching: true
+    })
+  })
+
+  it('should handle AUTH_SUCCESS', () => {
+    // Given
+    const state = {
+      account: {
+        email: 'email@test.com',
+        id: 1
+      }
+    }
+    const action = {
+      type: ActionsTypes.AUTH_SUCCESS,
+      payload: {
+        account: {
+          identifier: 2,
+          name: 'name',
+          userName: 'userName',
+          email: 'email@test.com',
+          password: '',
+          sshPublicKey: '',
+          privateKey: ''
+        }
+      }
+    }
+
+    // When
+    const nextState = authReducer(state, action)
+
+    // Then
+    expect(nextState).to.deep.equal({
+      account: {
+        id: 2,
+        name: 'name',
+        userName: 'userName',
+        email: 'email@test.com',
+        password: '',
+        sshKeyPublic: '',
+        sshKeyPrivate: ''
+      },
+      isAuthenticated: true,
+      isFetching: false
+    })
+  })
+
+  it('should handle AUTH_FAILURE', () => {
+    // Given
+    const state = undefined
+    const action = {
+      type: ActionsTypes.AUTH_FAILURE,
+      payload: {}
+    }
+
+    // When
+    const nextState = authReducer(state, action)
+
+    // Then
+    expect(nextState).to.deep.equal({
+      account: {},
+      isAuthenticated: false,
       isFetching: false
     })
   })

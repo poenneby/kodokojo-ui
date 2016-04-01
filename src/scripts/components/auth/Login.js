@@ -7,6 +7,7 @@ import TextField from 'material-ui/lib/text-field'
 import RaisedButton from 'material-ui/lib/raised-button'
 
 import './login.less'
+import { login, logout } from './loginActions'
 
 // Login component
 export const Login = class Login extends Component {
@@ -14,77 +15,109 @@ export const Login = class Login extends Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleLogout = this.handleLogout.bind(this)
   }
 
   handleSubmit (event) {
-    const { fields: { login, psw }, authenticate } = this.props
+    const { fields: { username, psw }, login } = this.props
 
     if (event) {
       event.preventDefault()
-      const nextLogin = login.value,
+      const nextLogin = username.value,
             nextPsw = psw.value
-      if (!nextLogin.trim() || !nextPsw.trim()) {
+      if (!nextLogin || !nextLogin.trim() || !nextPsw || !nextPsw.trim()) {
         return
       }
-      authenticate(nextLogin.trim(), nextPsw.trim())
+      login(nextLogin.trim(), nextPsw.trim())
     }
   }
 
+  handleLogout (event) {
+    const { logout } = this.props
+    if (event) {
+      event.preventDefault()
+    }
+    logout()
+  }
+
   render() {
-    const { fields: { login, psw } } = this.props
+    const { fields: { username, psw }, isAuthenticated } = this.props
 
     return (
-        <form name="login"
-              onSubmit={ this.handleSubmit }
-        >
-          <TextField
-              { ...login }
-              hintText="your.email@domain.ext"
-              floatingLabelText="Email"
-              type="email"
-          /><br />
-          <TextField
-              { ...psw }
-              floatingLabelText="Password"
-              type="password"
-              ref={ node => {
-                this.passwordInput = node
-              }}
-          /><br />
-          <RaisedButton
-              label="Login"
+      <div>
+        { !isAuthenticated &&
+          <form id="loginForm"
+                name="loginForm"
+                onSubmit={ this.handleSubmit }
+          >
+            <TextField
+                { ...username }
+                id="username"
+                name="username"
+                hintText="all of what is before @email.com"
+                floatingLabelText="User name"
+                type="text"
+            /><br />
+            <TextField
+                { ...psw }
+                id="psw"
+                name="psw"
+                floatingLabelText="Password"
+                type="password"
+            /><br />
+            <RaisedButton
+                label="Log in"
+                primary={ true }
+                type="submit"
+                onTouchTap={ this.handleSubmit }
+                className="form-submit"
+            /><br/>
+            <Link to="/">Not a user? Sign in!</Link>
+          </form>
+        }
+        { isAuthenticated &&
+          <div>
+            You are authenticated<br/>
+            <RaisedButton
+              label="Log out"
               primary={ true }
-              style={ style.button }
-              onTouchTap={ this.handleSubmit }
-          /><br/>
-          <Link to="/">Not a user? Sign in!</Link>
-        </form>
+              onTouchTap={ this.handleLogout }
+              className="form-submit"
+            />
+          </div>
+        }
+      </div>
     )
   }
 
 }
 
 Login.propTypes = {
+  isAuthenticated: PropTypes.bool,
   fields: PropTypes.object.isRequired,
   submitting: PropTypes.bool.isRequired,
-  authenticate: PropTypes.func.isRequired
+  login: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired
 }
 
 // Login container
 const mapStateProps = (state) => {
-  return { }
+  return {
+    isAuthenticated: state.auth.isAuthenticated
+  }
 }
 
 const mapDispatchProps = (dispatch) => {
   return {
-    authenticate: (login, psw) => dispatch(authenticate(login, psw))
+    login: (username, psw) => dispatch(login(username, psw)),
+    logout: () => dispatch(logout())
   }
 }
 
 const LoginContainer = reduxForm(
   {
     form: 'loginForm',
-    fields: ['login', 'psw']
+    fields: ['username', 'psw']
   },
   mapStateProps,
   mapDispatchProps

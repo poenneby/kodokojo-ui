@@ -1,5 +1,9 @@
 import merge from 'lodash/merge'
-import { ACCOUNT_ID_REQUEST, ACCOUNT_ID_SUCCESS, ACCOUNT_ID_FAILURE, ACCOUNT_REQUEST, ACCOUNT_SUCCESS, ACCOUNT_FAILURE } from '../../commons/constants'
+import {
+    ACCOUNT_ID_REQUEST, ACCOUNT_ID_SUCCESS, ACCOUNT_ID_FAILURE,
+    ACCOUNT_REQUEST, ACCOUNT_SUCCESS, ACCOUNT_FAILURE,
+    AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE, AUTH_RESET
+} from '../../commons/constants'
 
 const initialState = {
   account: {},
@@ -13,6 +17,7 @@ export default function auth(state = initialState, action) {
       account: {
         email: action.payload.email
       },
+      isAuthenticated: false,
       isFetching: true
     }
   }
@@ -25,6 +30,7 @@ export default function auth(state = initialState, action) {
         account: {
           id: action.payload.account.id
         },
+        isAuthenticated: false,
         isFetching: false
       }
     )
@@ -32,39 +38,71 @@ export default function auth(state = initialState, action) {
 
   if (action.type === ACCOUNT_ID_FAILURE) {
     // TODO
+    return {
+      ...state,
+      isAuthenticated: false,
+      isFetching: false
+    }
   }
 
   if (action.type === ACCOUNT_REQUEST) {
+    return {
+      ...state,
+      isAuthenticated: false,
+      isFetching: true
+    }
+  }
+
+  // TODO delete password / sshKeys from state after rendering
+  if (action.type === ACCOUNT_SUCCESS || action.type === AUTH_SUCCESS) {
+    return {
+      ...state,
+      account: {
+        id: action.payload.account.identifier,
+        name: action.payload.account.name,
+        userName: action.payload.account.userName,
+        email: action.payload.account.email,
+        password: action.payload.account.password,
+        sshKeyPublic: action.payload.account.sshPublicKey,
+        sshKeyPrivate: action.payload.account.privateKey
+      },
+      isAuthenticated: true,
+      isFetching: false
+    }
+  }
+
+  if (action.type === ACCOUNT_FAILURE) {
+    // TODO
+    return state
+  }
+  
+  if (action.type === AUTH_REQUEST) {
     return merge(
       {},
       state,
       {
+        isAuthenticated: false,
         isFetching: true
       }
     )
   }
 
-  if (action.type === ACCOUNT_SUCCESS) {
-    return merge(
-      {},
-      state,
-      {
-        account: {
-          id: action.payload.account.identifier,
-          name: action.payload.account.name,
-          userName: action.payload.account.userName,
-          email: action.payload.account.email,
-          password: action.payload.account.password,
-          sshKeyPublic: action.payload.account.sshPublicKey,
-          sshKeyPrivate: action.payload.account.privateKey
-        },
-        isFetching: false
-      }
-    )
+  if (action.type === AUTH_FAILURE) {
+    // TODO
+    return {
+      ...state,
+      isAuthenticated: false,
+      isFetching: false
+    }
   }
 
-  if (action.type === ACCOUNT_FAILURE) {
-    // TODO
+  if (action.type === AUTH_RESET) {
+    console.log('logout')
+    return {
+      ...state,
+      isAuthenticated: false,
+      isFetching: false
+    }
   }
 
   return state

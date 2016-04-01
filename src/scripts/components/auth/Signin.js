@@ -40,21 +40,24 @@ export const Signin = class Signin extends Component {
             name="signinForm"
             onSubmit={ this.handleSubmit }
       >
-          <TextField
-              { ...email }
-              name="email"
-              hintText={formatMessage({id:'signin-email-label'})}
-              floatingLabelText={formatMessage({id:'signin-email-hint-label'})}
-              type="email"
-              errorText={email.touched && email.error ? email.error : ''}
-          /><br />
-          <RaisedButton
-              label={formatMessage({id:'signin-button-label'})}
-              primary={ true }
-              onTouchTap={ this.handleSubmit }
-              className="form-submit"
-          /><br/>
-          <Link to="/login" title={formatMessage({id:'signin-login-link-label'})}><FormattedMessage id={'signin-login-link-label'}></FormattedMessage></Link>
+        <TextField
+            { ...email }
+            name="email"
+            hintText={ formatMessage({id:'signin-email-label'}) }
+            floatingLabelText={ formatMessage({id:'signin-email-hint-label'}) }
+            type="email"
+            errorText={ email.touched && email.error ? email.error : '' }
+        /><br />
+        <RaisedButton
+            label={ formatMessage({id:'signin-button-label'}) }
+            primary={ true }
+            type="submit"
+            onTouchTap={ this.handleSubmit }
+            className="form-submit"
+        /><br/>
+        <Link to="/login" title={ formatMessage({id:'signin-login-link-label'}) }>
+          <FormattedMessage id={'signin-login-link-label'}/>
+        </Link>
       </form>
     )
   }
