@@ -113,7 +113,7 @@ describe('auth reducer', () => {
         account: {
           identifier: 2,
           name: 'name',
-          userName: 'userName',
+          username: 'userName',
           email: 'email@test.com',
           password: 'password',
           sshPublicKey: 'sshPublicKey',
@@ -176,7 +176,7 @@ describe('auth reducer', () => {
         account: {
           identifier: 2,
           name: 'name',
-          userName: 'userName',
+          username: 'userName',
           email: 'email@test.com',
           password: '',
           sshPublicKey: '',

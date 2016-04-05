@@ -60,7 +60,7 @@ export default function auth(state = initialState, action) {
       account: {
         id: action.payload.account.identifier,
         name: action.payload.account.name,
-        userName: action.payload.account.userName,
+        userName: action.payload.account.username,
         email: action.payload.account.email,
         password: action.payload.account.password,
         sshKeyPublic: action.payload.account.sshPublicKey,

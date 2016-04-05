@@ -20,8 +20,11 @@ export const Account = class Account extends Component {
               Merci pour votre inscription !<br/>
               Pensez surtout à <strong>enregistrer vos informations de connexion :</strong>
             </p>
-            <div>login :</div>
+            <div>email :</div>
             <div>{account.email}</div>
+            <br/>
+            <div>username :</div>
+            <div>{account.userName}</div>
             <br/>
             <div>password:</div>
             <div>{account.password}</div>
