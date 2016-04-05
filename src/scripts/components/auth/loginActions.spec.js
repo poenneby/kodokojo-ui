@@ -84,7 +84,8 @@ describe('login actions', () => {
         expect(putAuthSpy).to.have.callCount(1)
         expect(putAuthSpy).to.have.been.calledWith(account.identifier)
         expect(getHeadersSpy).to.have.callCount(1)
-      }).then(done, done)
+        done()
+      }, done)
     })
 
     it('should fail to request auth', (done) => {
@@ -139,7 +140,8 @@ describe('login actions', () => {
         expect(setAuthSpy).to.have.been.calledWith(username, password)
         expect(putAuthSpy).to.have.callCount(0)
         expect(getHeadersSpy).to.have.callCount(1)
-      }).then(done, done)
+        done()
+      }, done)
     })
   })
 
@@ -160,7 +162,8 @@ describe('login actions', () => {
       return store.dispatch(actions.logout()).then(() => {
         expect(store.getActions()).to.deep.equal(expectedActions)
         expect(resetAuthSpy).to.have.callCount(1)
-      }).then(done, done)
+        done()
+      }, done)
     })
   })
 })

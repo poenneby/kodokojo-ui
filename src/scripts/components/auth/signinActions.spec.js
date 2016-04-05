@@ -97,7 +97,8 @@ describe('signin actions', () => {
         expect(pushSpy).to.have.callCount(1)
         expect(pushSpy).to.have.been.calledWith('/project')
         expect(getHeadersSpy).to.have.callCount(2)
-      }).then(done, done)
+        done()
+      }, done)
     })
 
     it('should fail to create account id', (done) => {
@@ -137,11 +138,12 @@ describe('signin actions', () => {
       const store = mockStore({account:{id:''}})
 
       // Then
-      return store.dispatch(actions.createAccount(email)).then(() => {
+      return store.dispatch(actions.createAccount(email)).then(done, () => {
         expect(store.getActions()).to.deep.equal(expectedActions)
         expect(pushSpy).to.have.callCount(0)
         expect(getHeadersSpy).to.have.callCount(1)
-      }).then(done, done)
+        done()
+      })
     })
 
     it('should fail to create account', (done) => {
@@ -200,11 +202,12 @@ describe('signin actions', () => {
       const store = mockStore({account:{id:''}})
 
       // Then
-      return store.dispatch(actions.createAccount(email)).then(() => {
+      return store.dispatch(actions.createAccount(email)).then(done, () => {
         expect(store.getActions()).to.deep.equal(expectedActions)
         expect(pushSpy).to.have.callCount(0)
         expect(getHeadersSpy).to.have.callCount(2)
-      }).then(done, done)
+        done()
+      })
     })
   })
 })

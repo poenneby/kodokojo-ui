@@ -26,6 +26,7 @@ describe('<Signin> component', () => {
       fields: {
         email: ''
       },
+      handleSubmit: fct => fct,
       intl: {
         formatMessage: mockFormatFct,
         formatDate: mockFormatFct,

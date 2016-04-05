@@ -61,10 +61,11 @@ export function logout() {
       if (!data.error) {
         authService.resetAuth()
       } else {
-        throw new Error(data)
+        throw new Error(data.payload.status)
       }
     }).catch(error => {
-      // TODO do something with error
+      // TODO do something with error dispatch signin error maybe
+      // console.log('error', error)
     })
   }
 }

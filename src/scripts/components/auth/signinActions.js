@@ -3,6 +3,7 @@ import { CALL_API } from 'redux-api-middleware'
 
 import api from '../../commons/config'
 import { getHeaders } from '../../services/ioService'
+import { returnErrorKey } from '../../services/errorService'
 import { ACCOUNT_ID_REQUEST, ACCOUNT_ID_SUCCESS, ACCOUNT_ID_FAILURE, ACCOUNT_REQUEST, ACCOUNT_SUCCESS, ACCOUNT_FAILURE } from '../../commons/constants'
 
 export function requestAccountId(email) {
@@ -75,16 +76,21 @@ export function createAccount(email) {
       if (!data.error) {
         return dispatch(requestAccount(email, data))
       } else {
-        throw new Error(data)
+        throw new Error(data.payload.status)
       }
     }).then(data => {
       if (!data.error) {
         browserHistory.push('/project')
+        // Return resolved promise for redux form handleSubmit mechanism
+        return Promise.resolve()
       } else {
-        throw new Error(data)
+        throw new Error(data.payload.status)
       }
     }).catch(error => {
-      // TODO do something with error
+      // TODO do something with error dispatch signin error maybe
+      // console.log('error', error)
+      // Return rejected promise for redux form handleSubmit mechanism
+      return Promise.reject({email: returnErrorKey('signin', 'create-account', error.message)})
     })
   }
 }

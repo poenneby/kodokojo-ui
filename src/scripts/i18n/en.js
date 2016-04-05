@@ -6,5 +6,7 @@ export default {
   'signin-email-label': 'Email',
   'signin-email-hint-label': 'your.email@domain.ext',
   'signin-button-label': 'Sign in',
-  'signin-login-link-label' : 'Already a user? Log in!'
+  'signin-login-link-label' : 'Already a user? Log in!',
+  'signin-create-account-email-required': 'email is required',
+  'signin-create-account-409': 'This email already exist'
 }

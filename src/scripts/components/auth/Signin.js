@@ -20,25 +20,24 @@ export const Signin = class Signin extends Component {
   }
 
   handleSubmit(event) {
-    const { fields: { email }, createAccount } = this.props
-    if (event) {
-      event.preventDefault()
-      const nextEmail = email.value
-      if (!nextEmail || !nextEmail.trim()) {
-        return
-      }
-      createAccount(nextEmail.trim())
+    const { fields: { email }, createAccount, account } = this.props
+
+    const nextEmail = email.value
+    if (!(nextEmail && nextEmail.trim())) {
+      return Promise.reject({ email: 'signin-create-account-email-required' })
+    } else {
+      return createAccount(nextEmail.trim())
     }
   }
 
   render() {
-    const { fields: { email } } = this.props
+    const { fields: { email }, handleSubmit, submitting } = this.props
     const { formatMessage }  = this.props.intl
 
     return (
       <form id="signinForm"
             name="signinForm"
-            onSubmit={ this.handleSubmit }
+            onSubmit={ handleSubmit(this.handleSubmit) }
       >
         <TextField
             { ...email }
@@ -46,14 +45,14 @@ export const Signin = class Signin extends Component {
             hintText={ formatMessage({id:'signin-email-label'}) }
             floatingLabelText={ formatMessage({id:'signin-email-hint-label'}) }
             type="email"
-            errorText={ email.touched && email.error ? email.error : '' }
+            errorText={ email.touched && email.error ? formatMessage({id:email.error}) : '' }
         /><br />
         <RaisedButton
             label={ formatMessage({id:'signin-button-label'}) }
             primary={ true }
             type="submit"
-            onTouchTap={ this.handleSubmit }
             className="form-submit"
+            disabled={submitting}
         /><br/>
         <Link to="/login" title={ formatMessage({id:'signin-login-link-label'}) }>
           <FormattedMessage id={'signin-login-link-label'}/>
@@ -65,14 +64,18 @@ export const Signin = class Signin extends Component {
 
 Signin.propTypes = {
   intl: intlShape.isRequired,
+  account: PropTypes.object,
   fields: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
   createAccount: PropTypes.func.isRequired
 }
 
 // Signin container
 const mapStateProps = (state) => {
-  // return {}
+  return {
+    account: state.auth.account
+  }
 }
 
 const mapDispatchProps = (dispatch) => {
