@@ -7,7 +7,7 @@ export const initUser = (request, response) => {
       return response.status(201).send(data)
     })
     .catch((err, resp) =>{
-      return response.status(err.response.statusCode ? err.response.statusCode : 500).send(err)
+      return response.status(err.response && err.response.statusCode ? err.response.statusCode : 500).send(err)
     })
 }
 
@@ -18,7 +18,7 @@ export const postUser = (request, response) => {
         return response.status(201).send(data)
       })
       .catch((err, resp) => {
-        return response.status(err.response.statusCode ? err.response.statusCode : 500).send(err)
+        return response.status(err.response && err.response.statusCode ? err.response.statusCode : 500).send(err)
       })
 }
 
@@ -29,6 +29,6 @@ export const getUserAccount = (request, response) => {
         return response.status(200).send(data)
       })
       .catch((err, resp) => {
-        return response.status(err.response.statusCode ? err.response.statusCode : 500).send(err)
+        return response.status(err.response && err.response.statusCode ? err.response.statusCode : 500).send(err)
       })
 }
