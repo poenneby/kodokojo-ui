@@ -10,6 +10,7 @@ import RaisedButton from 'material-ui/lib/raised-button'
 
 import './signin.less'
 import { createAccount } from './signinActions'
+import { returnErrorKey } from '../../services/errorService'
 
 // Signin component
 export const Signin = class Signin extends Component {
@@ -26,7 +27,12 @@ export const Signin = class Signin extends Component {
     if (!(nextEmail && nextEmail.trim())) {
       return Promise.reject({ email: 'signin-create-account-email-required' })
     } else {
-      return createAccount(nextEmail.trim())
+      return createAccount(nextEmail.trim()
+        ).then(
+          Promise.resolve
+        ).catch( error => {
+          return Promise.reject({email: returnErrorKey('signin', 'create-account', error.message)})
+        })
     }
   }
 

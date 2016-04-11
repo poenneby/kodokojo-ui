@@ -5,6 +5,7 @@ import chaiEnzyme from 'chai-enzyme'
 import {mount, render, shallow} from 'enzyme'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
+import 'sinon-as-promised'
 chai.use(chaiEnzyme())
 chai.use(sinonChai)
 import merge from 'lodash/merge'
@@ -129,9 +130,10 @@ describe('<Signin> component', () => {
               value: 'email@test.com'
             }
           },
-          createAccount: sinon.spy()
+          createAccount: sinon.stub()
         }
       )
+      nextProps.createAccount.resolves()
       const component = mount(
         <IntlProvider locale="en" messages={messages}>
           <Signin {...nextProps}/>
