@@ -50,15 +50,24 @@ ReactDOM.render(
       <Provider store={store}>
         { /* Tell the Router to use our enhanced history */ }
         <Router history={history}>
-          <Route path="/" component={App}>
+          <Route component={App}
+                 path="/"
+          >
             <IndexRoute component={HomePage}/>
-            <Route path="project" component={FirstProjectPage}/>
-            <Route path="login" component={LoginPage}/>
-            <Route path="users" component={UsersPage} onEnter={AuthService.checkAuth} />
-            <Route status={404}
+            <Route component={LoginPage}
+                   path="login"
+            />
+            <Route component={FirstProjectPage}
+                   path="project"
+            />
+            <Route component={UsersPage} onEnter={AuthService.checkAuth}
+                   path="users"
+            />
+            <Route component={NotFoundPage}
+                   dataTypePage="testDataType"
                    path="*"
-                   component={NotFoundPage}
-                   dataTypePage="testDataType"/>
+                   status={404}
+            />
           </Route>
         </Router>
       </Provider>

@@ -5,6 +5,10 @@ import { connect } from 'react-redux'
 // TODO TU
 export const Account = class Account extends Component {
 
+  static propTypes = {
+    account: PropTypes.object.isRequired
+  }
+
   constructor(props) {
     super(props)
   }
@@ -28,8 +32,16 @@ export const Account = class Account extends Component {
             <br/>
             <div>password:</div>
             <div>{account.password}</div>
-            <p><a href={`data:text/plain;charset=utf-8,${encodeURIComponent(account.sshKeyPublic)}`} download={'kodokojoKey.pub'}>ssh public key</a></p>
-            <p><a href={`data:text/plain;charset=utf-8,${encodeURIComponent(account.sshKeyPrivate)}`} download={'kodokojoPrivateKey.txt'}>ssh private key</a></p>
+            <p>
+              <a download={'kodokojoKey.pub'}
+                 href={`data:text/plain;charset=utf-8,${encodeURIComponent(account.sshKeyPublic)}`}
+              >ssh public key</a>
+            </p>
+            <p>
+              <a download={'kodokojoPrivateKey.txt'}
+                 href={`data:text/plain;charset=utf-8,${encodeURIComponent(account.sshKeyPrivate)}`}
+              >ssh private key</a>
+            </p>
           </div>
         }
         { !account.id &&
@@ -39,10 +51,6 @@ export const Account = class Account extends Component {
     )
   }
 
-}
-
-Account.propTypes = {
-  account: PropTypes.object.isRequired
 }
 
 // Account container

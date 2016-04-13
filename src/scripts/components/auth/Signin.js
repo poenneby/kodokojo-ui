@@ -13,7 +13,16 @@ import { createAccount } from './signinActions'
 import { returnErrorKey } from '../../services/errorService'
 
 // Signin component
-export const Signin = class Signin extends Component {
+export class Signin extends Component {
+
+  static propTypes = {
+    account: PropTypes.object,
+    createAccount: PropTypes.func.isRequired,
+    fields: PropTypes.object.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    intl: intlShape.isRequired,
+    submitting: PropTypes.bool.isRequired
+  }
 
   constructor(props) {
     super(props)
@@ -47,34 +56,27 @@ export const Signin = class Signin extends Component {
       >
         <TextField
             { ...email }
-            name="email"
-            hintText={ formatMessage({id:'signin-email-label'}) }
-            floatingLabelText={ formatMessage({id:'signin-email-hint-label'}) }
-            type="email"
             errorText={ email.touched && email.error ? formatMessage({id:email.error}) : '' }
+            floatingLabelText={ formatMessage({id:'signin-email-hint-label'}) }
+            hintText={ formatMessage({id:'signin-email-label'}) }
+            name="email"
+            type="email"
         /><br />
         <RaisedButton
-            label={ formatMessage({id:'signin-button-label'}) }
-            primary={ true }
-            type="submit"
             className="form-submit"
             disabled={submitting}
+            label={ formatMessage({id:'signin-button-label'}) }
+            primary
+            type="submit"
         /><br/>
-        <Link to="/login" title={ formatMessage({id:'signin-login-link-label'}) }>
+        <Link title={ formatMessage({id:'signin-login-link-label'}) }
+              to="/login"
+        >
           <FormattedMessage id={'signin-login-link-label'}/>
         </Link>
       </form>
     )
   }
-}
-
-Signin.propTypes = {
-  intl: intlShape.isRequired,
-  account: PropTypes.object,
-  fields: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired,
-  createAccount: PropTypes.func.isRequired
 }
 
 // Signin container

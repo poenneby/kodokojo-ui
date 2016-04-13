@@ -16,6 +16,15 @@ import './app.less'
 import AppHeader from './AppHeader'
 
 class App extends Component {
+
+  static propTypes = {
+    children: PropTypes.element.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
+    locale: PropTypes.string.isRequired,
+    setLocale: PropTypes.func.isRequired,
+    themeSelected: PropTypes.string.isRequired
+  }
+
   render() {
     const { children, themeSelected, locale, setLocale, isAuthenticated } = this.props
     const currentMuiTheme = (themeSelected === 'light') ? lightTheme : darkTheme
@@ -33,14 +42,6 @@ class App extends Component {
       </MuiThemeProvider>
     )
   }
-}
-
-App.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
-  children: PropTypes.element.isRequired,
-  themeSelected: PropTypes.string.isRequired,
-  locale: PropTypes.string.isRequired,
-  setLocale: PropTypes.func.isRequired
 }
 
 const mapStateProps = (state) => {

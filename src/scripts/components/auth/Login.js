@@ -10,7 +10,15 @@ import './login.less'
 import { login, logout } from './loginActions'
 
 // Login component
-export const Login = class Login extends Component {
+export class Login extends Component {
+
+  static propTypes = {
+    fields: PropTypes.object.isRequired,
+    isAuthenticated: PropTypes.bool,
+    login: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
+    submitting: PropTypes.bool.isRequired
+  }
 
   constructor(props) {
     super(props)
@@ -52,25 +60,25 @@ export const Login = class Login extends Component {
           >
             <TextField
                 { ...username }
+                floatingLabelText="User name"
+                hintText="all of what is before @email.com"
                 id="username"
                 name="username"
-                hintText="all of what is before @email.com"
-                floatingLabelText="User name"
                 type="text"
             /><br />
             <TextField
                 { ...psw }
+                floatingLabelText="Password"
                 id="psw"
                 name="psw"
-                floatingLabelText="Password"
                 type="password"
             /><br />
             <RaisedButton
-                label="Log in"
-                primary={ true }
-                type="submit"
-                onTouchTap={ this.handleSubmit }
                 className="form-submit"
+                label="Log in"
+                onTouchTap={ this.handleSubmit }
+                primary
+                type="submit"
             /><br/>
             <Link to="/">Not a user? Sign in!</Link>
           </form>
@@ -79,10 +87,10 @@ export const Login = class Login extends Component {
           <div>
             You are authenticated<br/>
             <RaisedButton
-              label="Log out"
-              primary={ true }
-              onTouchTap={ this.handleLogout }
               className="form-submit"
+              label="Log out"
+              onTouchTap={ this.handleLogout }
+              primary
             />
           </div>
         }
@@ -90,14 +98,6 @@ export const Login = class Login extends Component {
     )
   }
 
-}
-
-Login.propTypes = {
-  isAuthenticated: PropTypes.bool,
-  fields: PropTypes.object.isRequired,
-  submitting: PropTypes.bool.isRequired,
-  login: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired
 }
 
 // Login container

@@ -11,7 +11,13 @@ import './appHeader.less'
 import logoKodoKojo from '../../../images/logo-kodokojo-bl.svg'
 
 // AppHeader
-export const AppHeader = class AppHeader extends Component {
+export class AppHeader extends Component {
+
+  static propTypes = {
+    intl: intlShape.isRequired,
+    languageSelected: PropTypes.string.isRequired,
+    onLanguageChange: PropTypes.func.isRequired
+  }
 
   constructor(props) {
     super(props)
@@ -23,10 +29,10 @@ export const AppHeader = class AppHeader extends Component {
 
     return (
       <AppBar
-        title={<img src={ logoKodoKojo } />}
-        titleStyle={{paddingTop: '10px', overflow: 'visible'}}
         className="app-bar app-header"
         showMenuIconButton={false}
+        title={<img src={ logoKodoKojo } />}
+        titleStyle={{paddingTop: '10px', overflow: 'visible'}}
       >
         <div className="breadcrumb">
           <Link to="/">
@@ -39,22 +45,20 @@ export const AppHeader = class AppHeader extends Component {
         </div>
         <DropDownMenu
           className={ 'locale-selector' }
-          value={ languageSelected }
           labelStyle={ {color: '#fff'} }
           onChange={ (event,i,v) => onLanguageChange(v) }
+          value={ languageSelected }
         >
-          <MenuItem value="en" primaryText={ formatMessage({id:'app-lang-en-label'}) }/>
-          <MenuItem value="fr" primaryText={ formatMessage({id:'app-lang-fr-label'}) }/>
+          <MenuItem primaryText={ formatMessage({id:'app-lang-en-label'}) }
+                    value="en"
+          />
+          <MenuItem primaryText={ formatMessage({id:'app-lang-fr-label'}) }
+                    value="fr"
+          />
         </DropDownMenu>
       </AppBar>
     )
   }
-}
-
-AppHeader.propTypes = {
-  intl: intlShape.isRequired,
-  onLanguageChange: PropTypes.func.isRequired,
-  languageSelected: PropTypes.string.isRequired
 }
 
 export default injectIntl(AppHeader)

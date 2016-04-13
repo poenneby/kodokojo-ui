@@ -13,7 +13,12 @@ import { connect } from 'react-redux'
 //  },
 //}
 
-export const NotFound = class NotFound extends Component {
+export class NotFound extends Component {
+
+  static propTypes = {
+    dataTypePage: PropTypes.string.isRequired,
+    status: PropTypes.number.isRequired
+  }
 
   constructor(props) {
     super(props)
@@ -29,11 +34,6 @@ export const NotFound = class NotFound extends Component {
         </div>
     )
   }
-}
-
-NotFound.propTypes = {
-  status: PropTypes.number.isRequired,
-  dataTypePage: PropTypes.string.isRequired
 }
 
 // NotFounPage container

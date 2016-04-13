@@ -43,7 +43,7 @@ export function login(username, password) {
       }
     }).catch(error => {
       // TODO do something with error
-      console.log(error)
+      throw new Error(error.message)
     })
   }
 }
@@ -65,7 +65,7 @@ export function logout() {
       }
     }).catch(error => {
       // TODO do something with error dispatch signin error maybe
-      // console.log('error', error)
+      throw new Error(error.message)
     })
   }
 }

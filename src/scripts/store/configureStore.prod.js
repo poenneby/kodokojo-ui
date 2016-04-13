@@ -7,7 +7,7 @@ import rootReducer from '../commons/reducers'
 
 export default function configureStore(initialState) {
 
-  let finalCreateStore = compose(
+  const finalCreateStore = compose(
     applyMiddleware(
       thunk,
       apiMiddleware

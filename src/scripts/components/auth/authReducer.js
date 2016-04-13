@@ -97,7 +97,6 @@ export default function auth(state = initialState, action) {
   }
 
   if (action.type === AUTH_RESET) {
-    console.log('logout')
     return {
       ...state,
       isAuthenticated: false,
