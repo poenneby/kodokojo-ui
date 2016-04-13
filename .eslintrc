@@ -1,4 +1,5 @@
 {
+  "parser": "babel-eslint",
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended"
@@ -52,9 +53,26 @@
     "no-var": 1,
     "prefer-arrow-callback": 1,
     "prefer-spread": 1,
-    "no-unused-vars": 1,
+    "no-unused-vars": 0, // see https://github.com/babel/babel-eslint/issues/21
     "no-const-assign": 2,
     "no-class-assign": 2,
-    "no-dupe-class-members": 2
+    "no-dupe-class-members": 2,
+    "react/jsx-boolean-value": 1,
+    "react/jsx-no-undef": 1,
+    "jsx-quotes": 1,
+    "react/jsx-sort-props": 1,
+    "react/jsx-uses-react": 1,
+    "react/jsx-uses-vars": 1,
+    "react/no-did-mount-set-state": 1,
+    "react/no-did-update-set-state": 1,
+    "react/no-multi-comp": 1,
+    "react/no-unknown-property": 1,
+    "react/prop-types": 1,
+    "react/react-in-jsx-scope": 1,
+    "react/self-closing-comp": 1,
+    "react/sort-comp": 1,
+    "react/sort-prop-types": 1,
+    "react/wrap-multilines": 1,
+    "strict": 0
   }
 }
