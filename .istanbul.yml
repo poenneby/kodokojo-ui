@@ -1,2 +1,10 @@
 instrumentation:
-    root: ./src
+    root: src/
+    preserve-comments: true
+    default-excludes: true
+    include-all-sources: true
+reporting:
+    print: summary
+    reports:
+        - lcov
+    dir: ./coverage
