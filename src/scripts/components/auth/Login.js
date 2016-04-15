@@ -22,11 +22,9 @@ export class Login extends Component {
 
   constructor(props) {
     super(props)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleLogout = this.handleLogout.bind(this)
   }
 
-  handleSubmit (event) {
+  handleSubmit = (event) => {
     const { fields: { username, psw }, login } = this.props
 
     if (event) {
@@ -40,7 +38,7 @@ export class Login extends Component {
     }
   }
 
-  handleLogout (event) {
+  handleLogout = (event) => {
     const { logout } = this.props
     if (event) {
       event.preventDefault()

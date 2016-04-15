@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { compose } from 'redux'
 import { Link } from 'react-router'
 import { reduxForm } from 'redux-form'
+import { composeValidators, combineValidators, isRequired } from 'revalidate'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 
 // UI
@@ -10,7 +11,16 @@ import RaisedButton from 'material-ui/lib/raised-button'
 
 import './signin.less'
 import { createAccount } from './signinActions'
+import { emailValidator, email } from '../../services/validatorService'
 import { returnErrorKey } from '../../services/errorService'
+
+// validate function
+const validate = combineValidators({
+  email: composeValidators(
+    isRequired({message: 'form-input-required-error'}),
+    emailValidator
+  )('email')
+})
 
 // Signin component
 export class Signin extends Component {
@@ -26,22 +36,24 @@ export class Signin extends Component {
 
   constructor(props) {
     super(props)
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleSubmit(event) {
+  handleSubmit = () => {
     const { fields: { email }, createAccount, account } = this.props
 
     const nextEmail = email.value
-    if (!(nextEmail && nextEmail.trim())) {
-      return Promise.reject({ email: 'signin-create-account-email-required' })
+    const error = validate({email: nextEmail})
+    if (error) {
+      return Promise.reject({ email: error.email })
     } else {
-      return createAccount(nextEmail.trim()
+      if (nextEmail && nextEmail.trim()) {
+        return createAccount(nextEmail.trim()
         ).then(
-          Promise.resolve
-        ).catch( error => {
-          return Promise.reject({email: returnErrorKey('signin', 'create-account', error.message)})
+          Promise.resolve()
+        ).catch(error => {
+          Promise.reject({ email: returnErrorKey('signin', 'create-account', error.message) })
         })
+      }
     }
   }
 
@@ -52,13 +64,14 @@ export class Signin extends Component {
     return (
       <form id="signinForm"
             name="signinForm"
+            noValidate
             onSubmit={ handleSubmit(this.handleSubmit) }
       >
         <TextField
             { ...email }
-            errorText={ email.touched && email.error ? formatMessage({id:email.error}) : '' }
-            floatingLabelText={ formatMessage({id:'signin-email-hint-label'}) }
-            hintText={ formatMessage({id:'signin-email-label'}) }
+            errorText={ email.touched && email.error ? formatMessage({id: email.error}, {fieldName: formatMessage({id:'form-input-email'})}) : '' }
+            floatingLabelText={ formatMessage({id: 'signin-email-label'}) }
+            hintText={ formatMessage({id: 'signin-email-hint-label'}) }
             name="email"
             type="email"
         /><br />
@@ -96,7 +109,9 @@ const SigninContainer = compose(
   reduxForm(
     {
       form: 'signinForm',
-      fields: ['email']
+      fields: ['email'],
+      asyncBlurFields: ['email'],
+      validate
     },
     mapStateProps,
     mapDispatchProps

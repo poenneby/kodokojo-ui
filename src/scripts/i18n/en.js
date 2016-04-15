@@ -8,5 +8,8 @@ export default {
   'signin-button-label': 'Sign in',
   'signin-login-link-label' : 'Already a user? Log in!',
   'signin-create-account-email-required': 'email is required',
-  'signin-create-account-409': 'This email already exist'
+  'signin-create-account-409': 'This email already exist',
+  'email-validation-pattern-error': 'Invalid email address',
+  'form-input-required-error': '{fieldName} is required',
+  'form-input-email': 'Email'
 }

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 // Account component
 // TODO TU
-export const Account = class Account extends Component {
+export class Account extends Component {
 
   static propTypes = {
     account: PropTypes.object.isRequired

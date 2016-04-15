@@ -43,7 +43,6 @@ export function requestAccount(email, data) {
     [CALL_API]: {
       method: 'POST',
       endpoint: `http://${window.location.host||'localhost'}${api.user}/${data.payload.account.id}`,
-      // endpoint: `http://localhost/api/v1/user/${data.payload.account.id}`,
       headers: getHeaders(),
       body: JSON.stringify({
         email: email
