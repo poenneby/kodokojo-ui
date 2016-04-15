@@ -1,4 +1,4 @@
-import { createValidator } from 'revalidate'
+import { createValidator, composeValidators, isRequired, hasLengthBetween } from 'revalidate'
 
 const validatorService = {}
 
@@ -17,7 +17,7 @@ validatorService.email = (value) => {
 }
 
 /**
- * Revalidate validator for Email pattern
+ * Revalidate email pattern validator
  */
 validatorService.emailValidator = createValidator(
   message => value => {
@@ -25,7 +25,15 @@ validatorService.emailValidator = createValidator(
       return message
     }
   },
-  'email-validation-pattern-error'
+  'email-pattern-error'
+)
+
+/**
+ * Revalidate project name validator
+ */
+validatorService.projectNameValidator = composeValidators(
+  isRequired({message: 'general-input-required-error'}),
+  hasLengthBetween(1, 10)({ message: 'project-name-pattern-error' })
 )
 
 /**
@@ -38,6 +46,7 @@ validatorService.delayStandard = 800
 // public API
 export const email = validatorService.email
 export const emailValidator = validatorService.emailValidator
+export const projectNameValidator = validatorService.projectNameValidator
 export const delayStandard = validatorService.delayStandard
 
 export default validatorService
