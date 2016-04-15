@@ -26,10 +26,9 @@ export class Signin extends Component {
 
   constructor(props) {
     super(props)
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleSubmit(event) {
+  handleSubmit = () => {
     const { fields: { email }, createAccount, account } = this.props
 
     const nextEmail = email.value
