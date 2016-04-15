@@ -7,6 +7,7 @@ import thunk from 'redux-thunk'
 import { apiMiddleware } from 'redux-api-middleware'
 import configureMockStore from 'redux-mock-store'
 
+import api from '../../commons/config'
 import * as actions from './signinActions'
 import { __RewireAPI__ as  actionsRewireApi } from './signinActions'
 import {
@@ -80,12 +81,12 @@ describe('signin actions', () => {
           meta: undefined
         }
       ]
-      nock('http://localhost/api/v1')
-        .post('/user')
+      nock('http://localhost')
+        .post(`${api.user}`)
         .reply(200, () => {
           return id
         })
-        .post(`/user/${id}`)
+        .post(`${api.user}/${id}`)
         .reply(200, {id: id })
 
       // When
@@ -128,8 +129,8 @@ describe('signin actions', () => {
           meta: undefined
         }
       ]
-      nock('http://localhost/api/v1')
-        .post('/user')
+      nock('http://localhost')
+        .post(`${api.user}`)
         .reply(500, {
           error: 'error'
         })
@@ -187,12 +188,12 @@ describe('signin actions', () => {
           meta: undefined
         }
       ]
-      nock('http://localhost/api/v1')
-        .post('/user')
+      nock('http://localhost')
+        .post(`${api.user}`)
         .reply(200, () => {
           return id
         })
-        .post(`/user/${id}`)
+        .post(`${api.user}/${id}`)
         .reply(500, {
           error: 'error'
         })

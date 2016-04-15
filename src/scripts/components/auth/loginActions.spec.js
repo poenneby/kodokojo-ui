@@ -7,6 +7,7 @@ import thunk from 'redux-thunk'
 import { apiMiddleware } from 'redux-api-middleware'
 import configureMockStore from 'redux-mock-store'
 
+import api from '../../commons/config'
 import * as actions from './loginActions'
 import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE, AUTH_RESET } from '../../commons/constants'
 
@@ -36,11 +37,11 @@ describe('login actions', () => {
     it('should request auth', (done) => {
       // Given
       const username = 'test',
-        password = 'psUs3r',
-        auth = 'cryptedAuth',
-        account = {
-          identifier: 'idUs3r'
-        }
+            password = 'psUs3r',
+            auth = 'cryptedAuth',
+            account = {
+              identifier: 'idUs3r'
+            }
       const expectedActions = [
         {
           type: AUTH_REQUEST,
@@ -63,11 +64,11 @@ describe('login actions', () => {
       const setAuthSpy = sinon.stub(authService, 'setAuth').returns(auth)
       const putAuthSpy = sinon.spy(authService, 'putAuth')
       const getHeadersSpy = sinon.stub(ioService, 'getHeaders').returns(headers)
-      nock('http://localhost/api/v1', {
+      nock('http://localhost', {
         reqheaders: {
           'Authorization': `Basic ${auth}`
         }
-      }).get('/user')
+      }).get(`${api.user}`)
         .reply(200, () => {
           return account
         })
@@ -91,11 +92,8 @@ describe('login actions', () => {
     it('should fail to request auth', (done) => {
       // Given
       const username = 'test',
-        password = 'psUs3r',
-        auth = 'cryptedAuth',
-        account = {
-          identifier: 'idUs3r'
-        }
+            password = 'psUs3r',
+            auth = 'cryptedAuth'
       const expectedActions = [
         {
           type: AUTH_REQUEST,
@@ -123,11 +121,11 @@ describe('login actions', () => {
       const setAuthSpy = sinon.stub(authService, 'setAuth').returns(auth)
       const putAuthSpy = sinon.spy(authService, 'putAuth')
       const getHeadersSpy = sinon.stub(ioService, 'getHeaders').returns(headers)
-      nock('http://localhost/api/v1', {
-          reqheaders: {
-            'Authorization': `Basic ${auth}`
-          }
-      }).get('/user')
+      nock('http://localhost', {
+        reqheaders: {
+          'Authorization': `Basic ${auth}`
+        }
+      }).get(`${api.user}`)
         .reply(401)
 
       // When

@@ -3,6 +3,7 @@ import { CALL_API } from 'redux-api-middleware'
 
 import api from '../../commons/config'
 import { getHeaders } from '../../services/ioService'
+import { setAuth, putAuth } from '../../services/authService'
 import { ACCOUNT_ID_REQUEST, ACCOUNT_ID_SUCCESS, ACCOUNT_ID_FAILURE, ACCOUNT_REQUEST, ACCOUNT_SUCCESS, ACCOUNT_FAILURE } from '../../commons/constants'
 
 export function requestAccountId(email) {
