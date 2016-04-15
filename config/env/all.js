@@ -21,7 +21,8 @@ const all = {
   api: {
     host: localApiHost ? `http://${localApiHost}` : undefined,
     routes: {
-      user: `${api.user}`
+      user: `${api.user}`,
+      projectConfig: `${api.projectConfig}`
     }
   }
 }
