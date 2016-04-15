@@ -7,7 +7,6 @@ import ioService from '../../services/ioService'
 import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE, AUTH_RESET } from '../../commons/constants'
 
 export function requestAuthentication(username, password) {
-  authService.setAuth(username, password)
   return {
     [CALL_API]: {
       method: 'GET',
@@ -34,6 +33,7 @@ export function requestAuthentication(username, password) {
 }
 
 export function login(username, password) {
+  authService.setAuth(username, password)
   return dispatch => {
     return dispatch(requestAuthentication(username, password)
     ).then(data => {
