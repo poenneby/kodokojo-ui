@@ -3,7 +3,7 @@ import * as userRepository from './user.server.repository'
 export const initUser = (request, response) => {
   userRepository
     .initUser()
-    .then((data) => {
+    .then(data => {
       return response.status(201).send(data)
     })
     .catch((err, resp) =>{
@@ -14,7 +14,7 @@ export const initUser = (request, response) => {
 export const postUser = (request, response) => {
   userRepository
       .postUser(request.params.id, request.body.email)
-      .then((data) => {
+      .then(data => {
         return response.status(201).send(data)
       })
       .catch((err, resp) => {
@@ -25,7 +25,7 @@ export const postUser = (request, response) => {
 export const getUserAccount = (request, response) => {
   userRepository
       .getUserAccount(request.headers.authorization)
-      .then((data) => {
+      .then(data => {
         return response.status(200).send(data)
       })
       .catch((err, resp) => {

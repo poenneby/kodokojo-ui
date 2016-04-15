@@ -3,6 +3,9 @@ import logger from '../config/logger'
 
 export const requestWithLog = (options) => {
   let startMessage = `${options.method} request on uri ${options.uri}`
+  if (options.headers) {
+    startMessage += `\n Headers : ${JSON.stringify(options.headers, null, 2)}`
+  }
   if (options.body) {
     startMessage += `\n Body : ${JSON.stringify(options.body, null, 2)}`
   }
@@ -15,6 +18,6 @@ export const requestWithLog = (options) => {
     logger.error(startMessage)
     logger.error(JSON.stringify(error, null, 2))
     throw error
-  });
+  })
 
-};
+}
