@@ -79,6 +79,8 @@ export function createAccount(email) {
       }
     }).then(data => {
       if (!data.error) {
+        setAuth(data.payload.account.username, data.payload.account.password)
+        putAuth(data.payload.account.identifier)
         browserHistory.push('/firstproject')
       } else {
         throw new Error(data.payload.status)

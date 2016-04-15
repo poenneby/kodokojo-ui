@@ -23,26 +23,31 @@ const middlewares = [
 const mockStore = configureMockStore(middlewares)
 
 describe('signin actions', () => {
-  afterEach(() => {
-    nock.cleanAll()
-  })
-
-  describe('', () => {
-    let pushSpy,
-        getHeadersSpy
+  describe('create account', () => {
+    let pushHistorySpy,
+        getHeadersSpy,
+        setAuthSpy,
+        putAuthSpy
 
     beforeEach(() => {
-      pushSpy = sinon.spy()
+      pushHistorySpy = sinon.spy()
       actionsRewireApi.__Rewire__('browserHistory', {
-        push: pushSpy
+        push: pushHistorySpy
       })
       getHeadersSpy = sinon.spy()
       actionsRewireApi.__Rewire__('getHeaders', getHeadersSpy)
+      setAuthSpy = sinon.spy()
+      actionsRewireApi.__Rewire__('setAuth', setAuthSpy)
+      putAuthSpy = sinon.spy()
+      actionsRewireApi.__Rewire__('putAuth', putAuthSpy)
     })
 
     afterEach(() => {
       actionsRewireApi.__ResetDependency__('getHeaders')
       actionsRewireApi.__ResetDependency__('browserHistory')
+      actionsRewireApi.__ResetDependency__('setAuth')
+      actionsRewireApi.__ResetDependency__('putAuth')
+      nock.cleanAll()
     })
 
     it('should create account', (done) => {
@@ -95,11 +100,12 @@ describe('signin actions', () => {
       // Then
       return store.dispatch(actions.createAccount(email)).then(() => {
         expect(store.getActions()).to.deep.equal(expectedActions)
-        expect(pushSpy).to.have.callCount(1)
-        expect(pushSpy).to.have.been.calledWith('/firstproject')
+        expect(pushHistorySpy).to.have.callCount(1)
+        expect(pushHistorySpy).to.have.been.calledWith('/firstproject')
         expect(getHeadersSpy).to.have.callCount(2)
-        done()
-      }, done)
+        expect(setAuthSpy).to.have.callCount(1)
+        expect(putAuthSpy).to.have.callCount(1)
+      }).then(done, done)
     })
 
     it('should fail to create account id', (done) => {
@@ -141,10 +147,11 @@ describe('signin actions', () => {
       // Then
       return store.dispatch(actions.createAccount(email)).then(done, () => {
         expect(store.getActions()).to.deep.equal(expectedActions)
-        expect(pushSpy).to.have.callCount(0)
+        expect(pushHistorySpy).to.have.callCount(0)
         expect(getHeadersSpy).to.have.callCount(1)
-        done()
-      })
+        expect(setAuthSpy).to.have.callCount(0)
+        expect(putAuthSpy).to.have.callCount(0)
+      }).then(done, done)
     })
 
     it('should fail to create account', (done) => {
@@ -205,10 +212,11 @@ describe('signin actions', () => {
       // Then
       return store.dispatch(actions.createAccount(email)).then(done, () => {
         expect(store.getActions()).to.deep.equal(expectedActions)
-        expect(pushSpy).to.have.callCount(0)
+        expect(pushHistorySpy).to.have.callCount(0)
         expect(getHeadersSpy).to.have.callCount(2)
-        done()
-      })
+        expect(setAuthSpy).to.have.callCount(0)
+        expect(putAuthSpy).to.have.callCount(0)
+      }).then(done, done)
     })
   })
 })
