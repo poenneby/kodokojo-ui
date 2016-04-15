@@ -64,7 +64,7 @@ ReactDOM.render(
             />
             <Route
               component={FirstProjectPage}
-              path="project"
+              path="firstproject"
             />
             <Route
               component={ProjectDetailPage}

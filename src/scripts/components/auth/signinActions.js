@@ -79,7 +79,7 @@ export function createAccount(email) {
       }
     }).then(data => {
       if (!data.error) {
-        browserHistory.push('/project')
+        browserHistory.push('/firstproject')
       } else {
         throw new Error(data.payload.status)
       }

@@ -96,7 +96,7 @@ describe('signin actions', () => {
       return store.dispatch(actions.createAccount(email)).then(() => {
         expect(store.getActions()).to.deep.equal(expectedActions)
         expect(pushSpy).to.have.callCount(1)
-        expect(pushSpy).to.have.been.calledWith('/project')
+        expect(pushSpy).to.have.been.calledWith('/firstproject')
         expect(getHeadersSpy).to.have.callCount(2)
         done()
       }, done)
