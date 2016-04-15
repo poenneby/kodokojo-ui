@@ -27,6 +27,7 @@ import App from './scripts/components/app/App'
 import HomePage from './scripts/pages/HomePage'
 import LoginPage from './scripts/pages/LoginPage'
 import FirstProjectPage from './scripts/pages/FirstProjectPage'
+import ProjectDetailPage from './scripts/pages/ProjectDetailPage'
 import UsersPage from './scripts/pages/UsersPage'
 import NotFoundPage from './scripts/pages/NotFoundPage'
 
@@ -64,6 +65,10 @@ ReactDOM.render(
             <Route
               component={FirstProjectPage}
               path="project"
+            />
+            <Route
+              component={ProjectDetailPage}
+              path="project/:projectConfigId"
             />
             <Route
               component={UsersPage}
