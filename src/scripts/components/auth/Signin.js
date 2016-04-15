@@ -39,11 +39,11 @@ export class Signin extends Component {
   }
 
   handleSubmit = () => {
-    const { fields: { email }, createAccount, account } = this.props
+    const { fields: { email }, createAccount } = this.props
 
     const nextEmail = email.value
     const error = validate({email: nextEmail})
-    if (error) {
+    if (error.email) {
       return Promise.reject({ email: error.email })
     } else {
       if (nextEmail && nextEmail.trim()) {
