@@ -64,7 +64,7 @@ export function logout() {
         throw new Error(data.payload.status)
       }
     }).catch(error => {
-      // TODO do something with error dispatch signin error maybe
+      // TODO do something with error
       throw new Error(error.message)
     })
   }

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 // Account component
 // TODO TU
+// TODO implement i18n
 export class Account extends Component {
 
   static propTypes = {

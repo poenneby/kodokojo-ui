@@ -9,6 +9,7 @@ import RaisedButton from 'material-ui/lib/raised-button'
 import './login.less'
 import { login, logout } from './loginActions'
 
+// TODO implement i18n
 // Login component
 export class Login extends Component {
 
@@ -27,6 +28,7 @@ export class Login extends Component {
   handleSubmit = (event) => {
     const { fields: { username, psw }, login } = this.props
 
+    // TODO add redux form validation
     if (event) {
       event.preventDefault()
       const nextLogin = username.value,
