@@ -8,6 +8,7 @@ export default {
   'general-input-required-error': '{fieldName} is required',
   'project-config-create-button-label': 'Create',
   'project-config-intro-text': 'Create your very first project!',
+  'project-config-owner-label': 'Created by',
   'project-name-hint-label': 'project name',
   'project-name-label': 'name',
   'project-name-pattern-error': 'Invalid project name, must be between 1 and 10 characters long',

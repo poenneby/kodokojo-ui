@@ -1,20 +1,45 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
+import { injectIntl } from 'react-intl'
 
-// UI
-import Paper from 'material-ui/lib/paper'
-
+// Component
 import { centerPaper } from '../../styles/commons'
+import ProjectDetail from '../components/project/ProjectDetail'
 
 class ProjectDetailPage extends Component {
+
+  static propTypes = {
+    params : PropTypes.object.isRequired
+  }
+
+  constructor(props) {
+    super(props)
+  }
+
   render() {
+    const { params } = this.props
+
     return (
-      <div>
-        <Paper style={ centerPaper } zDepth={1}>
-          project details
-        </Paper>
+      <div style={ centerPaper }>
+          <ProjectDetail projectConfigId={params.projectConfigId} />
       </div>
     )
   }
 }
 
-export default ProjectDetailPage
+// ProjectDetail container
+const mapStateProps = (state) => {
+  return {
+   //
+  }
+}
+
+const ProjectDetailPageContainer = compose(
+  connect(
+    mapStateProps
+  ),
+  injectIntl
+)(ProjectDetailPage)
+
+export default ProjectDetailPageContainer
