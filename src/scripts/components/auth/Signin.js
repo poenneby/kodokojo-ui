@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { compose } from 'redux'
 import { Link } from 'react-router'
 import { reduxForm } from 'redux-form'
-import { composeValidators, combineValidators, isRequired } from 'revalidate'
+import { combineValidators } from 'revalidate'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 
 // UI
@@ -17,10 +17,7 @@ import { returnErrorKey } from '../../services/errorService'
 
 // validate function
 const validate = combineValidators({
-  email: composeValidators(
-    isRequired({ message: 'general-input-required-error' }),
-    emailValidator
-  )('email')
+  email: emailValidator('email')
 })
 
 // Signin component

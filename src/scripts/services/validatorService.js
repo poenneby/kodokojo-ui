@@ -19,13 +19,17 @@ validatorService.email = (value) => {
 /**
  * Revalidate email pattern validator
  */
-validatorService.emailValidator = createValidator(
+validatorService._emailCustomValidator = createValidator(
   message => value => {
     if (validatorService.email(value)) {
       return message
     }
   },
   'email-pattern-error'
+)
+validatorService.emailValidator = composeValidators(
+  isRequired({ message: 'general-input-required-error' }),
+  validatorService._emailCustomValidator
 )
 
 /**
