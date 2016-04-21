@@ -1,7 +1,7 @@
 import { PROJECT_CONFIG_REQUEST, PROJECT_CONFIG_SUCCESS, PROJECT_CONFIG_FAILURE } from '../../commons/constants'
 
 const initialState = {
-  project: {},
+  projectConfig: {},
   isFetching: false
 }
 
