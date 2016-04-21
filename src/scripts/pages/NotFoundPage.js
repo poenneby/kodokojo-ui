@@ -2,6 +2,12 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 //import DocumentMeta from 'react-document-meta'
 
+// UI
+import Paper from 'material-ui/lib/paper'
+
+// Component
+import { centerPaper } from '../../styles/commons'
+
 //const metaData = {
 //  title: '404 Page Not Found',
 //  description: 'Homecare',
@@ -28,9 +34,11 @@ export class NotFound extends Component {
     const { status, dataTypePage } = this.props
     return (
         <div>
-          {/* <DocumentMeta {...metaData} /> */}
-          <h3>{ status } NotFound</h3>
-          <p>{ dataTypePage }</p>
+          <Paper style={ centerPaper } zDepth={1}>
+            {/* <DocumentMeta {...metaData} /> */}
+            <h3>{ status } NotFound</h3>
+            <p>{ dataTypePage }</p>
+          </Paper>
         </div>
     )
   }
