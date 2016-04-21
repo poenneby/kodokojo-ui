@@ -10,6 +10,7 @@ import { setTheme, setLocale } from './appActions'
 const lightTheme = getMuiTheme()
 const darkTheme = getMuiTheme(darkBaseTheme)
 
+// Component
 import '../../../favicon.ico'
 import '../../../images/logo-kodokojo-icon.png'
 import './app.less'

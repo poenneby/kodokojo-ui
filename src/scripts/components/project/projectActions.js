@@ -23,7 +23,7 @@ export function requestProjectConfig(projectName, projectOwner, projectUsers) {
           payload: (action, state, res) => {
             return res.text().then(id => {
               return {
-                project: {
+                projectConfig: {
                   id: id
                 }
               }
@@ -41,7 +41,7 @@ export function createProjectConfig(projectName, projectOwner, projectUsers) {
     return dispatch(requestProjectConfig(projectName, projectOwner, projectUsers)
     ).then(data => {
       if (!data.error) {
-        browserHistory.push(`/project/${data.payload.project.id}`)
+        browserHistory.push(`/project/${data.payload.projectConfig.id}`)
       } else {
         throw new Error(data.payload.status)
       }
@@ -49,5 +49,35 @@ export function createProjectConfig(projectName, projectOwner, projectUsers) {
       // TODO do something with error
       throw new Error(error.message)
     })
+  }
+}
+
+export function fetchProjectConfig(projectConfigId) {
+  return {
+    [CALL_API]: {
+      method: 'GET',
+      endpoint: `http://${window.location.host||'localhost'}${api.projectConfig}/${projectConfigId}`,
+      headers: getHeaders(),
+      types: [
+        PROJECT_CONFIG_REQUEST,
+        {
+          type: PROJECT_CONFIG_SUCCESS,
+          payload: (action, state, res) => {
+            return res.json().then(projectConfig => {
+              return {
+                projectConfig: projectConfig
+              }
+            })
+          }
+        },
+        PROJECT_CONFIG_FAILURE
+      ]
+    }
+  }
+}
+
+export function getProjectConfig(projectConfigId) {
+  return dispatch => {
+    dispatch(fetchProjectConfig(projectConfigId))
   }
 }

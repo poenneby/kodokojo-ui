@@ -6,8 +6,8 @@
   "scripts": {
     "build:dev": "webpack -d && mustache config/json/index.dev.json src/index.mustache > static/index.html",
     "start:dev": "npm run build:dev && node server.js",
-    "build:prod": "webpack -p && mustache config/json/index.prod.json src/index.mustache > static/index.html",
-    "start:prod": "npm run build:prod && http-server static/",
+    "build:prod": "BABEL_ENV=production webpack -p && mustache config/json/index.prod.json src/index.mustache > static/index.html",
+    "start:prod": "BABEL_ENV=production npm run build:prod && http-server static/",
     "lint": "eslint ./src/ --ext .js --ext .jsx",
     "test": "BABEL_ENV=test mocha --compilers js:babel-core/register --recursive --require ignore-styles --require intl --require ./test/utils.js -R dot './src/**/*.spec.js'",
     "test:watch": "npm test -- --watch",

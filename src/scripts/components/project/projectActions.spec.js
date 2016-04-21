@@ -53,7 +53,7 @@ describe('project actions', () => {
         {
           type: PROJECT_CONFIG_SUCCESS,
           payload: {
-            project: {
+            projectConfig: {
               id: projectId
             }
           },

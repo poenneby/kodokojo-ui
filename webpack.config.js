@@ -4,13 +4,14 @@ var path = require('path')
 var webpack = require('webpack')
 
 module.exports = {
+  context: __dirname,
   entry: [
     './src/app.js'
   ],
   output: {
     path: path.join(__dirname, 'static'),
     filename: 'app.js',
-    publicPath: '/static/'
+    publicPath: '/'
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -47,10 +48,10 @@ module.exports = {
         loader: 'style!css!less'
       },
       {
-        test: /\.jpg|png|svg$/, loader: "file-loader?name=images/[name].[ext]"
+        test: /\.jpg|png|svg$/, loader: 'file-loader?name=images/[name].[ext]'
       },
       {
-        test: /\.ico$/, loader: "file-loader?name=./[name].[ext]"
+        test: /\.ico$/, loader: 'file-loader?name=./[name].[ext]'
       }
     ]
   }

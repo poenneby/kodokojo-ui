@@ -2,13 +2,14 @@ import React, { Component, PropTypes } from 'react'
 import { compose } from 'redux'
 import { Link } from 'react-router'
 import { reduxForm } from 'redux-form'
-import { composeValidators, combineValidators, isRequired } from 'revalidate'
+import { combineValidators } from 'revalidate'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 
 // UI
 import TextField from 'material-ui/lib/text-field'
 import RaisedButton from 'material-ui/lib/raised-button'
 
+// Component
 import './signin.less'
 import { createAccount } from './signinActions'
 import { emailValidator } from '../../services/validatorService'
@@ -16,10 +17,7 @@ import { returnErrorKey } from '../../services/errorService'
 
 // validate function
 const validate = combineValidators({
-  email: composeValidators(
-    isRequired({ message: 'general-input-required-error' }),
-    emailValidator
-  )('email')
+  email: emailValidator('email')
 })
 
 // Signin component
@@ -77,7 +75,7 @@ export class Signin extends Component {
         /><br />
         <RaisedButton
             className="form-submit"
-            disabled={submitting}
+            disabled={ submitting }
             label={ formatMessage({ id:'signin-button-label' }) }
             primary
             type="submit"

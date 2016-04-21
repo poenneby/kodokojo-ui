@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { compose } from 'redux'
 import { reduxForm } from 'redux-form'
-import { composeValidators, combineValidators, isRequired } from 'revalidate'
-import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
+import { combineValidators } from 'revalidate'
+import { intlShape, injectIntl } from 'react-intl'
 
 // UI
 import TextField from 'material-ui/lib/text-field'
@@ -17,6 +17,7 @@ const validate = combineValidators({
   projectName: projectNameValidator('projectName')
 })
 
+// TODO TU
 // ProjectForm component 
 export class ProjectForm extends Component {
   

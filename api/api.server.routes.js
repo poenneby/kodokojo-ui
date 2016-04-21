@@ -13,6 +13,8 @@ router.get(`${config.api.routes.user}/`, user.getUserAccount)
 
 router.post(`${config.api.routes.projectConfig}/`, project.postProjectConfig)
 
+router.get(`${config.api.routes.projectConfig}/:projectConfigId`, project.getProjectConfig)
+
 export default (app) => {
   app.use(router)
 }

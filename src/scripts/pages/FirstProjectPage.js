@@ -4,6 +4,7 @@ import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 // UI
 import Paper from 'material-ui/lib/paper'
 
+// Component
 import { centerPaper } from '../../styles/commons'
 import Account from '../components/auth/Account'
 import ProjectForm from '../components/project/ProjectForm'
@@ -21,10 +22,18 @@ class FirstProjectPage extends Component {
   render() {
     return (
       <div>
-        <Paper style={centerPaper} zDepth={1}>
+        <Paper
+          className="center"
+          style={ centerPaper }
+          zDepth={1}
+        >
           <Account />
         </Paper>
-        <Paper style={centerPaper} zDepth={1}>
+        <Paper
+          className="center"
+          style={ centerPaper }
+          zDepth={1}
+        >
           <FormattedMessage id={'project-config-intro-text'} />
           <ProjectForm/>
         </Paper>

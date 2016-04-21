@@ -7,6 +7,7 @@ import AppBar from 'material-ui/lib/app-bar'
 import DropDownMenu from 'material-ui/lib/DropDownMenu'
 import MenuItem from 'material-ui/lib/menus/menu-item'
 
+// Component
 import './appHeader.less'
 import logoKodoKojo from '../../../images/logo-kodokojo-bl.svg'
 
