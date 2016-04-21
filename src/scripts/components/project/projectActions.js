@@ -51,3 +51,33 @@ export function createProjectConfig(projectName, projectOwner, projectUsers) {
     })
   }
 }
+
+export function fetchProjectConfig(projectConfigId) {
+  return {
+    [CALL_API]: {
+      method: 'GET',
+      endpoint: `http://${window.location.host||'localhost'}${api.projectConfig}/${projectConfigId}`,
+      headers: getHeaders(),
+      types: [
+        PROJECT_CONFIG_REQUEST,
+        {
+          type: PROJECT_CONFIG_SUCCESS,
+          payload: (action, state, res) => {
+            return res.json().then(projectConfig => {
+              return {
+                projectConfig: projectConfig
+              }
+            })
+          }
+        },
+        PROJECT_CONFIG_FAILURE
+      ]
+    }
+  }
+}
+
+export function getProjectConfig(projectConfigId) {
+  return dispatch => {
+    dispatch(fetchProjectConfig(projectConfigId))
+  }
+}
