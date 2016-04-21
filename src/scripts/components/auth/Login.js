@@ -6,6 +6,7 @@ import { reduxForm } from 'redux-form'
 import TextField from 'material-ui/lib/text-field'
 import RaisedButton from 'material-ui/lib/raised-button'
 
+// Component
 import './login.less'
 import { login, logout } from './loginActions'
 

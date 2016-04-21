@@ -9,6 +9,7 @@ import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 import TextField from 'material-ui/lib/text-field'
 import RaisedButton from 'material-ui/lib/raised-button'
 
+// Component
 import './signin.less'
 import { createAccount } from './signinActions'
 import { emailValidator } from '../../services/validatorService'
@@ -77,7 +78,7 @@ export class Signin extends Component {
         /><br />
         <RaisedButton
             className="form-submit"
-            disabled={submitting}
+            disabled={ submitting }
             label={ formatMessage({ id:'signin-button-label' }) }
             primary
             type="submit"
