@@ -8,7 +8,7 @@ import { apiMiddleware } from 'redux-api-middleware'
 import configureMockStore from 'redux-mock-store'
 
 import api from '../../commons/config'
-import * as actions from './loginActions'
+import * as actions from './login.actions'
 import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE, AUTH_RESET } from '../../commons/constants'
 
 // dependencies to mock

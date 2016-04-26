@@ -11,7 +11,7 @@ import RaisedButton from 'material-ui/lib/raised-button'
 
 // Component
 import './signin.less'
-import { createAccount } from './signinActions'
+import { createAccount } from './signin.actions'
 import { emailValidator } from '../../services/validatorService'
 import { returnErrorKey } from '../../services/errorService'
 

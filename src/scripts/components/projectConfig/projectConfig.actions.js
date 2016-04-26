@@ -4,7 +4,7 @@ import { CALL_API } from 'redux-api-middleware'
 import api from '../../commons/config'
 import { getHeaders } from '../../services/ioService'
 import { mapProjectConfig } from '../../services/mappingService'
-import { createUser, getUser } from '../user/userActions'
+import { createUser, getUser } from '../user/user.actions'
 import {
   PROJECT_CONFIG_REQUEST,
   PROJECT_CONFIG_SUCCESS,

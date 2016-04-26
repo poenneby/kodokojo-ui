@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import authReducer from './authReducer'
+import authReducer from './auth.reducer'
 import * as ActionsTypes from '../../commons/constants'
 
 describe('auth reducer', () => {

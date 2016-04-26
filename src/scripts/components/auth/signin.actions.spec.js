@@ -8,8 +8,8 @@ import { apiMiddleware } from 'redux-api-middleware'
 import configureMockStore from 'redux-mock-store'
 
 import api from '../../commons/config'
-import * as actions from './signinActions'
-import { __RewireAPI__ as  actionsRewireApi } from './signinActions'
+import * as actions from './signin.actions'
+import { __RewireAPI__ as  actionsRewireApi } from './signin.actions'
 import {
   ACCOUNT_NEW_ID_REQUEST,
   ACCOUNT_NEW_ID_SUCCESS,

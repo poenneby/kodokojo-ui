@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import projectConfigReducer from './projectConfigReducer'
+import projectConfigReducer from './projectConfig.reducer'
 import * as ActionsTypes from '../../commons/constants'
 
 describe('projectConfig reducer', () => {

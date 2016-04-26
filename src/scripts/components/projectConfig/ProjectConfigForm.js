@@ -8,7 +8,7 @@ import { intlShape, injectIntl } from 'react-intl'
 import TextField from 'material-ui/lib/text-field'
 import RaisedButton from 'material-ui/lib/raised-button'
 
-import { createProjectConfig } from './projectConfigActions'
+import { createProjectConfig } from './projectConfig.actions'
 import { projectNameValidator } from '../../services/validatorService'
 import { returnErrorKey } from '../../services/errorService'
 

@@ -22,7 +22,7 @@ import './projectConfigDetail.less'
 import { fontSizeMedium } from '../../../styles/commons'
 import { emailValidator } from '../../services/validatorService'
 import { returnErrorKey } from '../../services/errorService'
-import { addUserToProjectConfig } from './projectConfigActions'
+import { addUserToProjectConfig } from './projectConfig.actions'
 import User from '../user/User'
 
 // validate function

@@ -8,8 +8,8 @@ import { apiMiddleware } from 'redux-api-middleware'
 import configureMockStore from 'redux-mock-store'
 
 import api from '../../commons/config'
-import * as actions from './projectConfigActions'
-import { __RewireAPI__ as actionsRewireApi } from './projectConfigActions'
+import * as actions from './projectConfig.actions'
+import { __RewireAPI__ as actionsRewireApi } from './projectConfig.actions'
 import {
   PROJECT_CONFIG_REQUEST,
   PROJECT_CONFIG_SUCCESS,
