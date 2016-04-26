@@ -7,7 +7,7 @@ import Paper from 'material-ui/lib/paper'
 // Component
 import { centerPaper } from '../../styles/commons'
 import Account from '../components/auth/Account'
-import ProjectForm from '../components/project/ProjectForm'
+import ProjectConfigForm from '../components/projectConfig/ProjectConfigForm'
 
 class FirstProjectPage extends Component {
 
@@ -35,7 +35,7 @@ class FirstProjectPage extends Component {
           zDepth={1}
         >
           <FormattedMessage id={'project-config-intro-text'} />
-          <ProjectForm/>
+          <ProjectConfigForm/>
         </Paper>
       </div>
     )

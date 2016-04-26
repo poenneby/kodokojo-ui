@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import projectReducer from './projectConfigReducer'
+import projectConfigReducer from './projectConfigReducer'
 import * as ActionsTypes from '../../commons/constants'
 
 describe('projectConfig reducer', () => {
@@ -11,7 +11,7 @@ describe('projectConfig reducer', () => {
     const action = {}
 
     // When
-    const nextState = projectReducer(state, action)
+    const nextState = projectConfigReducer(state, action)
 
     // Then
     expect(nextState).to.deep.equal({
@@ -28,7 +28,7 @@ describe('projectConfig reducer', () => {
     }
 
     // When
-    const nextState = projectReducer(state, action)
+    const nextState = projectConfigReducer(state, action)
 
     // Then
     expect(nextState).to.deep.equal({
@@ -50,7 +50,7 @@ describe('projectConfig reducer', () => {
     }
 
     // When
-    const nextState = projectReducer(state, action)
+    const nextState = projectConfigReducer(state, action)
 
     // Then
     expect(nextState).to.deep.equal({

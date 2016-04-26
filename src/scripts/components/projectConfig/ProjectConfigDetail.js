@@ -30,8 +30,8 @@ const validate = combineValidators({
   email: emailValidator('email')
 })
 
-// ProjectDetail component
-export class ProjectDetail extends Component {
+// ProjectConfigDetail component
+export class ProjectConfigDetail extends Component {
 
   static propTypes = {
     addUserToProjectConfig: PropTypes.func.isRequired,
@@ -173,15 +173,15 @@ export class ProjectDetail extends Component {
 
 }
 
-// ProjectDetail container
+// ProjectConfigDetail container
 const mapStateProps = (state) => {
   return {
-    projectConfig: state.project.projectConfig,
+    projectConfig: state.projectConfig,
     users: state.users
   }
 }
 
-const ProjectDetailContainer = compose(
+const ProjectConfigDetailContainer = compose(
   reduxForm(
     {
       form: 'addUserForm',
@@ -196,6 +196,6 @@ const ProjectDetailContainer = compose(
     }
   ),
   injectIntl
-)(ProjectDetail)
+)(ProjectConfigDetail)
 
-export default ProjectDetailContainer
+export default ProjectConfigDetailContainer
