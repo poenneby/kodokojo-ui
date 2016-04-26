@@ -6,6 +6,7 @@ import { intlShape, injectIntl } from 'react-intl'
 
 // UI
 import Card from 'material-ui/lib/card/card'
+import CardActions from 'material-ui/lib/card/card-actions'
 import CardHeader from 'material-ui/lib/card/card-header'
 import CardText from 'material-ui/lib/card/card-text'
 import Table from 'material-ui/lib/table/table'
