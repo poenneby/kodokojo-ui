@@ -91,10 +91,12 @@ export function getProjectConfig(projectConfigId) {
   return dispatch => {
     return dispatch(fetchProjectConfig(projectConfigId)
     ).then(data => {
-      if (!data.error && data.payload.projectConfig.users) {
-        data.payload.projectConfig.users.forEach((user) => {
-          dispatch(getUser(user.id))
-        })
+      if (!data.error) {
+        if (data.payload.projectConfig && data.payload.projectConfig.users) {
+          data.payload.projectConfig.users.forEach((user) => {
+            dispatch(getUser(user.id))
+          })
+        }
       } else {
         throw new Error(data.payload.status)
       }
@@ -123,6 +125,7 @@ export function requestAddUserToProjectConfig(projectConfigId, userId) {
 
 export function addUserToProjectConfig(projectConfigId, email) {
   return dispatch => {
+    // TODO serch user and if does not exist, create it
     return dispatch(createUser(email)
     ).then(data => {
       if (!data.error) {
