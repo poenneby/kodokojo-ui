@@ -5,7 +5,7 @@ import { injectIntl } from 'react-intl'
 
 // Component
 import { centerPaper } from '../../styles/commons'
-import ProjectDetail from '../components/project/ProjectDetail'
+import ProjectDetail from '../components/projectConfig/ProjectConfigDetail'
 
 class ProjectDetailPage extends Component {
 

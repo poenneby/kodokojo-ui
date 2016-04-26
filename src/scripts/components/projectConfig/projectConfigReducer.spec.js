@@ -1,9 +1,9 @@
 import { expect } from 'chai'
 
-import projectReducer from './projectReducer'
+import projectReducer from './projectConfigReducer'
 import * as ActionsTypes from '../../commons/constants'
 
-describe('project reducer', () => {
+describe('projectConfig reducer', () => {
 
   it('should return initialState', () => {
     // Given

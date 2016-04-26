@@ -8,7 +8,7 @@ import { intlShape, injectIntl } from 'react-intl'
 import TextField from 'material-ui/lib/text-field'
 import RaisedButton from 'material-ui/lib/raised-button'
 
-import { createProjectConfig } from './projectActions'
+import { createProjectConfig } from './projectConfigActions'
 import { projectNameValidator } from '../../services/validatorService'
 import { returnErrorKey } from '../../services/errorService'
 
@@ -91,7 +91,7 @@ export class ProjectForm extends Component {
 // ProjectForm container
 const mapStateProps = (state) => {
   return {
-    userId: state.auth.account.id
+    userId: state.auth.account && state.auth.account.id ? state.auth.account.id : ''
   }
 }
 

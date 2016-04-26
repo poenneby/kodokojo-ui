@@ -8,8 +8,8 @@ import { apiMiddleware } from 'redux-api-middleware'
 import configureMockStore from 'redux-mock-store'
 
 import api from '../../commons/config'
-import * as actions from './projectActions'
-import { __RewireAPI__ as actionsRewireApi } from './projectActions'
+import * as actions from './projectConfigActions'
+import { __RewireAPI__ as actionsRewireApi } from './projectConfigActions'
 import { PROJECT_CONFIG_REQUEST, PROJECT_CONFIG_SUCCESS, PROJECT_CONFIG_FAILURE } from '../../commons/constants'
 
 // Apply the middleware to the store
@@ -19,8 +19,8 @@ const middlewares = [
 ]
 const mockStore = configureMockStore(middlewares)
 
-describe('project actions', () => {
-  describe('create project config', () => {
+describe('projectConfig actions', () => {
+  describe('create projectConfig config', () => {
     let pushSpy,
         getHeadersSpy
 
@@ -39,7 +39,7 @@ describe('project actions', () => {
       nock.cleanAll()
     })
 
-    it('should create project config', (done) => {
+    it('should create projectConfig config', (done) => {
       // Given
       const projectName = 'Acme',
             projectOwner = 'idUs3r',
