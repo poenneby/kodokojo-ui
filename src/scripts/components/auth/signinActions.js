@@ -17,7 +17,7 @@ export function requestAccountId(email) {
   return {
     [CALL_API]: {
       method: 'POST',
-      endpoint: `http://${window.location.host||'localhost'}${api.user}`,
+      endpoint: `${window.location.protocol||'http:'}//${window.location.host||'localhost'}${api.user}`,
       headers: getHeaders(),
       types: [
         {
@@ -50,7 +50,7 @@ export function requestAccount(email, data) {
   return {
     [CALL_API]: {
       method: 'POST',
-      endpoint: `http://${window.location.host||'localhost'}${api.user}/${data.payload.account.id}`,
+      endpoint: `${window.location.protocol||'http:'}//${window.location.host||'localhost'}${api.user}/${data.payload.account.id}`,
       headers: getHeaders(),
       body: JSON.stringify({
         email: email

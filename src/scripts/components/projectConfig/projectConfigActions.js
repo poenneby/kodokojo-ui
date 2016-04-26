@@ -17,7 +17,7 @@ export function requestProjectConfig(projectName, projectOwner, projectUsers) {
   return {
     [CALL_API]: {
       method: 'POST',
-      endpoint: `http://${window.location.host||'localhost'}${api.projectConfig}`,
+      endpoint: `${window.location.protocol||'http:'}//${window.location.host||'localhost'}${api.projectConfig}`,
       headers: getHeaders(),
       body: JSON.stringify({
         name: projectName,
@@ -70,7 +70,7 @@ export function fetchProjectConfig(projectConfigId) {
   return {
     [CALL_API]: {
       method: 'GET',
-      endpoint: `http://${window.location.host||'localhost'}${api.projectConfig}/${projectConfigId}`,
+      endpoint: `${window.location.protocol||'http:'}//${window.location.host||'localhost'}${api.projectConfig}/${projectConfigId}`,
       headers: getHeaders(),
       types: [
         PROJECT_CONFIG_REQUEST,
@@ -109,7 +109,7 @@ export function requestAddUserToProjectConfig(projectConfigId, userId) {
   return {
     [CALL_API]: {
       method: 'PUT',
-      endpoint: `http://${window.location.host||'localhost'}${api.projectConfig}/${projectConfigId}${api.projectConfigUser}`,
+      endpoint: `${window.location.protocol||'http:'}//${window.location.host||'localhost'}${api.projectConfig}/${projectConfigId}${api.projectConfigUser}`,
       headers: getHeaders(),
       body: JSON.stringify([userId]),
       types: [
