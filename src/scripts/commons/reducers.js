@@ -4,12 +4,14 @@ import { reducer as formReducer } from 'redux-form'
 
 import auth from '../components/auth/authReducer'
 import prefs from '../components/app/appReducer'
-import project from '../components/project/projectReducer.js'
+import projectConfig from '../components/projectConfig/projectConfigReducer'
+import users from '../components/user/userReducer'
 
 const rootReducer = combineReducers({
   auth,
   prefs,
-  project,
+  projectConfig,
+  users,
   form: formReducer,
   routing: routerReducer
 })

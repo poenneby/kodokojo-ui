@@ -130,7 +130,6 @@
     "require-dot-file": "^0.4.0",
     "revalidate": "^0.1.0",
     "run-sequence": "^1.1.5",
-    "socket.io-client": "^1.4.5",
     "yamljs": "^0.2.5"
   }
 }

@@ -27,6 +27,7 @@ import App from './scripts/components/app/App'
 import HomePage from './scripts/pages/HomePage'
 import LoginPage from './scripts/pages/LoginPage'
 import FirstProjectPage from './scripts/pages/FirstProjectPage'
+import ProjectConfigDetailPage from './scripts/pages/ProjectConfigDetailPage'
 import ProjectDetailPage from './scripts/pages/ProjectDetailPage'
 import UsersPage from './scripts/pages/UsersPage'
 import NotFoundPage from './scripts/pages/NotFoundPage'
@@ -64,11 +65,16 @@ ReactDOM.render(
             />
             <Route
               component={FirstProjectPage}
-              path="firstproject"
+              path="firstProject"
+            />
+            <Route
+              component={ProjectConfigDetailPage}
+              onEnter={AuthService.checkAuth}
+              path="projectConfig"
             />
             <Route
               component={ProjectDetailPage}
-              path="project/:projectConfigId"
+              path="project"
             />
             <Route
               component={UsersPage}

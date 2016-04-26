@@ -2,10 +2,12 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { injectIntl } from 'react-intl'
+// import io from 'socket.io-client'
 
 // Component
+import api from '../../../config/shared/api.endpoints'
+import { getToken } from '../services/authService'
 import { centerPaper } from '../../styles/commons'
-import ProjectDetail from '../components/project/ProjectDetail'
 
 class ProjectDetailPage extends Component {
 
@@ -15,6 +17,24 @@ class ProjectDetailPage extends Component {
 
   constructor(props) {
     super(props)
+    this.socket = undefined
+  }
+
+  componentWillMount = () => {
+    this.socket = new WebSocket('ws://192.168.99.100:9080/api/v1/event')
+    this.socket.onopen = () => {
+      this.socket.send(JSON.stringify({
+        entity: 'user',
+        action: 'authentication',
+        data: {
+          authorization: `Basic ${getToken()}`
+        }
+      }))
+    }
+
+    this.socket.onmessage = (event) => {
+      console.log(event.data)
+    }
   }
 
   render() {
@@ -22,7 +42,6 @@ class ProjectDetailPage extends Component {
 
     return (
       <div style={ centerPaper }>
-          <ProjectDetail projectConfigId={params.projectConfigId} />
       </div>
     )
   }
@@ -31,7 +50,7 @@ class ProjectDetailPage extends Component {
 // ProjectDetail container
 const mapStateProps = (state) => {
   return {
-   //
+    //
   }
 }
 

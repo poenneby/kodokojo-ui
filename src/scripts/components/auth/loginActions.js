@@ -10,7 +10,7 @@ export function requestAuthentication(username, password) {
   return {
     [CALL_API]: {
       method: 'GET',
-      endpoint: `http://${window.location.host||'localhost'}${api.user}`,
+      endpoint: `${window.location.protocol||'http:'}//${window.location.host||'localhost'}${api.user}`,
       headers: ioService.getHeaders(),
       types: [
         AUTH_REQUEST,

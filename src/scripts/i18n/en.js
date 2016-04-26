@@ -7,15 +7,16 @@ export default {
   'email-pattern-error': 'Invalid email address',
   'general-input-required-error': '{fieldName} is required',
   'project-config-create-button-label': 'Create',
-  'project-config-intro-text': 'Create your very first project!',
+  'project-config-intro-text': 'Create your very first projectConfig!',
   'project-config-owner-label': 'Created by',
-  'project-name-hint-label': 'project name',
+  'project-name-hint-label': 'projectConfig name',
   'project-name-label': 'name',
-  'project-name-pattern-error': 'Invalid project name, must be between 1 and 10 characters long',
+  'project-name-pattern-error': 'Invalid projectConfig name, must be between 4 and 20 non special characters long',
   'signin-email-label': 'Email',
   'signin-email-hint-label': 'your.email@domain.ext',
   'signin-button-label': 'Sign in',
   'signin-login-link-label' : 'Already a user? Log in!',
   'signin-create-account-email-required': 'email is required',
-  'signin-create-account-409': 'This email already exist'
+  'signin-create-account-409': 'This email already exist',
+  'login-create-account-401': 'Account not found. Check your email or / and your password'
 }

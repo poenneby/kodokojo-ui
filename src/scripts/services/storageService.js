@@ -1,3 +1,4 @@
+// TODO test scope value, set it to locale if other than session por locale
 const storageService = {}
 
 storageService.put = (key, value, scope = 'local') => {

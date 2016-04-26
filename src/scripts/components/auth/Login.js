@@ -11,6 +11,7 @@ import './login.less'
 import { login, logout } from './loginActions'
 
 // TODO implement i18n
+// TODO if user already logged in, fetch user id from storage and fetch user from api to store
 // Login component
 export class Login extends Component {
 

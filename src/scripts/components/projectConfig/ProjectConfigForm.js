@@ -8,7 +8,7 @@ import { intlShape, injectIntl } from 'react-intl'
 import TextField from 'material-ui/lib/text-field'
 import RaisedButton from 'material-ui/lib/raised-button'
 
-import { createProjectConfig } from './projectActions'
+import { createProjectConfig } from './projectConfigActions'
 import { projectNameValidator } from '../../services/validatorService'
 import { returnErrorKey } from '../../services/errorService'
 
@@ -18,8 +18,8 @@ const validate = combineValidators({
 })
 
 // TODO TU
-// ProjectForm component 
-export class ProjectForm extends Component {
+// ProjectConfigForm component
+export class ProjectConfigForm extends Component {
   
   static propTypes = {
     createProjectConfig: PropTypes.func.isRequired,
@@ -88,10 +88,10 @@ export class ProjectForm extends Component {
   }
 }
 
-// ProjectForm container
+// ProjectConfigForm container
 const mapStateProps = (state) => {
   return {
-    userId: state.auth.account.id
+    userId: state.auth.account && state.auth.account.id ? state.auth.account.id : ''
   }
 }
 
@@ -101,7 +101,7 @@ const mapDispatchProps = (dispatch) => {
   }
 }
 
-const ProjectFormContainer = compose(
+const ProjectConfigFormContainer = compose(
   reduxForm(
     {
       form: 'projectForm',
@@ -113,6 +113,6 @@ const ProjectFormContainer = compose(
     mapDispatchProps
   ),
   injectIntl
-)(ProjectForm)
+)(ProjectConfigForm)
 
-export default ProjectFormContainer
+export default ProjectConfigFormContainer

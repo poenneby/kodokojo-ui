@@ -6,6 +6,7 @@ import { intlShape, injectIntl } from 'react-intl'
 
 // UI
 import Card from 'material-ui/lib/card/card'
+import CardActions from 'material-ui/lib/card/card-actions'
 import CardHeader from 'material-ui/lib/card/card-header'
 import CardText from 'material-ui/lib/card/card-text'
 import Table from 'material-ui/lib/table/table'
@@ -17,45 +18,64 @@ import TableBody from 'material-ui/lib/table/table-body'
 import TextField from 'material-ui/lib/text-field'
 import FlatButton from 'material-ui/lib/flat-button'
 
-import './projectDetail.less'
+import './projectConfigDetail.less'
 import { fontSizeMedium } from '../../../styles/commons'
-import { getProjectConfig } from './projectActions'
 import { emailValidator } from '../../services/validatorService'
+import { returnErrorKey } from '../../services/errorService'
+import { addUserToProjectConfig } from './projectConfigActions'
+import User from '../user/User'
 
 // validate function
 const validate = combineValidators({
   email: emailValidator('email')
 })
 
-// ProjectDetail component
-export class ProjectDetail extends Component {
+// ProjectConfigDetail component
+export class ProjectConfigDetail extends Component {
 
   static propTypes = {
-    getProjectConfig: PropTypes.func.isRequired,
+    addUserToProjectConfig: PropTypes.func.isRequired,
+    fields: PropTypes.object.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    intl: intlShape.isRequired,
     projectConfig: PropTypes.object.isRequired,
-    projectConfigId : PropTypes.string.isRequired,
-    intl: intlShape.isRequired
+    submitting: PropTypes.bool.isRequired
   }
 
   constructor(props) {
     super(props)
   }
 
-  componentWillMount() {
-    const { getProjectConfig, projectConfigId } = this.props
+  handleSubmit = () => {
+    const { fields: { email }, projectConfig, addUserToProjectConfig } = this.props
 
-    getProjectConfig(projectConfigId)
+    const nextEmail = email.value
+    const error = validate({ email: nextEmail })
+    if (error.email) {
+      return Promise.reject({ email: error.email })
+    } else {
+      if (nextEmail && nextEmail.trim()) {
+        return addUserToProjectConfig(projectConfig.id, nextEmail.trim()
+        ).then(() => {
+          email.value = ''
+          return Promise.resolve()
+        }
+        ).catch(error => {
+          return Promise.reject({ email: returnErrorKey('user', 'create-account', error.message) })
+        })
+      }
+    }
   }
 
   render() {
-    const { fields: { email }, projectConfig } = this.props
+    const { fields: { email }, projectConfig, users, handleSubmit, submitting } = this.props
     const { formatMessage }  = this.props.intl
-    const owner = projectConfig.owner && projectConfig.owner.username ? projectConfig.owner.username : ''
+    const owner = projectConfig.owner && projectConfig.owner.userName ? projectConfig.owner.userName : ''
 
     return (
       <Card>
         <CardHeader
-          avatar="http://lorempixel.com/100/100/abstract/"
+          // avatar="http://lorempixel.com/100/100/abstract/"
           subtitle={ formatMessage({ id: 'project-config-owner-label' }) + `: ${owner}` }
           title={ projectConfig.name }
           titleStyle={ fontSizeMedium }
@@ -63,7 +83,7 @@ export class ProjectDetail extends Component {
         <CardText>
           <Table
             fixedHeader
-            height="150px"
+            height="210px"
             selectable={ false }
           >
             <TableHeader>
@@ -75,21 +95,21 @@ export class ProjectDetail extends Component {
             <TableBody
               showRowHover
             >
-              { projectConfig.stack && projectConfig.stack[0] && projectConfig.stack[0].brickConfigs &&
-              projectConfig.stack[0].brickConfigs.map((row, index) => (
-                <TableRow key={index} selected={row.selected}>
-                  <TableRowColumn>{row.type}</TableRowColumn>
-                  <TableRowColumn>{row.name}</TableRowColumn>
+              { projectConfig.stacks && projectConfig.stacks[0] && projectConfig.stacks[0].brickConfigs &&
+              projectConfig.stacks[0].brickConfigs.map((brick, index) => (
+                <TableRow key={ index } selected={ brick.selected }>
+                  <TableRowColumn>{ brick.type }</TableRowColumn>
+                  <TableRowColumn>{ brick.name }</TableRowColumn>
                 </TableRow>
               ))
               }
             </TableBody>
           </Table>
-          <form name="addUserForm" style={{
-            display: 'table-cell',
-            verticalAlign: 'middle'
-
-          }}>
+          <form id="addUserForm"
+                name="addUserForm"
+                noValidate
+                onSubmit={ handleSubmit(this.handleSubmit) }
+          >
             <TextField
               { ...email }
               errorText={ email.touched && email.error ? formatMessage({ id: email.error }, {fieldName: formatMessage({ id:'email-input-label' })}) : '' }
@@ -100,7 +120,7 @@ export class ProjectDetail extends Component {
             />
             <FlatButton
               className="form-submit"
-              disabled={ false }
+              disabled={ submitting }
               label={ '+ Add a user' }
               primary
               type="submit"
@@ -108,7 +128,7 @@ export class ProjectDetail extends Component {
           </form>
           <Table
             fixedHeader
-            height="300px"
+            height="200px"
             selectable={ false }
           >
             <TableHeader>
@@ -122,44 +142,46 @@ export class ProjectDetail extends Component {
               showRowHover
             >
               { projectConfig.users &&
-                projectConfig.users.map( (row, index) => (
-                  <TableRow key={index} selected={row.selected}>
-                    <TableRowColumn>{row.username}</TableRowColumn>
-                    <TableRowColumn>{row.role}</TableRowColumn>
-                    <TableRowColumn>{row.email}</TableRowColumn>
-                  </TableRow>
+                projectConfig.users.map( (user, index) => (
+                  <User
+                    key={ index }
+                    userId={ user.id }
+                  />
                 ))
               }
               { !projectConfig.users &&
                 <TableRow>
                   <TableRowColumn>no user...</TableRowColumn>
-                  <TableRowColumn></TableRowColumn>
-                  <TableRowColumn></TableRowColumn>
+                  <TableRowColumn />
+                  <TableRowColumn />
                 </TableRow>
               }
             </TableBody>
           </Table>
         </CardText>
+        <CardActions>
+          <FlatButton
+            className="form-submit"
+            label={ 'Create project' }
+            primary
+            type="button"
+          />
+        </CardActions>
       </Card>
     )
   }
 
 }
 
-// ProjectDetail container
+// ProjectConfigDetail container
 const mapStateProps = (state) => {
   return {
-    projectConfig: state.project.projectConfig
+    projectConfig: state.projectConfig,
+    users: state.users
   }
 }
 
-const mapDispatchProps = (dispatch) => {
-  return {
-    getProjectConfig: (projectConfigId) => dispatch(getProjectConfig(projectConfigId))
-  }
-}
-
-const ProjectDetailContainer = compose(
+const ProjectConfigDetailContainer = compose(
   reduxForm(
     {
       form: 'addUserForm',
@@ -168,9 +190,11 @@ const ProjectDetailContainer = compose(
       validate
     },
     mapStateProps,
-    mapDispatchProps
+    {
+      addUserToProjectConfig
+    }
   ),
   injectIntl
-)(ProjectDetail)
+)(ProjectConfigDetail)
 
-export default ProjectDetailContainer
+export default ProjectConfigDetailContainer

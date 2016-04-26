@@ -22,7 +22,7 @@ global.navigator = global.window.navigator
  * Mocking local and session Storage
  */
 function storageMock() {
-  var storage = {};
+  var storage = {}
 
   return {
     setItem: (key, value) => storage[key] = value || '',

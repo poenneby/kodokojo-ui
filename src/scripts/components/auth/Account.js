@@ -33,16 +33,20 @@ export class Account extends Component {
             <br/>
             <div>password:</div>
             <div>{account.password}</div>
-            <p>
+            { account.sshKeyPublic &&
+              <p>
               <a download={'kodokojoKey.pub'}
                  href={`data:text/plain;charset=utf-8,${encodeURIComponent(account.sshKeyPublic)}`}
               >ssh public key</a>
-            </p>
-            <p>
-              <a download={'kodokojoPrivateKey.txt'}
-                 href={`data:text/plain;charset=utf-8,${encodeURIComponent(account.sshKeyPrivate)}`}
-              >ssh private key</a>
-            </p>
+              </p>
+            }
+            { account.sshKeyPrivate &&
+              <p>
+                <a download={'kodokojoPrivateKey.txt'}
+                   href={`data:text/plain;charset=utf-8,${encodeURIComponent(account.sshKeyPrivate)}`}
+                >ssh private key</a>
+              </p>
+            }
           </div>
         }
         { !account.id &&
@@ -57,7 +61,7 @@ export class Account extends Component {
 // Account container
 const mapStateProps = (state) => {
   return {
-    account: state.auth.account
+    account: state.auth.account || {}
   }
 }
 

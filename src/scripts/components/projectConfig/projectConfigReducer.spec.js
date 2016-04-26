@@ -1,9 +1,9 @@
 import { expect } from 'chai'
 
-import projectReducer from './projectReducer'
+import projectConfigReducer from './projectConfigReducer'
 import * as ActionsTypes from '../../commons/constants'
 
-describe('project reducer', () => {
+describe('projectConfig reducer', () => {
 
   it('should return initialState', () => {
     // Given
@@ -11,11 +11,10 @@ describe('project reducer', () => {
     const action = {}
 
     // When
-    const nextState = projectReducer(state, action)
+    const nextState = projectConfigReducer(state, action)
 
     // Then
     expect(nextState).to.deep.equal({
-      projectConfig: {},
       isFetching: false
     })
   })
@@ -28,11 +27,10 @@ describe('project reducer', () => {
     }
 
     // When
-    const nextState = projectReducer(state, action)
+    const nextState = projectConfigReducer(state, action)
 
     // Then
     expect(nextState).to.deep.equal({
-      projectConfig: {},
       isFetching: true
     })
   })  
@@ -50,13 +48,11 @@ describe('project reducer', () => {
     }
 
     // When
-    const nextState = projectReducer(state, action)
+    const nextState = projectConfigReducer(state, action)
 
     // Then
     expect(nextState).to.deep.equal({
-      projectConfig: {
-        id: 'projectId'
-      },
+      id: 'projectId',
       isFetching: false
     })
   })
