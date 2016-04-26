@@ -6,7 +6,7 @@ import Paper from 'material-ui/lib/paper'
 
 // Component
 import { centerPaper } from '../../styles/commons'
-import Account from '../components/auth/Account'
+import Account from '../components/user/Account'
 import ProjectConfigForm from '../components/projectConfig/ProjectConfigForm'
 
 class FirstProjectPage extends Component {

@@ -31,7 +31,8 @@ describe('signin actions', () => {
     let pushHistorySpy,
         getHeadersSpy,
         setAuthSpy,
-        putAuthSpy
+        putAuthSpy,
+        mapAccountSpy
 
     beforeEach(() => {
       pushHistorySpy = sinon.spy()
@@ -51,6 +52,7 @@ describe('signin actions', () => {
       actionsRewireApi.__ResetDependency__('browserHistory')
       actionsRewireApi.__ResetDependency__('setAuth')
       actionsRewireApi.__ResetDependency__('putAuth')
+      actionsRewireApi.__ResetDependency__('mapAccount')
       nock.cleanAll()
     })
 
@@ -97,6 +99,10 @@ describe('signin actions', () => {
         })
         .post(`${api.user}/${id}`)
         .reply(200, {id: id })
+      mapAccountSpy = sinon.stub().returns({
+        id: id
+      })
+      actionsRewireApi.__Rewire__('mapAccount', mapAccountSpy)
 
       // When
       const store = mockStore({})
@@ -105,7 +111,7 @@ describe('signin actions', () => {
       return store.dispatch(actions.createAccount(email)).then(() => {
         expect(store.getActions()).to.deep.equal(expectedActions)
         expect(pushHistorySpy).to.have.callCount(1)
-        expect(pushHistorySpy).to.have.been.calledWith('/firstproject')
+        expect(pushHistorySpy).to.have.been.calledWith('/firstProject')
         expect(getHeadersSpy).to.have.callCount(2)
         expect(setAuthSpy).to.have.callCount(1)
         expect(putAuthSpy).to.have.callCount(1)

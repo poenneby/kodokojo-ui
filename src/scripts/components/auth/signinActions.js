@@ -4,6 +4,7 @@ import { CALL_API } from 'redux-api-middleware'
 import api from '../../commons/config'
 import { getHeaders } from '../../services/ioService'
 import { setAuth, putAuth } from '../../services/authService'
+import { mapAccount } from '../../services/mappingService'
 import {
   ACCOUNT_NEW_ID_REQUEST,
   ACCOUNT_NEW_ID_SUCCESS,
@@ -60,9 +61,9 @@ export function requestAccount(email, data) {
         {
           type: ACCOUNT_NEW_SUCCESS,
           payload: (action, state, res) => {
-            return res.json().then(data => {
+            return res.json().then(account => {
               return {
-                account: data
+                account: mapAccount(account)
               }
             })
           }
@@ -88,7 +89,7 @@ export function createAccount(email) {
       if (!data.error) {
         setAuth(data.payload.account.username, data.payload.account.password)
         putAuth(data.payload.account.identifier)
-        browserHistory.push('/firstproject')
+        browserHistory.push('/firstProject')
       } else {
         throw new Error(data.payload.status)
       }

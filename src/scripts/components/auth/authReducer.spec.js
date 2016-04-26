@@ -111,13 +111,13 @@ describe('auth reducer', () => {
       type: ActionsTypes.ACCOUNT_NEW_SUCCESS,
       payload: {
         account: {
-          identifier: 2,
+          id: 2,
           name: 'name',
-          username: 'userName',
+          userName: 'userName',
           email: 'email@test.com',
           password: 'password',
-          sshPublicKey: 'sshPublicKey',
-          privateKey: 'privateKey'
+          sshKeyPublic: 'sshPublicKey',
+          sshKeyPrivate: 'privateKey'
         }
       }
     }
@@ -174,13 +174,13 @@ describe('auth reducer', () => {
       type: ActionsTypes.AUTH_SUCCESS,
       payload: {
         account: {
-          identifier: 2,
+          id: 2,
           name: 'name',
-          username: 'userName',
+          userName: 'userName',
           email: 'email@test.com',
           password: '',
-          sshPublicKey: '',
-          privateKey: ''
+          sshKeyPublic: '',
+          sshKeyPrivate: ''
         }
       }
     }

@@ -64,15 +64,7 @@ export default function auth(state = initialState, action) {
   if (action.type === ACCOUNT_NEW_SUCCESS || action.type === AUTH_SUCCESS) {
     return {
       ...state,
-      account: {
-        id: action.payload.account.identifier,
-        name: action.payload.account.name,
-        userName: action.payload.account.username,
-        email: action.payload.account.email,
-        password: action.payload.account.password,
-        sshKeyPublic: action.payload.account.sshPublicKey,
-        sshKeyPrivate: action.payload.account.privateKey
-      },
+      account: action.payload.account,
       isAuthenticated: true,
       isFetching: false
     }
