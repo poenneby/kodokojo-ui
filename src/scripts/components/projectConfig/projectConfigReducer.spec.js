@@ -15,7 +15,6 @@ describe('projectConfig reducer', () => {
 
     // Then
     expect(nextState).to.deep.equal({
-      projectConfig: {},
       isFetching: false
     })
   })
@@ -32,7 +31,6 @@ describe('projectConfig reducer', () => {
 
     // Then
     expect(nextState).to.deep.equal({
-      projectConfig: {},
       isFetching: true
     })
   })  
@@ -54,9 +52,7 @@ describe('projectConfig reducer', () => {
 
     // Then
     expect(nextState).to.deep.equal({
-      projectConfig: {
-        id: 'projectId'
-      },
+      id: 'projectId',
       isFetching: false
     })
   })
