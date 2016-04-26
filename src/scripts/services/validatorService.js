@@ -12,36 +12,46 @@ validatorService._isEmpty = (value) => {
  * @param value
  * @returns {boolean}
  */
-validatorService.email = (value) => {
-  return !validatorService._isEmpty(value) && !/^(?=[\S]{6,50}$)[A-zÀ-ÿ0-9._-]+@(?:[A-Za-z0-9-]{1,}\.){1,}[A-Za-z]{2,}$/i.test(value)
+validatorService.isEmailValid = (value) => {
+  return !validatorService._isEmpty(value) && /^(?=[\S]{6,50}$)[A-Za-z0-9._-]+@(?:[A-Za-z0-9-]{1,}\.){1,}[A-Za-z]{2,}$/.test(value)
 }
 
 /**
  * Revalidate email pattern validator
  */
-validatorService._emailCustomValidator = createValidator(
-  message => value => {
-    if (validatorService.email(value)) {
-      return message
-    }
-  },
-  'email-pattern-error'
-)
 validatorService.emailValidator = composeValidators(
   isRequired({ message: 'general-input-required-error' }),
-  validatorService._emailCustomValidator
+  createValidator(
+    message => value => {
+      if (!validatorService.isEmailValid(value)) {
+        return message
+      }
+    },
+    'email-pattern-error'
+  )
 )
 
+validatorService.isProjectNameValid = (value) => {
+  return !validatorService._isEmpty(value) && /([a-zA-Z0-9\-_]){4,20}/.test(value)
+}
+
 /**
- * Revalidate project name validator
+ * Revalidate projectConfig name validator
  */
 validatorService.projectNameValidator = composeValidators(
   isRequired({message: 'general-input-required-error'}),
-  hasLengthBetween(1, 10)({ message: 'project-name-pattern-error' })
+  createValidator(
+    message => value => {
+      if (!validatorService.isProjectNameValid(value)) {
+        return message
+      }
+    },
+    'project-name-pattern-error'
+  )
 )
 
 /**
- * Standard delay for async validation
+ * Standard delay for debounce validation
  *
  * @type {number}
  */
