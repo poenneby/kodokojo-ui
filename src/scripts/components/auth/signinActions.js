@@ -4,7 +4,14 @@ import { CALL_API } from 'redux-api-middleware'
 import api from '../../commons/config'
 import { getHeaders } from '../../services/ioService'
 import { setAuth, putAuth } from '../../services/authService'
-import { ACCOUNT_ID_REQUEST, ACCOUNT_ID_SUCCESS, ACCOUNT_ID_FAILURE, ACCOUNT_REQUEST, ACCOUNT_SUCCESS, ACCOUNT_FAILURE } from '../../commons/constants'
+import {
+  ACCOUNT_NEW_ID_REQUEST,
+  ACCOUNT_NEW_ID_SUCCESS,
+  ACCOUNT_NEW_ID_FAILURE,
+  ACCOUNT_NEW_REQUEST,
+  ACCOUNT_NEW_SUCCESS,
+  ACCOUNT_NEW_FAILURE
+} from '../../commons/constants'
 
 export function requestAccountId(email) {
   return {
@@ -14,13 +21,13 @@ export function requestAccountId(email) {
       headers: getHeaders(),
       types: [
         {
-          type: ACCOUNT_ID_REQUEST,
+          type: ACCOUNT_NEW_ID_REQUEST,
           payload: (action, data) => ({
             email: email
           })
         },
         {
-          type: ACCOUNT_ID_SUCCESS,
+          type: ACCOUNT_NEW_ID_SUCCESS,
           payload: (action, state, res) => {
             return res.text().then(id => {
               return {
@@ -31,7 +38,7 @@ export function requestAccountId(email) {
             })
           }
         },
-        ACCOUNT_ID_FAILURE
+        ACCOUNT_NEW_ID_FAILURE
       ]
 
       // schema: user
@@ -49,9 +56,9 @@ export function requestAccount(email, data) {
         email: email
       }),
       types: [
-        ACCOUNT_REQUEST,
+        ACCOUNT_NEW_REQUEST,
         {
-          type: ACCOUNT_SUCCESS,
+          type: ACCOUNT_NEW_SUCCESS,
           payload: (action, state, res) => {
             return res.json().then(data => {
               return {
@@ -60,7 +67,7 @@ export function requestAccount(email, data) {
             })
           }
         },
-        ACCOUNT_FAILURE
+        ACCOUNT_NEW_FAILURE
       ]
 
       // schema: user

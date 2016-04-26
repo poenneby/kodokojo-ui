@@ -11,8 +11,12 @@ import api from '../../commons/config'
 import * as actions from './signinActions'
 import { __RewireAPI__ as  actionsRewireApi } from './signinActions'
 import {
-  ACCOUNT_ID_REQUEST, ACCOUNT_ID_SUCCESS, ACCOUNT_ID_FAILURE,
-  ACCOUNT_REQUEST, ACCOUNT_SUCCESS, ACCOUNT_FAILURE
+  ACCOUNT_NEW_ID_REQUEST,
+  ACCOUNT_NEW_ID_SUCCESS,
+  ACCOUNT_NEW_ID_FAILURE,
+  ACCOUNT_NEW_REQUEST,
+  ACCOUNT_NEW_SUCCESS,
+  ACCOUNT_NEW_FAILURE
 } from '../../commons/constants'
 
 // Apply the middleware to the store
@@ -56,14 +60,14 @@ describe('signin actions', () => {
       const id = 'idUs3r'
       const expectedActions = [
         {
-          type: ACCOUNT_ID_REQUEST,
+          type: ACCOUNT_NEW_ID_REQUEST,
           payload: {
             email: email
           },
           meta: undefined
         },
         {
-          type: ACCOUNT_ID_SUCCESS,
+          type: ACCOUNT_NEW_ID_SUCCESS,
           payload: {
             account: {
               id: id
@@ -72,12 +76,12 @@ describe('signin actions', () => {
           meta: undefined
         },
         {
-          type: ACCOUNT_REQUEST,
+          type: ACCOUNT_NEW_REQUEST,
           payload: undefined,
           meta: undefined
         },
         {
-          type: ACCOUNT_SUCCESS,
+          type: ACCOUNT_NEW_SUCCESS,
           payload: {
             account: {
               id: id
@@ -114,14 +118,14 @@ describe('signin actions', () => {
       const id = 'idUs3r'
       const expectedActions = [
         {
-          type: ACCOUNT_ID_REQUEST,
+          type: ACCOUNT_NEW_ID_REQUEST,
           payload: {
             email: email
           },
           meta: undefined
         },
         {
-          type: ACCOUNT_ID_FAILURE,
+          type: ACCOUNT_NEW_ID_FAILURE,
           error: true,
           payload: {
             message: '500 - Internal Server Error',
@@ -160,14 +164,14 @@ describe('signin actions', () => {
       const id = 'idUs3r'
       const expectedActions = [
         {
-          type: ACCOUNT_ID_REQUEST,
+          type: ACCOUNT_NEW_ID_REQUEST,
           payload: {
             email: email
           },
           meta: undefined
         },
         {
-          type: ACCOUNT_ID_SUCCESS,
+          type: ACCOUNT_NEW_ID_SUCCESS,
           payload: {
             account: {
               id: id
@@ -176,12 +180,12 @@ describe('signin actions', () => {
           meta: undefined
         },
         {
-          type: ACCOUNT_REQUEST,
+          type: ACCOUNT_NEW_REQUEST,
           payload: undefined,
           meta: undefined
         },
         {
-          type: ACCOUNT_FAILURE,
+          type: ACCOUNT_NEW_FAILURE,
           error: true,
           payload: {
             message: '500 - Internal Server Error',

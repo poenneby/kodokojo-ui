@@ -1,8 +1,15 @@
 import merge from 'lodash/merge'
 import {
-    ACCOUNT_ID_REQUEST, ACCOUNT_ID_SUCCESS, ACCOUNT_ID_FAILURE,
-    ACCOUNT_REQUEST, ACCOUNT_SUCCESS, ACCOUNT_FAILURE,
-    AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE, AUTH_RESET
+  ACCOUNT_NEW_ID_REQUEST,
+  ACCOUNT_NEW_ID_SUCCESS,
+  ACCOUNT_NEW_ID_FAILURE,
+  ACCOUNT_NEW_REQUEST,
+  ACCOUNT_NEW_SUCCESS,
+  ACCOUNT_NEW_FAILURE,
+  AUTH_REQUEST,
+  AUTH_SUCCESS,
+  AUTH_FAILURE,
+  AUTH_RESET
 } from '../../commons/constants'
 
 const initialState = {
@@ -11,7 +18,7 @@ const initialState = {
 }
 
 export default function auth(state = initialState, action) {
-  if (action.type === ACCOUNT_ID_REQUEST) {
+  if (action.type === ACCOUNT_NEW_ID_REQUEST) {
     return {
       ...state,
       account: {
@@ -22,7 +29,7 @@ export default function auth(state = initialState, action) {
     }
   }
 
-  if (action.type === ACCOUNT_ID_SUCCESS) {
+  if (action.type === ACCOUNT_NEW_ID_SUCCESS) {
     return merge(
       {},
       state,
@@ -36,7 +43,7 @@ export default function auth(state = initialState, action) {
     )
   }
 
-  if (action.type === ACCOUNT_ID_FAILURE) {
+  if (action.type === ACCOUNT_NEW_ID_FAILURE) {
     // TODO
     return {
       ...state,
@@ -45,7 +52,7 @@ export default function auth(state = initialState, action) {
     }
   }
 
-  if (action.type === ACCOUNT_REQUEST) {
+  if (action.type === ACCOUNT_NEW_REQUEST) {
     return {
       ...state,
       isAuthenticated: false,
@@ -54,7 +61,7 @@ export default function auth(state = initialState, action) {
   }
 
   // TODO delete password / sshKeys from state after rendering
-  if (action.type === ACCOUNT_SUCCESS || action.type === AUTH_SUCCESS) {
+  if (action.type === ACCOUNT_NEW_SUCCESS || action.type === AUTH_SUCCESS) {
     return {
       ...state,
       account: {
@@ -71,7 +78,7 @@ export default function auth(state = initialState, action) {
     }
   }
 
-  if (action.type === ACCOUNT_FAILURE) {
+  if (action.type === ACCOUNT_NEW_FAILURE) {
     // TODO
     return state
   }

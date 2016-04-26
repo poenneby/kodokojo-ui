@@ -20,11 +20,11 @@ describe('auth reducer', () => {
     })
   })
 
-  it('should handle ACCOUNT_ID_REQUEST', () => {
+  it('should handle ACCOUNT_NEW_ID_REQUEST', () => {
     // Given
     const state = undefined
     const action = {
-      type: ActionsTypes.ACCOUNT_ID_REQUEST,
+      type: ActionsTypes.ACCOUNT_NEW_ID_REQUEST,
       payload: {
         email: 'email@test.com'
       }
@@ -43,7 +43,7 @@ describe('auth reducer', () => {
     })
   })
 
-  it('should handle ACCOUNT_ID_SUCCESS', () => {
+  it('should handle ACCOUNT_NEW_ID_SUCCESS', () => {
     // Given
     const state = {
       account: {
@@ -51,7 +51,7 @@ describe('auth reducer', () => {
       }
     }
     const action = {
-      type: ActionsTypes.ACCOUNT_ID_SUCCESS,
+      type: ActionsTypes.ACCOUNT_NEW_ID_SUCCESS,
       payload: {
         account: {
           id: 1
@@ -73,7 +73,7 @@ describe('auth reducer', () => {
     })
   })
 
-  it('should handle ACCOUNT_REQUEST', () => {
+  it('should handle ACCOUNT_NEW_REQUEST', () => {
     // Given
     const state = {
       account: {
@@ -82,7 +82,7 @@ describe('auth reducer', () => {
       }
     }
     const action = {
-      type: ActionsTypes.ACCOUNT_REQUEST
+      type: ActionsTypes.ACCOUNT_NEW_REQUEST
     }
 
     // When
@@ -99,7 +99,7 @@ describe('auth reducer', () => {
     })
   })
 
-  it('should handle ACCOUNT_SUCCESS', () => {
+  it('should handle ACCOUNT_NEW_SUCCESS', () => {
     // Given
     const state = {
       account: {
@@ -108,7 +108,7 @@ describe('auth reducer', () => {
       }
     }
     const action = {
-      type: ActionsTypes.ACCOUNT_SUCCESS,
+      type: ActionsTypes.ACCOUNT_NEW_SUCCESS,
       payload: {
         account: {
           identifier: 2,
