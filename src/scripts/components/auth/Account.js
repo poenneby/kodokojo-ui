@@ -61,7 +61,7 @@ export class Account extends Component {
 // Account container
 const mapStateProps = (state) => {
   return {
-    account: state.auth.account
+    account: state.auth.account || {}
   }
 }
 
