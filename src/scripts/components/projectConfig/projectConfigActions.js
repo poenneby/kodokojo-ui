@@ -3,6 +3,7 @@ import { CALL_API } from 'redux-api-middleware'
 
 import api from '../../commons/config'
 import { getHeaders } from '../../services/ioService'
+import { mapProjectConfig } from '../../services/mappingService'
 import { createUser, getUser } from '../user/userActions'
 import {
   PROJECT_CONFIG_REQUEST,
@@ -75,7 +76,7 @@ export function fetchProjectConfig(projectConfigId) {
           payload: (action, state, res) => {
             return res.json().then(projectConfig => {
               return {
-                projectConfig: projectConfig
+                projectConfig: mapProjectConfig(projectConfig)
               }
             })
           }
@@ -92,11 +93,14 @@ export function getProjectConfig(projectConfigId) {
     ).then(data => {
       if (!data.error && data.payload.projectConfig.users) {
         data.payload.projectConfig.users.forEach((user) => {
-          dispatch(getUser(user.identifer))
+          dispatch(getUser(user.id))
         })
       } else {
-        throw new Error()
+        throw new Error(data.payload.status)
       }
+    }).catch(error => {
+      // TODO do something with error
+      throw new Error(error.message)
     })
   }
 }

@@ -1,5 +1,5 @@
 import merge from 'lodash/merge'
-import each from 'lodash/each'
+
 import {
   PROJECT_CONFIG_REQUEST,
   PROJECT_CONFIG_SUCCESS,
@@ -25,18 +25,8 @@ export default function project(state = initialState, action) {
     return merge(
       {},
       state,
+      action.payload.projectConfig,
       {
-        projectConfig: {
-          id: action.payload.projectConfig.identifier,
-          name: action.payload.projectConfig.name,
-          owner: action.payload.projectConfig.owner,
-          stack: action.payload.projectConfig.stackConfigs,
-          users: each(action.payload.projectConfig.users, user => {
-            return {
-              id: user.identifier
-            }
-          })
-        },
         isFetching: false
       }
     )
