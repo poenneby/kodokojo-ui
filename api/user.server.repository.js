@@ -38,10 +38,23 @@ userRepository.getUserAccount = (credentials) => {
   })
 }
 
+userRepository.getUser = (credentials, userId) => {
+  logger.debug('getUserAccount', credentials)
+  return requestWithLog({
+    method: 'GET',
+    uri: `${config.api.host}${config.api.routes.user}/${userId}`,
+    headers: {
+      'Authorization': `${credentials}`
+    },
+    json: true
+  })
+}
+
 // Public methods
 export const initUser = userRepository.initUser
 export const postUser = userRepository.postUser
 export const getUserAccount = userRepository.getUserAccount
+export const getUser = userRepository.getUser
 
 // Service instance
 export default userRepository

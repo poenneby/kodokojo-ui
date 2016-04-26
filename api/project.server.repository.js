@@ -2,6 +2,7 @@ import config from '../config/config'
 import logger from '../config/logger'
 
 import { requestWithLog } from './utils.server.service'
+import endpoints from '../config/shared/api.endpoints'
 
 const projectRepository = {}
 
@@ -30,9 +31,21 @@ projectRepository.getProjectConfig = (headers, projectConfigId) => {
   })
 }
 
+projectRepository.putUserToProjectConfig = (headers, projectConfigId, users) => {
+  logger.debug('putUserToProjectConfig', config.api.routes.projectConfig)
+  return requestWithLog({
+    method: 'PUT',
+    uri: `${config.api.host}${config.api.routes.projectConfig}/${projectConfigId}${endpoints.projectConfigUser}`,
+    json: true,
+    headers: headers,
+    body: users
+  })
+}
+
 // Public API
 export const postProjectConfig = projectRepository.postProjectConfig
 export const getProjectConfig = projectRepository.getProjectConfig
+export const putUserToProjectConfig = projectRepository.putUserToProjectConfig
 
 // Service instance
 export default projectRepository

@@ -22,7 +22,7 @@ import { fontSizeMedium } from '../../../styles/commons'
 import { emailValidator } from '../../services/validatorService'
 import { returnErrorKey } from '../../services/errorService'
 import { addUserToProjectConfig } from './projectConfigActions'
-import { User } from '../user/User'
+import User from '../user/User'
 
 // validate function
 const validate = combineValidators({
@@ -55,8 +55,10 @@ export class ProjectConfigDetail extends Component {
     } else {
       if (nextEmail && nextEmail.trim()) {
         return addUserToProjectConfig(projectConfig.id, nextEmail.trim()
-        ).then(
-          Promise.resolve()
+        ).then(() => {
+          email.value = ''
+          return Promise.resolve()
+        }
         ).catch(error => {
           return Promise.reject({ email: returnErrorKey('user', 'create-account', error.message) })
         })
@@ -67,7 +69,7 @@ export class ProjectConfigDetail extends Component {
   render() {
     const { fields: { email }, projectConfig, users, handleSubmit, submitting } = this.props
     const { formatMessage }  = this.props.intl
-    const owner = projectConfig.owner && projectConfig.owner.username ? projectConfig.owner.username : ''
+    const owner = projectConfig.owner && projectConfig.owner.userName ? projectConfig.owner.userName : ''
 
     return (
       <Card>
@@ -80,7 +82,7 @@ export class ProjectConfigDetail extends Component {
         <CardText>
           <Table
             fixedHeader
-            height="150px"
+            height="210px"
             selectable={ false }
           >
             <TableHeader>
@@ -92,8 +94,8 @@ export class ProjectConfigDetail extends Component {
             <TableBody
               showRowHover
             >
-              { projectConfig.stack && projectConfig.stack[0] && projectConfig.stack[0].brickConfigs &&
-              projectConfig.stack[0].brickConfigs.map((brick, index) => (
+              { projectConfig.stacks && projectConfig.stacks[0] && projectConfig.stacks[0].brickConfigs &&
+              projectConfig.stacks[0].brickConfigs.map((brick, index) => (
                 <TableRow key={ index } selected={ brick.selected }>
                   <TableRowColumn>{ brick.type }</TableRowColumn>
                   <TableRowColumn>{ brick.name }</TableRowColumn>
@@ -125,7 +127,7 @@ export class ProjectConfigDetail extends Component {
           </form>
           <Table
             fixedHeader
-            height="300px"
+            height="200px"
             selectable={ false }
           >
             <TableHeader>
@@ -141,10 +143,8 @@ export class ProjectConfigDetail extends Component {
               { projectConfig.users &&
                 projectConfig.users.map( (user, index) => (
                   <User
-                    key={ user.identifer }
-                    // TODO rename to user.identifier after backend fix & update
-                    userId={ user.identifer }
-                    users={users}
+                    key={ index }
+                    userId={ user.id }
                   />
                 ))
               }
@@ -158,6 +158,14 @@ export class ProjectConfigDetail extends Component {
             </TableBody>
           </Table>
         </CardText>
+        <CardActions>
+          <FlatButton
+            className="form-submit"
+            label={ 'Create project' }
+            primary
+            type="button"
+          />
+        </CardActions>
       </Card>
     )
   }

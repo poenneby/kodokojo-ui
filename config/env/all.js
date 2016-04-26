@@ -17,12 +17,14 @@ if (process.env.DOCKER_HOST) {
   }
 }
 
+// TODO set protocol into parameter to serve https or http or ws
 const all = {
   api: {
     host: localApiHost ? `http://${localApiHost}` : undefined,
     routes: {
       user: `${api.user}`,
-      projectConfig: `${api.projectConfig}`
+      projectConfig: `${api.projectConfig}`,
+      event: `${api.event}`
     }
   }
 }

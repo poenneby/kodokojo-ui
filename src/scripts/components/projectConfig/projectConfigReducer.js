@@ -10,7 +10,6 @@ import {
 } from '../../commons/constants'
 
 const initialState = {
-  projectConfig: {},
   isFetching: false
 }
 

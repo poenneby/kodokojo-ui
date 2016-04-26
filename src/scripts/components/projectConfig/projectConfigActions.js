@@ -128,7 +128,9 @@ export function addUserToProjectConfig(projectConfigId, email) {
         throw new Error(data.payload.status)
       }
     }).then(data => {
-      if (data.error) {
+      if (!data.error) {
+        return dispatch(getProjectConfig(projectConfigId))
+      } else {
         throw new Error(data.payload.status)
       }
     }).catch(error => {
