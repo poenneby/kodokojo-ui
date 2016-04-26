@@ -49,16 +49,12 @@ export function createProjectConfig(projectName, projectOwner, projectUsers) {
     return dispatch(requestProjectConfig(projectName, projectOwner, projectUsers)
     ).then(data => {
       if (!data.error) {
-        return getProjectConfig(data.payload.projectConfig.id)
+        return dispatch(getProjectConfig(data.payload.projectConfig.id))
       } else {
         throw new Error(data.payload.status)
       }
-    }).then(data => {
-      if (!data.error) {
-        browserHistory.push(`/project/${data.payload.projectConfig.id}`)
-      } else {
-        throw new Error(data.payload.status)
-      }
+    }).then(() => {
+      browserHistory.push('/projectConfig')
     }).catch(error => {
       // TODO do something with error
       throw new Error(error.message)

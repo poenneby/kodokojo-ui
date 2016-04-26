@@ -19,7 +19,6 @@ import FlatButton from 'material-ui/lib/flat-button'
 
 import './projectConfigDetail.less'
 import { fontSizeMedium } from '../../../styles/commons'
-import { getProjectConfig } from './projectConfigActions'
 import { emailValidator } from '../../services/validatorService'
 import { returnErrorKey } from '../../services/errorService'
 import { addUserToProjectConfig } from './projectConfigActions'
@@ -36,23 +35,15 @@ export class ProjectConfigDetail extends Component {
   static propTypes = {
     addUserToProjectConfig: PropTypes.func.isRequired,
     fields: PropTypes.object.isRequired,
-    getProjectConfig: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     intl: intlShape.isRequired,
     projectConfig: PropTypes.object.isRequired,
-    projectConfigId : PropTypes.string.isRequired,
     submitting: PropTypes.bool.isRequired
   }
 
   constructor(props) {
     super(props)
   }
-
-  // componentWillMount() {
-  //   const { getProjectConfig, projectConfigId } = this.props
-  //
-  //   getProjectConfig(projectConfigId)
-  // }
 
   handleSubmit = () => {
     const { fields: { email }, projectConfig, addUserToProjectConfig } = this.props
@@ -191,8 +182,7 @@ const ProjectConfigDetailContainer = compose(
     },
     mapStateProps,
     {
-      addUserToProjectConfig,
-      getProjectConfig
+      addUserToProjectConfig
     }
   ),
   injectIntl

@@ -74,7 +74,7 @@ ReactDOM.render(
             />
             <Route
               component={ProjectDetailPage}
-              path="project/:projectConfigId"
+              path="project"
             />
             <Route
               component={UsersPage}
