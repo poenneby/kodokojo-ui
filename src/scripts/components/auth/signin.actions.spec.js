@@ -60,6 +60,11 @@ describe('signin actions', () => {
       // Given
       const email = 'test@email.com'
       const id = 'idUs3r'
+      const account = {
+        id: id,
+        userName: 'test',
+        password: 'password'
+      }
       const expectedActions = [
         {
           type: ACCOUNT_NEW_ID_REQUEST,
@@ -86,7 +91,9 @@ describe('signin actions', () => {
           type: ACCOUNT_NEW_SUCCESS,
           payload: {
             account: {
-              id: id
+              id: id,
+              userName: 'test',
+              password: 'password'
             }
           },
           meta: undefined
@@ -94,14 +101,14 @@ describe('signin actions', () => {
       ]
       nock('http://localhost')
         .post(`${api.user}`)
-        .reply(200, () => {
+        .reply(201, () => {
           return id
         })
         .post(`${api.user}/${id}`)
-        .reply(200, {id: id })
-      mapAccountSpy = sinon.stub().returns({
-        id: id
-      })
+        .reply(201, () => {
+          return account
+        })
+      mapAccountSpy = sinon.stub().returns(account)
       actionsRewireApi.__Rewire__('mapAccount', mapAccountSpy)
 
       // When
@@ -114,7 +121,9 @@ describe('signin actions', () => {
         expect(pushHistorySpy).to.have.been.calledWith('/firstProject')
         expect(getHeadersSpy).to.have.callCount(2)
         expect(setAuthSpy).to.have.callCount(1)
+        expect(setAuthSpy).to.have.been.calledWith('test', 'password')
         expect(putAuthSpy).to.have.callCount(1)
+        expect(putAuthSpy).to.have.been.calledWith(id)
       }).then(done, done)
     })
 
