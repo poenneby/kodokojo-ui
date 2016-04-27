@@ -32,3 +32,15 @@ export const putUserToProjectConfig = (request, response) => {
       return response.status(err.response && err.response.statusCode ? err.response.statusCode : 500).send(err)
     })
 }
+
+export const postProject = (request, response) => {
+  projectRepository
+    .postProject(request.headers, request.params.projectConfigId)
+    .then(data => {
+      return response.status(201).send(data)
+    })
+    .catch((err, resp) => {
+      return response.status(err.response && err.response.statusCode ? err.response.statusCode : 500).send(err)
+    })
+}
+

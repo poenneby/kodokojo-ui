@@ -20,6 +20,8 @@ router.put(`${config.api.routes.projectConfig}/:projectConfigId${endpoints.proje
 
 router.get(`${config.api.routes.projectConfig}/:projectConfigId`, project.getProjectConfig)
 
+router.post(`${config.api.routes.project}/:projectConfigId`, project.postProject)
+
 export default (app) => {
   app.use(router)
 }

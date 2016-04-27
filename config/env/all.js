@@ -24,6 +24,7 @@ const all = {
     routes: {
       user: `${api.user}`,
       projectConfig: `${api.projectConfig}`,
+      project: `${api.project}`,
       event: `${api.event}`
     }
   }

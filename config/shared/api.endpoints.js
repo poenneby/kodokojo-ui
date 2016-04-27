@@ -4,5 +4,6 @@ export default {
   user: `${api.v1}/user`,
   projectConfig: `${api.v1}/projectconfig`,
   projectConfigUser: '/user',
+  project: `${api.v1}/project`,
   event: `${api.v1}/event`
 }

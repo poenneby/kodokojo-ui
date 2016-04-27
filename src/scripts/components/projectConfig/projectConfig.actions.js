@@ -14,16 +14,16 @@ import {
   PROJECT_CONFIG_ADD_USER_FAILURE
 } from '../../commons/constants'
 
-export function requestProjectConfig(projectName, projectOwner, projectUsers) {
+export function requestProjectConfig(projectConfigName, projectConfigOwner, projectConfigUsers) {
   return {
     [CALL_API]: {
       method: 'POST',
       endpoint: `${window.location.protocol||'http:'}//${window.location.host||'localhost'}${api.projectConfig}`,
       headers: getHeaders(),
       body: JSON.stringify({
-        name: projectName,
-        ownerIdentifier: projectOwner,
-        userIdentifiers: projectUsers
+        name: projectConfigName,
+        ownerIdentifier: projectConfigOwner,
+        userIdentifiers: projectConfigUsers
       }),
       types: [
         PROJECT_CONFIG_REQUEST,
@@ -45,9 +45,9 @@ export function requestProjectConfig(projectName, projectOwner, projectUsers) {
   }
 }
 
-export function createProjectConfig(projectName, projectOwner, projectUsers) {
+export function createProjectConfig(projectConfigName, projectConfigOwner, projectConfigUsers) {
   return dispatch => {
-    return dispatch(requestProjectConfig(projectName, projectOwner, projectUsers)
+    return dispatch(requestProjectConfig(projectConfigName, projectConfigOwner, projectConfigUsers)
     ).then(data => {
       if (!data.error) {
         return dispatch(getProjectConfig(data.payload.projectConfig.id))
@@ -125,7 +125,7 @@ export function requestAddUserToProjectConfig(projectConfigId, userId) {
 
 export function addUserToProjectConfig(projectConfigId, email) {
   return dispatch => {
-    // TODO serch user and if does not exist, create it
+    // TODO search user and if does not exist, create it
     return dispatch(createUser(email)
     ).then(data => {
       if (!data.error) {

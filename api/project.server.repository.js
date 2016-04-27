@@ -42,10 +42,21 @@ projectRepository.putUserToProjectConfig = (headers, projectConfigId, users) => 
   })
 }
 
+projectRepository.postProject = (headers, projectConfigId) => {
+  logger.debug('postProject', config.api.routes.project)
+  return requestWithLog({
+    method: 'POST',
+    uri: `${config.api.host}${config.api.routes.project}/${projectConfigId}`,
+    json: true,
+    headers: headers
+  })
+}
+
 // Public API
 export const postProjectConfig = projectRepository.postProjectConfig
 export const getProjectConfig = projectRepository.getProjectConfig
 export const putUserToProjectConfig = projectRepository.putUserToProjectConfig
+export const postProject = projectRepository.postProject
 
 // Service instance
 export default projectRepository

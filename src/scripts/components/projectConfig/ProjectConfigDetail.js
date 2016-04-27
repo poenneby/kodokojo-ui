@@ -18,11 +18,13 @@ import TableBody from 'material-ui/lib/table/table-body'
 import TextField from 'material-ui/lib/text-field'
 import FlatButton from 'material-ui/lib/flat-button'
 
+// Component
 import './projectConfigDetail.less'
 import { fontSizeMedium } from '../../../styles/commons'
 import { emailValidator } from '../../services/validatorService'
 import { returnErrorKey } from '../../services/errorService'
 import { addUserToProjectConfig } from './projectConfig.actions'
+import { createProject } from '../project/project.actions'
 import User from '../user/User'
 
 // validate function
@@ -35,10 +37,12 @@ export class ProjectConfigDetail extends Component {
 
   static propTypes = {
     addUserToProjectConfig: PropTypes.func.isRequired,
+    createProject: PropTypes.func.isRequired,
     fields: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     intl: intlShape.isRequired,
     projectConfig: PropTypes.object.isRequired,
+    resetForm: PropTypes.func.isRequired,
     submitting: PropTypes.bool.isRequired
   }
 
@@ -47,7 +51,7 @@ export class ProjectConfigDetail extends Component {
   }
 
   handleSubmit = () => {
-    const { fields: { email }, projectConfig, addUserToProjectConfig } = this.props
+    const { fields: { email }, projectConfig, addUserToProjectConfig, resetForm } = this.props
 
     const nextEmail = email.value
     const error = validate({ email: nextEmail })
@@ -57,7 +61,7 @@ export class ProjectConfigDetail extends Component {
       if (nextEmail && nextEmail.trim()) {
         return addUserToProjectConfig(projectConfig.id, nextEmail.trim()
         ).then(() => {
-          email.value = ''
+          resetForm('addUserForm')
           return Promise.resolve()
         }
         ).catch(error => {
@@ -67,15 +71,29 @@ export class ProjectConfigDetail extends Component {
     }
   }
 
+  handleClick = (event) => {
+    const { createProject, projectConfig } = this.props
+
+    event.preventDefault()
+
+    if (projectConfig.id) {
+      return createProject(projectConfig.id
+      ).catch(error => {
+        // TODO di something better with error
+        console.log(error)
+      })
+    }
+
+  }
+
   render() {
-    const { fields: { email }, projectConfig, users, handleSubmit, submitting } = this.props
+    const { fields: { email }, projectConfig, handleSubmit, submitting } = this.props
     const { formatMessage }  = this.props.intl
     const owner = projectConfig.owner && projectConfig.owner.userName ? projectConfig.owner.userName : ''
 
     return (
       <Card>
         <CardHeader
-          // avatar="http://lorempixel.com/100/100/abstract/"
           subtitle={ formatMessage({ id: 'project-config-owner-label' }) + `: ${owner}` }
           title={ projectConfig.name }
           titleStyle={ fontSizeMedium }
@@ -162,7 +180,9 @@ export class ProjectConfigDetail extends Component {
         <CardActions>
           <FlatButton
             className="form-submit"
+            disabled={ !projectConfig.id }
             label={ 'Create project' }
+            onClick={ this.handleClick }
             primary
             type="button"
           />
@@ -176,8 +196,7 @@ export class ProjectConfigDetail extends Component {
 // ProjectConfigDetail container
 const mapStateProps = (state) => {
   return {
-    projectConfig: state.projectConfig,
-    users: state.users
+    projectConfig: state.projectConfig
   }
 }
 
@@ -186,12 +205,12 @@ const ProjectConfigDetailContainer = compose(
     {
       form: 'addUserForm',
       fields: ['email'],
-      touchOnChange: true,
       validate
     },
     mapStateProps,
     {
-      addUserToProjectConfig
+      addUserToProjectConfig,
+      createProject
     }
   ),
   injectIntl
