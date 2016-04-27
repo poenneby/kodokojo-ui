@@ -4,9 +4,10 @@ import api from '../../commons/config'
 // import { user } from '../../commons/schemas'
 import authService from '../../services/authService'
 import ioService from '../../services/ioService'
+import { mapAccount } from '../../services/mappingService'
 import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE, AUTH_RESET } from '../../commons/constants'
 
-export function requestAuthentication(username, password) {
+export function requestAuthentication() {
   return {
     [CALL_API]: {
       method: 'GET',
@@ -17,9 +18,9 @@ export function requestAuthentication(username, password) {
         {
           type: AUTH_SUCCESS,
           payload: (action, state, res) => {
-            return res.json().then(data => {
+            return res.json().then(account => {
               return {
-                account: data
+                account: mapAccount(account)
               }
             })
           }
@@ -35,11 +36,12 @@ export function requestAuthentication(username, password) {
 export function login(username, password) {
   authService.setAuth(username, password)
   return dispatch => {
-    return dispatch(requestAuthentication(username, password)
+    return dispatch(requestAuthentication()
     ).then(data => {
       if (!data.error) {
-        const userId = data.payload.account.identifier
-        authService.putAuth(userId)
+        authService.putAuth(data.payload.account.id)
+      } else {
+        throw new Error(data.payload.status)
       }
     }).catch(error => {
       // TODO do something with error

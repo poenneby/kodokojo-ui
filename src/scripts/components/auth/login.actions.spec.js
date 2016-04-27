@@ -9,6 +9,7 @@ import configureMockStore from 'redux-mock-store'
 
 import api from '../../commons/config'
 import * as actions from './login.actions'
+import { __RewireAPI__ as actionsRewireApi } from './login.actions'
 import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE, AUTH_RESET } from '../../commons/constants'
 
 // dependencies to mock
@@ -23,15 +24,20 @@ const middlewares = [
 const mockStore = configureMockStore(middlewares)
 
 describe('login actions', () => {
+  let mapAccount
+
   afterEach(() => {
     nock.cleanAll()
   })
 
   describe('login', () => {
+    let mapAccountSpy
+
     afterEach(() => {
       authService.setAuth.restore()
       authService.putAuth.restore()
       ioService.getHeaders.restore()
+      actionsRewireApi.__ResetDependency__('mapAccount')
     })
 
     it('should request auth', (done) => {
@@ -40,7 +46,7 @@ describe('login actions', () => {
             password = 'psUs3r',
             auth = 'cryptedAuth',
             account = {
-              identifier: 'idUs3r'
+              id: 'idUs3r'
             }
       const expectedActions = [
         {
@@ -64,6 +70,8 @@ describe('login actions', () => {
       const setAuthSpy = sinon.stub(authService, 'setAuth').returns(auth)
       const putAuthSpy = sinon.spy(authService, 'putAuth')
       const getHeadersSpy = sinon.stub(ioService, 'getHeaders').returns(headers)
+      mapAccountSpy = sinon.stub().returns(account)
+      actionsRewireApi.__Rewire__('mapAccount', mapAccountSpy)
       nock('http://localhost', {
         reqheaders: {
           'Authorization': `Basic ${auth}`
@@ -83,10 +91,9 @@ describe('login actions', () => {
         expect(setAuthSpy).to.have.callCount(1)
         expect(setAuthSpy).to.have.been.calledWith(username, password)
         expect(putAuthSpy).to.have.callCount(1)
-        expect(putAuthSpy).to.have.been.calledWith(account.identifier)
+        expect(putAuthSpy).to.have.been.calledWith(account.id)
         expect(getHeadersSpy).to.have.callCount(1)
-        done()
-      }, done)
+      }, done).then(done, done)
     })
 
     it('should fail to request auth', (done) => {
@@ -132,14 +139,13 @@ describe('login actions', () => {
       const store = mockStore({})
 
       // Then
-      return store.dispatch(actions.login(username, password)).then(() => {
+      return store.dispatch(actions.login(username, password)).then(done, () => {
         expect(store.getActions()).to.deep.equal(expectedActions)
         expect(setAuthSpy).to.have.callCount(1)
         expect(setAuthSpy).to.have.been.calledWith(username, password)
         expect(putAuthSpy).to.have.callCount(0)
         expect(getHeadersSpy).to.have.callCount(1)
-        done()
-      }, done)
+      }).then(done, done)
     })
   })
 
