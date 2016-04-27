@@ -9,10 +9,11 @@ chai.use(chaiEnzyme())
 chai.use(sinonChai)
 import merge from 'lodash/merge'
 
-// import { IntlProvider } from 'react-intl'
+import { IntlProvider } from 'react-intl'
 
 import { Login } from './Login'
 
+// TODO test error message when login
 describe('<Login> component', () => {
 
   let props,
@@ -21,38 +22,28 @@ describe('<Login> component', () => {
 
   beforeEach(() => {
     // TODO find another way to mock IntlProvider
-    // const mockFormatFct = options => options.id
-    // props = {
-    //   fields: {
-    //     email: ''
-    //   },
-    //   intl: {
-    //     formatMessage: mockFormatFct,
-    //     formatDate: mockFormatFct,
-    //     formatPlural: mockFormatFct,
-    //     formatTime: mockFormatFct,
-    //     formatRelative: mockFormatFct,
-    //     formatNumber: mockFormatFct,
-    //     formatHTMLMessage: mockFormatFct,
-    //     now: mockFormatFct
-    //   },
-    //   submitting: false,
+    const mockFormatFct = options => options.id
     props = {
       fields: {
         username: '',
-        password: ''
+        psw: ''
+      },
+      handleSubmit: fct => fct,
+      intl: {
+        formatMessage: mockFormatFct,
+        formatDate: mockFormatFct,
+        formatPlural: mockFormatFct,
+        formatTime: mockFormatFct,
+        formatRelative: mockFormatFct,
+        formatNumber: mockFormatFct,
+        formatHTMLMessage: mockFormatFct,
+        now: mockFormatFct
       },
       submitting: false,
       login: () => {},
       logout: () => {}
     }
-    // messages = {
-    //   'signin-email-label': 'signin-email-label',
-    //   'signin-email-hint-label': 'signin-email-hint-label',
-    //   'signin-button-label': 'signin-button-label',
-    //   'signin-login-link-label': 'signin-login-link-label'
-    // }
-    // intlProvider = new IntlProvider({locale:'en'}, {})
+    intlProvider = new IntlProvider({locale:'en'}, {})
   })
 
   it('should render a form if not authenticated', () => {
@@ -61,11 +52,12 @@ describe('<Login> component', () => {
       props,
       { isAuthenticated: false }
     )
-    // const { context } = intlProvider.getChildContext()
+    const { context } = intlProvider.getChildContext()
 
     // When
     const component = shallow(
-      <Login {...nextProps}/>
+      <Login {...nextProps}/>,
+      context
     )
 
     // Then
@@ -89,34 +81,6 @@ describe('<Login> component', () => {
     expect(component).to.have.descendants('div')
     expect(component.text()).to.contains('You are authenticated')
   })
-
-  // it.only('should render i18n ids', () => {
-  //   // Given
-  //   const nextProps = merge(
-  //     props,
-  //     {
-  //       intl: {
-  //         formatMessage: sinon.stub(props.intl, 'formatMessage', (options) => {
-  //           return options.id
-  //         })
-  //       }
-  //     }
-  //   )
-  //   const { context } = intlProvider.getChildContext()
-  //
-  //   // When
-  //   shallow(
-  //     <Signin {...nextProps}/>,
-  //       { context }
-  //   )
-  //
-  //   // Then
-  //   expect(nextProps.intl.formatMessage).to.have.callCount(4)
-  //   expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signin-email-label' })
-  //   expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signin-email-hint-label' })
-  //   expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signin-button-label' })
-  //   expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signin-login-link-label' })
-  // })
 
   it('should set props properly', () => {
     // Given
@@ -146,7 +110,7 @@ describe('<Login> component', () => {
     expect(component.find(Login).props().logout).to.be.instanceof(Function)
   })
 
-  describe ('handle submit', () => {
+  describe('handle submit', () => {
     it('should trigger login if username & password inputs are not empty', () => {
       // Given
       const nextProps = merge(
@@ -160,11 +124,14 @@ describe('<Login> component', () => {
               value: 'password'
             }
           },
-          login: sinon.spy()
+          login: sinon.stub()
         }
       )
+      nextProps.login.resolves()
       const component = mount(
+        <IntlProvider locale="en">
           <Login {...nextProps}/>
+        </IntlProvider>
       )
 
       // When
@@ -190,14 +157,13 @@ describe('<Login> component', () => {
         }
       )
       const component = mount(
-        <Login {...nextProps}/>
+        <IntlProvider locale="en">
+          <Login {...nextProps}/>
+        </IntlProvider>
       )
 
       // When
-      component.find('form').simulate('submit', {
-        preventDefault: () => {
-        }
-      })
+      component.find('form').simulate('submit', { preventDefault: () => {} })
 
       // Then
       expect(nextProps.login).to.not.have.been.called
@@ -218,7 +184,9 @@ describe('<Login> component', () => {
         }
       )
       const component = mount(
+        <IntlProvider locale="en">
           <Login {...nextProps}/>
+        </IntlProvider>
       )
 
       // When

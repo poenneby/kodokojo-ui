@@ -1,12 +1,15 @@
 import React, { Component, PropTypes } from 'react'
+import { compose } from 'redux'
 import { Link } from 'react-router'
 import { reduxForm } from 'redux-form'
+import { intlShape, injectIntl } from 'react-intl'
 
 // UI
 import TextField from 'material-ui/lib/text-field'
 import RaisedButton from 'material-ui/lib/raised-button'
 
 // Component
+import { returnErrorKey } from '../../services/errorService'
 import './login.less'
 import { login, logout } from './login.actions'
 
@@ -17,6 +20,8 @@ export class Login extends Component {
 
   static propTypes = {
     fields: PropTypes.object.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    intl: intlShape.isRequired,
     isAuthenticated: PropTypes.bool,
     login: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired,
@@ -27,18 +32,19 @@ export class Login extends Component {
     super(props)
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = () => {
     const { fields: { username, psw }, login } = this.props
 
     // TODO add redux form validation
-    if (event) {
-      event.preventDefault()
-      const nextLogin = username.value,
-            nextPsw = psw.value
-      if (!nextLogin || !nextLogin.trim() || !nextPsw || !nextPsw.trim()) {
-        return
-      }
-      login(nextLogin.trim(), nextPsw.trim())
+    const nexUserName = username.value
+    const nexPassword = psw.value
+    if (nexUserName && nexUserName.trim() && nexPassword && nexPassword.trim()) {
+      return login(nexUserName.trim(), nexPassword.trim()
+      ).then(() => {
+        return Promise.resolve()
+      }).catch(error => {
+        return Promise.reject({ psw: returnErrorKey('login', 'authenticate', error.message) })
+      })
     }
   }
 
@@ -51,14 +57,15 @@ export class Login extends Component {
   }
 
   render() {
-    const { fields: { username, psw }, isAuthenticated } = this.props
+    const { fields: { username, psw }, handleSubmit, submitting, isAuthenticated } = this.props
+    const { formatMessage }  = this.props.intl
 
     return (
       <div>
         { !isAuthenticated &&
           <form id="loginForm"
                 name="loginForm"
-                onSubmit={ this.handleSubmit }
+                onSubmit={ handleSubmit(this.handleSubmit) }
           >
             <TextField
                 { ...username }
@@ -70,6 +77,7 @@ export class Login extends Component {
             /><br />
             <TextField
                 { ...psw }
+                errorText={ psw.touched && psw.error ? formatMessage({ id: psw.error }) : '' }
                 floatingLabelText="Password"
                 id="psw"
                 name="psw"
@@ -77,8 +85,9 @@ export class Login extends Component {
             /><br />
             <RaisedButton
                 className="form-submit"
+                disabled={ submitting }
                 label="Log in"
-                onTouchTap={ this.handleSubmit }
+                onTouchTap={ handleSubmit(this.handleSubmit) }
                 primary
                 type="submit"
             /><br/>
@@ -109,20 +118,19 @@ const mapStateProps = (state) => {
   }
 }
 
-const mapDispatchProps = (dispatch) => {
-  return {
-    login: (username, psw) => dispatch(login(username, psw)),
-    logout: () => dispatch(logout())
-  }
-}
-
-const LoginContainer = reduxForm(
-  {
-    form: 'loginForm',
-    fields: ['username', 'psw']
-  },
-  mapStateProps,
-  mapDispatchProps
+const LoginContainer = compose(
+  reduxForm(
+    {
+      form: 'loginForm',
+      fields: ['username', 'psw']
+    },
+    mapStateProps,
+    {
+      login,
+      logout
+    }
+  ),
+  injectIntl
 )(Login)
 
 export default LoginContainer

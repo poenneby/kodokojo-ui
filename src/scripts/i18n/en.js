@@ -18,5 +18,5 @@ export default {
   'signin-login-link-label' : 'Already a user? Log in!',
   'signin-create-account-email-required': 'email is required',
   'signin-create-account-409': 'This email already exist',
-  'login-create-account-401': 'Account not found. Check your email or / and your password'
+  'login-authenticate-401': 'Account not found. Check your email or / and your password'
 }
