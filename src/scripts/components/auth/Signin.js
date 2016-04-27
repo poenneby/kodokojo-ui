@@ -46,9 +46,9 @@ export class Signin extends Component {
     } else {
       if (nextEmail && nextEmail.trim()) {
         return createAccount(nextEmail.trim()
-        ).then(
-          Promise.resolve()
-        ).catch(error => {
+        ).then(() => {
+          return Promise.resolve()
+        }).catch(error => {
           return Promise.reject({ email: returnErrorKey('signin', 'create-account', error.message) })
         })
       }
@@ -77,6 +77,7 @@ export class Signin extends Component {
             className="form-submit"
             disabled={ submitting }
             label={ formatMessage({ id:'signin-button-label' }) }
+            onTouchTap={ handleSubmit(this.handleSubmit) }
             primary
             type="submit"
         /><br/>

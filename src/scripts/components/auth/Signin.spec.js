@@ -163,7 +163,7 @@ describe('<Signin> component', () => {
       )
 
       // When
-      component.find('form').simulate('submit', {preventDefault: () => {}})
+      component.find('form').simulate('submit', { preventDefault: () => {} })
 
       // Then
       expect(nextProps.createAccount).to.not.have.been.called
