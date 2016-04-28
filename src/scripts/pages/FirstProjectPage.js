@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 
 // UI
-import Paper from 'material-ui/lib/paper'
+import Paper from 'material-ui/Paper'
 
 // Component
 import { centerPaper } from '../../styles/commons'

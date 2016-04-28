@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 // UI
-import Paper from 'material-ui/lib/paper'
+import Paper from 'material-ui/paper'
 
 // Component
 import { centerPaper } from '../../styles/commons'

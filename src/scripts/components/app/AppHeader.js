@@ -3,9 +3,9 @@ import { Link } from 'react-router'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 
 // UI
-import AppBar from 'material-ui/lib/app-bar'
-import DropDownMenu from 'material-ui/lib/DropDownMenu'
-import MenuItem from 'material-ui/lib/menus/menu-item'
+import AppBar from 'material-ui/AppBar'
+import DropDownMenu from 'material-ui/DropDownMenu'
+import MenuItem from 'material-ui/MenuItem'
 
 // Component
 import './appHeader.less'

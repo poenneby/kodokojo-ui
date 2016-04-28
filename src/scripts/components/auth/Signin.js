@@ -6,8 +6,8 @@ import { combineValidators } from 'revalidate'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 
 // UI
-import TextField from 'material-ui/lib/text-field'
-import RaisedButton from 'material-ui/lib/raised-button'
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
 
 // Component
 import './signin.less'

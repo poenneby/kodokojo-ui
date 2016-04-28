@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
 // UI
-import TableRow from 'material-ui/lib/table/table-row'
-import TableRowColumn from 'material-ui/lib/table/table-row-column'
+import TableRow from 'material-ui/Table/TableRow'
+import TableRowColumn from 'material-ui/Table/TableRowColumn'
 
 // TODO TU
 // User component

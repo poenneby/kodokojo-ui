@@ -5,8 +5,8 @@ import { reduxForm } from 'redux-form'
 import { intlShape, injectIntl } from 'react-intl'
 
 // UI
-import TextField from 'material-ui/lib/text-field'
-import RaisedButton from 'material-ui/lib/raised-button'
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
 
 // Component
 import { returnErrorKey } from '../../services/errorService'

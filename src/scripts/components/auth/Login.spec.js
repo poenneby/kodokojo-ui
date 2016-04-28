@@ -10,6 +10,11 @@ chai.use(sinonChai)
 import merge from 'lodash/merge'
 
 import { IntlProvider } from 'react-intl'
+// FIXME add this to pass test, remove if FIXME
+// see https://github.com/callemall/material-ui/issues/4021
+// and https://github.com/callemall/material-ui/pull/3820
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
 import { Login } from './Login'
 
@@ -100,7 +105,9 @@ describe('<Login> component', () => {
 
     // When
     const component = mount(
+      <MuiThemeProvider muiTheme={getMuiTheme()}>
         <Login {...nextProps}/>
+      </MuiThemeProvider>
     )
 
     // Then
@@ -130,7 +137,9 @@ describe('<Login> component', () => {
       nextProps.login.resolves()
       const component = mount(
         <IntlProvider locale="en">
-          <Login {...nextProps}/>
+          <MuiThemeProvider muiTheme={getMuiTheme()}>
+            <Login {...nextProps}/>
+          </MuiThemeProvider>
         </IntlProvider>
       )
 
@@ -158,7 +167,9 @@ describe('<Login> component', () => {
       )
       const component = mount(
         <IntlProvider locale="en">
-          <Login {...nextProps}/>
+          <MuiThemeProvider muiTheme={getMuiTheme()}>
+            <Login {...nextProps}/>
+          </MuiThemeProvider>
         </IntlProvider>
       )
 
@@ -185,7 +196,9 @@ describe('<Login> component', () => {
       )
       const component = mount(
         <IntlProvider locale="en">
-          <Login {...nextProps}/>
+          <MuiThemeProvider muiTheme={getMuiTheme()}>
+            <Login {...nextProps}/>
+          </MuiThemeProvider>
         </IntlProvider>
       )
 
@@ -208,7 +221,9 @@ describe('<Login> component', () => {
         }
       )
       const component = mount(
-        <Login {...nextProps}/>
+        <MuiThemeProvider muiTheme={getMuiTheme()}>
+          <Login {...nextProps}/>
+        </MuiThemeProvider>
       )
 
       // When

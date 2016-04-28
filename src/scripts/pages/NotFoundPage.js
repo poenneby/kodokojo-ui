@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 //import DocumentMeta from 'react-document-meta'
 
 // UI
-import Paper from 'material-ui/lib/paper'
+import Paper from 'material-ui/Paper'
 
 // Component
 import { centerPaper } from '../../styles/commons'

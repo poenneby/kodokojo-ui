@@ -5,8 +5,8 @@ import { combineValidators } from 'revalidate'
 import { intlShape, injectIntl } from 'react-intl'
 
 // UI
-import TextField from 'material-ui/lib/text-field'
-import RaisedButton from 'material-ui/lib/raised-button'
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
 
 import { createProjectConfig } from './projectConfig.actions'
 import { projectNameValidator } from '../../services/validatorService'

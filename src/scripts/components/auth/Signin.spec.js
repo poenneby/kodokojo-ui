@@ -11,6 +11,11 @@ chai.use(sinonChai)
 import merge from 'lodash/merge'
 
 import { IntlProvider } from 'react-intl'
+// FIXME add this to pass test, remove if FIXME
+// see https://github.com/callemall/material-ui/issues/4021
+// and https://github.com/callemall/material-ui/pull/3820
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
 import { Signin } from './Signin'
 
@@ -110,7 +115,9 @@ describe('<Signin> component', () => {
     // TODO find another way to mock IntlProvider
     const component = mount(
       <IntlProvider locale="en" messages={messages}>
-        <Signin {...nextProps}/>
+        <MuiThemeProvider muiTheme={getMuiTheme()}>
+          <Signin {...nextProps}/>
+        </MuiThemeProvider>
       </IntlProvider>
     )
 
@@ -136,7 +143,9 @@ describe('<Signin> component', () => {
       nextProps.createAccount.resolves()
       const component = mount(
         <IntlProvider locale="en" messages={messages}>
-          <Signin {...nextProps}/>
+          <MuiThemeProvider muiTheme={getMuiTheme()}>
+            <Signin {...nextProps}/>
+          </MuiThemeProvider>
         </IntlProvider>
       )
 
@@ -158,7 +167,9 @@ describe('<Signin> component', () => {
       )
       const component = mount(
         <IntlProvider locale="en" messages={messages}>
-          <Signin {...nextProps}/>
+          <MuiThemeProvider muiTheme={getMuiTheme()}>
+            <Signin {...nextProps}/>
+          </MuiThemeProvider>
         </IntlProvider>
       )
 
