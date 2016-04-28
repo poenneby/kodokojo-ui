@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
 // UI
-import darkBaseTheme from 'material-ui/lib/styles/baseThemes/darkBaseTheme'
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import getMuiTheme from 'material-ui/lib/styles/getMuiTheme'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
 import { setTheme, setLocale } from './appActions'
 const lightTheme = getMuiTheme()
