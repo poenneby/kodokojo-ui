@@ -9,12 +9,13 @@ This is the UI for Kodo Kojo project
 
 ## Contribute
 
-Please, read following [Contribution page](CONTRIBUTE.md)
+Please, read following [Contribution page](CONTRIBUTING.md)
 
 ## Prerequiste
 
 ### Development   
 NodeJS (see package.json file for version)
+Consider using nvm for more 
 
 
 ### Production   
@@ -26,29 +27,55 @@ Working build of [kodokojo](https://github.com/kodokojo/kodokojo) project
 
 ### Development
 
-    npm install
-    eval $(docker-machine env default) // mount docker env variables
-    npm run start:dev
-    
-Install npm packages, build development files into static/, start webpack dev server on localhost:3000
+You have to set two environment variables
+If you are running Kodo Kojo backend in local mode, set variables as follow:
 
-    open http://localhost:3000
+    NODE_ENV=development
+    BABEL_ENV=development
+    
+If you are running Kodo Kojo backend that reroute to AWS instance, set variables as follow:
+
+    NODE_ENV=local
+    BABEL_ENV=development
+
+
+First install npm packages, build development files into static/, start webpack dev server on localhost:3000
+
+    $ npm install
+    $ eval $(docker-machine env default) // mount docker env variables
+    $ npm run start:dev
+    
+Then open ui project in browser
+
+    $ open http://localhost:3000
+
+
+In any case, you will need to run Kodo Kojo backend to be able to test and develop locally, please [refers to proper documentation](https://github.com/kodokojo/kodokojo/blob/master/README.md) for explanation details.
+
 
 ### Local "production"
 
-    npm install
-    npm run start:prod
-    
+Set environment variables to
+
+    NODE_ENV=production
+    BABEL_ENV=production
+
 Install npm packages, build production files into static/, start webpack dev server on localhost:3000
 
-    open http://localhost:8080
-  
-
-### Production
-
-    ./build.sh
+    $ npm install
+    $ npm run start:prod
     
-Build production version of the project, put static/ content into /delivery/kodokojo-ui-<version>.tar.gz
+Then open ui project in browser
+
+    $ open http://localhost:8080
 
 
-Thanks to all Open source project which made such project possible!
+### Build production release
+
+Build production tar.gz release: it build the project, then put static/ content into /delivery/kodokojo-ui-<version>.tar.gz
+
+
+    $ ./build.sh
+    
+
+Thanks to all Open source projects which made such project possible!
