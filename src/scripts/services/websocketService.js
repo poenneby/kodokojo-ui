@@ -56,7 +56,8 @@ websocketService._startSocket = (url) => {
 /**
  * stop socket and ping
  */
-websocketService.stopSocket = () => {
+// TODO add user name and pass it to back for logging purpose
+websocketService.stopSocket = (userName) => {
   if (websocketService.socket) {
     websocketService.socket.close(1000, 'user <user> living')
   }

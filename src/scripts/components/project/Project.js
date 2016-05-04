@@ -30,6 +30,8 @@ class Project extends Component {
   componentWillMount = () => {
     const { updateProject } = this.props
 
+    // TODO let the dev backend reroute ws calls
+    // maybe with https://www.npmjs.com/package/express-ws
     // this.socket = new WebSocket('ws://localhost/api/v1/event')
     this.socket = websocketService
       .initSocket('ws://192.168.99.100:9080/api/v1/event')
@@ -46,7 +48,7 @@ class Project extends Component {
   }
 
   componentWillUnmount = () => {
-    // TODO add user name
+    // TODO pass userName to stop method
     websocketService.stop()
   }
 
