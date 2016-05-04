@@ -66,6 +66,7 @@ ReactDOM.render(
             />
             <Route
               component={FirstProjectPage}
+              onEnter={AuthService.checkAuth}
               path="firstProject"
             />
             <Route
@@ -75,6 +76,7 @@ ReactDOM.render(
             />
             <Route
               component={ProjectDetailPage}
+              onEnter={AuthService.checkAuth}
               path="project"
             />
             <Route
