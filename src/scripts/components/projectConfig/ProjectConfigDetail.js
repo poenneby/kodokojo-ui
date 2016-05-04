@@ -113,8 +113,8 @@ export class ProjectConfigDetail extends Component {
             <TableBody
               showRowHover
             >
-              { projectConfig.stacks && projectConfig.stacks[0] && projectConfig.stacks[0].brickConfigs &&
-              projectConfig.stacks[0].brickConfigs.map((brick, index) => (
+              { projectConfig.stacks && projectConfig.stacks[0] && projectConfig.stacks[0].bricks &&
+              projectConfig.stacks[0].bricks.map((brick, index) => (
                 <TableRow key={ index } selected={ brick.selected }>
                   <TableRowColumn>{ brick.type }</TableRowColumn>
                   <TableRowColumn>{ brick.name }</TableRowColumn>

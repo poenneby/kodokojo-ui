@@ -63,7 +63,7 @@ mappingService.mapStacks = (data) => {
     return {
       type: stack.type,
       name: stack.name,
-      brickConfigs: mappingService.mapBricks(stack.brickConfigs)
+      bricks: mappingService.mapBricks(stack.brickConfigs)
     }
   })
 }
@@ -75,7 +75,7 @@ mappingService.mapStacks = (data) => {
  * @returns {{brick}}
  */
 mappingService.mapBricks = (data) => {
-  let bricks = []
+  const bricks = []
   data.map((brick) => {
     if (brick.type !== 'LOADBALANCER') {
       bricks.push({

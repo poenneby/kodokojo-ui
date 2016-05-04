@@ -68,9 +68,9 @@ class Project extends Component {
           titleStyle={ fontSizeMedium }
         />
         <CardText>
-          { project.stacks && project.stacks[0] && project.stacks[0].brickConfigs &&
-          project.stacks[0].brickConfigs.map((brick, index) => (
-            <div style={{ paddingTop: '.5em' }} key={index} >
+          { project.stacks && project.stacks[0] && project.stacks[0].bricks &&
+          project.stacks[0].bricks.map((brick, index) => (
+            <div key={index} style={{ paddingTop: '.5em' }}>
               { brick.type } : { brick.name } > { brick.state || 'UNDEFINED' }
               { brick.url &&
                 <div><a href={brick.url} target="_blank">{brick.url}</a></div>
