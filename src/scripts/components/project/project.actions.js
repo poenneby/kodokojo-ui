@@ -3,11 +3,11 @@ import { CALL_API } from 'redux-api-middleware'
 
 import api from '../../commons/config'
 import { getHeaders } from '../../services/ioService'
-// import { mapProject } from '../../services/mappingService'
 import {
   PROJECT_REQUEST,
   PROJECT_SUCCESS,
-  PROJECT_FAILURE
+  PROJECT_FAILURE,
+  PROJECT_UPDATE
 } from '../../commons/constants'
 
 
@@ -49,5 +49,12 @@ export function createProject(projectConfigId) {
     }).catch(error => {
       throw new Error(error.message)
     })
+  }
+}
+
+export function updateProject(event) {
+  return {
+    type: PROJECT_UPDATE,
+    payload: event
   }
 }
