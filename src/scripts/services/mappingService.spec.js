@@ -77,6 +77,7 @@ describe('mapping service', () => {
         ]
       }
       const mapUserSpy = sinon.stub(mappingService, 'mapUser', data => data)
+      const mapStacksSpy = sinon.stub(mappingService, 'mapStacks', data => data)
 
       // When
       const returns = mappingService.mapProjectConfig(accountFromApi)
@@ -96,6 +97,7 @@ describe('mapping service', () => {
       expect(mapUserSpy).to.have.callCount(2)
       expect(mapUserSpy).to.have.been.calledWith('ownerId')
       expect(mapUserSpy).to.have.been.calledWith('userId1')
+      expect(mapStacksSpy).to.have.been.calledWith(['stack'])
     })
   })
 })
