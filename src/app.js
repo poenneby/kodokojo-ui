@@ -33,13 +33,14 @@ import UsersPage from './scripts/pages/UsersPage'
 import NotFoundPage from './scripts/pages/NotFoundPage'
 
 import AuthService from './scripts/services/authService'
+import { handleHistoryChange } from './scripts/services/historyService'
 
 // Add the reducer to your store on the `routing` key
 const store = configureStore(initialState)
 
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, store)
-
+history.listen(location => handleHistoryChange(location.pathname))
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
