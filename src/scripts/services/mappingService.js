@@ -1,7 +1,10 @@
+import findIndx from 'lodash/findIndex'
+import omit from 'lodash/omit'
+
 const mappingService = {}
 
 /**
- * Mapping for account
+ * mapping for account
  *
  * @param data
  * @returns {{id: (string), name: (string), userName: (string), email: (string), password: (string), sshKeyPublic: (string), sshKeyPrivate: (string)}}
@@ -19,7 +22,7 @@ mappingService.mapAccount = (data) => {
 }
 
 /**
- * Mapping for user
+ * mapping for user
  *
  * @param data
  * @returns {{id: (string), name: (string), userName: (string), email: (string)}}
@@ -34,18 +37,75 @@ mappingService.mapUser = (data) => {
 }
 
 /**
- * Mapping for project config
+ * mapping for project config
  *
  * @param data
- * @returns {{id: (string), name: (string), owner: {user}, stacks: [array], users: [array<user>]}}
+ * @returns {{id: (string), name: (string), owner: {user}, stacks: [array<{stack}>], users: [array<{user}>]}}
  */
 mappingService.mapProjectConfig = (data) => {
   return {
     id: data.identifier,
     name: data.name,
     owner: mappingService.mapUser(data.owner),
-    stacks: data.stackConfigs,
+    stacks: mappingService.mapStacks(data.stackConfigs),
     users: data.users ? data.users.map(user => mappingService.mapUser(user)) : undefined
+  }
+}
+
+/**
+ * mapping for stacks
+ *
+ * @param data
+ * @returns [array] stacks
+ */
+mappingService.mapStacks = (data) => {
+  return data.map((stack) => {
+    return {
+      type: stack.type,
+      name: stack.name,
+      brickConfigs: mappingService.mapBricks(stack.brickConfigs)
+    }
+  })
+}
+
+/**
+ * mapping for bricks
+ *
+ * @param data
+ * @returns {{brick}}
+ */
+mappingService.mapBricks = (data) => {
+  let bricks = []
+  data.map((brick) => {
+    if (brick.type !== 'LOADBALANCER') {
+      bricks.push({
+        type: brick.type,
+        name: brick.name,
+        state: brick.state,
+        url: brick.url
+      })
+    }
+  })
+  return bricks
+}
+
+/**
+ * mapping for brick events from websocket
+ * 
+ * @param data
+ * @returns {{entity: (string), action: (string), data: {projectConfigurationId: (string), brickType: (string), brickName: (string), brickState: (string|undefined), brickUrl: (string|undefined)}}}
+ */
+mappingService.mapBrickEvents = (data) => {
+  return {
+    entity: data.entity,
+    action: data.action,
+    data: {
+      projectConfigurationId: data.data.projectConfiguration,
+      brickType: data.data.brickType,
+      brickName: data.data.brickName,
+      brickState: data.data.state,
+      brickUrl: data.data.url
+    }
   }
 }
 
@@ -53,5 +113,6 @@ mappingService.mapProjectConfig = (data) => {
 export const mapAccount = mappingService.mapAccount
 export const mapUser = mappingService.mapUser
 export const mapProjectConfig = mappingService.mapProjectConfig
+export const mapBrickEvents = mappingService.mapBrickEvents
 
 export default mappingService
