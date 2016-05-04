@@ -19,13 +19,6 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],
-  // dev server config
-  devServer: {
-    stats: {
-      chunkModules: false,
-      assets: false
-    }
-  },
   module: {
     preLoaders: [
       {

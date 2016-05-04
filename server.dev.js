@@ -30,6 +30,14 @@ apiRoutes(app)
 const compiler = webpack(webpackConfig)
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
+  chunks: false,
+  quiet: false,
+  stats: {
+    colors: true,
+    noInfo: true,
+    chunkModules: false,
+    assets: false
+  },
   publicPath: webpackConfig.output.publicPath
 }))
 app.use(require('webpack-hot-middleware')(compiler))
