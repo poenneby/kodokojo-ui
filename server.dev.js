@@ -31,29 +31,30 @@ const compiler = webpack(webpackConfig)
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
   publicPath: webpackConfig.output.publicPath
-}));
+}))
 app.use(require('webpack-hot-middleware')(compiler))
 
 // static content
 app.use('/static', express.static('static'))
 
 // serve index.html for all get to anything but /api
-app.get(/^(\/(?!api).*)$/, function(req, res) {
+app.get(/^(\/(?!api).*)$/, (req, res) => {
   res.sendFile(path.join(__dirname, 'static/index.html'))
 })
 
 // server config
 const port = config.server.port
+const host = 'localhost'
 
 if (config.api.error) {
   logger.error('Error: Server can’t be started')
   throw new Error('Server error')
 } else {
-  app.listen(port, 'localhost', function(err) {
+  app.listen(port, host, (err) => {
     if (err) {
       logger.error(err)
     } else {
-      logger.info('==> 🌍  Listening at http://localhost:%s', port)
+      logger.info(`==> 🌍  Listening at http://${host}:${port}`)
     }
   })
 }

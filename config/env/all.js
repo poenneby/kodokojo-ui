@@ -1,10 +1,10 @@
 import api from '../shared/api.endpoints'
 
-let localApiHost
 
 /**
  * Set docker host
  */
+let localApiHost
 if (process.env.DOCKER_HOST) {
   const dockerHost = process.env.DOCKER_HOST
 

@@ -21,7 +21,7 @@ describe('mapping service', () => {
       }
 
       // When
-      var returns = mappingService.mapAccount(accountFromApi)
+      const returns = mappingService.mapAccount(accountFromApi)
 
       // Then
       expect(returns).to.deep.equal({
@@ -48,7 +48,7 @@ describe('mapping service', () => {
       }
 
       // When
-      var returns = mappingService.mapUser(accountFromApi)
+      const returns = mappingService.mapUser(accountFromApi)
 
       // Then
       expect(returns).to.deep.equal({
@@ -79,7 +79,7 @@ describe('mapping service', () => {
       const mapUserSpy = sinon.stub(mappingService, 'mapUser', data => data)
 
       // When
-      var returns = mappingService.mapProjectConfig(accountFromApi)
+      const returns = mappingService.mapProjectConfig(accountFromApi)
 
       // Then
       expect(returns).to.deep.equal({

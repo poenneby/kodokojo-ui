@@ -43,10 +43,10 @@ module.exports = {
         loader: 'style!css!less'
       },
       {
-        test: /\.jpg|png|svg$/, loader: "file-loader?name=images/[name].[ext]"
+        test: /\.jpg|png|svg$/, loader: 'file-loader?name=images/[name].[ext]'
       },
       {
-        test: /\.ico$/, loader: "file-loader?name=./[name].[ext]"
+        test: /\.ico$/, loader: 'file-loader?name=./[name].[ext]'
       }
     ]
   }

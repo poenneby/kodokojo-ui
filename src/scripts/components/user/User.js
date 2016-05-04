@@ -40,7 +40,6 @@ const mapStateProps = (state) => {
 
 const mapDispatchProps = (dispatch) => {
   return {
-
   }
 }
 
