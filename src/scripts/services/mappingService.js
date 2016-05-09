@@ -1,6 +1,3 @@
-import findIndx from 'lodash/findIndex'
-import omit from 'lodash/omit'
-
 const mappingService = {}
 
 /**
@@ -17,7 +14,8 @@ mappingService.mapAccount = (data) => {
     email: data.email,
     password: data.password,
     sshKeyPublic: data.sshPublicKey,
-    sshKeyPrivate: data.privateKey
+    sshKeyPrivate: data.privateKey,
+    entityId: data.entityIdentifier
   }
 }
 

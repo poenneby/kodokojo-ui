@@ -56,7 +56,7 @@ export class Signin extends Component {
   }
 
   render() {
-    const { fields: { email }, handleSubmit, submitting } = this.props
+    const { fields: { email, entity }, handleSubmit, submitting } = this.props
     const { formatMessage }  = this.props.intl
 
     return (
@@ -72,6 +72,13 @@ export class Signin extends Component {
             hintText={ formatMessage({id: 'signin-email-hint-label'}) }
             name="email"
             type="email"
+        /><br />
+        <TextField
+          { ...entity }
+          floatingLabelText={ formatMessage({id: 'signin-entity-label'}) }
+          hintText={ formatMessage({id: 'signin-entity-hint-label'}) }
+          name="entity"
+          type="text"
         /><br />
         <RaisedButton
             className="form-submit"
@@ -108,7 +115,7 @@ const SigninContainer = compose(
   reduxForm(
     {
       form: 'signinForm',
-      fields: ['email'],
+      fields: ['email', 'entity'],
       touchOnChange: true,
       validate
     },

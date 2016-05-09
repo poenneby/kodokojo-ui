@@ -17,7 +17,8 @@ describe('mapping service', () => {
         email: 'email',
         password: 'password',
         sshPublicKey: 'sshPublicKey',
-        privateKey: 'privateKey'
+        privateKey: 'privateKey',
+        entityIdentifier: 'entityIdentifier'
       }
 
       // When
@@ -31,9 +32,9 @@ describe('mapping service', () => {
         email: 'email',
         password: 'password',
         sshKeyPublic: 'sshPublicKey',
-        sshKeyPrivate: 'privateKey'
+        sshKeyPrivate: 'privateKey',
+        entityId: 'entityIdentifier'
       })
-
     })
   })
 
@@ -57,7 +58,6 @@ describe('mapping service', () => {
         userName: 'username',
         email: 'email'
       })
-
     })
   })
 

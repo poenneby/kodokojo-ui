@@ -14,6 +14,8 @@ export default {
   'project-name-pattern-error': 'Invalid projectConfig name, must be between 4 and 20 non special characters long',
   'signin-email-label': 'Email',
   'signin-email-hint-label': 'your.email@domain.ext',
+  'signin-entity-label': 'Entity',
+  'signin-entity-hint-label': 'your compagny name (optional)',
   'signin-button-label': 'Sign in',
   'signin-login-link-label' : 'Already a user? Log in!',
   'signin-create-account-email-required': 'email is required',

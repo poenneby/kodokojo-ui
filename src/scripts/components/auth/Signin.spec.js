@@ -91,11 +91,13 @@ describe('<Signin> component', () => {
     )
 
     // Then
-    expect(nextProps.intl.formatMessage).to.have.callCount(4)
+    expect(nextProps.intl.formatMessage).to.have.callCount(6)
     expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signin-email-label' })
     expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signin-email-hint-label' })
     expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signin-button-label' })
     expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signin-login-link-label' })
+    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signin-entity-label' })
+    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signin-entity-hint-label' })
   })
 
   it('should set props properly', () => {
