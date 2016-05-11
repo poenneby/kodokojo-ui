@@ -3,6 +3,9 @@
 var path = require('path')
 var webpack = require('webpack')
 
+// FIXME to prevent error, node-sass must be specifically 3.4.2
+// see https://github.com/react-toolbox/react-toolbox-example/issues/19
+
 module.exports = {
   context: __dirname,
   entry: [
@@ -19,6 +22,13 @@ module.exports = {
       'process.env.BABEL_ENV': '"production"'
     })
   ],
+  resolve: {
+    extensions: ['', '.jsx', '.scss', '.js', '.json'],
+    modulesDirectories: [
+      'node_modules',
+      path.resolve(__dirname, './node_modules')
+    ]
+  },
   module: {
     preLoaders: [
       {
@@ -46,6 +56,10 @@ module.exports = {
         test: /\.less$/,
         exclude: /node_modules/,
         loader: 'style!css!less'
+      },
+      {
+        test: /(\.scss|\.css)$/,
+        loader: 'style!css!sass'
       },
       {
         test: /\.jpg|png|svg$/, loader: 'file-loader?name=images/[name].[ext]'
