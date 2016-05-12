@@ -3,13 +3,15 @@ import { Link } from 'react-router'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 
 // UI
-import AppBar from 'material-ui/AppBar'
-import DropDownMenu from 'material-ui/DropDownMenu'
-import MenuItem from 'material-ui/MenuItem'
+// FIXME temporary commented, must be replace by toolbox or custom components
+// import DropDownMenu from 'material-ui/DropDownMenu'
+// import MenuItem from 'material-ui/MenuItem'
+// import Navigation from 'react-toolbox/lib/navigation'
+
+import AppBar from '../_ui/appBar/AppBar'
 
 // Component
 import './appHeader.less'
-import logoKodoKojo from '../../../images/logo-kodokojo-bl.svg'
 
 // AppHeader
 export class AppHeader extends Component {
@@ -30,34 +32,54 @@ export class AppHeader extends Component {
 
     return (
       <AppBar
-        className="app-bar app-header"
-        showMenuIconButton={false}
-        title={<img src={ logoKodoKojo } />}
-        titleStyle={{paddingTop: '10px', overflow: 'visible'}}
+        flat
       >
-        <div className="breadcrumb">
-          <Link to="/">
-            <FormattedMessage id={'app-nav-home-label'}/>
-          </Link>
-          {' | '}
-          <Link to="/users">
-            <FormattedMessage id={'app-nav-users-label'}/>
-          </Link>
-        </div>
-        <DropDownMenu
-          className={ 'locale-selector' }
-          labelStyle={ {color: '#fff'} }
-          onChange={ (event,i,v) => onLanguageChange(v) }
-          value={ languageSelected }
-        >
-          <MenuItem primaryText={ formatMessage({id:'app-lang-en-label'}) }
-                    value="en"
-          />
-          <MenuItem primaryText={ formatMessage({id:'app-lang-fr-label'}) }
-                    value="fr"
-          />
-        </DropDownMenu>
+        <Tabs
+          // TODO bind values to store
+          active={ 0 }
+          tabsList={ [
+            {
+              label: 'Xebia'
+            },
+            {
+              label: 'Projects'
+            },
+            {
+              label: 'Kodo Kojo'
+            },
+            {
+              label: 'Stacks',
+              disabled: true
+            }
+          ] }
+        />
       </AppBar>
+      // FIXME this is for testing purpose, delete when tabs are implemented
+      // <Navigation type="horizontal">
+      //   <Link to="/">
+      //   <FormattedMessage id={'app-nav-home-label'}/>
+      //   </Link>
+      //   {' | '}
+      //   <Link to="/users">
+      //     <FormattedMessage id={'app-nav-users-label'}/>
+      //   </Link>
+      // </Navigation>
+
+      // TODO move this in app header, set param to show / hide language switch + automatically browser available languages
+      // <DropDownMenu
+      //   className={ 'locale-selector' }
+      //   labelStyle={ {color: '#fff'} }
+      //   onChange={ (event,i,v) => onLanguageChange(v) }
+      //   value={ languageSelected }
+      // >
+      //   <MenuItem primaryText={ formatMessage({id:'app-lang-en-label'}) }
+      //             value="en"
+      //   />
+      //   <MenuItem primaryText={ formatMessage({id:'app-lang-fr-label'}) }
+      //             value="fr"
+      //   />
+      // </DropDownMenu>
+
     )
   }
 }
