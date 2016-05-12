@@ -34,25 +34,6 @@ export class AppHeader extends Component {
       <AppBar
         flat
       >
-        <Tabs
-          // TODO bind values to store
-          active={ 0 }
-          tabsList={ [
-            {
-              label: 'Xebia'
-            },
-            {
-              label: 'Projects'
-            },
-            {
-              label: 'Kodo Kojo'
-            },
-            {
-              label: 'Stacks',
-              disabled: true
-            }
-          ] }
-        />
       </AppBar>
       // FIXME this is for testing purpose, delete when tabs are implemented
       // <Navigation type="horizontal">
