@@ -13,14 +13,10 @@ Please, read following [Contribution page](CONTRIBUTING.md).
 
 ## Prerequiste
 
-### Development   
-NodeJS (see package.json file for version).
-Consider using nvm for more.
-
-
-### Production   
-Docker 1.8 or newer.
-Working build of [kodokojo](https://github.com/kodokojo/kodokojo) project.
+- NodeJS (see package.json file for version).
+- Consider using nvm to switch node version in development easily.
+- Docker 1.8 or newer.
+- A working build of [kodokojo](https://github.com/kodokojo/kodokojo) project.
 
 ## Installation & build
 
