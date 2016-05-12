@@ -1,26 +1,77 @@
+// font family
+@import url(https://fonts.googleapis.com/css?family=Catamaran:400,100,200,300,500,600,700,800,900&subset=latin,latin-ext);
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,300,100italic,300italic,400italic,500,500italic,700,700italic,900,900italic);
 
-// font size
-@default: .75em;
-@h2: 1.8em;
-@h3: 1.5em;
+@font-family-primary: 'Catamaran', sans-serif;
+@font-family-secondary: 'Roboto', sans-serif;
 
-@font-size-smaller: .5em;
-@font-size-small: .8em;
-@font-size-regular: 1em;
-@font-size-medium: 1.2em;
-@font-size-large: 1.4em;
+.font-standard--thin {
+  font-family: @font-family-primary;
+  font-weight: 100;
+}
+
+.font-standard--normal {
+  font-family: @font-family-primary;
+  font-weight: 400;
+}
+
+// font sizes
+@default: .75rem;
+@h2: 1.8rem;
+@h3: 1.5rem;
+
+@font-size-smaller: .5rem;
+@font-size-small: .8rem;
+@font-size-normal: 1rem;
+@font-size-medium: 1.2rem;
+@font-size-large: 1.4rem;
+@font-size-larger: 1.7rem;
+
+.font-size--smaller {
+  font-size: @font-size-smaller;
+}
+
+.font-size--small {
+  font-size: @font-size-small;
+}
+
+.font-size--regular {
+  font-size: @font-size-normal;
+}
+
+.font-size--medium {
+  font-size: @font-size-medium;
+}
+
+.font-size--large {
+  font-size: @font-size-large;
+}
+
+.font-size--larger {
+  font-size: @font-size-larger;
+}
+
+// TODO
+// font weights
 
 // colors
-@color-primary-dark: #3A3A3D;
-@color-primary-standard: #5A5A5E;
-@color-primary-light: #FFFFFF;
-@color-secondary-light: #5FC8D4;
-@color-secondary-standard: #259FB7;
-@color-secondary-dark: #237688;
-@color-ternary-standard: #C9564B;
-// font-colors
-@color-font-light: #FFFFFF;
-@color-font-dark: #242424;
+// primary
+@color-primary-0: #36353A;
+@color-primary-1: #4A4A52;
+@color-primary-2: #5D5D66;
+@color-primary-3: #75757F;
+// secondary
+@color-secondary-0: #60DADF;
+@color-secondary-1: #6CBDEC;
+@color-secondary-2: #84A5EC;
+@color-secondary-3: #9991CD;
+
+// font colors
+@color-font-0: #47474C;
+@color-font-1: #75757F;
+@color-font-2: #8F8F99;
+@color-font-3: #A6A6B2;
+@color-font-4: #FFFFFF;
 
 // positions
 .center {
