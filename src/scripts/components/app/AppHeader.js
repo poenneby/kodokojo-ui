@@ -33,8 +33,7 @@ export class AppHeader extends Component {
     return (
       <AppBar
         flat
-      >
-      </AppBar>
+      />
       // FIXME this is for testing purpose, delete when tabs are implemented
       // <Navigation type="horizontal">
       //   <Link to="/">

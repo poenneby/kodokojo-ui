@@ -29,8 +29,9 @@ export class AppBar extends Component {
     return (
       <ToolboxAppBar
         className="header-bar"
-        fix
-        flat
+        // FIXME this parameters don’t seems to do anything
+        fix={ fix }
+        flat={ flat }
       >
         <img className="logo-kodokojo" src={logoKodoKojo} />
         { children }
