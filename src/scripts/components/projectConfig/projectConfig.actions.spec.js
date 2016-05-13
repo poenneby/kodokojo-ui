@@ -67,7 +67,7 @@ describe('project config actions', () => {
     it('should create project config', (done) => {
       // Given
       const projectConfigName = 'Acme',
-            projectConfigOwner = 'idUs3r',
+            projectConfigAdmins = ['idUs3r'],
             projectConfigId = 'projectId'
       const expectedActions = [
         {
@@ -98,7 +98,7 @@ describe('project config actions', () => {
       const store = mockStore({})
 
       // Then
-      return store.dispatch(actions.createProjectConfig(projectConfigName, projectConfigOwner)).then(() => {
+      return store.dispatch(actions.createProjectConfig(projectConfigName, projectConfigAdmins)).then(() => {
         expect(store.getActions()).to.deep.equal(expectedActions)
         expect(historyPushSpy).to.have.callCount(1)
         expect(historyPushSpy).to.have.been.calledWith('/projectConfig')
@@ -127,12 +127,12 @@ describe('project config actions', () => {
       it('should return project config', (done) => {
         // Given
         const projectConfigName = 'Acme',
-              projectConfigOwner = 'idUs3r',
+              projectConfigAdmins = ['idUs3r'],
               projectConfigId = 'projectId',
               projectConfig = {
                 id: projectConfigId,
                 name: projectConfigName,
-                owner: projectConfigOwner,
+                admins: projectConfigAdmins,
                 users: [
                   { id: 'otherUserId' }
                 ]
@@ -209,12 +209,12 @@ describe('project config actions', () => {
       it('should return project config', (done) => {
         // Given
         const projectConfigName = 'Acme',
-              projectConfigOwner = 'idUs3r',
+              projectConfigAdmins = ['idUs3r'],
               projectConfigId = 'projectId',
               projectConfig = {
                 id: projectConfigId,
                 name: projectConfigName,
-                owner: projectConfigOwner,
+                admins: projectConfigAdmins,
                 users: [
                   { id: 'otherUserId' }
                 ]

@@ -130,7 +130,7 @@ export function addUserToProjectConfig(projectConfigId, email) {
     ).then(data => {
       if (!data.error) {
         // TODO add dispatch show user details when user is created
-        return dispatch(requestAddUserToProjectConfig(projectConfigId, data.payload.account.identifier))
+        return dispatch(requestAddUserToProjectConfig(projectConfigId, data.payload.account.id))
       } else {
         throw new Error(data.payload.status)
       }

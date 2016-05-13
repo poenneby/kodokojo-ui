@@ -58,7 +58,8 @@ class Project extends Component {
     let owner,
         name
     if (project) {
-      owner = project.owner.userName
+      // FIXME admins is now an array
+      owner = project.admins[0].userName
       name = project.name
     }
 

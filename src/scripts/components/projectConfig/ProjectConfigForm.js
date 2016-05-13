@@ -97,7 +97,7 @@ const mapStateProps = (state) => {
 
 const mapDispatchProps = (dispatch) => {
   return {
-    createProjectConfig: (projectName, projectOwner, projectUsers) => dispatch(createProjectConfig(projectName, projectOwner, projectUsers))
+    createProjectConfig: (projectName, projectAdmins, projectUsers) => dispatch(createProjectConfig(projectName, projectAdmins, projectUsers))
   }
 }
 

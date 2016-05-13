@@ -68,7 +68,9 @@ describe('mapping service', () => {
       const accountFromApi = {
         identifier: 'id',
         name: 'name',
-        owner: 'ownerId',
+        admins: [
+          'admin1'
+        ],
         stackConfigs: [
           'stack'
         ],
@@ -86,7 +88,9 @@ describe('mapping service', () => {
       expect(returns).to.deep.equal({
         id: 'id',
         name: 'name',
-        owner: 'ownerId',
+        admins: [
+          'admin1'
+        ],
         stacks: [
           'stack'
         ],
@@ -95,7 +99,7 @@ describe('mapping service', () => {
         ]
       })
       expect(mapUserSpy).to.have.callCount(2)
-      expect(mapUserSpy).to.have.been.calledWith('ownerId')
+      expect(mapUserSpy).to.have.been.calledWith('admin1')
       expect(mapUserSpy).to.have.been.calledWith('userId1')
       expect(mapStacksSpy).to.have.been.calledWith(['stack'])
     })

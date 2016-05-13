@@ -38,13 +38,13 @@ mappingService.mapUser = (data) => {
  * mapping for project config
  *
  * @param data
- * @returns {{id: (string), name: (string), owner: {user}, stacks: [array<{stack}>], users: [array<{user}>]}}
+ * @returns {{id: (string), name: (string), admins: {user}, stacks: [array<{stack}>], users: [array<{user}>]}}
  */
 mappingService.mapProjectConfig = (data) => {
   return {
     id: data.identifier,
     name: data.name,
-    owner: mappingService.mapUser(data.owner),
+    admins: data.admins ? data.admins.map(admin => mappingService.mapUser(admin)) : undefined,
     stacks: mappingService.mapStacks(data.stackConfigs),
     users: data.users ? data.users.map(user => mappingService.mapUser(user)) : undefined
   }

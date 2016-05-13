@@ -89,7 +89,8 @@ export class ProjectConfigDetail extends Component {
   render() {
     const { fields: { email }, projectConfig, handleSubmit, submitting } = this.props
     const { formatMessage }  = this.props.intl
-    const owner = projectConfig.owner && projectConfig.owner.userName ? projectConfig.owner.userName : ''
+    // FIXME modify owner, could have multiple users in it
+    const owner = projectConfig.admins && projectConfig.admins[0].userName ? projectConfig.admins[0].userName : ''
 
     return (
       <Card>
