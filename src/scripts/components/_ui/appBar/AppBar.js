@@ -24,13 +24,13 @@ export class AppBar extends Component {
   }
 
   render() {
-    const { children, fix, flat } = this.props
+    const { children, fixed, flat } = this.props
     
     return (
       <ToolboxAppBar
         className="header-bar"
         // FIXME this parameters don’t seems to do anything
-        fix={ fix }
+        fixed={ fixed }
         flat={ flat }
       >
         <img className="logo-kodokojo" src={logoKodoKojo} />
