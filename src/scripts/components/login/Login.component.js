@@ -11,7 +11,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 // Component
 import { returnErrorKey } from '../../services/errorService'
 import './login.less'
-import { login, logout } from './login.actions'
+import { login, logout } from './login.actions.js'
 
 // TODO implement i18n
 // TODO if user already logged in, fetch user id from storage and fetch user from api to store

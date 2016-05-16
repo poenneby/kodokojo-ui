@@ -44,7 +44,6 @@ export default function auth(state = initialState, action) {
   }
 
   if (action.type === ACCOUNT_NEW_ID_FAILURE) {
-    // TODO
     return {
       ...state,
       isAuthenticated: false,
@@ -74,7 +73,7 @@ export default function auth(state = initialState, action) {
     // TODO
     return state
   }
-  
+
   if (action.type === AUTH_REQUEST) {
     return merge(
       {},

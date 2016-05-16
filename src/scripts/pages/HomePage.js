@@ -5,7 +5,7 @@ import Paper from 'material-ui/Paper'
 
 // Component
 import { centerPaper } from '../../styles/commons'
-import Signin from '../components/auth/Signin'
+import Signup from '../components/signup/Signup.component'
 
 class HomePage extends Component {
   render() {
@@ -16,7 +16,7 @@ class HomePage extends Component {
           style={ centerPaper }
           zDepth={1}
         >
-          <Signin />
+          <Signup />
         </Paper>
       </div>
     )

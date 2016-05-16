@@ -10,8 +10,8 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 
 // Component
-import './signin.less'
-import { createAccount } from './signin.actions'
+import './signup.less'
+import { createAccount } from './signup.actions.js'
 import { emailValidator } from '../../services/validatorService'
 import { returnErrorKey } from '../../services/errorService'
 
@@ -20,8 +20,8 @@ const validate = combineValidators({
   email: emailValidator('email')
 })
 
-// Signin component
-export class Signin extends Component {
+// Signup component
+export class Signup extends Component {
 
   static propTypes = {
     account: PropTypes.object,
@@ -49,7 +49,7 @@ export class Signin extends Component {
         ).then(() => {
           return Promise.resolve()
         }).catch(error => {
-          return Promise.reject({ email: returnErrorKey('signin', 'create-account', error.message) })
+          return Promise.reject({ email: returnErrorKey('signup', 'create-auth', error.message) })
         })
       }
     }
@@ -60,45 +60,45 @@ export class Signin extends Component {
     const { formatMessage }  = this.props.intl
 
     return (
-      <form id="signinForm"
-            name="signinForm"
+      <form id="signupForm"
+            name="signupForm"
             noValidate
             onSubmit={ handleSubmit(this.handleSubmit) }
       >
         <TextField
             { ...email }
             errorText={ email.touched && email.error ? formatMessage({ id: email.error }, {fieldName: formatMessage({ id:'email-input-label' })}) : '' }
-            floatingLabelText={ formatMessage({id: 'signin-email-label'}) }
-            hintText={ formatMessage({id: 'signin-email-hint-label'}) }
+            floatingLabelText={ formatMessage({id: 'signup-email-label'}) }
+            hintText={ formatMessage({id: 'signup-email-hint-label'}) }
             name="email"
             type="email"
         /><br />
         <TextField
           { ...entity }
-          floatingLabelText={ formatMessage({id: 'signin-entity-label'}) }
-          hintText={ formatMessage({id: 'signin-entity-hint-label'}) }
+          floatingLabelText={ formatMessage({id: 'signup-entity-label'}) }
+          hintText={ formatMessage({id: 'signup-entity-hint-label'}) }
           name="entity"
           type="text"
         /><br />
         <RaisedButton
             className="form-submit"
             disabled={ submitting }
-            label={ formatMessage({ id:'signin-button-label' }) }
+            label={ formatMessage({ id:'signup-button-label' }) }
             onTouchTap={ handleSubmit(this.handleSubmit) }
             primary
             type="submit"
         /><br/>
-        <Link title={ formatMessage({ id:'signin-login-link-label' }) }
+        <Link title={ formatMessage({ id:'signup-login-link-label' }) }
               to="/login"
         >
-          <FormattedMessage id={'signin-login-link-label'}/>
+          <FormattedMessage id={'signup-login-link-label'}/>
         </Link>
       </form>
     )
   }
 }
 
-// Signin container
+// Signup container
 const mapStateProps = (state) => {
   return {
     account: state.auth.account
@@ -111,10 +111,10 @@ const mapDispatchProps = (dispatch) => {
   }
 }
 
-const SigninContainer = compose(
+const SignupContainer = compose(
   reduxForm(
     {
-      form: 'signinForm',
+      form: 'signupForm',
       fields: ['email', 'entity'],
       touchOnChange: true,
       validate
@@ -123,6 +123,6 @@ const SigninContainer = compose(
     mapDispatchProps
   ),
   injectIntl
-)(Signin)
+)(Signup)
 
-export default SigninContainer
+export default SignupContainer

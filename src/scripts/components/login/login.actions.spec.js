@@ -8,8 +8,8 @@ import { apiMiddleware } from 'redux-api-middleware'
 import configureMockStore from 'redux-mock-store'
 
 import api from '../../commons/config'
-import * as actions from './login.actions'
-import { __RewireAPI__ as actionsRewireApi } from './login.actions'
+import * as actions from './login.actions.js'
+import { __RewireAPI__ as actionsRewireApi } from './login.actions.js'
 import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE, AUTH_RESET } from '../../commons/constants'
 
 // dependencies to mock
