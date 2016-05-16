@@ -59,7 +59,7 @@ mappingService.mapStack = (data) => {
   return {
     type: data.type,
     name: data.name,
-    bricks: data.brickConfigs ? data.brickConfigs.map(brick => mappingService.mapBrick(brick)) : undefined
+    bricks: data.brickConfigs ? data.brickConfigs.map(brick => mappingService.mapBrick(brick)).filter(brick => brick !== undefined) : undefined
   }
 }
 
