@@ -61,9 +61,13 @@ describe('mapping service', () => {
     })
   })
 
-  describe('map project', () => {
+  describe('map project config', () => {
+    afterEach(() => {
+      mappingService.mapUser.restore()
+      mappingService.mapStack.restore()
+    })
 
-    it('should map project', () => {
+    it('should map project config', () => {
       // Given
       const accountFromApi = {
         identifier: 'id',
@@ -72,14 +76,15 @@ describe('mapping service', () => {
           'admin1'
         ],
         stackConfigs: [
-          'stack'
+          'stack1',
+          'stack2'
         ],
         users: [
           'userId1'
         ]
       }
       const mapUserSpy = sinon.stub(mappingService, 'mapUser', data => data)
-      const mapStacksSpy = sinon.stub(mappingService, 'mapStacks', data => data)
+      const mapStackSpy = sinon.stub(mappingService, 'mapStack', data => data)
 
       // When
       const returns = mappingService.mapProjectConfig(accountFromApi)
@@ -92,7 +97,8 @@ describe('mapping service', () => {
           'admin1'
         ],
         stacks: [
-          'stack'
+          'stack1',
+          'stack2'
         ],
         users:  [
           'userId1'
@@ -101,7 +107,123 @@ describe('mapping service', () => {
       expect(mapUserSpy).to.have.callCount(2)
       expect(mapUserSpy).to.have.been.calledWith('admin1')
       expect(mapUserSpy).to.have.been.calledWith('userId1')
-      expect(mapStacksSpy).to.have.been.calledWith(['stack'])
+      expect(mapStackSpy).to.have.callCount(2)
+      expect(mapStackSpy).to.have.been.calledWith('stack1')
+      expect(mapStackSpy).to.have.been.calledWith('stack2')
+    })
+  })
+
+  describe('map user', () => {
+    it('should map user', () => {
+      // Given
+      const userFromApi = {
+        identifier: 'id',
+        name: 'name',
+        username: 'userName',
+        email: 'test@email.com'
+      }
+
+      // When
+      const returns = mappingService.mapUser(userFromApi)
+
+      // Then
+      expect(returns).to.deep.equal({
+        id: 'id',
+        name: 'name',
+        userName: 'userName',
+        email: 'test@email.com'
+      })
+    })
+  })
+
+  describe('map stack', () => {
+    afterEach(() => {
+      mappingService.mapBrick.restore()
+    })
+
+    it('should map stack', () => {
+      // Given
+      const stackFromApi = {
+        type: 'type',
+        name: 'name',
+        brickConfigs: [
+          'brick1',
+          'brick2'
+        ]
+      }
+      const mapBrickSpy = sinon.stub(mappingService, 'mapBrick', data => data)
+
+      // When
+      const returns = mappingService.mapStack(stackFromApi)
+
+      // Then
+      expect(returns).to.deep.equal({
+        type: 'type',
+        name: 'name',
+        bricks: [
+          'brick1',
+          'brick2'
+        ]
+      })
+      expect(mapBrickSpy).to.have.callCount(2)
+      expect(mapBrickSpy).to.have.been.calledWith('brick1')
+      expect(mapBrickSpy).to.have.been.calledWith('brick2')
+    })
+  })
+
+  describe('map brick', () => {
+    it('should map brick', () => {
+      // Given
+      const brickFromApi = {
+        type: 'type',
+        name: 'name',
+        state: 'state',
+        url: 'url'
+      }
+
+      // When
+      const returns = mappingService.mapBrick(brickFromApi)
+
+      // Then
+      expect(returns).to.deep.equal({
+        type: 'type',
+        name: 'name',
+        state: 'state',
+        url: 'url'
+      })
+    })
+  })
+
+  describe('map brick event', () => {
+    it('should map brick event', () => {
+      // Given
+      const brickEventFromApi = {
+        entity: 'entity',
+        action: 'action',
+        data: {
+          projectConfiguration: 'projectConfigId',
+          brickType: 'brickType',
+          brickName: 'brickName',
+          state: 'state',
+          url: 'url'
+        }
+      }
+
+      // When
+      const returns = mappingService.mapBrickEvent(brickEventFromApi)
+
+      // Then
+      expect(returns).to.deep.equal({
+        entity: 'entity',
+        action: 'action',
+        data: {
+          projectConfigurationId: 'projectConfigId',
+          brickType: 'brickType',
+          brickName: 'brickName',
+          brickState: 'state',
+          brickUrl: 'url'
+        }
+      })
     })
   })
 })

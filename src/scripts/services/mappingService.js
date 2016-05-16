@@ -20,6 +20,22 @@ mappingService.mapAccount = (data) => {
 }
 
 /**
+ * mapping for project config
+ *
+ * @param data
+ * @returns {{id: (string), name: (string), admins: {user}, stacks: [array<{stack}>], users: [array<{user}>]}}
+ */
+mappingService.mapProjectConfig = (data) => {
+  return {
+    id: data.identifier,
+    name: data.name,
+    admins: data.admins ? data.admins.map(admin => mappingService.mapUser(admin)) : undefined,
+    stacks: data.stackConfigs ? data.stackConfigs.map(stack => mappingService.mapStack(stack)) : undefined,
+    users: data.users ? data.users.map(user => mappingService.mapUser(user)) : undefined
+  }
+}
+
+/**
  * mapping for user
  *
  * @param data
@@ -35,56 +51,32 @@ mappingService.mapUser = (data) => {
 }
 
 /**
- * mapping for project config
+ * mapping for stack
  *
- * @param data
- * @returns {{id: (string), name: (string), admins: {user}, stacks: [array<{stack}>], users: [array<{user}>]}}
+ * @returns {{type: (string), name: (string), bricks: [array<{brick}]}}
  */
-mappingService.mapProjectConfig = (data) => {
+mappingService.mapStack = (data) => {
   return {
-    id: data.identifier,
+    type: data.type,
     name: data.name,
-    admins: data.admins ? data.admins.map(admin => mappingService.mapUser(admin)) : undefined,
-    stacks: mappingService.mapStacks(data.stackConfigs),
-    users: data.users ? data.users.map(user => mappingService.mapUser(user)) : undefined
+    bricks: data.brickConfigs ? data.brickConfigs.map(brick => mappingService.mapBrick(brick)) : undefined
   }
 }
 
 /**
- * mapping for stacks
+ * mapping for brick
  *
- * @param data
- * @returns [array] stacks
+ * @returns {{type: (string), name: (string), state: (string), url: (string)}}
  */
-mappingService.mapStacks = (data) => {
-  return data.map((stack) => {
+mappingService.mapBrick = (data) => {
+  if (data.type !== 'LOADBALANCER') {
     return {
-      type: stack.type,
-      name: stack.name,
-      bricks: mappingService.mapBricks(stack.brickConfigs)
+      type: data.type,
+      name: data.name,
+      state: data.state,
+      url: data.url
     }
-  })
-}
-
-/**
- * mapping for bricks
- *
- * @param data
- * @returns {{brick}}
- */
-mappingService.mapBricks = (data) => {
-  const bricks = []
-  data.map((brick) => {
-    if (brick.type !== 'LOADBALANCER') {
-      bricks.push({
-        type: brick.type,
-        name: brick.name,
-        state: brick.state,
-        url: brick.url
-      })
-    }
-  })
-  return bricks
+  }
 }
 
 /**
@@ -93,7 +85,7 @@ mappingService.mapBricks = (data) => {
  * @param data
  * @returns {{entity: (string), action: (string), data: {projectConfigurationId: (string), brickType: (string), brickName: (string), brickState: (string|undefined), brickUrl: (string|undefined)}}}
  */
-mappingService.mapBrickEvents = (data) => {
+mappingService.mapBrickEvent = (data) => {
   return {
     entity: data.entity,
     action: data.action,
@@ -111,6 +103,6 @@ mappingService.mapBrickEvents = (data) => {
 export const mapAccount = mappingService.mapAccount
 export const mapUser = mappingService.mapUser
 export const mapProjectConfig = mappingService.mapProjectConfig
-export const mapBrickEvents = mappingService.mapBrickEvents
+export const mapBrickEvent = mappingService.mapBrickEvent
 
 export default mappingService

@@ -11,7 +11,7 @@ import CardText from 'material-ui/Card/CardText'
 // Component
 import { fontSizeMedium } from '../../../styles/commons'
 import { updateProject } from './project.actions'
-import { mapBrickEvents } from '../../services/mappingService'
+import { mapBrickEvent } from '../../services/mappingService'
 import websocketService from '../../services/websocketService'
 
 class Project extends Component {
@@ -41,7 +41,7 @@ class Project extends Component {
           event = JSON.parse(event.data)
           if(event.entity === 'brick' && event.action === 'updateState') {
             console.log(event)
-            updateProject(mapBrickEvents(event))
+            updateProject(mapBrickEvent(event))
           }
         }
       })
