@@ -8,6 +8,10 @@ import mappingService from './mappingService'
 describe('mapping service', () => {
 
   describe('map account', () => {
+    afterEach(() => {
+      mappingService.mapProjectConfigId.restore()
+    })
+
     it('should map account', () => {
       // Given
       const accountFromApi = {
@@ -18,8 +22,13 @@ describe('mapping service', () => {
         password: 'password',
         sshPublicKey: 'sshPublicKey',
         privateKey: 'privateKey',
-        entityIdentifier: 'entityIdentifier'
+        entityIdentifier: 'entityIdentifier',
+        projectConfigurationIds: [
+          'projectConfig1',
+          'projectConfig2'
+        ]
       }
+      const mapProjectConfigIdSpy = sinon.stub(mappingService, 'mapProjectConfigId', data => data)
 
       // When
       const returns = mappingService.mapAccount(accountFromApi)
@@ -33,7 +42,33 @@ describe('mapping service', () => {
         password: 'password',
         sshKeyPublic: 'sshPublicKey',
         sshKeyPrivate: 'privateKey',
-        entityId: 'entityIdentifier'
+        entityId: 'entityIdentifier',
+        projectConfigIds: [
+          'projectConfig1',
+          'projectConfig2'
+        ]
+      })
+      expect(mapProjectConfigIdSpy).to.have.callCount(2)
+      expect(mapProjectConfigIdSpy).to.have.been.calledWith('projectConfig1')
+      expect(mapProjectConfigIdSpy).to.have.been.calledWith('projectConfig2')
+    })
+  })
+
+  describe('map project config id', () => {
+    it('should map project config id', () => {
+      // Given
+      const projectConfigIdFromApi = {
+        projectConfigurationId: 'projectConfigId',
+        projectId: 'projectId'
+      }
+
+      // When
+      const returns = mappingService.mapProjectConfigId(projectConfigIdFromApi)
+
+      // Then
+      expect(returns).to.deep.equal({
+        projectConfigId: 'projectConfigId',
+        projectId: 'projectId'
       })
     })
   })
@@ -217,7 +252,6 @@ describe('mapping service', () => {
         entity: 'entity',
         action: 'action',
         data: {
-          projectConfigurationId: 'projectConfigId',
           brickType: 'brickType',
           brickName: 'brickName',
           brickState: 'state',

@@ -15,9 +15,23 @@ mappingService.mapAccount = (data) => {
     password: data.password,
     sshKeyPublic: data.sshPublicKey,
     sshKeyPrivate: data.privateKey,
-    entityId: data.entityIdentifier
+    entityId: data.entityIdentifier,
+    projectConfigIds: data.projectConfigurationIds ? data.projectConfigurationIds.map(projectConfigId => mappingService.mapProjectConfigId(projectConfigId)) : undefined
   }
 }
+
+/**
+ * mapping for "project config id"
+ * @param data
+ * @returns {{projectConfigurationId: (string|*), projectId: *}}
+ */
+mappingService.mapProjectConfigId = (data) => {
+  return {
+    projectConfigId: data.projectConfigurationId,
+    projectId: data.projectId
+  }
+}
+
 
 /**
  * mapping for project config
@@ -90,7 +104,6 @@ mappingService.mapBrickEvent = (data) => {
     entity: data.entity,
     action: data.action,
     data: {
-      projectConfigurationId: data.data.projectConfiguration,
       brickType: data.data.brickType,
       brickName: data.data.brickName,
       brickState: data.data.state,
@@ -99,10 +112,59 @@ mappingService.mapBrickEvent = (data) => {
   }
 }
 
+
+const project = `{
+  "identifier": "27fa9603fafe9667861844e804a7772d8441b8c5",
+  "projectConfigurationIdentifier": "5046c08bfa80f7db73c643a981bf0779f4a2930f",
+  "name": "toto",
+  "snapshotDate": "May 16, 2016 2:11:47 PM",
+  "stacks": [
+    {
+      "name": "build-A",
+      "stackType": "BUILD",
+      "brickStates": [
+        {
+          "projectConfigurationIdentifier": "5046c08bfa80f7db73c643a981bf0779f4a2930f",
+          "brickType": "REPOSITORY",
+          "stackName": "build-A",
+          "brickName": "nexus",
+          "state": "STARTING",
+          "url": "https://repository-toto.kodokojo.dev"
+        },
+        {
+          "projectConfigurationIdentifier": "5046c08bfa80f7db73c643a981bf0779f4a2930f",
+          "brickType": "CI",
+          "stackName": "build-A",
+          "brickName": "jenkins",
+          "state": "STARTING",
+          "url": "https://ci-toto.kodokojo.dev"
+        },
+        {
+          "projectConfigurationIdentifier": "5046c08bfa80f7db73c643a981bf0779f4a2930f",
+          "brickType": "SCM",
+          "stackName": "build-A",
+          "brickName": "gitlab",
+          "state": "STARTING",
+          "url": "https://scm-toto.kodokojo.dev"
+        },
+        {
+          "projectConfigurationIdentifier": "5046c08bfa80f7db73c643a981bf0779f4a2930f",
+          "brickType": "LOADBALANCER",
+          "stackName": "build-A",
+          "brickName": "haproxy",
+          "state": "RUNNING",
+          "url": "https://loadbalancer-toto.kodokojo.dev"
+        }
+      ]
+    }
+  ]
+}`
+
 // public API
 export const mapAccount = mappingService.mapAccount
 export const mapUser = mappingService.mapUser
 export const mapProjectConfig = mappingService.mapProjectConfig
+export const mapProjectConfigId = mappingService.mapProjectConfigId
 export const mapBrickEvent = mappingService.mapBrickEvent
 
 export default mappingService
