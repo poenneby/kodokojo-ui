@@ -23,7 +23,7 @@ addLocaleData(fr)
 // Application
 import configureStore from './scripts/store/configureStore'
 import initialState from './scripts/commons/init'
-import App from './scripts/components/app/App'
+import App from './scripts/components/app/App.component'
 import HomePage from './scripts/pages/HomePage'
 import LoginPage from './scripts/pages/LoginPage'
 import FirstProjectPage from './scripts/pages/FirstProjectPage'

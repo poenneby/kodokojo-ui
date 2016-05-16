@@ -6,7 +6,7 @@ import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
-import { setTheme, setLocale } from './appActions'
+import { setTheme, setLocale } from './app.actions'
 const lightTheme = getMuiTheme()
 const darkTheme = getMuiTheme(darkBaseTheme)
 
@@ -14,7 +14,7 @@ const darkTheme = getMuiTheme(darkBaseTheme)
 import '../../../favicon.ico'
 import '../../../images/logo-kodokojo-icon.png'
 import './app.less'
-import AppHeader from './AppHeader'
+import AppHeader from './AppHeader.component'
 
 class App extends Component {
 
