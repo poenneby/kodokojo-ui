@@ -19,7 +19,7 @@ export class AppBar extends Component {
       PropTypes.arrayOf(PropTypes.element),
       PropTypes.element
     ]),
-    fix: PropTypes.bool,
+    fixed: PropTypes.bool,
     flat: PropTypes.bool
   }
 
