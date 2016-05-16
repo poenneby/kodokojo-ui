@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react'
 
 // Component
 import { centerPaper } from '../../styles/commons'
-import ProjectConfigDetail from '../components/projectConfig/ProjectConfigDetail'
+import ProjectConfig from '../components/projectConfig/ProjectConfig.component'
 
-class ProjectConfigDetailPage extends Component {
+class ProjectConfigPage extends Component {
 
   constructor(props) {
     super(props)
@@ -13,10 +13,10 @@ class ProjectConfigDetailPage extends Component {
   render() {
     return (
       <div style={ centerPaper }>
-          <ProjectConfigDetail />
+          <ProjectConfig />
       </div>
     )
   }
 }
 
-export default ProjectConfigDetailPage
+export default ProjectConfigPage

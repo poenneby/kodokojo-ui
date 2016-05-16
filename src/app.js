@@ -27,8 +27,8 @@ import App from './scripts/components/app/App.component'
 import HomePage from './scripts/pages/HomePage'
 import LoginPage from './scripts/pages/LoginPage'
 import FirstProjectPage from './scripts/pages/FirstProjectPage'
-import ProjectConfigDetailPage from './scripts/pages/ProjectConfigDetailPage'
-import ProjectDetailPage from './scripts/pages/ProjectDetailPage'
+import ProjectConfigPage from './scripts/pages/ProjectConfigPage'
+import ProjectPage from './scripts/pages/ProjectPage'
 import UsersPage from './scripts/pages/UsersPage'
 import NotFoundPage from './scripts/pages/NotFoundPage'
 
@@ -70,12 +70,12 @@ ReactDOM.render(
               path="firstProject"
             />
             <Route
-              component={ProjectConfigDetailPage}
+              component={ProjectConfigPage}
               onEnter={AuthService.checkAuth}
               path="projectConfig"
             />
             <Route
-              component={ProjectDetailPage}
+              component={ProjectPage}
               onEnter={AuthService.checkAuth}
               path="project"
             />

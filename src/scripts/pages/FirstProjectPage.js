@@ -6,8 +6,8 @@ import Paper from 'material-ui/Paper'
 
 // Component
 import { centerPaper } from '../../styles/commons'
-import Account from '../components/user/Account'
-import ProjectConfigForm from '../components/projectConfig/ProjectConfigForm'
+import Account from '../components/auth/Account.component.js'
+import ProjectConfigForm from '../components/projectConfig/ProjectConfigForm.component'
 
 class FirstProjectPage extends Component {
 
@@ -16,7 +16,7 @@ class FirstProjectPage extends Component {
   }
 
   componentWillUnmount() {
-    // TODO dispatch action that clean account from sensitive infos (password, ssh keys)
+    // TODO dispatch action that clean auth from sensitive infos (password, ssh keys)
   }
 
   render() {

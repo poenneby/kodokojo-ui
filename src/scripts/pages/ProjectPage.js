@@ -3,9 +3,9 @@ import { injectIntl } from 'react-intl'
 
 // Component
 import { centerPaper } from '../../styles/commons'
-import Project from '../components/project/Project'
+import Project from '../components/project/Project.component'
 
-class ProjectDetailPage extends Component {
+class ProjectPage extends Component {
 
 
   render() {
@@ -18,6 +18,6 @@ class ProjectDetailPage extends Component {
 }
 
 
-const ProjectDetailPageContainer = injectIntl(ProjectDetailPage)
+const ProjectPageContainer = injectIntl(ProjectPage)
 
-export default ProjectDetailPageContainer
+export default ProjectPageContainer

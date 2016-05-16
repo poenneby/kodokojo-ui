@@ -19,21 +19,21 @@ import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 
 // Component
-import './projectConfigDetail.less'
+import './projectConfig.less'
 import { fontSizeMedium } from '../../../styles/commons'
 import { emailValidator } from '../../services/validatorService'
 import { returnErrorKey } from '../../services/errorService'
 import { addUserToProjectConfig } from './projectConfig.actions'
 import { createProject } from '../project/project.actions'
-import User from '../user/User'
+import User from '../user/User.component'
 
 // validate function
 const validate = combineValidators({
   email: emailValidator('email')
 })
 
-// ProjectConfigDetail component
-export class ProjectConfigDetail extends Component {
+// ProjectConfig component
+export class ProjectConfig extends Component {
 
   static propTypes = {
     addUserToProjectConfig: PropTypes.func.isRequired,
@@ -65,7 +65,7 @@ export class ProjectConfigDetail extends Component {
           return Promise.resolve()
         }
         ).catch(error => {
-          return Promise.reject({ email: returnErrorKey('user', 'create-account', error.message) })
+          return Promise.reject({ email: returnErrorKey('user', 'create-auth', error.message) })
         })
       }
     }
@@ -132,8 +132,8 @@ export class ProjectConfigDetail extends Component {
             <TextField
               { ...email }
               errorText={ email.touched && email.error ? formatMessage({ id: email.error }, {fieldName: formatMessage({ id:'email-input-label' })}) : '' }
-              floatingLabelText={ formatMessage({id: 'signin-email-label'}) }
-              hintText={ formatMessage({id: 'signin-email-hint-label'}) }
+              floatingLabelText={ formatMessage({id: 'signup-email-label'}) }
+              hintText={ formatMessage({id: 'signup-email-hint-label'}) }
               name="email"
               type="email"
             />
@@ -194,14 +194,14 @@ export class ProjectConfigDetail extends Component {
 
 }
 
-// ProjectConfigDetail container
+// ProjectConfig container
 const mapStateProps = (state) => {
   return {
     projectConfig: state.projectConfig
   }
 }
 
-const ProjectConfigDetailContainer = compose(
+const ProjectConfigContainer = compose(
   reduxForm(
     {
       form: 'addUserForm',
@@ -215,6 +215,6 @@ const ProjectConfigDetailContainer = compose(
     }
   ),
   injectIntl
-)(ProjectConfigDetail)
+)(ProjectConfig)
 
-export default ProjectConfigDetailContainer
+export default ProjectConfigContainer
