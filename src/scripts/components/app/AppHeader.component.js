@@ -8,7 +8,7 @@ import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 // import MenuItem from 'material-ui/MenuItem'
 // import Navigation from 'react-toolbox/lib/navigation'
 
-import AppBar from '../_ui/appBar/AppBar'
+import AppBar from '../_ui/appBar/AppBar.component'
 
 // Component
 import './appHeader.less'

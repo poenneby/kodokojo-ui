@@ -6,7 +6,7 @@ import { storiesOf, action } from '@kadira/storybook'
 import configureStore from '../../../store/configureStore'
 
 // component to story
-import AppBar from './AppBar'
+import AppBar from './AppBar.component'
 
 const initialState = {}
 
@@ -20,14 +20,14 @@ storiesOf('AppBar', module)
       <AppBar />
     </Provider>
   ))
-  .add('flat', () => (
+  .add('with flat prop', () => (
     <Provider store={store}>
       <AppBar
         flat
       />
     </Provider>
   ))
-  .add('fixed', () => (
+  .add('with fixed prop', () => (
       <Provider store={store}>
         <div>
           <AppBar
@@ -72,7 +72,7 @@ storiesOf('AppBar', module)
         </div>
       </Provider>
   ))
-  .add('children', () => (
+  .add('with children', () => (
       <Provider store={store}>
         <AppBar
           fixed
