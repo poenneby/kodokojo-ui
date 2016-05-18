@@ -22,6 +22,8 @@ router.get(`${config.api.routes.projectConfig}/:projectConfigId`, project.getPro
 
 router.post(`${config.api.routes.project}/:projectConfigId`, project.postProject)
 
+router.get(`${config.api.routes.project}/:projectId`, project.getProject)
+
 export default (app) => {
   app.use(router)
 }

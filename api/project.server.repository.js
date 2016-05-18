@@ -52,11 +52,22 @@ projectRepository.postProject = (headers, projectConfigId) => {
   })
 }
 
+projectRepository.getProject = (headers, projectId) => {
+  logger.debug('getProject', config.api.routes.project)
+  return requestWithLog({
+    method: 'GET',
+    uri: `${config.api.host}${config.api.routes.project}/${projectId}`,
+    json: true,
+    headers: headers
+  })
+}
+
 // Public API
 export const postProjectConfig = projectRepository.postProjectConfig
 export const getProjectConfig = projectRepository.getProjectConfig
 export const putUserToProjectConfig = projectRepository.putUserToProjectConfig
 export const postProject = projectRepository.postProject
+export const getProject = projectRepository.getProject
 
 // Service instance
 export default projectRepository
