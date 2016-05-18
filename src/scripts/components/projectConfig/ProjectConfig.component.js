@@ -77,13 +77,9 @@ export class ProjectConfig extends Component {
     event.preventDefault()
 
     if (projectConfig.id) {
-      return createProject(projectConfig.id
-      ).catch(error => {
-        // TODO di something better with error
-        console.log(error)
-      })
+      // TODO add reducer that catch error and toast it
+      createProject(projectConfig.id)
     }
-
   }
 
   render() {
