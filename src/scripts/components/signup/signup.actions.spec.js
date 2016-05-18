@@ -8,8 +8,8 @@ import { apiMiddleware } from 'redux-api-middleware'
 import configureMockStore from 'redux-mock-store'
 
 import api from '../../commons/config'
-import * as actions from './signin.actions'
-import { __RewireAPI__ as  actionsRewireApi } from './signin.actions'
+import * as actions from './signup.actions.js'
+import { __RewireAPI__ as  actionsRewireApi } from './signup.actions.js'
 import {
   ACCOUNT_NEW_ID_REQUEST,
   ACCOUNT_NEW_ID_SUCCESS,
@@ -26,8 +26,8 @@ const middlewares = [
 ]
 const mockStore = configureMockStore(middlewares)
 
-describe('signin actions', () => {
-  describe('create account', () => {
+describe('signup actions', () => {
+  describe('create auth', () => {
     let pushHistorySpy,
         getHeadersSpy,
         setAuthSpy,
@@ -56,7 +56,7 @@ describe('signin actions', () => {
       nock.cleanAll()
     })
 
-    it('should create account', (done) => {
+    it('should create auth', (done) => {
       // Given
       const email = 'test@email.com'
       const id = 'idUs3r'
@@ -127,7 +127,7 @@ describe('signin actions', () => {
       }).then(done, done)
     })
 
-    it('should fail to create account id', (done) => {
+    it('should fail to create auth id', (done) => {
       // Given
       const email = 'test@email.com'
       const id = 'idUs3r'
@@ -173,7 +173,7 @@ describe('signin actions', () => {
       }).then(done, done)
     })
 
-    it('should fail to create account', (done) => {
+    it('should fail to create auth', (done) => {
       // Given
       const email = 'test@email.com'
       const id = 'idUs3r'

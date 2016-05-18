@@ -3,12 +3,9 @@ import findIndex from 'lodash/findIndex'
 import cloneDeep from 'lodash/cloneDeep'
 
 import {
-  PROJECT_CONFIG_REQUEST,
-  PROJECT_CONFIG_SUCCESS,
-  PROJECT_CONFIG_FAILURE,
-  PROJECT_CONFIG_ADD_USER_REQUEST,
-  PROJECT_CONFIG_ADD_USER_SUCCESS,
-  PROJECT_CONFIG_ADD_USER_FAILURE,
+  PROJECT_NEW_REQUEST,
+  PROJECT_NEW_SUCCESS,
+  PROJECT_NEW_FAILURE,
   PROJECT_REQUEST,
   PROJECT_SUCCESS,
   PROJECT_FAILURE,
@@ -20,50 +17,50 @@ const initialState = {
 }
 
 export default function project(state = initialState, action) {
-  if (action.type === PROJECT_CONFIG_REQUEST) {
+  if (action.type === PROJECT_NEW_REQUEST) {
     return {
       ...state,
       isFetching: true
     }
   }
 
-  if (action.type === PROJECT_CONFIG_SUCCESS) {
+  if (action.type === PROJECT_NEW_SUCCESS) {
     return merge(
       {},
       state,
-      action.payload.projectConfig,
+      action.payload.project,
       {
         isFetching: false
       }
     )
   }
 
-  if (action.type === PROJECT_CONFIG_FAILURE) {
-    // TODO
+  if (action.type === PROJECT_NEW_FAILURE) {
     return {
       ...state,
       isFetching: false
     }
   }
 
-  if (action.type ===   PROJECT_CONFIG_ADD_USER_REQUEST) {
+  if (action.type === PROJECT_REQUEST) {
     return {
       ...state,
       isFetching: true
     }
   }
 
-  if (action.type === PROJECT_CONFIG_ADD_USER_SUCCESS) {
+  if (action.type === PROJECT_SUCCESS) {
     return merge(
       {},
       state,
+      action.payload.project,
       {
         isFetching: false
       }
     )
   }
 
-  if (action.type === PROJECT_CONFIG_ADD_USER_FAILURE) {
+  if (action.type === PROJECT_FAILURE) {
     // TODO
     return {
       ...state,

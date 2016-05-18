@@ -8,18 +8,18 @@ import sinonChai from 'sinon-chai'
 import 'sinon-as-promised'
 chai.use(chaiEnzyme())
 chai.use(sinonChai)
-import merge from 'lodash/merge'
+import merge from '../../../../node_modules/lodash/merge'
 
 import { IntlProvider } from 'react-intl'
 // FIXME add this to pass test, remove if FIXME
 // see https://github.com/callemall/material-ui/issues/4021
 // and https://github.com/callemall/material-ui/pull/3820
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import MuiThemeProvider from '../../../../node_modules/material-ui/styles/MuiThemeProvider'
+import getMuiTheme from '../../../../node_modules/material-ui/styles/getMuiTheme'
 
-import { Signin } from './Signin'
+import { Signup } from './Signup.component'
 
-describe('<Signin> component', () => {
+describe('<Signup> component', () => {
 
   let props,
       messages,
@@ -47,10 +47,10 @@ describe('<Signin> component', () => {
       createAccount: () => {}
     }
     messages = {
-      'signin-email-label': 'signin-email-label',
-      'signin-email-hint-label': 'signin-email-hint-label',
-      'signin-button-label': 'signin-button-label',
-      'signin-login-link-label': 'signin-login-link-label'
+      'signup-email-label': 'signup-email-label',
+      'signup-email-hint-label': 'signup-email-hint-label',
+      'signup-button-label': 'signup-button-label',
+      'signup-login-link-label': 'signup-login-link-label'
     }
     intlProvider = new IntlProvider({locale:'en'}, {})
   })
@@ -62,7 +62,7 @@ describe('<Signin> component', () => {
 
     // When
     const component = shallow(
-      <Signin {...nextProps}/>,
+      <Signup {...nextProps}/>,
       { context }
     )
 
@@ -86,18 +86,18 @@ describe('<Signin> component', () => {
 
     // When
     shallow(
-      <Signin {...nextProps}/>,
+      <Signup {...nextProps}/>,
         { context }
     )
 
     // Then
     expect(nextProps.intl.formatMessage).to.have.callCount(6)
-    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signin-email-label' })
-    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signin-email-hint-label' })
-    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signin-button-label' })
-    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signin-login-link-label' })
-    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signin-entity-label' })
-    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signin-entity-hint-label' })
+    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signup-email-label' })
+    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signup-email-hint-label' })
+    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signup-button-label' })
+    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signup-login-link-label' })
+    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signup-entity-label' })
+    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signup-entity-hint-label' })
   })
 
   it('should set props properly', () => {
@@ -118,14 +118,14 @@ describe('<Signin> component', () => {
     const component = mount(
       <IntlProvider locale="en" messages={messages}>
         <MuiThemeProvider muiTheme={getMuiTheme()}>
-          <Signin {...nextProps}/>
+          <Signup {...nextProps}/>
         </MuiThemeProvider>
       </IntlProvider>
     )
 
     // Then
-    expect(component.find(Signin).props().fields.email.value).to.equal('email@test.com')
-    expect(component.find(Signin).props().createAccount).to.be.instanceof(Function)
+    expect(component.find(Signup).props().fields.email.value).to.equal('email@test.com')
+    expect(component.find(Signup).props().createAccount).to.be.instanceof(Function)
   })
 
   describe ('handle submit', () => {
@@ -146,7 +146,7 @@ describe('<Signin> component', () => {
       const component = mount(
         <IntlProvider locale="en" messages={messages}>
           <MuiThemeProvider muiTheme={getMuiTheme()}>
-            <Signin {...nextProps}/>
+            <Signup {...nextProps}/>
           </MuiThemeProvider>
         </IntlProvider>
       )
@@ -170,7 +170,7 @@ describe('<Signin> component', () => {
       const component = mount(
         <IntlProvider locale="en" messages={messages}>
           <MuiThemeProvider muiTheme={getMuiTheme()}>
-            <Signin {...nextProps}/>
+            <Signup {...nextProps}/>
           </MuiThemeProvider>
         </IntlProvider>
       )

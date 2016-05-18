@@ -19,11 +19,11 @@ describe('projectConfig reducer', () => {
     })
   })
 
-  it('should handle PROJECT_CONFIG_REQUEST', () => {
+  it('should handle PROJECT_CONFIG_NEW_REQUEST', () => {
     // Given
     const state = undefined
     const action = {
-      type: ActionsTypes.PROJECT_CONFIG_REQUEST
+      type: ActionsTypes.PROJECT_CONFIG_NEW_REQUEST
     }
 
     // When
@@ -35,11 +35,11 @@ describe('projectConfig reducer', () => {
     })
   })  
 
-  it('should handle PROJECT_CONFIG_SUCCESS', () => {
+  it('should handle PROJECT_CONFIG_NEW_SUCCESS', () => {
     // Given
     const state = undefined
     const action = {
-      type: ActionsTypes.PROJECT_CONFIG_SUCCESS,
+      type: ActionsTypes.PROJECT_CONFIG_NEW_SUCCESS,
       payload: {
         projectConfig: {
           id: 'projectId'

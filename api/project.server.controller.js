@@ -44,3 +44,15 @@ export const postProject = (request, response) => {
     })
 }
 
+
+export const getProject = (request, response) => {
+  projectRepository
+    .getProject(request.headers, request.params.projectId)
+      .then(data => {
+        return response.status(200).send(data)
+      })
+      .catch((err, resp) => {
+        return response.status(err.response && err.response.statusCode ? err.response.statusCode : 500).send(err)
+      })
+}
+

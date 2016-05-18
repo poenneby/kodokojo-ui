@@ -5,7 +5,7 @@ import Paper from 'material-ui/Paper'
 
 // Component
 import { centerPaper } from '../../styles/commons'
-import Login from '../components/auth/Login'
+import Login from '../components/login/Login.component.js'
 
 class LoginPage extends Component {
   render() {

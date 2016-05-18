@@ -7,16 +7,16 @@ import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 chai.use(chaiEnzyme())
 chai.use(sinonChai)
-import merge from 'lodash/merge'
+import merge from '../../../../node_modules/lodash/merge'
 
 import { IntlProvider } from 'react-intl'
 // FIXME add this to pass test, remove if FIXME
 // see https://github.com/callemall/material-ui/issues/4021
 // and https://github.com/callemall/material-ui/pull/3820
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import MuiThemeProvider from '../../../../node_modules/material-ui/styles/MuiThemeProvider'
+import getMuiTheme from '../../../../node_modules/material-ui/styles/getMuiTheme'
 
-import { Login } from './Login'
+import { Login } from './Login.component.js'
 
 // TODO test error message when login
 describe('<Login> component', () => {
