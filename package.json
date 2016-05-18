@@ -19,6 +19,14 @@
     "coverage": "BABEL_ENV=test babel-node node_modules/isparta/bin/isparta cover _mocha --root src/ --include-all-sources --default-excludes -- --recursive './src/**/*.spec.js' --require ignore-styles --require intl --require ./test/utils.js"
   },
   "author": "ModuloM",
+  "contributors": [
+    {
+      "name": "Antoine LE TAXIN"
+    },
+    {
+      "name": "Jean-Pascal THIERY"
+    }
+  ],
   "license": "GPL-3.0",
   "engines": {
     "node": "5.x.x",
