@@ -1,3 +1,4 @@
+import { browserHistory } from 'react-router'
 import { CALL_API } from 'redux-api-middleware'
 
 import api from '../../commons/config'
@@ -5,7 +6,14 @@ import api from '../../commons/config'
 import authService from '../../services/authService'
 import ioService from '../../services/ioService'
 import { mapAccount } from '../../services/mappingService'
-import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE, AUTH_RESET } from '../../commons/constants'
+import { getProject } from '../project/project.actions'
+import { getProjectConfigAndProject } from '../projectConfig/projectConfig.actions'
+import {
+  AUTH_REQUEST,
+  AUTH_SUCCESS,
+  AUTH_FAILURE,
+  AUTH_RESET
+} from '../../commons/constants'
 
 export function requestAuthentication() {
   return {
@@ -40,6 +48,24 @@ export function login(username, password) {
     ).then(data => {
       if (!data.error) {
         authService.putAuth(data.payload.account.id)
+        // user has at least one projectConfigId
+        if (data.payload.account.projectConfigIds) {
+          const projectConfig = data.payload.account.projectConfigIds[0]
+          // first case, project config has a project id
+          if (projectConfig) {
+            if (projectConfig.projectId) {
+              // get project config and project and redirect to project
+              return dispatch(getProjectConfigAndProject(projectConfig.projectConfigId, projectConfig.projectId)
+              ).then(browserHistory.push('/project'))
+            }
+            // TODO second case, project config has no project id
+            // must redirect to project config stack, with a button to start it
+            return
+          }
+        } else {
+          // TODO third case no ids, redirect to first project
+          return
+        }
       } else {
         throw new Error(data.payload.status)
       }

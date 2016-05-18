@@ -5,6 +5,7 @@ import api from '../../commons/config'
 import { getHeaders } from '../../services/ioService'
 import { mapProjectConfig } from '../../services/mappingService'
 import { createUser, getUser } from '../user/user.actions'
+import { getProject } from '../project/project.actions'
 import {
   PROJECT_CONFIG_NEW_REQUEST,
   PROJECT_CONFIG_NEW_SUCCESS,
@@ -98,6 +99,29 @@ export function getProjectConfig(projectConfigId) {
             dispatch(getUser(userId))
           })
         }
+        return data
+      } else {
+        throw new Error(data.payload.status)
+      }
+    }).catch(error => {
+      // TODO do something with error
+      throw new Error(error.message)
+    })
+  }
+}
+
+// TODO TU
+export function getProjectConfigAndProject(projectConfigId, projectId) {
+  return dispatch => {
+    return dispatch(getProjectConfig(projectConfigId)
+    ).then(data => {
+      if (!data.error) {
+        return dispatch(getProject(projectId))
+      } else {
+        throw new Error(data.payload.status)
+      }
+    }).then(data => {
+      if (!data.error) {
         return data
       } else {
         throw new Error(data.payload.status)

@@ -31,13 +31,28 @@ describe('login actions', () => {
   })
 
   describe('login', () => {
-    let mapAccountSpy
+    let mapAccountSpy,
+        historyPushSpy,
+        getProjectConfigAndProjectSpy
+
+    beforeEach(() => {
+      historyPushSpy = sinon.spy()
+      actionsRewireApi.__Rewire__('browserHistory', {
+        push: historyPushSpy
+      })
+      getProjectConfigAndProjectSpy = sinon.stub().returns({
+        type: 'MOCKED_ACTION'
+      })
+      actionsRewireApi.__Rewire__('getProjectConfigAndProject', getProjectConfigAndProjectSpy)
+    })
 
     afterEach(() => {
       authService.setAuth.restore()
       authService.putAuth.restore()
       ioService.getHeaders.restore()
       actionsRewireApi.__ResetDependency__('mapAccount')
+      actionsRewireApi.__ResetDependency__('browserHistory')
+      actionsRewireApi.__ResetDependency__('getProjectConfigAndProject')
     })
 
     it('should request auth', (done) => {
@@ -46,7 +61,13 @@ describe('login actions', () => {
             password = 'psUs3r',
             auth = 'cryptedAuth',
             account = {
-              id: 'idUs3r'
+              id: 'idUs3r',
+              projectConfigIds: [
+                {
+                  projectConfigId: 'projectConfigId',
+                  projectId: 'projectId'
+                }
+              ]
             }
       const expectedActions = [
         {
@@ -60,6 +81,9 @@ describe('login actions', () => {
             account: account
           },
           meta: undefined
+        },
+        {
+          type: 'MOCKED_ACTION'
         }
       ]
       const headers = {
@@ -93,6 +117,9 @@ describe('login actions', () => {
         expect(putAuthSpy).to.have.callCount(1)
         expect(putAuthSpy).to.have.been.calledWith(account.id)
         expect(getHeadersSpy).to.have.callCount(1)
+        expect(getProjectConfigAndProjectSpy).to.have.callCount(1)
+        expect(historyPushSpy).to.have.callCount(1)
+        expect(historyPushSpy).to.have.been.calledWith('/project')
       }, done).then(done, done)
     })
 
