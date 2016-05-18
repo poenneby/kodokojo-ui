@@ -7,7 +7,6 @@ import signup from '../components/signup/signup.reducer'
 import login from '../components/login/login.reducer'
 import prefs from '../components/app/app.reducer'
 import projectConfig from '../components/projectConfig/projectConfig.reducer'
-import project from '../components/project/project.reducer'
 import users from '../components/user/user.reducer'
 
 const rootReducer = combineReducers({
@@ -16,7 +15,6 @@ const rootReducer = combineReducers({
   login,
   prefs,
   projectConfig,
-  project,
   users,
   form: formReducer,
   routing: routerReducer

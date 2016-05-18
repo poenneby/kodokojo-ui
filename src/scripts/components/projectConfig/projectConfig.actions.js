@@ -94,10 +94,11 @@ export function getProjectConfig(projectConfigId) {
     ).then(data => {
       if (!data.error) {
         if (data.payload.projectConfig && data.payload.projectConfig.users) {
-          data.payload.projectConfig.users.forEach((user) => {
-            dispatch(getUser(user.id))
+          data.payload.projectConfig.users.forEach((userId) => {
+            dispatch(getUser(userId))
           })
         }
+        return data
       } else {
         throw new Error(data.payload.status)
       }

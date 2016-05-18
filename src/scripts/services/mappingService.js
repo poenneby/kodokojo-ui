@@ -1,10 +1,12 @@
 const mappingService = {}
 
+// TODO TI
+
 /**
  * mapping for account
  *
  * @param data
- * @returns {{id: (string), name: (string), userName: (string), email: (string), password: (string), sshKeyPublic: (string), sshKeyPrivate: (string)}}
+ * @returns {{id: string, name: string, userName: string, email: string, password: string, sshKeyPublic: string, sshKeyPrivate: string}}
  */
 mappingService.mapAccount = (data) => {
   return {
@@ -23,7 +25,7 @@ mappingService.mapAccount = (data) => {
 /**
  * mapping for "project config id"
  * @param data
- * @returns {{projectConfigurationId: (string|*), projectId: *}}
+ * @returns {{projectConfigurationId: string, projectId: string}}
  */
 mappingService.mapProjectConfigId = (data) => {
   return {
@@ -32,32 +34,17 @@ mappingService.mapProjectConfigId = (data) => {
   }
 }
 
-
-/**
- * mapping for project config
- *
- * @param data
- * @returns {{id: (string), name: (string), admins: {user}, stacks: [array<{stack}>], users: [array<{user}>]}}
- */
-mappingService.mapProjectConfig = (data) => {
-  return {
-    id: data.identifier,
-    name: data.name,
-    admins: data.admins ? data.admins.map(admin => mappingService.mapUser(admin)) : undefined,
-    stacks: data.stackConfigs ? data.stackConfigs.map(stack => mappingService.mapStack(stack)) : undefined,
-    users: data.users ? data.users.map(user => mappingService.mapUser(user)) : undefined
-  }
-}
-
 /**
  * mapping for user
  *
  * @param data
- * @returns {{id: (string), name: (string), userName: (string), email: (string)}}
+ * @returns {{id: string, name: string, userName: string, email: string}}
  */
 mappingService.mapUser = (data) => {
   return {
     id: data.identifier,
+    firstName: data.firstName,
+    lastName: data.lastName,
     name: data.name,
     userName: data.username,
     email: data.email
@@ -67,22 +54,25 @@ mappingService.mapUser = (data) => {
 /**
  * mapping for stack
  *
- * @returns {{type: (string), name: (string), bricks: [array<{brick}]}}
+ * @returns {{type: string, name: string, bricks: array<brick>}}
+ * @private
  */
-mappingService.mapStack = (data) => {
+mappingService._mapStack = (data) => {
+  const bricks = data.brickConfigs || data.brickStates || undefined
   return {
     type: data.type,
     name: data.name,
-    bricks: data.brickConfigs ? data.brickConfigs.map(brick => mappingService.mapBrick(brick)).filter(brick => brick !== undefined) : undefined
+    bricks: bricks ? bricks.map(brick => mappingService._mapBrick(brick)).filter(brick => brick !== undefined) : undefined
   }
 }
 
 /**
  * mapping for brick
  *
- * @returns {{type: (string), name: (string), state: (string), url: (string)}}
+ * @returns {{type: string, name: string, state: string, url: string}}
+ * @private
  */
-mappingService.mapBrick = (data) => {
+mappingService._mapBrick = (data) => {
   if (data.type !== 'LOADBALANCER') {
     return {
       type: data.type,
@@ -94,10 +84,44 @@ mappingService.mapBrick = (data) => {
 }
 
 /**
- * mapping for brick events from websocket
+ * mapping for project config
+ *
+ * @param data
+ * @returns {{id: string, name: string, admins: {user}, stacks: array<stack>, users: array<user>}}
+ */
+mappingService.mapProjectConfig = (data) => {
+  return {
+    id: data.identifier,
+    name: data.name,
+    // admins: data.admins ? data.admins.map(admin => mappingService.mapUser(admin)) : undefined,
+    admins: data.admins ? data.admins.map(admin => admin.identifier) : undefined,
+    stacks: data.stackConfigs ? data.stackConfigs.map(stack => mappingService._mapStack(stack)) : undefined,
+    // users: data.users ? data.users.map(user => mappingService.mapUser(user)) : undefined
+    users: data.users ? data.users.map(user => user.identifier) : undefined
+  }
+}
+
+/**
+ * mapping for project
+ *
+ * @param data
+ * @returns {{id: string, projectConfigId: string, name: string, updateDate: string, stacks: array<stack>}}
+ */
+mappingService.mapProject = (data) => {
+  return {
+    id: data.identifier,
+    projectConfigId: data.projectConfigurationIdentifier,
+    name: data.name,
+    updateDate: data.snapshotDate, // TODO convert string to date?
+    stacks: data.stacks ? data.stacks.map(stack => mappingService._mapStack(stack)) : undefined
+  }
+}
+
+/**
+ * mapping for brick event from websocket
  * 
  * @param data
- * @returns {{entity: (string), action: (string), data: {projectConfigurationId: (string), brickType: (string), brickName: (string), brickState: (string|undefined), brickUrl: (string|undefined)}}}
+ * @returns {{entity: string, action: string, data: {projectConfigurationId: string, brickType: string, brickName: string, brickState: (string|undefined), brickUrl: (string|undefined)}}}
  */
 mappingService.mapBrickEvent = (data) => {
   return {
@@ -113,56 +137,10 @@ mappingService.mapBrickEvent = (data) => {
 }
 
 
-const project = `{
-  "identifier": "27fa9603fafe9667861844e804a7772d8441b8c5",
-  "projectConfigurationIdentifier": "5046c08bfa80f7db73c643a981bf0779f4a2930f",
-  "name": "toto",
-  "snapshotDate": "May 16, 2016 2:11:47 PM",
-  "stacks": [
-    {
-      "name": "build-A",
-      "stackType": "BUILD",
-      "brickStates": [
-        {
-          "projectConfigurationIdentifier": "5046c08bfa80f7db73c643a981bf0779f4a2930f",
-          "brickType": "REPOSITORY",
-          "stackName": "build-A",
-          "brickName": "nexus",
-          "state": "STARTING",
-          "url": "https://repository-toto.kodokojo.dev"
-        },
-        {
-          "projectConfigurationIdentifier": "5046c08bfa80f7db73c643a981bf0779f4a2930f",
-          "brickType": "CI",
-          "stackName": "build-A",
-          "brickName": "jenkins",
-          "state": "STARTING",
-          "url": "https://ci-toto.kodokojo.dev"
-        },
-        {
-          "projectConfigurationIdentifier": "5046c08bfa80f7db73c643a981bf0779f4a2930f",
-          "brickType": "SCM",
-          "stackName": "build-A",
-          "brickName": "gitlab",
-          "state": "STARTING",
-          "url": "https://scm-toto.kodokojo.dev"
-        },
-        {
-          "projectConfigurationIdentifier": "5046c08bfa80f7db73c643a981bf0779f4a2930f",
-          "brickType": "LOADBALANCER",
-          "stackName": "build-A",
-          "brickName": "haproxy",
-          "state": "RUNNING",
-          "url": "https://loadbalancer-toto.kodokojo.dev"
-        }
-      ]
-    }
-  ]
-}`
-
 // public API
 export const mapAccount = mappingService.mapAccount
 export const mapUser = mappingService.mapUser
+export const mapProject = mappingService.mapProject
 export const mapProjectConfig = mappingService.mapProjectConfig
 export const mapProjectConfigId = mappingService.mapProjectConfigId
 export const mapBrickEvent = mappingService.mapBrickEvent

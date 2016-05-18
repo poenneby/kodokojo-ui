@@ -18,7 +18,7 @@ class Project extends Component {
 
   static propTypes = {
     intl: intlShape.isRequired,
-    project: PropTypes.object,
+    projectConfig: PropTypes.object,
     updateProject: PropTypes.func.isRequired
   }
 
@@ -53,26 +53,21 @@ class Project extends Component {
   }
 
   render() {
-    const { project } = this.props
-    const { formatMessage }  = this.props.intl
-    let owner,
-        name
-    if (project) {
-      // FIXME admins is now an array
-      owner = project.admins[0].userName
-      name = project.name
+    const { projectConfig } = this.props
+    let name
+    if (projectConfig) {
+      name = projectConfig.name
     }
 
     return (
       <Card>
         <CardHeader
-          subtitle={ formatMessage({ id: 'project-config-owner-label' }) + `: ${owner}` }
           title={ name }
           titleStyle={ fontSizeMedium }
         />
         <CardText>
-          { project.stacks && project.stacks[0] && project.stacks[0].bricks &&
-          project.stacks[0].bricks.map((brick, index) => (
+          { projectConfig.stacks && projectConfig.stacks[0] && projectConfig.stacks[0].bricks &&
+          projectConfig.stacks[0].bricks.map((brick, index) => (
             <div key={index} style={{ paddingTop: '.5em' }}>
               { brick.type } : { brick.name } > { brick.state || 'UNDEFINED' }
               { brick.url &&
@@ -89,7 +84,7 @@ class Project extends Component {
 // ProjectDetail container
 const mapStateProps = (state) => {
   return {
-    project: state.project
+    projectConfig: state.projectConfig
   }
 }
 

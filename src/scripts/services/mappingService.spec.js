@@ -76,83 +76,10 @@ describe('mapping service', () => {
   describe('map user', () => {
     it('should map user', () => {
       // Given
-      const accountFromApi = {
-        identifier: 'identifier',
-        name: 'name',
-        username: 'username',
-        email: 'email'
-      }
-
-      // When
-      const returns = mappingService.mapUser(accountFromApi)
-
-      // Then
-      expect(returns).to.deep.equal({
-        id: 'identifier',
-        name: 'name',
-        userName: 'username',
-        email: 'email'
-      })
-    })
-  })
-
-  describe('map project config', () => {
-    afterEach(() => {
-      mappingService.mapUser.restore()
-      mappingService.mapStack.restore()
-    })
-
-    it('should map project config', () => {
-      // Given
-      const accountFromApi = {
-        identifier: 'id',
-        name: 'name',
-        admins: [
-          'admin1'
-        ],
-        stackConfigs: [
-          'stack1',
-          'stack2'
-        ],
-        users: [
-          'userId1'
-        ]
-      }
-      const mapUserSpy = sinon.stub(mappingService, 'mapUser', data => data)
-      const mapStackSpy = sinon.stub(mappingService, 'mapStack', data => data)
-
-      // When
-      const returns = mappingService.mapProjectConfig(accountFromApi)
-
-      // Then
-      expect(returns).to.deep.equal({
-        id: 'id',
-        name: 'name',
-        admins: [
-          'admin1'
-        ],
-        stacks: [
-          'stack1',
-          'stack2'
-        ],
-        users:  [
-          'userId1'
-        ]
-      })
-      expect(mapUserSpy).to.have.callCount(2)
-      expect(mapUserSpy).to.have.been.calledWith('admin1')
-      expect(mapUserSpy).to.have.been.calledWith('userId1')
-      expect(mapStackSpy).to.have.callCount(2)
-      expect(mapStackSpy).to.have.been.calledWith('stack1')
-      expect(mapStackSpy).to.have.been.calledWith('stack2')
-    })
-  })
-
-  describe('map user', () => {
-    it('should map user', () => {
-      // Given
       const userFromApi = {
         identifier: 'id',
+        firstName: 'firstName',
+        lastName: 'lastName',
         name: 'name',
         username: 'userName',
         email: 'test@email.com'
@@ -165,6 +92,8 @@ describe('mapping service', () => {
       expect(returns).to.deep.equal({
         id: 'id',
         name: 'name',
+        firstName: 'firstName',
+        lastName: 'lastName',
         userName: 'userName',
         email: 'test@email.com'
       })
@@ -173,10 +102,10 @@ describe('mapping service', () => {
 
   describe('map stack', () => {
     afterEach(() => {
-      mappingService.mapBrick.restore()
+      mappingService._mapBrick.restore()
     })
 
-    it('should map stack', () => {
+    it('should map stack from project config', () => {
       // Given
       const stackFromApi = {
         type: 'type',
@@ -186,10 +115,39 @@ describe('mapping service', () => {
           'brick2'
         ]
       }
-      const mapBrickSpy = sinon.stub(mappingService, 'mapBrick', data => data)
+      const mapBrickSpy = sinon.stub(mappingService, '_mapBrick', data => data)
 
       // When
-      const returns = mappingService.mapStack(stackFromApi)
+      const returns = mappingService._mapStack(stackFromApi)
+
+      // Then
+      expect(returns).to.deep.equal({
+        type: 'type',
+        name: 'name',
+        bricks: [
+          'brick1',
+          'brick2'
+        ]
+      })
+      expect(mapBrickSpy).to.have.callCount(2)
+      expect(mapBrickSpy).to.have.been.calledWith('brick1')
+      expect(mapBrickSpy).to.have.been.calledWith('brick2')
+    })
+
+    it('should map stack from project ', () => {
+      // Given
+      const stackFromApi = {
+        type: 'type',
+        name: 'name',
+        brickStates: [
+          'brick1',
+          'brick2'
+        ]
+      }
+      const mapBrickSpy = sinon.stub(mappingService, '_mapBrick', data => data)
+
+      // When
+      const returns = mappingService._mapStack(stackFromApi)
 
       // Then
       expect(returns).to.deep.equal({
@@ -217,7 +175,7 @@ describe('mapping service', () => {
       }
 
       // When
-      const returns = mappingService.mapBrick(brickFromApi)
+      const returns = mappingService._mapBrick(brickFromApi)
 
       // Then
       expect(returns).to.deep.equal({
@@ -226,6 +184,96 @@ describe('mapping service', () => {
         state: 'state',
         url: 'url'
       })
+    })
+  })
+
+  describe('map project config', () => {
+    afterEach(() => {
+      mappingService._mapStack.restore()
+    })
+
+    it('should map project config', () => {
+      // Given
+      const projectConfigFromApi = {
+        identifier: 'id',
+        name: 'name',
+        admins: [
+          { identifier: '1', name: 'admin1'},
+          { identifier: '2', name: 'admin2'}
+        ],
+        stackConfigs: [
+          'stack1',
+          'stack2'
+        ],
+        users: [
+          { identifier: '1', name: 'user1'},
+          { identifier: '2', name: 'user2'}
+        ]
+      }
+      const mapStackSpy = sinon.stub(mappingService, '_mapStack', data => data)
+
+      // When
+      const returns = mappingService.mapProjectConfig(projectConfigFromApi)
+
+      // Then
+      expect(returns).to.deep.equal({
+        id: 'id',
+        name: 'name',
+        admins: [
+          '1',
+          '2'
+        ],
+        stacks: [
+          'stack1',
+          'stack2'
+        ],
+        users:  [
+          '1',
+          '2'
+        ]
+      })
+      expect(mapStackSpy).to.have.callCount(2)
+      expect(mapStackSpy).to.have.been.calledWith('stack1')
+      expect(mapStackSpy).to.have.been.calledWith('stack2')
+    })
+  })
+
+  describe('map project', () => {
+    afterEach(() => {
+      mappingService._mapStack.restore()
+    })
+
+    it('should map project', () => {
+      // Given
+      const projectFromApi = {
+        identifier: 'id',
+        projectConfigurationIdentifier: 'projectConfigId',
+        name: 'name',
+        snapshotDate: 'May 16, 2016 2:11:47 PM',
+        stacks: [
+          'stack1',
+          'stack2'
+        ]
+      }
+      const mapStackSpy = sinon.stub(mappingService, '_mapStack', data => data)
+
+      // When
+      const returns = mappingService.mapProject(projectFromApi)
+
+      // Then
+      expect(returns).to.deep.equal({
+        id: 'id',
+        projectConfigId: 'projectConfigId',
+        name: 'name',
+        updateDate: 'May 16, 2016 2:11:47 PM',
+        stacks: [
+          'stack1',
+          'stack2'
+        ]
+      })
+      expect(mapStackSpy).to.have.callCount(2)
+      expect(mapStackSpy).to.have.been.calledWith('stack1')
+      expect(mapStackSpy).to.have.been.calledWith('stack2')
     })
   })
 
