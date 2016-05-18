@@ -33,6 +33,7 @@ module.exports = {
     preLoaders: [
       {
         test: /\.jsx?$/,
+        exclude: /node_modules/,
         loaders: ['eslint'],
         include: [
           path.join(__dirname, 'api'),

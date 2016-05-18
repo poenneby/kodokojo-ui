@@ -2,7 +2,8 @@ import path from 'path'
 import express from 'express'
 import bodyParser from 'body-parser'
 import webpack from 'webpack'
-import webpackConfig from './webpack.config.dev'
+import webpackConfigDev from './webpack.config.dev'
+import webpackConfigDefault from './webpack.config'
 import config from './config/config'
 import logger from './config/logger'
 
@@ -27,6 +28,12 @@ app.use(bodyParser.urlencoded({ extended: true }))
 apiRoutes(app)
 
 // webpack dev server config
+let webpackConfig
+if (process.env.NODE_ENV === 'production') {
+  webpackConfig = webpackConfigDefault
+} else {
+  webpackConfig = webpackConfigDev
+}
 const compiler = webpack(webpackConfig)
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,

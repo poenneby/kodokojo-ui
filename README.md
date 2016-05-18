@@ -62,7 +62,7 @@ Install npm packages, build production files into static/, start webpack dev ser
     
 Then open ui project in browser.
 
-    $ open http://localhost:8080
+    $ open http://localhost:3000
 
 
 ### Build production release

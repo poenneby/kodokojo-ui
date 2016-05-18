@@ -59,7 +59,7 @@ module.exports = {
       },
       {
         test: /(\.scss|\.css)$/,
-        loader: 'style!css!sass'
+        loader: 'style!css?modules&importLoaders=2!sass'
       },
       {
         test: /\.jpg|png|svg$/, loader: 'file-loader?name=images/[name].[ext]'

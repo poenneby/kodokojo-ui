@@ -1,3 +1,4 @@
+// TODO document this use case or delete
 const local = {
   api: {
     host: 'http://192.168.99.100:9080'
