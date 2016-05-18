@@ -11,9 +11,9 @@ import api from '../../commons/config'
 import * as actions from './projectConfig.actions'
 import { __RewireAPI__ as actionsRewireApi } from './projectConfig.actions'
 import {
-  PROJECT_CONFIG_REQUEST,
-  PROJECT_CONFIG_SUCCESS,
-  PROJECT_CONFIG_FAILURE,
+  PROJECT_CONFIG_NEW_REQUEST,
+  PROJECT_CONFIG_NEW_SUCCESS,
+  PROJECT_CONFIG_NEW_FAILURE,
   PROJECT_CONFIG_ADD_USER_REQUEST,
   PROJECT_CONFIG_ADD_USER_SUCCESS,
   PROJECT_CONFIG_ADD_USER_FAILURE
@@ -71,12 +71,12 @@ describe('project config actions', () => {
             projectConfigId = 'projectId'
       const expectedActions = [
         {
-          type: PROJECT_CONFIG_REQUEST,
+          type: PROJECT_CONFIG_NEW_REQUEST,
           payload: undefined,
           meta: undefined
         },
         {
-          type: PROJECT_CONFIG_SUCCESS,
+          type: PROJECT_CONFIG_NEW_SUCCESS,
           payload: {
             projectConfig: {
               id: projectConfigId
@@ -108,156 +108,159 @@ describe('project config actions', () => {
         expect(getProjectConfigSpy).to.have.calledWith(projectConfigId)
       }, done).then(done, done)
     })
+  })
 
-    // TODO failure TU
-    describe('get project config', () => {
-      let getUserSpy
+  // TODO failure TU
+  describe('get project config', () => {
+    let getUserSpy
 
-      beforeEach(() => {
-        getUserSpy = sinon.stub().returns({
-          type: 'MOCKED_ACTION'
-        })
-        actionsRewireApi.__Rewire__('getUser', getUserSpy)
+    beforeEach(() => {
+      getUserSpy = sinon.stub().returns({
+        type: 'MOCKED_ACTION'
       })
-
-      afterEach(() => {
-        actionsRewireApi.__ResetDependency__('getUser')
-      })
-
-      it('should return project config', (done) => {
-        // Given
-        const projectConfigName = 'Acme',
-              projectConfigAdmins = ['idUs3r'],
-              projectConfigId = 'projectId',
-              projectConfig = {
-                id: projectConfigId,
-                name: projectConfigName,
-                admins: projectConfigAdmins,
-                users: [
-                  { id: 'otherUserId' }
-                ]
-              }
-        mapProjectConfigSpy = sinon.stub().returns(projectConfig)
-        actionsRewireApi.__Rewire__('mapProjectConfig', mapProjectConfigSpy)
-        const expectedActions = [
-          {
-            type: PROJECT_CONFIG_REQUEST,
-            payload: undefined,
-            meta: undefined
-          },
-          {
-            type: PROJECT_CONFIG_SUCCESS,
-            payload: {
-              projectConfig: projectConfig
-            },
-            meta: undefined
-          },
-          {
-            type: 'MOCKED_ACTION'
-          }
-        ]
-        nock('http://localhost')
-          .get(`${api.projectConfig}/${projectConfigId}`)
-          .reply(200, () => {
-            return {
-              projectConfig: projectConfig
-            }
-          })
-
-        // When
-        const store = mockStore({})
-
-        // Then
-        return store.dispatch(actions.getProjectConfig(projectConfigId)).then(() => {
-          expect(store.getActions()).to.deep.equal(expectedActions)
-          expect(getHeadersSpy).to.have.callCount(1)
-          expect(mapProjectConfigSpy).to.have.callCount(1)
-          expect(mapProjectConfigSpy).to.have.been.calledWith({
-            projectConfig: projectConfig
-          })
-          expect(getUserSpy).to.have.callCount(1)
-          expect(getUserSpy).to.have.calledWith('otherUserId')
-        }, done).then(done, done)
-      })
+      actionsRewireApi.__Rewire__('getUser', getUserSpy)
     })
 
-    // TODO failure TU
-    describe('add user to project config', () => {
-      let createUserSpy
+    afterEach(() => {
+      actionsRewireApi.__ResetDependency__('getUser')
+    })
 
-      beforeEach(() => {
-        createUserSpy = sinon.stub().returns({
+    it('should return project config', (done) => {
+      // Given
+      const projectConfigName = 'Acme',
+            projectConfigAdmins = [
+              'idUs3r'
+            ],
+            projectConfigId = 'projectId',
+            projectConfig = {
+              id: projectConfigId,
+              name: projectConfigName,
+              admins: projectConfigAdmins,
+              users: [
+                'otherUserId'
+              ]
+            }
+      mapProjectConfigSpy = sinon.stub().returns(projectConfig)
+      actionsRewireApi.__Rewire__('mapProjectConfig', mapProjectConfigSpy)
+      const expectedActions = [
+        {
+          type: PROJECT_CONFIG_NEW_REQUEST,
+          payload: undefined,
+          meta: undefined
+        },
+        {
+          type: PROJECT_CONFIG_NEW_SUCCESS,
+          payload: {
+            projectConfig: projectConfig
+          },
+          meta: undefined
+        },
+        {
+          type: 'MOCKED_ACTION'
+        }
+      ]
+      nock('http://localhost')
+        .get(`${api.projectConfig}/${projectConfigId}`)
+        .reply(200, () => {
+          return {
+            projectConfig: projectConfig
+          }
+        })
+
+      // When
+      const store = mockStore({})
+
+      // Then
+      return store.dispatch(actions.getProjectConfig(projectConfigId)).then(() => {
+        expect(store.getActions()).to.deep.equal(expectedActions)
+        expect(getHeadersSpy).to.have.callCount(1)
+        expect(mapProjectConfigSpy).to.have.callCount(1)
+        expect(mapProjectConfigSpy).to.have.been.calledWith({
+          projectConfig: projectConfig
+        })
+        expect(getUserSpy).to.have.callCount(1)
+        expect(getUserSpy).to.have.calledWith('otherUserId')
+      }, done).then(done, done)
+    })
+  })
+
+  // TODO failure TU
+  describe('add user to project config', () => {
+    let createUserSpy,
+        getProjectConfigSpy
+
+    beforeEach(() => {
+      createUserSpy = sinon.stub().returns({
+        type: 'MOCKED_ACTION',
+        payload: {
+          account: {
+            identifier: 'otherUserId'
+          }
+        }
+      })
+      actionsRewireApi.__Rewire__('createUser', createUserSpy)
+      getProjectConfigSpy = sinon.stub().returns({
+        type: 'MOCKED_ACTION'
+      })
+      actionsRewireApi.__Rewire__('getProjectConfig', getProjectConfigSpy)
+    })
+
+    afterEach(() => {
+      actionsRewireApi.__ResetDependency__('createUser')
+      actionsRewireApi.__ResetDependency__('getProjectConfig')
+    })
+
+    it('should return project config', (done) => {
+      // Given
+      const projectConfigName = 'Acme',
+            projectConfigAdmins = ['idUs3r'],
+            projectConfigId = 'projectId',
+            projectConfig = {
+              id: projectConfigId,
+              name: projectConfigName,
+              admins: projectConfigAdmins,
+              users: [
+                { id: 'otherUserId' }
+              ]
+            },
+            userEmail = 'email@test.com'
+      const expectedActions = [
+        {
           type: 'MOCKED_ACTION',
           payload: {
             account: {
               identifier: 'otherUserId'
             }
           }
-        })
-        actionsRewireApi.__Rewire__('createUser', createUserSpy)
-        getProjectConfigSpy = sinon.stub().returns({
+        },
+        {
+          type: PROJECT_CONFIG_ADD_USER_REQUEST,
+          payload: undefined,
+          meta: undefined
+        },
+        {
+          type: PROJECT_CONFIG_ADD_USER_SUCCESS,
+          payload: undefined,
+          meta: undefined
+        },
+        {
           type: 'MOCKED_ACTION'
-        })
-        actionsRewireApi.__Rewire__('getProjectConfig', getProjectConfigSpy)
-      })
+        }
+      ]
+      nock('http://localhost')
+        .put(`${api.projectConfig}/${projectConfigId}${api.projectConfigUser}`)
+        .reply(200)
 
-      afterEach(() => {
-        actionsRewireApi.__ResetDependency__('createUser')
-        actionsRewireApi.__ResetDependency__('getProjectConfig')
-      })
+      // When
+      const store = mockStore({})
 
-      it('should return project config', (done) => {
-        // Given
-        const projectConfigName = 'Acme',
-              projectConfigAdmins = ['idUs3r'],
-              projectConfigId = 'projectId',
-              projectConfig = {
-                id: projectConfigId,
-                name: projectConfigName,
-                admins: projectConfigAdmins,
-                users: [
-                  { id: 'otherUserId' }
-                ]
-              },
-              userEmail = 'email@test.com'
-        const expectedActions = [
-          {
-            type: 'MOCKED_ACTION',
-            payload: {
-              account: {
-                identifier: 'otherUserId'
-              }
-            }
-          },
-          {
-            type: PROJECT_CONFIG_ADD_USER_REQUEST,
-            payload: undefined,
-            meta: undefined
-          },
-          {
-            type: PROJECT_CONFIG_ADD_USER_SUCCESS,
-            payload: undefined,
-            meta: undefined
-          },
-          {
-            type: 'MOCKED_ACTION'
-          }
-        ]
-        nock('http://localhost')
-          .put(`${api.projectConfig}/${projectConfigId}${api.projectConfigUser}`)
-          .reply(200)
-
-        // When
-        const store = mockStore({})
-
-        // Then
-        return store.dispatch(actions.addUserToProjectConfig(projectConfigId, userEmail)).then(() => {
-          expect(store.getActions()).to.deep.equal(expectedActions)
-          expect(getHeadersSpy).to.have.callCount(1)
-          expect(createUserSpy).to.have.callCount(1)
-          expect(createUserSpy).to.have.calledWith(userEmail)
-        }, done).then(done, done)
-      })
+      // Then
+      return store.dispatch(actions.addUserToProjectConfig(projectConfigId, userEmail)).then(() => {
+        expect(store.getActions()).to.deep.equal(expectedActions)
+        expect(getHeadersSpy).to.have.callCount(1)
+        expect(createUserSpy).to.have.callCount(1)
+        expect(createUserSpy).to.have.calledWith(userEmail)
+      }, done).then(done, done)
     })
   })
 })

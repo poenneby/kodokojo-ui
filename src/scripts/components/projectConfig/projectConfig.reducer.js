@@ -1,9 +1,9 @@
 import merge from 'lodash/merge'
 
 import {
-  PROJECT_CONFIG_REQUEST,
-  PROJECT_CONFIG_SUCCESS,
-  PROJECT_CONFIG_FAILURE,
+  PROJECT_CONFIG_NEW_REQUEST,
+  PROJECT_CONFIG_NEW_SUCCESS,
+  PROJECT_CONFIG_NEW_FAILURE,
   PROJECT_CONFIG_ADD_USER_REQUEST,
   PROJECT_CONFIG_ADD_USER_SUCCESS,
   PROJECT_CONFIG_ADD_USER_FAILURE
@@ -14,14 +14,14 @@ const initialState = {
 }
 
 export default function projectConfig(state = initialState, action) {
-  if (action.type === PROJECT_CONFIG_REQUEST) {
+  if (action.type === PROJECT_CONFIG_NEW_REQUEST) {
     return {
       ...state,
       isFetching: true
     }
   }
 
-  if (action.type === PROJECT_CONFIG_SUCCESS) {
+  if (action.type === PROJECT_CONFIG_NEW_SUCCESS) {
     return merge(
       {},
       state,
@@ -32,7 +32,7 @@ export default function projectConfig(state = initialState, action) {
     )
   }
 
-  if (action.type === PROJECT_CONFIG_FAILURE) {
+  if (action.type === PROJECT_CONFIG_NEW_FAILURE) {
     // TODO
     return {
       ...state,
@@ -40,7 +40,7 @@ export default function projectConfig(state = initialState, action) {
     }
   }
 
-  if (action.type ===   PROJECT_CONFIG_ADD_USER_REQUEST) {
+  if (action.type === PROJECT_CONFIG_ADD_USER_REQUEST) {
     return {
       ...state,
       isFetching: true
