@@ -48,23 +48,27 @@ export function login(username, password) {
     ).then(data => {
       if (!data.error) {
         authService.putAuth(data.payload.account.id)
+
         // user has at least one projectConfigId
-        if (data.payload.account.projectConfigIds) {
+        if (data.payload.account.projectConfigIds.length) {
           const projectConfig = data.payload.account.projectConfigIds[0]
+
           // first case, project config has a project id
-          if (projectConfig) {
-            if (projectConfig.projectId) {
-              // get project config and project and redirect to project
-              return dispatch(getProjectConfigAndProject(projectConfig.projectConfigId, projectConfig.projectId)
-              ).then(browserHistory.push('/project'))
-            }
+          if (projectConfig.projectId) {
+
+            // get project config and project and redirect to project
+            return dispatch(getProjectConfigAndProject(projectConfig.projectConfigId, projectConfig.projectId)
+            ).then(browserHistory.push('/project'))
+          } else {
+
             // TODO second case, project config has no project id
             // must redirect to project config stack, with a button to start it
             return
           }
         } else {
-          // TODO third case no ids, redirect to first project
-          return
+
+          // if no ids, redirect to first project
+          return browserHistory.push('/firstProject')
         }
       } else {
         throw new Error(data.payload.status)

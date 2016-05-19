@@ -24,8 +24,6 @@ const middlewares = [
 const mockStore = configureMockStore(middlewares)
 
 describe('login actions', () => {
-  let mapAccount
-
   afterEach(() => {
     nock.cleanAll()
   })
@@ -53,6 +51,8 @@ describe('login actions', () => {
       actionsRewireApi.__ResetDependency__('mapAccount')
       actionsRewireApi.__ResetDependency__('browserHistory')
       actionsRewireApi.__ResetDependency__('getProjectConfigAndProject')
+      actionsRewireApi.__ResetDependency__('putAuth')
+      actionsRewireApi.__ResetDependency__('requestAuthentication')
     })
 
     it('should request auth', (done) => {
@@ -120,7 +120,54 @@ describe('login actions', () => {
         expect(getProjectConfigAndProjectSpy).to.have.callCount(1)
         expect(historyPushSpy).to.have.callCount(1)
         expect(historyPushSpy).to.have.been.calledWith('/project')
-      }, done).then(done, done)
+        done()
+      }).catch(done)
+    })
+
+    it('should redirect to first project', (done) => {
+      // Given
+      const username = 'test',
+            password = 'psUs3r',
+            auth = 'cryptedAuth',
+            account = {
+              id: 'idUs3r',
+              projectConfigIds: []
+            },
+            requestAuthenticationSpy = sinon.stub().returns({
+              type: 'MOCKED_ACTION',
+              payload: {
+                account: account
+              }
+            })
+      actionsRewireApi.__Rewire__('requestAuthentication', requestAuthenticationSpy)
+      const setAuthSpy = sinon.stub(authService, 'setAuth').returns(auth)
+      const putAuthSpy = sinon.spy(authService, 'putAuth')
+      const getHeadersSpy = sinon.spy(ioService, 'getHeaders')
+      const expectedActions = [
+        {
+          type: 'MOCKED_ACTION',
+          payload: {
+            account: account
+          }
+        }
+      ]
+
+      // When
+      const store = mockStore({})
+
+      // Then
+      return store.dispatch(actions.login(username, password)).then(() => {
+        expect(store.getActions()).to.deep.equal(expectedActions)
+        expect(setAuthSpy).to.have.callCount(1)
+        expect(setAuthSpy).to.have.been.calledWith(username, password)
+        expect(putAuthSpy).to.have.callCount(1)
+        expect(putAuthSpy).to.have.been.calledWith(account.id)
+        expect(getHeadersSpy).to.have.not.been.called
+        expect(requestAuthenticationSpy).to.have.callCount(1)
+        expect(historyPushSpy).to.have.callCount(1)
+        expect(historyPushSpy).to.have.been.calledWith('/firstProject')
+        done()
+      }).catch(done)
     })
 
     it('should fail to request auth', (done) => {
@@ -166,13 +213,18 @@ describe('login actions', () => {
       const store = mockStore({})
 
       // Then
-      return store.dispatch(actions.login(username, password)).then(done, () => {
-        expect(store.getActions()).to.deep.equal(expectedActions)
-        expect(setAuthSpy).to.have.callCount(1)
-        expect(setAuthSpy).to.have.been.calledWith(username, password)
-        expect(putAuthSpy).to.have.callCount(0)
-        expect(getHeadersSpy).to.have.callCount(1)
-      }).then(done, done)
+      return store.dispatch(actions.login(username, password))
+        .then(()=> {
+          done(new Error('This fail case test passed'))
+        })
+        .catch(() => {
+          expect(store.getActions()).to.deep.equal(expectedActions)
+          expect(setAuthSpy).to.have.callCount(1)
+          expect(setAuthSpy).to.have.been.calledWith(username, password)
+          expect(putAuthSpy).to.have.callCount(0)
+          expect(getHeadersSpy).to.have.callCount(1)
+          done()
+        })
     })
   })
 
