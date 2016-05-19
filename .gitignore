@@ -11,13 +11,13 @@ pids
 *.pid
 *.seed
 
-.sass-cache/
+.sass-cache
 
-node_modules/
-static/
-reports/
-coverage/
-transpiled/
+node_modules
+static
+reports
+coverage
+transpiled
 *.zip
 *.tgz
 .modules
