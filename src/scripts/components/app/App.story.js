@@ -31,7 +31,7 @@ storiesOf('App', module)
     <Provider store={store}>
       <IntlProvider locale="en">
         <App
-          isNavVisible={ true }
+          isNavVisible
         >
           <div>children</div>
         </App>

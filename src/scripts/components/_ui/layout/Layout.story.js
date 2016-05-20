@@ -15,13 +15,6 @@ const initialState = {}
 const store = configureStore(initialState)
 
 storiesOf('Layout', module)
-  .add('default', () => (
-    <Provider store={store}>
-      <Layout>
-        children
-      </Layout>
-    </Provider>
-  ))
   .add('with Panel', () => (
     <Provider store={store}>
       <Layout>

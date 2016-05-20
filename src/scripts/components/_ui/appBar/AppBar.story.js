@@ -38,7 +38,6 @@ storiesOf('AppBar', module)
             <br/>
             <br/>
             <br/>
-            <br/>
             Lorem ipsum dolor sit amet, quo ea autem dolorum expetenda. Ei case brute liber ius, eos ut diam eius,
             graecis corrumpit molestiae in has. Velit corrumpit per ad, no democritum scribentur pro.
             Quo fabellas legendos cu, velit deserunt evertitur at eam.<br/>
