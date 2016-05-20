@@ -10,19 +10,28 @@
   font-weight: 100;
 }
 
+.font-standard--light {
+  font-family: @font-family-primary;
+  font-weight: 300;
+}
+
 .font-standard--normal {
   font-family: @font-family-primary;
   font-weight: 400;
 }
 
 // font sizes
-@default: .75rem;
-@h2: 1.8rem;
-@h3: 1.5rem;
+@font-size-default: .9286rem;
 
+// titles
+@title-size-1: 2.857rem;
+@title-size-2: 1.8rem;
+@title-size-3: 1.5rem;
+
+// paragraph
 @font-size-smaller: .5rem;
 @font-size-small: .8rem;
-@font-size-normal: 1rem;
+@font-size-normal: 1.143rem;
 @font-size-medium: 1.2rem;
 @font-size-large: 1.4rem;
 @font-size-larger: 1.7rem;
@@ -74,6 +83,12 @@
 @color-font-4: #FFFFFF;
 
 // positions
+// TODO move to a new _layout.less
 .center {
   text-align: center;
+}
+// reset
+body {
+  .font-standard--light;
+  font-size: @font-size-default;
 }
