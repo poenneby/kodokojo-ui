@@ -19,13 +19,18 @@
     "test:watch": "npm test -- --watch",
     "coverage": "BABEL_ENV=test babel-node node_modules/isparta/bin/isparta cover _mocha --root src/ --include-all-sources --default-excludes -- --recursive './src/**/*.spec.js' --require ignore-styles --require intl --require ./test/utils.js"
   },
-  "author": "ModuloM",
+  "author": {
+    "name" : "ModuloM / Antoine Le Taxin",
+    "url" : "https://twitter.com/ModuloM"
+  },
   "contributors": [
     {
-      "name": "Antoine LE TAXIN"
+      "name": "Antoine LE TAXIN",
+      "url": "https://twitter.com/ModuloM"
     },
     {
-      "name": "Jean-Pascal THIERY"
+      "name": "Jean-Pascal THIERY",
+      "url": "https://twitter.com/jpthiery"
     }
   ],
   "license": "GPL-3.0",
