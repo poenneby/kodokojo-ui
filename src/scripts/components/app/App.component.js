@@ -13,7 +13,6 @@ const darkTheme = getMuiTheme(darkBaseTheme)
 // Component
 import '../../../favicon.ico'
 import '../../../images/logo-kodokojo-icon.png'
-import './app.less'
 import AppHeader from './AppHeader.component'
 
 class App extends Component {
