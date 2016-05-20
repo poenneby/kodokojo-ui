@@ -13,7 +13,7 @@ import './panel.less'
 export class Panel extends Component {
 
   static propTypes = {
-    children: React.PropTypes.oneOfType([
+    children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.element),
       PropTypes.element
     ]),

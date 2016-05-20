@@ -14,9 +14,10 @@ export class NavDrawer extends Component {
 
   static propTypes = {
     active: PropTypes.bool,
-    children: React.PropTypes.oneOfType([
+    children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.element),
-      PropTypes.element
+      PropTypes.element,
+      PropTypes.string
     ]),
     onOverlayClick: PropTypes.func,
     permanentAt: PropTypes.string,

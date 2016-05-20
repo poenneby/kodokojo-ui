@@ -12,7 +12,7 @@ import { Layout as ToolboxLayout } from 'react-toolbox'
 export class Layout extends Component {
 
   static propTypes = {
-    children: React.PropTypes.oneOfType([
+    children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.element),
       PropTypes.element
     ])

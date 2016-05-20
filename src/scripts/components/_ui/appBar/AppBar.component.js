@@ -13,9 +13,10 @@ import logoKodoKojo from '../../../../images/logo-white-kodokojo.svg'
 export class AppBar extends Component {
 
   static propTypes = {
-    children: React.PropTypes.oneOfType([
+    children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.element),
-      PropTypes.element
+      PropTypes.element,
+      PropTypes.string
     ]),
     fixed: PropTypes.bool,
     flat: PropTypes.bool

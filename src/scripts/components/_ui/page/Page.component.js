@@ -10,7 +10,7 @@ import './page.less'
 export class NavDrawer extends Component {
 
   static propTypes = {
-    children: React.PropTypes.oneOfType([
+    children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.element),
       PropTypes.element
     ])
