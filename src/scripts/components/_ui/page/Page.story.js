@@ -16,7 +16,7 @@ storiesOf('Page', module)
   .add('default', () => (
     <Provider store={store}>
       <Page>
-        <h2>Title</h2>
+        <h1>Title</h1>
         <p>
           Lorem ipsum dolor sit amet, quo ea autem dolorum expetenda. Ei case brute liber ius, eos ut diam eius,
           graecis corrumpit molestiae in has. Velit corrumpit per ad, no democritum scribentur pro.
