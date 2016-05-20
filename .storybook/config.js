@@ -6,6 +6,7 @@ function loadStories() {
   require('../src/scripts/components/_ui/layout/Layout.story')
   require('../src/scripts/components/_ui/panel/Panel.story')
   require('../src/scripts/components/_ui/navDrawer/NavDrawer.story')
+  require('../src/scripts/components/_ui/page/Page.story')
 }
 
 configure(loadStories, module)
