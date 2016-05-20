@@ -70,7 +70,7 @@ export default function project(state = initialState, action) {
 
   if (action.type === PROJECT_UPDATE && action.payload.data.brickType !== 'LOADBALANCER') {
     const bricks = cloneDeep(state.stacks[0].bricks)
-    const brickIndex = findIndex(bricks, {name: action.payload.data.brickName})
+    const brickIndex = findIndex(bricks, { name: action.payload.data.brickName })
     bricks[brickIndex].state = action.payload.data.brickState
     bricks[brickIndex].url = action.payload.data.brickUrl
     return merge(
@@ -79,7 +79,7 @@ export default function project(state = initialState, action) {
       {
         stacks: [
           {
-            bricks: bricks
+            bricks
           }
         ],
         isFetching: false

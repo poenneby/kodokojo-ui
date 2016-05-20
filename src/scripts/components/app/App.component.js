@@ -27,7 +27,7 @@ class App extends Component {
   }
 
   render() {
-    const { children, themeSelected, locale, setLocale, isAuthenticated } = this.props
+    const { children, themeSelected, locale, setLocale, isAuthenticated } = this.props // eslint-disable-line no-shadow
     const currentMuiTheme = (themeSelected === 'light') ? lightTheme : darkTheme
 
     return (
@@ -45,13 +45,13 @@ class App extends Component {
   }
 }
 
-const mapStateProps = (state) => {
-  return {
+const mapStateProps = (state) => (
+  {
     locale: state.prefs.locale,
     themeSelected: state.prefs.theme,
     isAuthenticated: state.auth.isAuthenticated
   }
-}
+)
 
 export default connect(
   mapStateProps,

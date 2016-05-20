@@ -20,5 +20,3 @@ user.define({
 const Schemas = {
   USER: user
 }
-
-

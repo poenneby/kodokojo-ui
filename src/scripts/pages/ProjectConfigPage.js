@@ -6,10 +6,6 @@ import ProjectConfig from '../components/projectConfig/ProjectConfig.component'
 
 class ProjectConfigPage extends Component {
 
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return (
       <div style={ centerPaper }>

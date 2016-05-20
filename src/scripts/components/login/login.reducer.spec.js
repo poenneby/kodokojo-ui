@@ -1,10 +1,13 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-duplicate-imports */
+/* eslint-disable import/no-duplicates */
+
 import { expect } from 'chai'
 
 import loginReducer from './login.reducer'
 import * as ActionsTypes from '../../commons/constants'
 
 describe('login reducer', () => {
-
   it('should return initialState', () => {
     // Given
     const state = undefined
@@ -81,5 +84,4 @@ describe('login reducer', () => {
       isFetching: false
     })
   })
-
 })

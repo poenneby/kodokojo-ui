@@ -24,8 +24,8 @@ export class AppBar extends Component {
   }
 
   render() {
-    const { children, fixed, flat } = this.props
-    
+    const { children, fixed, flat } = this.props // eslint-disable-line no-shadow
+
     return (
       <ToolboxAppBar
         className="header-bar"

@@ -1,3 +1,7 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-duplicate-imports */
+/* eslint-disable import/no-duplicates */
+
 import chai, { expect } from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
@@ -29,9 +33,9 @@ describe('login actions', () => {
   })
 
   describe('login', () => {
-    let mapAccountSpy,
-        historyPushSpy,
-        getProjectConfigAndProjectSpy
+    let mapAccountSpy
+    let historyPushSpy
+    let getProjectConfigAndProjectSpy
 
     beforeEach(() => {
       historyPushSpy = sinon.spy()
@@ -57,18 +61,18 @@ describe('login actions', () => {
 
     it('should request auth', (done) => {
       // Given
-      const username = 'test',
-            password = 'psUs3r',
-            auth = 'cryptedAuth',
-            account = {
-              id: 'idUs3r',
-              projectConfigIds: [
-                {
-                  projectConfigId: 'projectConfigId',
-                  projectId: 'projectId'
-                }
-              ]
-            }
+      const username = 'test'
+      const password = 'psUs3r'
+      const auth = 'cryptedAuth'
+      const account = {
+        id: 'idUs3r',
+        projectConfigIds: [
+          {
+            projectConfigId: 'projectConfigId',
+            projectId: 'projectId'
+          }
+        ]
+      }
       const expectedActions = [
         {
           type: AUTH_REQUEST,
@@ -78,7 +82,7 @@ describe('login actions', () => {
         {
           type: AUTH_SUCCESS,
           payload: {
-            account: account
+            account
           },
           meta: undefined
         },
@@ -87,9 +91,9 @@ describe('login actions', () => {
         }
       ]
       const headers = {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Basic ${auth}`
+        Authorization: `Basic ${auth}`
       }
       const setAuthSpy = sinon.stub(authService, 'setAuth').returns(auth)
       const putAuthSpy = sinon.spy(authService, 'putAuth')
@@ -98,12 +102,10 @@ describe('login actions', () => {
       actionsRewireApi.__Rewire__('mapAccount', mapAccountSpy)
       nock('http://localhost', {
         reqheaders: {
-          'Authorization': `Basic ${auth}`
+          Authorization: `Basic ${auth}`
         }
       }).get(`${api.user}`)
-        .reply(200, () => {
-          return account
-        })
+        .reply(200, () => account)
 
 
       // When
@@ -126,19 +128,19 @@ describe('login actions', () => {
 
     it('should redirect to first project', (done) => {
       // Given
-      const username = 'test',
-            password = 'psUs3r',
-            auth = 'cryptedAuth',
-            account = {
-              id: 'idUs3r',
-              projectConfigIds: []
-            },
-            requestAuthenticationSpy = sinon.stub().returns({
-              type: 'MOCKED_ACTION',
-              payload: {
-                account: account
-              }
-            })
+      const username = 'test'
+      const password = 'psUs3r'
+      const auth = 'cryptedAuth'
+      const account = {
+        id: 'idUs3r',
+        projectConfigIds: []
+      }
+      const requestAuthenticationSpy = sinon.stub().returns({
+        type: 'MOCKED_ACTION',
+        payload: {
+          account
+        }
+      })
       actionsRewireApi.__Rewire__('requestAuthentication', requestAuthenticationSpy)
       const setAuthSpy = sinon.stub(authService, 'setAuth').returns(auth)
       const putAuthSpy = sinon.spy(authService, 'putAuth')
@@ -147,7 +149,7 @@ describe('login actions', () => {
         {
           type: 'MOCKED_ACTION',
           payload: {
-            account: account
+            account
           }
         }
       ]
@@ -172,9 +174,9 @@ describe('login actions', () => {
 
     it('should fail to request auth', (done) => {
       // Given
-      const username = 'test',
-            password = 'psUs3r',
-            auth = 'cryptedAuth'
+      const username = 'test'
+      const password = 'psUs3r'
+      const auth = 'cryptedAuth'
       const expectedActions = [
         {
           type: AUTH_REQUEST,
@@ -195,16 +197,16 @@ describe('login actions', () => {
         }
       ]
       const headers = {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Basic ${auth}`
+        Authorization: `Basic ${auth}`
       }
       const setAuthSpy = sinon.stub(authService, 'setAuth').returns(auth)
       const putAuthSpy = sinon.spy(authService, 'putAuth')
       const getHeadersSpy = sinon.stub(ioService, 'getHeaders').returns(headers)
       nock('http://localhost', {
         reqheaders: {
-          'Authorization': `Basic ${auth}`
+          Authorization: `Basic ${auth}`
         }
       }).get(`${api.user}`)
         .reply(401)
@@ -214,7 +216,7 @@ describe('login actions', () => {
 
       // Then
       return store.dispatch(actions.login(username, password))
-        .then(()=> {
+        .then(() => {
           done(new Error('This fail case test passed'))
         })
         .catch(() => {
@@ -242,11 +244,12 @@ describe('login actions', () => {
       const store = mockStore({})
 
       // Then
-      return store.dispatch(actions.logout()).then(() => {
-        expect(store.getActions()).to.deep.equal(expectedActions)
-        expect(resetAuthSpy).to.have.callCount(1)
-        done()
-      }, done)
+      return store.dispatch(actions.logout())
+        .then(() => {
+          expect(store.getActions()).to.deep.equal(expectedActions)
+          expect(resetAuthSpy).to.have.callCount(1)
+          done()
+        }).catch(done)
     })
   })
 })

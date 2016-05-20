@@ -7,7 +7,6 @@ import persistenceStore from './persistenceStore'
 import rootReducer from '../commons/reducers'
 
 export default function configureStore(initialState) {
-
   const finalCreateStore = compose(
       applyMiddleware(
         thunk,

@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-duplicate-imports */
+/* eslint-disable import/no-duplicates */
+
 import React from 'react'
-import chai from 'chai'
-import { expect } from 'chai'
+import chai, { expect } from 'chai'
 import chaiEnzyme from 'chai-enzyme'
-import {mount, render, shallow} from 'enzyme'
+import { mount, render, shallow } from 'enzyme'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 chai.use(chaiEnzyme())
@@ -20,10 +23,9 @@ import { Login } from './Login.component.js'
 
 // TODO test error message when login
 describe('<Login> component', () => {
-
-  let props,
-      messages,
-      intlProvider
+  let props
+  let messages
+  let intlProvider
 
   beforeEach(() => {
     // TODO find another way to mock IntlProvider
@@ -48,12 +50,12 @@ describe('<Login> component', () => {
       login: () => {},
       logout: () => {}
     }
-    intlProvider = new IntlProvider({locale:'en'}, {})
+    intlProvider = new IntlProvider({ locale: 'en' }, {})
   })
 
   it('should render a form if not authenticated', () => {
     // Given
-    const nextProps =  merge(
+    const nextProps = merge(
       props,
       { isAuthenticated: false }
     )
@@ -71,7 +73,7 @@ describe('<Login> component', () => {
 
   it('should render a div if authenticated', () => {
     // Given
-    const nextProps =  merge(
+    const nextProps = merge(
       props,
       { isAuthenticated: true }
     )
@@ -144,7 +146,7 @@ describe('<Login> component', () => {
       )
 
       // When
-      component.find('form').simulate('submit', {preventDefault: () => {}})
+      component.find('form').simulate('submit', { preventDefault: () => {} })
 
       // Then
       expect(nextProps.login).to.have.callCount(1)
@@ -158,7 +160,7 @@ describe('<Login> component', () => {
         {
           fields: {
             username: {},
-            psw : {
+            psw: {
               value: 'password'
             }
           },
@@ -203,14 +205,14 @@ describe('<Login> component', () => {
       )
 
       // When
-      component.find('form').simulate('submit', {preventDefault: () => {}})
+      component.find('form').simulate('submit', { preventDefault: () => {} })
 
       // Then
       expect(nextProps.login).to.not.have.been.called
     })
   })
 
-  describe ('handle logout', () => {
+  describe('handle logout', () => {
     it('should logout', () => {
       // Given
       const nextProps = merge(

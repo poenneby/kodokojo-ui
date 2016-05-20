@@ -19,26 +19,27 @@ export function requestNewUserId(email) {
   return {
     [CALL_API]: {
       method: 'POST',
-      endpoint: `${window.location.protocol||'http:'}//${window.location.host||'localhost'}${api.user}`,
+      endpoint:
+        `${window.location.protocol || 'http:'}//` +
+        `${window.location.host || 'localhost'}${api.user}`,
       headers: getHeaders(),
       types: [
         {
           type: USER_NEW_ID_REQUEST,
           payload: (action, data) => ({
-            email: email
+            email
           })
         },
         {
           type: USER_NEW_ID_SUCCESS,
-          payload: (action, state, res) => {
-            return res.text().then(id => {
-              return {
+          payload: (action, state, res) => res.text()
+            .then(id => (
+              {
                 account: {
-                  id: id
+                  id
                 }
               }
-            })
-          }
+            ))
         },
         USER_NEW_ID_FAILURE
       ]
@@ -52,22 +53,23 @@ export function requestNewUser(email, userId) {
   return {
     [CALL_API]: {
       method: 'POST',
-      endpoint: `${window.location.protocol||'http:'}//${window.location.host||'localhost'}${api.user}/${userId}`,
+      endpoint:
+        `${window.location.protocol || 'http:'}//` +
+        `${window.location.host || 'localhost'}${api.user}/${userId}`,
       headers: getHeaders(),
       body: JSON.stringify({
-        email: email
+        email
       }),
       types: [
         USER_NEW_REQUEST,
         {
           type: USER_NEW_SUCCESS,
-          payload: (action, state, res) => {
-            return res.json().then(data => {
-              return {
+          payload: (action, state, res) => res.json()
+            .then(data => (
+              {
                 account: data
               }
-            })
-          }
+            ))
         },
         USER_NEW_FAILURE
       ]
@@ -78,39 +80,35 @@ export function requestNewUser(email, userId) {
 }
 
 export function createUser(email) {
-  return dispatch => {
-    return dispatch(requestNewUserId(email)
-    ).then(data => {
+  return dispatch => dispatch(requestNewUserId(email))
+    .then(data => {
       if (!data.error && data.payload.account && data.payload.account.id) {
         const userId = data.payload.account.id
         return dispatch(requestNewUser(email, userId))
-      } else {
-        throw new Error(data.payload.status)
       }
-    }).catch(error => {
-      // TODO do something with error
-      throw new Error(error.message)
+      return Promise.reject(data.payload.status)
     })
-  }
+    .catch(error => Promise.reject(error.message))
 }
 
 export function requestUser(userId) {
   return {
     [CALL_API]: {
       method: 'GET',
-      endpoint: `${window.location.protocol||'http:'}//${window.location.host||'localhost'}${api.user}/${userId}`,
+      endpoint:
+        `${window.location.protocol || 'http:'}//` +
+        `${window.location.host || 'localhost'}${api.user}/${userId}`,
       headers: getHeaders(),
       types: [
         USER_REQUEST,
         {
           type: USER_SUCCESS,
-          payload: (action, state, res) => {
-            return res.json().then(data => {
-              return {
+          payload: (action, state, res) => res.json()
+            .then(data => (
+              {
                 user: mapUser(data)
               }
-            })
-          }
+            ))
         },
         USER_FAILURE
       ]
@@ -121,16 +119,13 @@ export function requestUser(userId) {
 }
 
 export function getUser(userId) {
-  return dispatch => {
-    return dispatch(requestUser(userId)
-    ).then(data => {
-      if (data.error) {
-        throw new Error()
+  return dispatch => dispatch(requestUser(userId))
+    .then(data => {
+      if (!data.error) {
+        return Promise.resolve()
       }
-    }).catch(error => {
-      // TODO do something with error
-      throw new Error(error.message)
+      return Promise.reject(data.payload.status)
     })
-  }
+    .catch(error => Promise.reject(error.message))
 }
 

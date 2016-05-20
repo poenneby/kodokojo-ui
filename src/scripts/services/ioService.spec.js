@@ -1,3 +1,7 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-duplicate-imports */
+/* eslint-disable import/no-duplicates */
+
 import chai, { expect } from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
@@ -6,7 +10,6 @@ chai.use(sinonChai)
 import ioService from './ioService'
 
 describe('io service', () => {
-
   describe('getHeaders method', () => {
     afterEach(() => {
       ioService.__ResetDependency__('getToken')
@@ -22,7 +25,7 @@ describe('io service', () => {
 
       // Then
       expect(returned).to.be.deep.equal({
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json'
       })
       expect(getTokenSpy).to.have.callCount(1)
@@ -39,8 +42,8 @@ describe('io service', () => {
 
       // Then
       expect(returned).to.be.deep.equal({
-        'Accept': 'application/json',
-        'Authorization': 'Basic token',
+        Accept: 'application/json',
+        Authorization: 'Basic token',
         'Content-Type': 'application/json'
       })
       expect(getTokenSpy).to.have.callCount(1)
@@ -62,14 +65,13 @@ describe('io service', () => {
 
       // Then
       expect(returned).to.be.deep.equal({
-        'Accept': 'application/xml',
-        'Authorization': 'Basic token',
+        Accept: 'application/xml',
+        Authorization: 'Basic token',
         'Content-Type': 'application/json',
-        'SuperCustomHeader': 'super'
+        SuperCustomHeader: 'super'
       })
       expect(getTokenSpy).to.have.callCount(1)
       expect(getTokenSpy).to.have.calledWith()
     })
   })
-
 })

@@ -22,12 +22,8 @@ export class AppHeader extends Component {
     onLanguageChange: PropTypes.func.isRequired
   }
 
-  constructor(props) {
-    super(props)
-  }
-
   render() {
-    const { languageSelected, onLanguageChange } = this.props
+    const { languageSelected, onLanguageChange } = this.props // eslint-disable-line no-shadow
     const { formatMessage } = this.props.intl
 
     return (

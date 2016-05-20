@@ -15,11 +15,73 @@ import {
   PROJECT_CONFIG_ADD_USER_FAILURE
 } from '../../commons/constants'
 
+// TODO use a different action key for fetch, not NEW but PROJECT_CONFIG_(REQUEST/SUCCESS/FAILURE)
+export function fetchProjectConfig(projectConfigId) {
+  return {
+    [CALL_API]: {
+      method: 'GET',
+      endpoint:
+      `${window.location.protocol || 'http:'}//` +
+      `${window.location.host || 'localhost'}${api.projectConfig}/${projectConfigId}`,
+      headers: getHeaders(),
+      types: [
+        PROJECT_CONFIG_NEW_REQUEST,
+        {
+          type: PROJECT_CONFIG_NEW_SUCCESS,
+          payload: (action, state, res) => res.json()
+            .then(projectConfig => (
+              {
+                projectConfig: mapProjectConfig(projectConfig)
+              }
+            ))
+        },
+        PROJECT_CONFIG_NEW_FAILURE
+      ]
+    }
+  }
+}
+
+export function getProjectConfig(projectConfigId) {
+  return dispatch => dispatch(fetchProjectConfig(projectConfigId))
+    .then(data => {
+      if (!data.error) {
+        if (data.payload.projectConfig && data.payload.projectConfig.users) {
+          data.payload.projectConfig.users.forEach((userId) => {
+            dispatch(getUser(userId))
+          })
+        }
+        return Promise.resolve(data)
+      }
+      return Promise.reject(data.payload.status)
+    })
+    .catch(error => Promise.reject(error.message))
+}
+
+// TODO TU
+export function getProjectConfigAndProject(projectConfigId, projectId) {
+  return dispatch => dispatch(getProjectConfig(projectConfigId))
+    .then(data => {
+      if (!data.error) {
+        return dispatch(getProject(projectId))
+      }
+      return Promise.reject(data.payload.status)
+    })
+    .then(data => {
+      if (!data.error) {
+        return data
+      }
+      return Promise.reject(data.payload.status)
+    })
+    .catch(error => Promise.reject(error.message))
+}
+
 export function requestProjectConfig(projectConfigName, projectConfigOwner, projectConfigUsers) {
   return {
     [CALL_API]: {
       method: 'POST',
-      endpoint: `${window.location.protocol||'http:'}//${window.location.host||'localhost'}${api.projectConfig}`,
+      endpoint:
+        `${window.location.protocol || 'http:'}//` +
+        `${window.location.host || 'localhost'}${api.projectConfig}`,
       headers: getHeaders(),
       body: JSON.stringify({
         name: projectConfigName,
@@ -30,15 +92,14 @@ export function requestProjectConfig(projectConfigName, projectConfigOwner, proj
         PROJECT_CONFIG_NEW_REQUEST,
         {
           type: PROJECT_CONFIG_NEW_SUCCESS,
-          payload: (action, state, res) => {
-            return res.text().then(id => {
-              return {
+          payload: (action, state, res) => res.text()
+            .then(id => (
+              {
                 projectConfig: {
-                  id: id
+                  id
                 }
               }
-            })
-          }
+            ))
         },
         PROJECT_CONFIG_NEW_FAILURE
       ]
@@ -47,97 +108,26 @@ export function requestProjectConfig(projectConfigName, projectConfigOwner, proj
 }
 
 export function createProjectConfig(projectConfigName, projectConfigOwner, projectConfigUsers) {
-  return dispatch => {
-    return dispatch(requestProjectConfig(projectConfigName, projectConfigOwner, projectConfigUsers)
-    ).then(data => {
+  return dispatch => dispatch(requestProjectConfig(projectConfigName, projectConfigOwner, projectConfigUsers))
+    .then(data => {
       if (!data.error) {
         return dispatch(getProjectConfig(data.payload.projectConfig.id))
-      } else {
-        throw new Error(data.payload.status)
       }
-    }).then(() => {
+      return Promise.reject(data.payload.status)
+    })
+    .then(() => {
       browserHistory.push('/projectConfig')
-    }).catch(error => {
-      // TODO do something with error
-      throw new Error(error.message)
     })
-  }
-}
-
-// TODO use a different action key for fetch, not NEW but PROJECT_CONFIG_(REQUEST/SUCCESS/FAILURE)
-export function fetchProjectConfig(projectConfigId) {
-  return {
-    [CALL_API]: {
-      method: 'GET',
-      endpoint: `${window.location.protocol||'http:'}//${window.location.host||'localhost'}${api.projectConfig}/${projectConfigId}`,
-      headers: getHeaders(),
-      types: [
-        PROJECT_CONFIG_NEW_REQUEST,
-        {
-          type: PROJECT_CONFIG_NEW_SUCCESS,
-          payload: (action, state, res) => {
-            return res.json().then(projectConfig => {
-              return {
-                projectConfig: mapProjectConfig(projectConfig)
-              }
-            })
-          }
-        },
-        PROJECT_CONFIG_NEW_FAILURE
-      ]
-    }
-  }
-}
-
-export function getProjectConfig(projectConfigId) {
-  return dispatch => {
-    return dispatch(fetchProjectConfig(projectConfigId)
-    ).then(data => {
-      if (!data.error) {
-        if (data.payload.projectConfig && data.payload.projectConfig.users) {
-          data.payload.projectConfig.users.forEach((userId) => {
-            dispatch(getUser(userId))
-          })
-        }
-        return data
-      } else {
-        throw new Error(data.payload.status)
-      }
-    }).catch(error => {
-      // TODO do something with error
-      throw new Error(error.message)
-    })
-  }
-}
-
-// TODO TU
-export function getProjectConfigAndProject(projectConfigId, projectId) {
-  return dispatch => {
-    return dispatch(getProjectConfig(projectConfigId)
-    ).then(data => {
-      if (!data.error) {
-        return dispatch(getProject(projectId))
-      } else {
-        throw new Error(data.payload.status)
-      }
-    }).then(data => {
-      if (!data.error) {
-        return data
-      } else {
-        throw new Error(data.payload.status)
-      }
-    }).catch(error => {
-      // TODO do something with error
-      throw new Error(error.message)
-    })
-  }
+    .catch(error => Promise.reject(error.message))
 }
 
 export function requestAddUserToProjectConfig(projectConfigId, userId) {
   return {
     [CALL_API]: {
       method: 'PUT',
-      endpoint: `${window.location.protocol||'http:'}//${window.location.host||'localhost'}${api.projectConfig}/${projectConfigId}${api.projectConfigUser}`,
+      endpoint:
+        `${window.location.protocol || 'http:'}//` +
+        `${window.location.host || 'localhost'}${api.projectConfig}/${projectConfigId}${api.projectConfigUser}`,
       headers: getHeaders(),
       body: JSON.stringify([userId]),
       types: [
@@ -150,25 +140,20 @@ export function requestAddUserToProjectConfig(projectConfigId, userId) {
 }
 
 export function addUserToProjectConfig(projectConfigId, email) {
-  return dispatch => {
-    // TODO search user and if does not exist, create it
-    return dispatch(createUser(email)
-    ).then(data => {
+  // TODO search user and if does not exist, create it
+  return dispatch => dispatch(createUser(email))
+    .then(data => {
       if (!data.error) {
         // TODO add dispatch show user details when user is created
         return dispatch(requestAddUserToProjectConfig(projectConfigId, data.payload.account.id))
-      } else {
-        throw new Error(data.payload.status)
       }
-    }).then(data => {
+      return Promise.reject(data.payload.status)
+    })
+    .then(data => {
       if (!data.error) {
         return dispatch(getProjectConfig(projectConfigId))
-      } else {
-        throw new Error(data.payload.status)
       }
-    }).catch(error => {
-      // TODO do something with error
-      throw new Error(error.message)
+      return Promise.reject(data.payload.status)
     })
-  }
+    .catch(error => Promise.reject(error.message))
 }

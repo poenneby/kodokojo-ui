@@ -20,7 +20,7 @@ const validate = combineValidators({
 // TODO TU
 // ProjectConfigForm component
 export class ProjectConfigForm extends Component {
-  
+
   static propTypes = {
     createProjectConfig: PropTypes.func.isRequired,
     fields: PropTypes.object.isRequired,
@@ -29,33 +29,28 @@ export class ProjectConfigForm extends Component {
     submitting: PropTypes.bool.isRequired,
     userId: PropTypes.string.isRequired
   }
-  
-  constructor(props) {
-    super(props)
-  }
 
   handleSubmit = () => {
-    const { fields: { projectName }, userId, createProjectConfig } = this.props
+    const { fields: { projectName }, userId, createProjectConfig } = this.props // eslint-disable-line no-shadow
 
     const nextProjectName = projectName.value
     const error = validate({ projectName: nextProjectName })
+
     if (error.projectName) {
       return Promise.reject({ projectName: error.email })
-    } else {
-      if (nextProjectName && nextProjectName.trim()) {
-        return createProjectConfig(nextProjectName.trim(), userId
-        ).then(
-          Promise.resolve()
-        ).catch( error => {
-          return Promise.reject({ projectName: returnErrorKey('project', 'config-create', error.message) })
-        })
-      }
     }
+    if (nextProjectName && nextProjectName.trim()) {
+      return createProjectConfig(nextProjectName.trim(), userId)
+        .then(Promise.resolve())
+        .catch(err => Promise.reject({ projectName: returnErrorKey('project', 'config-create', err.message) }))
+    }
+    // TODO add default error message
+    return Promise.reject()
   }
 
   render() {
-    const { fields: { projectName, projectUsers }, handleSubmit, submitting  } = this.props
-    const { formatMessage }  = this.props.intl
+    const { fields: { projectName, projectUsers }, handleSubmit, submitting } = this.props // eslint-disable-line no-shadow
+    const { formatMessage } = this.props.intl
 
     return (
       <form id="projectForm"
@@ -64,9 +59,13 @@ export class ProjectConfigForm extends Component {
       >
         <TextField
           { ...projectName }
-          errorText={ projectName.touched && projectName.error ? formatMessage({id: projectName.error}, {fieldName: formatMessage({id:'project-name-label'})}) : '' }
-          floatingLabelText={ formatMessage({id:'project-name-label'}) }
-          hintText={ formatMessage({id:'project-name-hint-label'}) }
+          errorText={
+            projectName.touched && projectName.error ?
+            formatMessage({ id: projectName.error }, { fieldName: formatMessage({ id: 'project-name-label' }) }) :
+            ''
+          }
+          floatingLabelText={ formatMessage({ id: 'project-name-label' }) }
+          hintText={ formatMessage({ id: 'project-name-hint-label' }) }
           name="projectName"
           type="text"
         /><br />
@@ -79,7 +78,7 @@ export class ProjectConfigForm extends Component {
         <RaisedButton
           className="form-submit"
           disabled={submitting}
-          label={ formatMessage({id:'project-config-create-button-label'}) }
+          label={ formatMessage({ id: 'project-config-create-button-label' }) }
           primary
           type="submit"
         /><br/>
@@ -89,17 +88,11 @@ export class ProjectConfigForm extends Component {
 }
 
 // ProjectConfigForm container
-const mapStateProps = (state) => {
-  return {
+const mapStateProps = (state) => (
+  {
     userId: state.auth.account && state.auth.account.id ? state.auth.account.id : ''
   }
-}
-
-const mapDispatchProps = (dispatch) => {
-  return {
-    createProjectConfig: (projectName, projectAdmins, projectUsers) => dispatch(createProjectConfig(projectName, projectAdmins, projectUsers))
-  }
-}
+)
 
 const ProjectConfigFormContainer = compose(
   reduxForm(
@@ -110,7 +103,9 @@ const ProjectConfigFormContainer = compose(
       validate
     },
     mapStateProps,
-    mapDispatchProps
+    {
+      createProjectConfig
+    }
   ),
   injectIntl
 )(ProjectConfigForm)

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-//import DocumentMeta from 'react-document-meta'
+// import DocumentMeta from 'react-document-meta'
 
 // UI
 import Paper from 'material-ui/Paper'
@@ -8,26 +8,22 @@ import Paper from 'material-ui/Paper'
 // Component
 import { centerPaper } from '../../styles/commons'
 
-//const metaData = {
+// const metaData = {
 //  title: '404 Page Not Found',
 //  description: 'Homecare',
 //  meta: {
 //    charset: 'utf-8',
 //    name: {
 //      keywords: 'homecare, bla, bla',
-//    },
-//  },
-//}
+//    }
+//  }
+// }
 
 export class NotFound extends Component {
 
   static propTypes = {
     dataTypePage: PropTypes.string.isRequired,
     status: PropTypes.number.isRequired
-  }
-
-  constructor(props) {
-    super(props)
   }
 
   render() {
@@ -45,12 +41,12 @@ export class NotFound extends Component {
 }
 
 // NotFounPage container
-const mapStateProps = (state, ownProps) => {
-  return {
+const mapStateProps = (state, ownProps) => (
+  {
     status: ownProps.route.status,
     dataTypePage: ownProps.route.dataTypePage
   }
-}
+)
 
 const NotFoundPage = connect(
     mapStateProps

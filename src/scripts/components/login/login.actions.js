@@ -19,23 +19,23 @@ export function requestAuthentication() {
   return {
     [CALL_API]: {
       method: 'GET',
-      endpoint: `${window.location.protocol||'http:'}//${window.location.host||'localhost'}${api.user}`,
+      endpoint:
+        `${window.location.protocol || 'http:'}//` +
+        `${window.location.host || 'localhost'}${api.user}`,
       headers: ioService.getHeaders(),
       types: [
         AUTH_REQUEST,
         {
           type: AUTH_SUCCESS,
-          payload: (action, state, res) => {
-            return res.json().then(account => {
-              return {
+          payload: (action, state, res) => res.json()
+            .then(account => (
+              {
                 account: mapAccount(account)
               }
-            })
-          }
+            ))
         },
         AUTH_FAILURE
       ]
-
       // schema: user
     }
   }
@@ -43,41 +43,33 @@ export function requestAuthentication() {
 
 export function login(username, password) {
   authService.setAuth(username, password)
-  return dispatch => {
-    return dispatch(requestAuthentication()
-    ).then(data => {
+  return dispatch => dispatch(requestAuthentication())
+    .then(data => {
       if (!data.error) {
         authService.putAuth(data.payload.account.id)
 
-        // user has at least one projectConfigId
         if (data.payload.account.projectConfigIds.length) {
           const projectConfig = data.payload.account.projectConfigIds[0]
 
-          // first case, project config has a project id
           if (projectConfig.projectId) {
-
             // get project config and project and redirect to project
-            return dispatch(getProjectConfigAndProject(projectConfig.projectConfigId, projectConfig.projectId)
-            ).then(browserHistory.push('/project'))
-          } else {
-
+            return dispatch(
+              getProjectConfigAndProject(projectConfig.projectConfigId, projectConfig.projectId))
+                .then(browserHistory.push('/project'))
+          }
+          if (!projectConfig.projectId) {
             // TODO second case, project config has no project id
             // must redirect to project config stack, with a button to start it
-            return
+            return Promise.resolve()
           }
-        } else {
-
-          // if no ids, redirect to first project
-          return browserHistory.push('/firstProject')
         }
-      } else {
-        throw new Error(data.payload.status)
+        // if no ids, redirect to first project
+        browserHistory.push('/firstProject')
+        return Promise.resolve()
       }
-    }).catch(error => {
-      // TODO do something with error
-      throw new Error(error.message)
+      return Promise.reject(data.payload.status)
     })
-  }
+    .catch(error => Promise.reject(error.message))
 }
 
 export function resetAuthentication() {
@@ -87,17 +79,13 @@ export function resetAuthentication() {
 }
 
 export function logout() {
-  return dispatch => {
-    return dispatch(resetAuthentication()
-    ).then(data => {
+  return dispatch => dispatch(resetAuthentication())
+    .then(data => {
       if (!data.error) {
         authService.resetAuth()
-      } else {
-        throw new Error(data.payload.status)
+        return Promise.resolve()
       }
-    }).catch(error => {
-      // TODO do something with error
-      throw new Error(error.message)
+      return Promise.reject(data.payload.status)
     })
-  }
+    .catch(error => Promise.reject(error.message))
 }
