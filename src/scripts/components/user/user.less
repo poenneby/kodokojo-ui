@@ -1,0 +1,29 @@
+@import (once) '../../../styles/_form-elements';
+
+.user {
+  display: flex;
+  align-items: center;
+  flex-flow: row;
+  justify-content: space-between;
+  height: 70px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background: @color-primary-2;
+  color: @color-font-3;
+  div[data-react-toolbox="avatar"] {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+    background-color: @color-secondary-1;
+    font-size: @font-size-large;
+    margin-right: 20px;
+    .user-initials {
+      width: 100%;
+    }
+  }
+  .user-column {
+    display: flex;
+    align-items: center;
+  }
+}
