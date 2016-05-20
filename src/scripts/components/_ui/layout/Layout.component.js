@@ -22,8 +22,7 @@ export class Layout extends Component {
     const { children } = this.props // eslint-disable-line no-shadow
 
     return (
-      <ToolboxLayout
-      >
+      <ToolboxLayout>
         { children }
       </ToolboxLayout>
     )

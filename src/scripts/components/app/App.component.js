@@ -13,6 +13,9 @@ const darkTheme = getMuiTheme(darkBaseTheme)
 // Component
 import '../../../favicon.ico'
 import '../../../images/logo-kodokojo-icon.png'
+import Layout from '../_ui/layout/Layout.component'
+import NavDrawer from '../_ui/navDrawer/NavDrawer.component'
+import Panel from '../_ui/panel/Panel.component'
 import AppHeader from './AppHeader.component'
 
 class App extends Component {
@@ -20,35 +23,46 @@ class App extends Component {
   static propTypes = {
     children: PropTypes.element.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
+    isNavVisible: PropTypes.bool,
     locale: PropTypes.string.isRequired,
     setLocale: PropTypes.func.isRequired,
     themeSelected: PropTypes.string.isRequired
   }
 
   render() {
-    const { children, themeSelected, locale, setLocale, isAuthenticated } = this.props // eslint-disable-line no-shadow
+    const { children, themeSelected, locale, setLocale, isAuthenticated, isNavVisible } = this.props // eslint-disable-line no-shadow
     const currentMuiTheme = (themeSelected === 'light') ? lightTheme : darkTheme
 
     return (
       <MuiThemeProvider muiTheme={currentMuiTheme}>
-        <div>
-          <AppHeader
-            isAuthenticated={isAuthenticated}
-            languageSelected={locale}
-            onLanguageChange={(value) => setLocale(value)}
-          />
-          {children}
-        </div>
+        <Layout>
+          <Panel>
+            <AppHeader
+              isAuthenticated={isAuthenticated}
+              languageSelected={locale}
+              onLanguageChange={(value) => setLocale(value)}
+            />
+            <Layout>
+              <NavDrawer
+                pinned={ !isNavVisible }
+              />
+              <Panel>
+                {children}
+              </Panel>
+            </Layout>
+          </Panel>
+        </Layout>
       </MuiThemeProvider>
     )
   }
 }
 
-const mapStateProps = (state) => (
+const mapStateProps = (state, ownProps) => (
   {
     locale: state.prefs.locale,
     themeSelected: state.prefs.theme,
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    isNavVisible: ownProps.isNavVisible
   }
 )
 

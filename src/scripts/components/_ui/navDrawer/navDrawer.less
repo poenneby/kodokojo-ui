@@ -3,9 +3,19 @@
 // FIXME need important because of react-toolbox element weight, change for inline style?
 .nav {
   background: @color-primary-2;
-  width: 200px !important;
-  aside {
+  &.nav--open {
     width: 200px !important;
+    aside {
+      width: 200px !important;
+    }
+  }
+  &.nav--close {
+    width: inherit;
+    aside {
+      width: inherit;
+    }
+  }
+  aside {
     background-color: @color-primary-2 !important;
     box-shadow: none !important;
     border: none !important;

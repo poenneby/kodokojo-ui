@@ -18,7 +18,6 @@ export class NavDrawer extends Component {
       PropTypes.arrayOf(PropTypes.element),
       PropTypes.element
     ]),
-    className: PropTypes.string,
     onOverlayClick: PropTypes.func,
     permanentAt: PropTypes.string,
     pinned: PropTypes.bool,
@@ -27,12 +26,12 @@ export class NavDrawer extends Component {
   }
 
   render() {
-    const { children, active, className, onOverlayClick, permanentAt, pinned, scrollY, width } = this.props // eslint-disable-line no-shadow
+    const { children, active, onOverlayClick, permanentAt, pinned, scrollY, width } = this.props // eslint-disable-line no-shadow
 
     return (
       <ToolboxNavDrawer
         active={ active }
-        className={ className ? `${className} nav` : 'nav' }
+        className={ (pinned || active) ? 'nav nav--open' : 'nav nav--closed' }
         onOverlayClick={ onOverlayClick }
         permanentAt={ permanentAt }
         pinned={ pinned }

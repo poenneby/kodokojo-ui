@@ -21,7 +21,7 @@ export class Panel extends Component {
   }
 
   render() {
-    const { children } = this.props // eslint-disable-line no-shadow
+    const { children, scrollY } = this.props // eslint-disable-line no-shadow
 
     return (
       <ToolboxPanel
