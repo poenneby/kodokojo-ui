@@ -10,14 +10,15 @@ import AppBar from './AppBar.component'
 
 const initialState = {}
 
-
-// Add the reducer to your store on the `routing` key
 const store = configureStore(initialState)
 
 storiesOf('AppBar', module)
-  .add('default', () => (
+  .add('with children', () => (
     <Provider store={store}>
-      <AppBar />
+      <AppBar
+      >
+        <div>children</div>
+      </AppBar>
     </Provider>
   ))
   .add('with flat prop', () => (
@@ -88,14 +89,5 @@ storiesOf('AppBar', module)
             Quo at lorem hendrerit. Et vim odio accusamus. Nec an animal recusabo erroribus. Unum menandri id vim.<br/>
           </div>
         </div>
-      </Provider>
-  ))
-  .add('with children', () => (
-      <Provider store={store}>
-        <AppBar
-          fixed
-        >
-           - children -
-        </AppBar>
       </Provider>
   ))

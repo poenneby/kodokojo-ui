@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
 
 // UI library component
 import { AppBar as ToolboxAppBar } from 'react-toolbox'
@@ -10,7 +9,6 @@ import logoKodoKojo from '../../../../images/logo-white-kodokojo.svg'
 
 /**
  * UI: AppBar component
- *
  */
 export class AppBar extends Component {
 
@@ -29,7 +27,6 @@ export class AppBar extends Component {
     return (
       <ToolboxAppBar
         className="header-bar"
-        // FIXME this parameters don’t seems to do anything
         fixed={ fixed }
         flat={ flat }
       >
@@ -40,4 +37,4 @@ export class AppBar extends Component {
   }
 }
 
-export default connect()(AppBar)
+export default AppBar
