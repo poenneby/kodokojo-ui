@@ -13,6 +13,7 @@ const darkTheme = getMuiTheme(darkBaseTheme)
 // Component
 import '../../../favicon.ico'
 import '../../../images/logo-kodokojo-icon.png'
+import '../../../styles/_variables.less'
 import Layout from '../_ui/layout/Layout.component'
 import NavDrawer from '../_ui/navDrawer/NavDrawer.component'
 import Panel from '../_ui/panel/Panel.component'
