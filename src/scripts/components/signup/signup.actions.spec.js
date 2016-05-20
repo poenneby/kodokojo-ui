@@ -1,3 +1,7 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-duplicate-imports */
+/* eslint-disable import/no-duplicates */
+
 import chai, { expect } from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
@@ -9,7 +13,7 @@ import configureMockStore from 'redux-mock-store'
 
 import api from '../../commons/config'
 import * as actions from './signup.actions.js'
-import { __RewireAPI__ as  actionsRewireApi } from './signup.actions.js'
+import { __RewireAPI__ as actionsRewireApi } from './signup.actions.js'
 import {
   ACCOUNT_NEW_ID_REQUEST,
   ACCOUNT_NEW_ID_SUCCESS,
@@ -28,11 +32,11 @@ const mockStore = configureMockStore(middlewares)
 
 describe('signup actions', () => {
   describe('create auth', () => {
-    let pushHistorySpy,
-        getHeadersSpy,
-        setAuthSpy,
-        putAuthSpy,
-        mapAccountSpy
+    let pushHistorySpy
+    let getHeadersSpy
+    let setAuthSpy
+    let putAuthSpy
+    let mapAccountSpy
 
     beforeEach(() => {
       pushHistorySpy = sinon.spy()
@@ -61,7 +65,7 @@ describe('signup actions', () => {
       const email = 'test@email.com'
       const id = 'idUs3r'
       const account = {
-        id: id,
+        id,
         userName: 'test',
         password: 'password'
       }
@@ -69,7 +73,7 @@ describe('signup actions', () => {
         {
           type: ACCOUNT_NEW_ID_REQUEST,
           payload: {
-            email: email
+            email
           },
           meta: undefined
         },
@@ -77,7 +81,7 @@ describe('signup actions', () => {
           type: ACCOUNT_NEW_ID_SUCCESS,
           payload: {
             account: {
-              id: id
+              id
             }
           },
           meta: undefined
@@ -91,7 +95,7 @@ describe('signup actions', () => {
           type: ACCOUNT_NEW_SUCCESS,
           payload: {
             account: {
-              id: id,
+              id,
               userName: 'test',
               password: 'password'
             }
@@ -101,13 +105,10 @@ describe('signup actions', () => {
       ]
       nock('http://localhost')
         .post(`${api.user}`)
-        .reply(201, () => {
-          return id
-        })
+        .reply(201, () => id)
         .post(`${api.user}/${id}`)
-        .reply(201, () => {
-          return account
-        })
+        .reply(201, () => account)
+
       mapAccountSpy = sinon.stub().returns(account)
       actionsRewireApi.__Rewire__('mapAccount', mapAccountSpy)
 
@@ -115,27 +116,29 @@ describe('signup actions', () => {
       const store = mockStore({})
 
       // Then
-      return store.dispatch(actions.createAccount(email)).then(() => {
-        expect(store.getActions()).to.deep.equal(expectedActions)
-        expect(pushHistorySpy).to.have.callCount(1)
-        expect(pushHistorySpy).to.have.been.calledWith('/firstProject')
-        expect(getHeadersSpy).to.have.callCount(2)
-        expect(setAuthSpy).to.have.callCount(1)
-        expect(setAuthSpy).to.have.been.calledWith('test', 'password')
-        expect(putAuthSpy).to.have.callCount(1)
-        expect(putAuthSpy).to.have.been.calledWith(id)
-      }).then(done, done)
+      return store.dispatch(actions.createAccount(email))
+        .then(() => {
+          expect(store.getActions()).to.deep.equal(expectedActions)
+          expect(pushHistorySpy).to.have.callCount(1)
+          expect(pushHistorySpy).to.have.been.calledWith('/firstProject')
+          expect(getHeadersSpy).to.have.callCount(2)
+          expect(setAuthSpy).to.have.callCount(1)
+          expect(setAuthSpy).to.have.been.calledWith('test', 'password')
+          expect(putAuthSpy).to.have.callCount(1)
+          expect(putAuthSpy).to.have.been.calledWith(id)
+          done()
+        })
+        .catch(done)
     })
 
     it('should fail to create auth id', (done) => {
       // Given
       const email = 'test@email.com'
-      const id = 'idUs3r'
       const expectedActions = [
         {
           type: ACCOUNT_NEW_ID_REQUEST,
           payload: {
-            email: email
+            email
           },
           meta: undefined
         },
@@ -161,16 +164,23 @@ describe('signup actions', () => {
         })
 
       // When
-      const store = mockStore({account:{id:''}})
+      const store = mockStore({
+        account: {
+          id: ''
+        }
+      })
 
       // Then
-      return store.dispatch(actions.createAccount(email)).then(done, () => {
-        expect(store.getActions()).to.deep.equal(expectedActions)
-        expect(pushHistorySpy).to.have.callCount(0)
-        expect(getHeadersSpy).to.have.callCount(1)
-        expect(setAuthSpy).to.have.callCount(0)
-        expect(putAuthSpy).to.have.callCount(0)
-      }).then(done, done)
+      return store.dispatch(actions.createAccount(email))
+        .then(done, () => {
+          expect(store.getActions()).to.deep.equal(expectedActions)
+          expect(pushHistorySpy).to.have.callCount(0)
+          expect(getHeadersSpy).to.have.callCount(1)
+          expect(setAuthSpy).to.have.callCount(0)
+          expect(putAuthSpy).to.have.callCount(0)
+          done()
+        })
+        .catch(done)
     })
 
     it('should fail to create auth', (done) => {
@@ -181,7 +191,7 @@ describe('signup actions', () => {
         {
           type: ACCOUNT_NEW_ID_REQUEST,
           payload: {
-            email: email
+            email
           },
           meta: undefined
         },
@@ -189,7 +199,7 @@ describe('signup actions', () => {
           type: ACCOUNT_NEW_ID_SUCCESS,
           payload: {
             account: {
-              id: id
+              id
             }
           },
           meta: undefined
@@ -216,9 +226,7 @@ describe('signup actions', () => {
       ]
       nock('http://localhost')
         .post(`${api.user}`)
-        .reply(200, () => {
-          return id
-        })
+        .reply(200, () => id)
         .post(`${api.user}/${id}`)
         .reply(500, {
           error: 'error'
@@ -226,16 +234,25 @@ describe('signup actions', () => {
 
 
       // When
-      const store = mockStore({account:{id:''}})
+      const store = mockStore({
+        account: {
+          id: ''
+        }
+      })
 
       // Then
-      return store.dispatch(actions.createAccount(email)).then(done, () => {
-        expect(store.getActions()).to.deep.equal(expectedActions)
-        expect(pushHistorySpy).to.have.callCount(0)
-        expect(getHeadersSpy).to.have.callCount(2)
-        expect(setAuthSpy).to.have.callCount(0)
-        expect(putAuthSpy).to.have.callCount(0)
-      }).then(done, done)
+      return store.dispatch(actions.createAccount(email))
+        .then(() => {
+          done(new Error('This fail case test passed'))
+        })
+        .catch(() => {
+          expect(store.getActions()).to.deep.equal(expectedActions)
+          expect(pushHistorySpy).to.have.callCount(0)
+          expect(getHeadersSpy).to.have.callCount(2)
+          expect(setAuthSpy).to.have.callCount(0)
+          expect(putAuthSpy).to.have.callCount(0)
+          done()
+        })
     })
   })
 })

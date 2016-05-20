@@ -14,11 +14,11 @@ ioService.getHeaders = (header) => {
   const token = getToken()
   return merge(
     {
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'Content-Type': 'application/json'
     },
     header,
-    token ? { 'Authorization': `Basic ${token}` } : {}
+    token ? { Authorization: `Basic ${token}` } : {}
   )
 }
 

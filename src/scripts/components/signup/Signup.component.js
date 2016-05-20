@@ -32,32 +32,26 @@ export class Signup extends Component {
     submitting: PropTypes.bool.isRequired
   }
 
-  constructor(props) {
-    super(props)
-  }
-
   handleSubmit = () => {
-    const { fields: { email }, createAccount } = this.props
+    const { fields: { email }, createAccount } = this.props // eslint-disable-line no-shadow
 
     const nextEmail = email.value
     const error = validate({ email: nextEmail })
     if (error.email) {
       return Promise.reject({ email: error.email })
-    } else {
-      if (nextEmail && nextEmail.trim()) {
-        return createAccount(nextEmail.trim()
-        ).then(() => {
-          return Promise.resolve()
-        }).catch(error => {
-          return Promise.reject({ email: returnErrorKey('signup', 'create-auth', error.message) })
-        })
-      }
     }
+    if (nextEmail && nextEmail.trim()) {
+      return createAccount(nextEmail.trim())
+        .then(Promise.resolve())
+        .catch(err => Promise.reject({ email: returnErrorKey('signup', 'create-account', err.message) }))
+    }
+    // TODO add default error message
+    return Promise.reject()
   }
 
   render() {
-    const { fields: { email, entity }, handleSubmit, submitting } = this.props
-    const { formatMessage }  = this.props.intl
+    const { fields: { email, entity }, handleSubmit, submitting } = this.props // eslint-disable-line no-shadow
+    const { formatMessage } = this.props.intl
 
     return (
       <form id="signupForm"
@@ -67,28 +61,32 @@ export class Signup extends Component {
       >
         <TextField
             { ...email }
-            errorText={ email.touched && email.error ? formatMessage({ id: email.error }, {fieldName: formatMessage({ id:'email-input-label' })}) : '' }
-            floatingLabelText={ formatMessage({id: 'signup-email-label'}) }
-            hintText={ formatMessage({id: 'signup-email-hint-label'}) }
+            errorText={
+              email.touched && email.error ?
+              formatMessage({ id: email.error }, { fieldName: formatMessage({ id: 'email-input-label' }) }) :
+              ''
+            }
+            floatingLabelText={ formatMessage({ id: 'signup-email-label' }) }
+            hintText={ formatMessage({ id: 'signup-email-hint-label' }) }
             name="email"
             type="email"
         /><br />
         <TextField
           { ...entity }
-          floatingLabelText={ formatMessage({id: 'signup-entity-label'}) }
-          hintText={ formatMessage({id: 'signup-entity-hint-label'}) }
+          floatingLabelText={ formatMessage({ id: 'signup-entity-label' }) }
+          hintText={ formatMessage({ id: 'signup-entity-hint-label' }) }
           name="entity"
           type="text"
         /><br />
         <RaisedButton
             className="form-submit"
             disabled={ submitting }
-            label={ formatMessage({ id:'signup-button-label' }) }
+            label={ formatMessage({ id: 'signup-button-label' }) }
             onTouchTap={ handleSubmit(this.handleSubmit) }
             primary
             type="submit"
         /><br/>
-        <Link title={ formatMessage({ id:'signup-login-link-label' }) }
+        <Link title={ formatMessage({ id: 'signup-login-link-label' }) }
               to="/login"
         >
           <FormattedMessage id={'signup-login-link-label'}/>
@@ -99,17 +97,11 @@ export class Signup extends Component {
 }
 
 // Signup container
-const mapStateProps = (state) => {
-  return {
+const mapStateProps = (state) => (
+  {
     account: state.auth.account
   }
-}
-
-const mapDispatchProps = (dispatch) => {
-  return {
-    createAccount: (email) => dispatch(createAccount(email))
-  }
-}
+)
 
 const SignupContainer = compose(
   reduxForm(
@@ -120,7 +112,9 @@ const SignupContainer = compose(
       validate
     },
     mapStateProps,
-    mapDispatchProps
+    {
+      createAccount
+    }
   ),
   injectIntl
 )(Signup)

@@ -1,21 +1,13 @@
 // TODO test scope value, set it to locale if other than session por locale
 const storageService = {}
 
-storageService.put = (key, value, scope = 'local') => {
-  return window[`${scope}Storage`].setItem(key, value)
-}
+storageService.put = (key, value, scope = 'local') => window[`${scope}Storage`].setItem(key, value)
 
-storageService.get = (key, scope = 'local') => {
-  return window[`${scope}Storage`].getItem(key)
-}
+storageService.get = (key, scope = 'local') => window[`${scope}Storage`].getItem(key)
 
-storageService.remove = (key, scope = 'local') => {
-  return window[`${scope}Storage`].removeItem(key)
-}
+storageService.remove = (key, scope = 'local') => window[`${scope}Storage`].removeItem(key)
 
-storageService.clear = (scope = 'local') => {
-  return window[`${scope}Storage`].clear()
-}
+storageService.clear = (scope = 'local') => window[`${scope}Storage`].clear()
 
 // public API
 export const put = storageService.put

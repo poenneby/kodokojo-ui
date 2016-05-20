@@ -31,10 +31,11 @@ authService.checkAuth = (nextState, replaceState) => {
  */
 authService.setAuth = (login, password) => {
   if (login && password) {
-    const token = authService._encryptBasicAuth(`${login}:${password}`)
+    const token = authService.encryptBasicAuth(`${login}:${password}`)
     storageService.put('token', token, 'session')
     return token
   }
+  return ''
 }
 
 /**
@@ -61,40 +62,30 @@ authService.resetAuth = () => {
  *
  * @returns {boolean}
  */
-authService.isAuth = () => {
-  return !!storageService.get('isAuthenticated', 'session')
-}
+authService.isAuth = () => !!storageService.get('isAuthenticated', 'session')
 
 /**
  * Return token
  *
  * @returns {string} token
  */
-authService.getToken = () => {
-  return storageService.get('token', 'session') || ''
-}
+authService.getToken = () => storageService.get('token', 'session') || ''
 
 /**
  * Return encrypted basic auth string
  *
  * @param auth {string}
  * @returns {string}
- * @private
  */
-authService._encryptBasicAuth = (auth) => {
-  return btoa(auth)
-}
+authService.encryptBasicAuth = (auth) => btoa(auth)
 
 /**
  * Return decrypted basic auth string
  *
  * @param auth {string}
  * @returns {string}
- * @private
  */
-authService._decryptBasicAuth = (auth) => {
-  return atob(auth)
-}
+authService.decryptBasicAuth = (auth) => atob(auth)
 
 // public API
 export const checkAuth = authService.checkAuth

@@ -8,9 +8,7 @@ const errorService = {}
  * @param code
  * @returns {string}
  */
-errorService.returnErrorKey = (component, action, code) => {
-  return `${component}-${action}-${code}`
-}
+errorService.returnErrorKey = (component, action, code) => `${component}-${action}-${code}`
 
 // public API
 export const returnErrorKey = errorService.returnErrorKey

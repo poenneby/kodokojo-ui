@@ -46,33 +46,28 @@ export class ProjectConfig extends Component {
     submitting: PropTypes.bool.isRequired
   }
 
-  constructor(props) {
-    super(props)
-  }
-
   handleSubmit = () => {
-    const { fields: { email }, projectConfig, addUserToProjectConfig, resetForm } = this.props
+    const { fields: { email }, projectConfig, addUserToProjectConfig, resetForm } = this.props // eslint-disable-line no-shadow
 
     const nextEmail = email.value
     const error = validate({ email: nextEmail })
     if (error.email) {
       return Promise.reject({ email: error.email })
-    } else {
-      if (nextEmail && nextEmail.trim()) {
-        return addUserToProjectConfig(projectConfig.id, nextEmail.trim()
-        ).then(() => {
+    }
+    if (nextEmail && nextEmail.trim()) {
+      return addUserToProjectConfig(projectConfig.id, nextEmail.trim())
+        .then(() => {
           resetForm('addUserForm')
           return Promise.resolve()
-        }
-        ).catch(error => {
-          return Promise.reject({ email: returnErrorKey('user', 'create-auth', error.message) })
         })
-      }
+        .catch(err => Promise.reject({ email: returnErrorKey('user', 'create-auth', err.message) }))
     }
+    // TODO add default error message
+    return Promise.reject()
   }
 
   handleClick = (event) => {
-    const { createProject, projectConfig } = this.props
+    const { createProject, projectConfig } = this.props // eslint-disable-line no-shadow
 
     event.preventDefault()
 
@@ -83,15 +78,15 @@ export class ProjectConfig extends Component {
   }
 
   render() {
-    const { fields: { email }, projectConfig, handleSubmit, submitting } = this.props
-    const { formatMessage }  = this.props.intl
+    const { fields: { email }, projectConfig, handleSubmit, submitting } = this.props // eslint-disable-line no-shadow
+    const { formatMessage } = this.props.intl
     // FIXME modify owner, could have multiple users in it
     const owner = projectConfig.admins && projectConfig.admins[0].userName ? projectConfig.admins[0].userName : ''
 
     return (
       <Card>
         <CardHeader
-          subtitle={ formatMessage({ id: 'project-config-owner-label' }) + `: ${owner}` }
+          subtitle={ `${formatMessage({ id: 'project-config-owner-label' })} : ${owner}` }
           title={ projectConfig.name }
           titleStyle={ fontSizeMedium }
         />
@@ -111,11 +106,11 @@ export class ProjectConfig extends Component {
               showRowHover
             >
               { projectConfig.stacks && projectConfig.stacks[0] && projectConfig.stacks[0].bricks &&
-              projectConfig.stacks[0].bricks.map((brick, index) => (
-                <TableRow key={ index } selected={ brick.selected }>
-                  <TableRowColumn>{ brick.type }</TableRowColumn>
-                  <TableRowColumn>{ brick.name }</TableRowColumn>
-                </TableRow>
+                projectConfig.stacks[0].bricks.map((brick, index) => (
+                  <TableRow key={ index } selected={ brick.selected }>
+                    <TableRowColumn>{ brick.type }</TableRowColumn>
+                    <TableRowColumn>{ brick.name }</TableRowColumn>
+                  </TableRow>
               ))
               }
             </TableBody>
@@ -127,9 +122,13 @@ export class ProjectConfig extends Component {
           >
             <TextField
               { ...email }
-              errorText={ email.touched && email.error ? formatMessage({ id: email.error }, {fieldName: formatMessage({ id:'email-input-label' })}) : '' }
-              floatingLabelText={ formatMessage({id: 'signup-email-label'}) }
-              hintText={ formatMessage({id: 'signup-email-hint-label'}) }
+              errorText={
+                email.touched && email.error ?
+                formatMessage({ id: email.error }, { fieldName: formatMessage({ id: 'email-input-label' }) }) :
+                 ''
+              }
+              floatingLabelText={ formatMessage({ id: 'signup-email-label' }) }
+              hintText={ formatMessage({ id: 'signup-email-hint-label' }) }
               name="email"
               type="email"
             />
@@ -157,7 +156,7 @@ export class ProjectConfig extends Component {
               showRowHover
             >
               { projectConfig.users &&
-                projectConfig.users.map( (user, index) => (
+                projectConfig.users.map((user, index) => (
                   <User
                     key={ index }
                     userId={ user.id }
@@ -191,11 +190,11 @@ export class ProjectConfig extends Component {
 }
 
 // ProjectConfig container
-const mapStateProps = (state) => {
-  return {
+const mapStateProps = (state) => (
+  {
     projectConfig: state.projectConfig
   }
-}
+)
 
 const ProjectConfigContainer = compose(
   reduxForm(

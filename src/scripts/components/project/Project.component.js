@@ -28,7 +28,7 @@ class Project extends Component {
   }
 
   componentWillMount = () => {
-    const { updateProject } = this.props
+    const { updateProject } = this.props // eslint-disable-line no-shadow
 
     // TODO let the dev backend reroute ws calls
     // maybe with https://www.npmjs.com/package/express-ws
@@ -37,11 +37,11 @@ class Project extends Component {
       .initSocket('ws://192.168.99.100:9080/api/v1/event')
       .then(socket => {
         this.socket = socket
-        this.socket.onmessage = (event) => {
-          event = JSON.parse(event.data)
-          if(event.entity === 'brick' && event.action === 'updateState') {
-            console.log(event)
-            updateProject(mapBrickEvent(event))
+        this.socket.onmessage = (socketEvent) => {
+          const socketEventData = JSON.parse(socketEvent.data)
+          if (socketEventData.entity === 'brick' && socketEventData.action === 'updateState') {
+            console.log(socketEventData)
+            updateProject(mapBrickEvent(socketEventData))
           }
         }
       })
@@ -53,7 +53,7 @@ class Project extends Component {
   }
 
   render() {
-    const { projectConfig } = this.props
+    const { projectConfig } = this.props // eslint-disable-line no-shadow
     let name
     if (projectConfig) {
       name = projectConfig.name
@@ -67,14 +67,15 @@ class Project extends Component {
         />
         <CardText>
           { projectConfig.stacks && projectConfig.stacks[0] && projectConfig.stacks[0].bricks &&
-          projectConfig.stacks[0].bricks.map((brick, index) => (
-            <div key={index} style={{ paddingTop: '.5em' }}>
-              { brick.type } : { brick.name } > { brick.state || 'UNDEFINED' }
-              { brick.url &&
-                <div><a href={brick.url} target="_blank">{brick.url}</a></div>
-              }
-            </div>
-          ))}
+            projectConfig.stacks[0].bricks.map((brick, index) => (
+              <div key={index} style={{ paddingTop: '.5em' }}>
+                { brick.type } : { brick.name } > { brick.state || 'UNDEFINED' }
+                { brick.url &&
+                  <div><a href={brick.url} target="_blank">{brick.url}</a></div>
+                }
+              </div>
+            ))
+          }
         </CardText>
       </Card>
     )
@@ -82,18 +83,18 @@ class Project extends Component {
 }
 
 // ProjectDetail container
-const mapStateProps = (state) => {
-  return {
+const mapStateProps = (state) => (
+  {
     projectConfig: state.projectConfig
   }
-}
+)
 
-// const mergeProps = (stateProps, dispatchProps, ownProps) => {
-//   return {
+// const mergeProps = (stateProps, dispatchProps, ownProps) => (
+//   {
 //     ...ownProps,
 //     user: stateProps.users[ownProps.userId]
 //   }
-// }
+// )
 
 const ProjectContainer = compose(
   connect(

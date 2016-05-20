@@ -14,12 +14,8 @@ export class User extends Component {
     userId: PropTypes.string.isRequired
   }
 
-  constructor(props) {
-    super(props)
-  }
-
   render() {
-    const { user } = this.props
+    const { user } = this.props // eslint-disable-line no-shadow
 
     return (
       <TableRow>
@@ -32,27 +28,22 @@ export class User extends Component {
 }
 
 // User container
-const mapStateProps = (state) => {
-  return {
+const mapStateProps = (state) => (
+  {
     users: state.users
   }
-}
+)
 
-const mapDispatchProps = (dispatch) => {
-  return {
-  }
-}
-
-const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  return {
+const mergeProps = (stateProps, dispatchProps, ownProps) => (
+  {
     ...ownProps,
     user: stateProps.users[ownProps.userId]
   }
-}
+)
 
 const UserContainer = connect(
   mapStateProps,
-  mapDispatchProps,
+  {},
   mergeProps
 )(User)
 

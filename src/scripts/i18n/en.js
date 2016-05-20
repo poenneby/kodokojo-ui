@@ -17,7 +17,7 @@ export default {
   'signup-entity-label': 'Entity',
   'signup-entity-hint-label': 'your compagny name (optional)',
   'signup-button-label': 'Sign up',
-  'signup-login-link-label' : 'Already a user? Log in!',
+  'signup-login-link-label': 'Already a user? Log in!',
   'signup-create-account-email-required': 'email is required',
   'signup-create-account-409': 'This email already exist',
   'login-authenticate-401': 'Account not found. Check your email or / and your password'

@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-duplicate-imports */
+/* eslint-disable import/no-duplicates */
+
 import React from 'react'
-import chai from 'chai'
-import { expect } from 'chai'
+import chai, { expect } from 'chai'
 import chaiEnzyme from 'chai-enzyme'
-import {mount, render, shallow} from 'enzyme'
+import { mount, render, shallow } from 'enzyme'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import 'sinon-as-promised'
@@ -20,10 +23,9 @@ import getMuiTheme from '../../../../node_modules/material-ui/styles/getMuiTheme
 import { Signup } from './Signup.component'
 
 describe('<Signup> component', () => {
-
-  let props,
-      messages,
-      intlProvider
+  let props
+  let messages
+  let intlProvider
 
   beforeEach(() => {
     // TODO find another way to mock IntlProvider
@@ -52,12 +54,12 @@ describe('<Signup> component', () => {
       'signup-button-label': 'signup-button-label',
       'signup-login-link-label': 'signup-login-link-label'
     }
-    intlProvider = new IntlProvider({locale:'en'}, {})
+    intlProvider = new IntlProvider({ locale: 'en' }, {})
   })
 
   it('should render a form', () => {
     // Given
-    const nextProps =  merge(props)
+    const nextProps = merge(props)
     const { context } = intlProvider.getChildContext()
 
     // When
@@ -76,9 +78,7 @@ describe('<Signup> component', () => {
       props,
       {
         intl: {
-          formatMessage: sinon.stub(props.intl, 'formatMessage', (options) => {
-            return options.id
-          })
+          formatMessage: sinon.stub(props.intl, 'formatMessage', (options) => options.id)
         }
       }
     )
@@ -128,7 +128,7 @@ describe('<Signup> component', () => {
     expect(component.find(Signup).props().createAccount).to.be.instanceof(Function)
   })
 
-  describe ('handle submit', () => {
+  describe('handle submit', () => {
     it('should trigger creatAccount if email input is not empty', () => {
       // Given
       const nextProps = merge(
@@ -152,7 +152,7 @@ describe('<Signup> component', () => {
       )
 
       // When
-      component.find('form').simulate('submit', {preventDefault: () => {}})
+      component.find('form').simulate('submit', { preventDefault: () => {} })
 
       // Then
       expect(nextProps.createAccount).to.have.callCount(1)

@@ -1,3 +1,7 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-duplicate-imports */
+/* eslint-disable import/no-duplicates */
+
 import chai, { expect } from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
@@ -6,7 +10,6 @@ chai.use(sinonChai)
 import mappingService from './mappingService'
 
 describe('mapping service', () => {
-
   describe('map account', () => {
     afterEach(() => {
       mappingService.mapProjectConfigId.restore()
@@ -102,7 +105,7 @@ describe('mapping service', () => {
 
   describe('map stack', () => {
     afterEach(() => {
-      mappingService._mapBrick.restore()
+      mappingService.mapBrick.restore()
     })
 
     it('should map stack from project config', () => {
@@ -115,10 +118,10 @@ describe('mapping service', () => {
           'brick2'
         ]
       }
-      const mapBrickSpy = sinon.stub(mappingService, '_mapBrick', data => data)
+      const mapBrickSpy = sinon.stub(mappingService, 'mapBrick', data => data)
 
       // When
-      const returns = mappingService._mapStack(stackFromApi)
+      const returns = mappingService.mapStack(stackFromApi)
 
       // Then
       expect(returns).to.deep.equal({
@@ -144,10 +147,10 @@ describe('mapping service', () => {
           'brick2'
         ]
       }
-      const mapBrickSpy = sinon.stub(mappingService, '_mapBrick', data => data)
+      const mapBrickSpy = sinon.stub(mappingService, 'mapBrick', data => data)
 
       // When
-      const returns = mappingService._mapStack(stackFromApi)
+      const returns = mappingService.mapStack(stackFromApi)
 
       // Then
       expect(returns).to.deep.equal({
@@ -175,7 +178,7 @@ describe('mapping service', () => {
       }
 
       // When
-      const returns = mappingService._mapBrick(brickFromApi)
+      const returns = mappingService.mapBrick(brickFromApi)
 
       // Then
       expect(returns).to.deep.equal({
@@ -189,7 +192,7 @@ describe('mapping service', () => {
 
   describe('map project config', () => {
     afterEach(() => {
-      mappingService._mapStack.restore()
+      mappingService.mapStack.restore()
     })
 
     it('should map project config', () => {
@@ -198,19 +201,19 @@ describe('mapping service', () => {
         identifier: 'id',
         name: 'name',
         admins: [
-          { identifier: '1', name: 'admin1'},
-          { identifier: '2', name: 'admin2'}
+          { identifier: '1', name: 'admin1' },
+          { identifier: '2', name: 'admin2' }
         ],
         stackConfigs: [
           'stack1',
           'stack2'
         ],
         users: [
-          { identifier: '1', name: 'user1'},
-          { identifier: '2', name: 'user2'}
+          { identifier: '1', name: 'user1' },
+          { identifier: '2', name: 'user2' }
         ]
       }
-      const mapStackSpy = sinon.stub(mappingService, '_mapStack', data => data)
+      const mapStackSpy = sinon.stub(mappingService, 'mapStack', data => data)
 
       // When
       const returns = mappingService.mapProjectConfig(projectConfigFromApi)
@@ -227,7 +230,7 @@ describe('mapping service', () => {
           'stack1',
           'stack2'
         ],
-        users:  [
+        users: [
           '1',
           '2'
         ]
@@ -240,7 +243,7 @@ describe('mapping service', () => {
 
   describe('map project', () => {
     afterEach(() => {
-      mappingService._mapStack.restore()
+      mappingService.mapStack.restore()
     })
 
     it('should map project', () => {
@@ -255,7 +258,7 @@ describe('mapping service', () => {
           'stack2'
         ]
       }
-      const mapStackSpy = sinon.stub(mappingService, '_mapStack', data => data)
+      const mapStackSpy = sinon.stub(mappingService, 'mapStack', data => data)
 
       // When
       const returns = mappingService.mapProject(projectFromApi)

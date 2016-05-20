@@ -7,7 +7,6 @@ import Project from '../components/project/Project.component'
 
 class ProjectPage extends Component {
 
-
   render() {
     return (
       <div style={ centerPaper }>
@@ -16,7 +15,6 @@ class ProjectPage extends Component {
     )
   }
 }
-
 
 const ProjectPageContainer = injectIntl(ProjectPage)
 

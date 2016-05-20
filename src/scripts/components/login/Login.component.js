@@ -28,28 +28,23 @@ export class Login extends Component {
     submitting: PropTypes.bool.isRequired
   }
 
-  constructor(props) {
-    super(props)
-  }
-
   handleSubmit = () => {
-    const { fields: { username, psw }, login } = this.props
+    const { fields: { username, psw }, login } = this.props // eslint-disable-line no-shadow
 
     // TODO add redux form validation
     const nexUserName = username.value
     const nexPassword = psw.value
     if (nexUserName && nexUserName.trim() && nexPassword && nexPassword.trim()) {
-      return login(nexUserName.trim(), nexPassword.trim()
-      ).then(() => {
-        return Promise.resolve()
-      }).catch(error => {
-        return Promise.reject({ psw: returnErrorKey('login', 'authenticate', error.message) })
-      })
+      return login(nexUserName.trim(), nexPassword.trim())
+        .then(Promise.resolve())
+        .catch(err => Promise.reject({ psw: returnErrorKey('login', 'authenticate', err.message) }))
     }
+    // TODO add default error message
+    return Promise.reject()
   }
 
   handleLogout = (event) => {
-    const { logout } = this.props
+    const { logout } = this.props // eslint-disable-line no-shadow
     if (event) {
       event.preventDefault()
     }
@@ -57,8 +52,8 @@ export class Login extends Component {
   }
 
   render() {
-    const { fields: { username, psw }, handleSubmit, submitting, isAuthenticated } = this.props
-    const { formatMessage }  = this.props.intl
+    const { fields: { username, psw }, handleSubmit, submitting, isAuthenticated } = this.props // eslint-disable-line no-shadow
+    const { formatMessage } = this.props.intl
 
     return (
       <div>
@@ -112,11 +107,11 @@ export class Login extends Component {
 }
 
 // Login container
-const mapStateProps = (state) => {
-  return {
+const mapStateProps = (state) => (
+  {
     isAuthenticated: state.auth.isAuthenticated
   }
-}
+)
 
 const LoginContainer = compose(
   reduxForm(
@@ -134,4 +129,3 @@ const LoginContainer = compose(
 )(Login)
 
 export default LoginContainer
-

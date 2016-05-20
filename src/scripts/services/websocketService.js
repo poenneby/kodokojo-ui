@@ -11,24 +11,20 @@ const websocketService = {
  * @param url
  * @returns {Promise} (websocket)
  */
-websocketService.initSocket = (url) => {
+websocketService.initSocket = (url) => new Promise((resolve, reject) => {
+  if (!websocketService.socket) {
+    websocketService.startSocket(url)
+  }
 
-  return new Promise((resolve, reject) => {
-    if (!websocketService.socket) {
-      websocketService._startSocket(url)
-    }
-
-    resolve(websocketService.socket)
-  })
-}
+  resolve(websocketService.socket)
+})
 
 /**
  * start socket
  *
  * @param url
- * @private
  */
-websocketService._startSocket = (url) => {
+websocketService.startSocket = (url) => {
   websocketService.socket = new WebSocket(url)
 
   websocketService.socket.onopen = () => {

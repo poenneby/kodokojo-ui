@@ -18,26 +18,27 @@ export function requestAccountId(email) {
   return {
     [CALL_API]: {
       method: 'POST',
-      endpoint: `${window.location.protocol||'http:'}//${window.location.host||'localhost'}${api.user}`,
+      endpoint:
+        `${window.location.protocol || 'http:'}//` +
+        `${window.location.host || 'localhost'}${api.user}`,
       headers: getHeaders(),
       types: [
         {
           type: ACCOUNT_NEW_ID_REQUEST,
           payload: (action, data) => ({
-            email: email
+            email
           })
         },
         {
           type: ACCOUNT_NEW_ID_SUCCESS,
-          payload: (action, state, res) => {
-            return res.text().then(id => {
-              return {
+          payload: (action, state, res) => res.text()
+            .then(id => (
+              {
                 account: {
-                  id: id
+                  id
                 }
               }
-            })
-          }
+            ))
         },
         ACCOUNT_NEW_ID_FAILURE
       ]
@@ -51,22 +52,23 @@ export function requestAccount(email, data) {
   return {
     [CALL_API]: {
       method: 'POST',
-      endpoint: `${window.location.protocol||'http:'}//${window.location.host||'localhost'}${api.user}/${data.payload.account.id}`,
+      endpoint:
+        `${window.location.protocol || 'http:'}//` +
+        `${window.location.host || 'localhost'}${api.user}/${data.payload.account.id}`,
       headers: getHeaders(),
       body: JSON.stringify({
-        email: email
+        email
       }),
       types: [
         ACCOUNT_NEW_REQUEST,
         {
           type: ACCOUNT_NEW_SUCCESS,
-          payload: (action, state, res) => {
-            return res.json().then(account => {
-              return {
+          payload: (action, state, res) => res.json()
+            .then(account => (
+              {
                 account: mapAccount(account)
               }
-            })
-          }
+            ))
         },
         ACCOUNT_NEW_FAILURE
       ]
@@ -77,25 +79,20 @@ export function requestAccount(email, data) {
 }
 
 export function createAccount(email) {
-  return dispatch => {
-    return dispatch(requestAccountId(email)
-    ).then(data => {
+  return dispatch => dispatch(requestAccountId(email))
+    .then(data => {
       if (!data.error) {
         return dispatch(requestAccount(email, data))
-      } else {
-        throw new Error(data.payload.status)
       }
-    }).then(data => {
+      return Promise.reject(data.payload.status)
+    })
+    .then(data => {
       if (!data.error) {
         setAuth(data.payload.account.userName, data.payload.account.password)
         putAuth(data.payload.account.id)
-        browserHistory.push('/firstProject')
-      } else {
-        throw new Error(data.payload.status)
+        return Promise.resolve(browserHistory.push('/firstProject'))
       }
-    }).catch(error => {
-      // TODO do something with error
-      throw new Error(error.message)
+      return Promise.reject(data.payload.status)
     })
-  }
+    .catch(error => Promise.reject(error.message))
 }

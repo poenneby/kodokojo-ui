@@ -10,12 +10,8 @@ export class Account extends Component {
     account: PropTypes.object.isRequired
   }
 
-  constructor(props) {
-    super(props)
-  }
-
   render() {
-    const { account } = this.props
+    const { account } = this.props // eslint-disable-line no-shadow
 
     return (
       <div>
@@ -59,11 +55,11 @@ export class Account extends Component {
 }
 
 // Account container
-const mapStateProps = (state) => {
-  return {
+const mapStateProps = (state) => (
+  {
     account: state.auth.account || {}
   }
-}
+)
 
 const AccountContainer = connect(
     mapStateProps

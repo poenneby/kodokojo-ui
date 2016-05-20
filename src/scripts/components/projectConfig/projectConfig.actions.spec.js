@@ -1,3 +1,7 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-duplicate-imports */
+/* eslint-disable import/no-duplicates */
+
 import chai, { expect } from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
@@ -27,9 +31,9 @@ const middlewares = [
 const mockStore = configureMockStore(middlewares)
 
 describe('project config actions', () => {
-  let historyPushSpy,
-      getHeadersSpy,
-      mapProjectConfigSpy
+  let historyPushSpy
+  let getHeadersSpy
+  let mapProjectConfigSpy
 
   beforeEach(() => {
     historyPushSpy = sinon.spy()
@@ -66,9 +70,9 @@ describe('project config actions', () => {
 
     it('should create project config', (done) => {
       // Given
-      const projectConfigName = 'Acme',
-            projectConfigAdmins = ['idUs3r'],
-            projectConfigId = 'projectId'
+      const projectConfigName = 'Acme'
+      const projectConfigAdmins = ['idUs3r']
+      const projectConfigId = 'projectId'
       const expectedActions = [
         {
           type: PROJECT_CONFIG_NEW_REQUEST,
@@ -90,23 +94,24 @@ describe('project config actions', () => {
       ]
       nock('http://localhost')
         .post(`${api.projectConfig}`)
-        .reply(201, () => {
-          return projectConfigId
-        })
+        .reply(201, () => projectConfigId)
 
       // When
       const store = mockStore({})
 
       // Then
-      return store.dispatch(actions.createProjectConfig(projectConfigName, projectConfigAdmins)).then(() => {
-        expect(store.getActions()).to.deep.equal(expectedActions)
-        expect(historyPushSpy).to.have.callCount(1)
-        expect(historyPushSpy).to.have.been.calledWith('/projectConfig')
-        expect(getHeadersSpy).to.have.callCount(1)
-        expect(mapProjectConfigSpy).to.have.callCount(0)
-        expect(getProjectConfigSpy).to.have.callCount(1)
-        expect(getProjectConfigSpy).to.have.calledWith(projectConfigId)
-      }, done).then(done, done)
+      return store.dispatch(actions.createProjectConfig(projectConfigName, projectConfigAdmins))
+        .then(() => {
+          expect(store.getActions()).to.deep.equal(expectedActions)
+          expect(historyPushSpy).to.have.callCount(1)
+          expect(historyPushSpy).to.have.been.calledWith('/projectConfig')
+          expect(getHeadersSpy).to.have.callCount(1)
+          expect(mapProjectConfigSpy).to.have.callCount(0)
+          expect(getProjectConfigSpy).to.have.callCount(1)
+          expect(getProjectConfigSpy).to.have.calledWith(projectConfigId)
+          done()
+        })
+        .catch(done)
     })
   })
 
@@ -127,19 +132,19 @@ describe('project config actions', () => {
 
     it('should return project config', (done) => {
       // Given
-      const projectConfigName = 'Acme',
-            projectConfigAdmins = [
-              'idUs3r'
-            ],
-            projectConfigId = 'projectId',
-            projectConfig = {
-              id: projectConfigId,
-              name: projectConfigName,
-              admins: projectConfigAdmins,
-              users: [
-                'otherUserId'
-              ]
-            }
+      const projectConfigName = 'Acme'
+      const projectConfigAdmins = [
+        'idUs3r'
+      ]
+      const projectConfigId = 'projectId'
+      const projectConfig = {
+        id: projectConfigId,
+        name: projectConfigName,
+        admins: projectConfigAdmins,
+        users: [
+          'otherUserId'
+        ]
+      }
       mapProjectConfigSpy = sinon.stub().returns(projectConfig)
       actionsRewireApi.__Rewire__('mapProjectConfig', mapProjectConfigSpy)
       const expectedActions = [
@@ -151,7 +156,7 @@ describe('project config actions', () => {
         {
           type: PROJECT_CONFIG_NEW_SUCCESS,
           payload: {
-            projectConfig: projectConfig
+            projectConfig
           },
           meta: undefined
         },
@@ -161,33 +166,36 @@ describe('project config actions', () => {
       ]
       nock('http://localhost')
         .get(`${api.projectConfig}/${projectConfigId}`)
-        .reply(200, () => {
-          return {
-            projectConfig: projectConfig
+        .reply(200, () => (
+          {
+            projectConfig
           }
-        })
+        ))
 
       // When
       const store = mockStore({})
 
       // Then
-      return store.dispatch(actions.getProjectConfig(projectConfigId)).then(() => {
-        expect(store.getActions()).to.deep.equal(expectedActions)
-        expect(getHeadersSpy).to.have.callCount(1)
-        expect(mapProjectConfigSpy).to.have.callCount(1)
-        expect(mapProjectConfigSpy).to.have.been.calledWith({
-          projectConfig: projectConfig
+      return store.dispatch(actions.getProjectConfig(projectConfigId))
+        .then(() => {
+          expect(store.getActions()).to.deep.equal(expectedActions)
+          expect(getHeadersSpy).to.have.callCount(1)
+          expect(mapProjectConfigSpy).to.have.callCount(1)
+          expect(mapProjectConfigSpy).to.have.been.calledWith({
+            projectConfig
+          })
+          expect(getUserSpy).to.have.callCount(1)
+          expect(getUserSpy).to.have.calledWith('otherUserId')
+          done()
         })
-        expect(getUserSpy).to.have.callCount(1)
-        expect(getUserSpy).to.have.calledWith('otherUserId')
-      }, done).then(done, done)
+        .catch(done)
     })
   })
 
   // TODO failure TU
   describe('add user to project config', () => {
-    let createUserSpy,
-        getProjectConfigSpy
+    let createUserSpy
+    let getProjectConfigSpy
 
     beforeEach(() => {
       createUserSpy = sinon.stub().returns({
@@ -212,18 +220,18 @@ describe('project config actions', () => {
 
     it('should return project config', (done) => {
       // Given
-      const projectConfigName = 'Acme',
-            projectConfigAdmins = ['idUs3r'],
-            projectConfigId = 'projectId',
-            projectConfig = {
-              id: projectConfigId,
-              name: projectConfigName,
-              admins: projectConfigAdmins,
-              users: [
-                { id: 'otherUserId' }
-              ]
-            },
-            userEmail = 'email@test.com'
+      const projectConfigName = 'Acme'
+      const projectConfigAdmins = ['idUs3r']
+      const projectConfigId = 'projectId'
+      const projectConfig = {
+        id: projectConfigId,
+        name: projectConfigName,
+        admins: projectConfigAdmins,
+        users: [
+          { id: 'otherUserId' }
+        ]
+      }
+      const userEmail = 'email@test.com'
       const expectedActions = [
         {
           type: 'MOCKED_ACTION',
@@ -255,12 +263,15 @@ describe('project config actions', () => {
       const store = mockStore({})
 
       // Then
-      return store.dispatch(actions.addUserToProjectConfig(projectConfigId, userEmail)).then(() => {
-        expect(store.getActions()).to.deep.equal(expectedActions)
-        expect(getHeadersSpy).to.have.callCount(1)
-        expect(createUserSpy).to.have.callCount(1)
-        expect(createUserSpy).to.have.calledWith(userEmail)
-      }, done).then(done, done)
+      return store.dispatch(actions.addUserToProjectConfig(projectConfigId, userEmail))
+        .then(() => {
+          expect(store.getActions()).to.deep.equal(expectedActions)
+          expect(getHeadersSpy).to.have.callCount(1)
+          expect(createUserSpy).to.have.callCount(1)
+          expect(createUserSpy).to.have.calledWith(userEmail)
+          done()
+        })
+        .catch(done)
     })
   })
 })

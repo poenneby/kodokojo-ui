@@ -1,3 +1,7 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-duplicate-imports */
+/* eslint-disable import/no-duplicates */
+
 import chai, { expect } from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
@@ -9,7 +13,6 @@ import authService from './authService'
 import storageService from './storageService'
 
 describe('auth service', () => {
-
   describe('checkAuth method', () => {
     afterEach(() => {
       authService.isAuth.restore()
@@ -55,34 +58,34 @@ describe('auth service', () => {
 
   describe('setAuth method', () => {
     afterEach(() => {
-      authService._encryptBasicAuth.restore()
+      authService.encryptBasicAuth.restore()
     })
 
     it('should set auth if arguments are passed', () => {
       // Given
       const username = 'username'
       const password = 'password'
-      const _encryptBasicAuthSpy = sinon.stub(authService, '_encryptBasicAuth').returns('token')
+      const encryptBasicAuthSpy = sinon.stub(authService, 'encryptBasicAuth').returns('token')
 
       // When
       const returned = authService.setAuth(username, password)
 
       // Then
       expect(returned).to.be.equal('token')
-      expect(_encryptBasicAuthSpy).to.have.callCount(1)
-      expect(_encryptBasicAuthSpy).to.have.have.been.calledWith(`${username}:${password}`)
+      expect(encryptBasicAuthSpy).to.have.callCount(1)
+      expect(encryptBasicAuthSpy).to.have.have.been.calledWith(`${username}:${password}`)
     })
 
     it('should return undefined if no arguments', () => {
       // Given
-      const _encryptBasicAuthSpy = sinon.stub(authService, '_encryptBasicAuth').returns('token')
+      const encryptBasicAuthSpy = sinon.stub(authService, 'encryptBasicAuth').returns('token')
 
       // When
       const returned = authService.setAuth()
 
       // Then
-      expect(returned).to.be.undefined
-      expect(_encryptBasicAuthSpy).to.have.callCount(0)
+      expect(returned).to.be.equal('')
+      expect(encryptBasicAuthSpy).to.have.callCount(0)
     })
   })
 
@@ -202,5 +205,4 @@ describe('auth service', () => {
       expect(getSpy).to.have.been.calledWithExactly('token', 'session')
     })
   })
-
 })
