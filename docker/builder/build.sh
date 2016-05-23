@@ -1,5 +1,10 @@
 #!/bin/bash
 
+rm -rf /src/node_modules/
+rc=$?
+if [ "$rc" != 0 ]; then
+  exit $rc
+fi
 npm i
 rc=$?
 if [ "$rc" != 0 ]; then
