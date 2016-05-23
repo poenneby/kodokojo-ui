@@ -29,7 +29,7 @@ apiRoutes(app)
 
 // webpack dev server config
 let webpackConfig
-if (process.env.NODE_ENV === 'production') {
+if (process.env.BUILD_ENV === 'production') {
   webpackConfig = webpackConfigDefault
 } else {
   webpackConfig = webpackConfigDev
