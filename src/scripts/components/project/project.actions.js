@@ -88,7 +88,7 @@ export function createProject(projectConfigId) {
     })
     .then(data => {
       if (!data.error) {
-        browserHistory.push('/project')
+        return browserHistory.push('/project')
       }
       return Promise.reject(data.payload.status)
     })
