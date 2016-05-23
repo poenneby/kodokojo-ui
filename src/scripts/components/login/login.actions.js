@@ -55,7 +55,7 @@ export function login(username, password) {
             // get project config and project and redirect to project
             return dispatch(
               getProjectConfigAndProject(projectConfig.projectConfigId, projectConfig.projectId))
-                .then(browserHistory.push('/project'))
+                .then(Promise.resolve(browserHistory.push('/project')))
           }
           if (!projectConfig.projectId) {
             // TODO second case, project config has no project id
@@ -64,8 +64,7 @@ export function login(username, password) {
           }
         }
         // if no ids, redirect to first project
-        browserHistory.push('/firstProject')
-        return Promise.resolve()
+        return Promise.resolve(browserHistory.push('/firstProject'))
       }
       return Promise.reject(data.payload.status)
     })

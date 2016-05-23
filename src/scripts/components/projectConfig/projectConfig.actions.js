@@ -116,7 +116,7 @@ export function createProjectConfig(projectConfigName, projectConfigOwner, proje
       return Promise.reject(data.payload.status)
     })
     .then(() => {
-      browserHistory.push('/projectConfig')
+      Promise.resolve(browserHistory.push('/projectConfig'))
     })
     .catch(error => Promise.reject(error.message))
 }
