@@ -11,7 +11,7 @@ export class User extends Component {
 
   static propTypes = {
     user: PropTypes.object,
-    userId: PropTypes.string.isRequired
+    userId: PropTypes.string
   }
 
   render() {
