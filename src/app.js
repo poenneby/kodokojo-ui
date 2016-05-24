@@ -29,6 +29,7 @@ import LoginPage from './scripts/pages/LoginPage'
 import FirstProjectPage from './scripts/pages/FirstProjectPage'
 import ProjectConfigPage from './scripts/pages/ProjectConfigPage'
 import ProjectPage from './scripts/pages/ProjectPage'
+import MembersPage from './scripts/pages/MembersPage'
 import UsersPage from './scripts/pages/UsersPage'
 import NotFoundPage from './scripts/pages/NotFoundPage'
 
@@ -78,6 +79,11 @@ ReactDOM.render(
               component={ProjectPage}
               onEnter={AuthService.checkAuth}
               path="project"
+            />
+            <Route
+              component={MembersPage}
+              onEnter={AuthService.checkAuth}
+              path="members"
             />
             <Route
               component={UsersPage}

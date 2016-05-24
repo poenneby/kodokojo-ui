@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { intlShape, injectIntl } from 'react-intl'
+import { Link } from 'react-router'
 
 // UI
 import Card from 'material-ui/Card/Card'
@@ -76,6 +77,10 @@ class Project extends Component {
               </div>
             ))
           }
+          // FIXME this is for testing KOD-80, remove after
+          <Link to="/members">
+            go to members
+          </Link>
         </CardText>
       </Card>
     )

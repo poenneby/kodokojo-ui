@@ -20,5 +20,6 @@ export default {
   'signup-login-link-label': 'Déjà inscrit ? Identifiez-vous !',
   'signup-create-account-email-required': 'l’email est obligatoire',
   'signup-create-account-409': 'L’email existe déjà',
-  'login-authenticate-401': 'Account not found. Check your email or / and your password'
+  'login-authenticate-401': 'Account not found. Check your email or / and your password',
+  'members-label': 'Members'
 }
