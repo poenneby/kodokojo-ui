@@ -10,15 +10,13 @@ import { IntlProvider } from 'react-intl'
 import MembersPage from './MembersPage'
 import en from '../i18n/en'
 
-console.log(en)
-
 const initialState = {
   projectConfig: {
     id: '1',
     users: [
-      { id: 'user-1' },
-      { id: 'user-2' },
-      { id: 'user-4' }
+      'user-1',
+      'user-2',
+      'user-4'
     ]
   },
   users: {
