@@ -86,9 +86,11 @@ export function createUser(email) {
         const userId = data.payload.account.id
         return dispatch(requestNewUser(email, userId))
       }
-      return Promise.reject(data.payload.status)
+      throw new Error(data.payload.status)
     })
-    .catch(error => Promise.reject(error.message))
+    .catch(error => {
+      throw new Error(error.message)
+    })
 }
 
 export function requestUser(userId) {
@@ -124,7 +126,7 @@ export function getUser(userId) {
       if (!data.error) {
         return Promise.resolve()
       }
-      return Promise.reject(data.payload.status)
+      throw new Error(data.payload.status)
     })
     .catch(error => Promise.reject(error.message))
 }
