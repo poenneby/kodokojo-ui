@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import capitalise from 'lodash/capitalize'
 
-// UI
-import TableRow from 'material-ui/Table/TableRow'
-import TableRowColumn from 'material-ui/Table/TableRowColumn'
+// Component
+import './user.less'
+import Avatar from '../_ui/avatar/Avatar.component'
 
 // TODO TU
 // User component
@@ -11,26 +12,49 @@ export class User extends Component {
 
   static propTypes = {
     user: PropTypes.object,
-    userId: PropTypes.string
+    userId: PropTypes.string,
+    users: PropTypes.array
   }
 
   render() {
-    const { user } = this.props // eslint-disable-line no-shadow
-
+    const { users, user, userId } = this.props // eslint-disable-line no-shadow
+    console.log(users, user, userId)
     return (
-      <TableRow>
-        <TableRowColumn>{ user ? user.userName : '-' }</TableRowColumn>
-        <TableRowColumn>{ user ? 'admin' : '-' }</TableRowColumn>
-        <TableRowColumn>{ user ? user.email : '-' }</TableRowColumn>
-      </TableRow>
+      <div className="user user-item">
+        <div className="user-column">
+          <Avatar>
+            <div className="user-initials">
+            { user &&
+              user.firstName.substr(0, 1).toUpperCase()
+            }
+            { user &&
+              user.lastName.substr(0, 1).toUpperCase()
+            }
+            </div>
+          </Avatar>
+          { user &&
+            `${capitalise(user.firstName)} ${capitalise(user.lastName)}`
+          }
+        </div>
+        <div className="user-column">
+          { user ? user.userName : '-' }
+        </div>
+        <div className="user-column">
+          { user ? 'admin' : '-' }
+        </div>
+        <div className="user-column">
+          { user ? user.email : '-' }
+        </div>
+      </div>
     )
   }
 }
 
 // User container
-const mapStateProps = (state) => (
+const mapStateProps = (state, ownProps) => (
   {
-    users: state.users
+    users: state.users,
+    userId: ownProps.userId
   }
 )
 

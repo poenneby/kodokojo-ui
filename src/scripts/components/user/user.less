@@ -1,0 +1,55 @@
+@import (once) '../../../styles/_form-elements';
+
+.user {
+  display: flex;
+  align-items: center;
+  flex-flow: row;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 20px;
+  div[data-react-toolbox="avatar"] {
+    display: flex;
+    flex: 40px 0 0;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+    margin-right: 20px;
+    font-size: @font-size-large;
+    background-color: @color-primary-1;
+    .user-initials {
+      width: 100%;
+    }
+  }
+  &.user-item {
+    &:not(:first-child) {
+      margin-bottom: 20px;
+    }
+    height: 70px;
+    background: @color-primary-2;
+    color: @color-font-3;
+    div[data-react-toolbox="avatar"] {
+      background-color: @color-secondary-1;
+    }
+  }
+  &.user-header {
+    color: @color-font-3;
+    margin-bottom: 10px;
+  }
+  .user-column {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    &:first-of-type {
+      flex: 40% 1 1;
+    }
+    &:nth-of-type(2) {
+      flex: 20% 1 1;
+    }
+    &:nth-of-type(3) {
+      flex: 15% 1 1;
+    }
+    &:nth-of-type(4) {
+      flex: 25% 1 1;
+    }
+  }
+}

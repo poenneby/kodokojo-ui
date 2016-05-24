@@ -44,11 +44,13 @@ export function getProject(projectId) {
   return dispatch => dispatch(fetchProject(projectId))
     .then(data => {
       if (!data.error) {
-        return data
+        return Promise.resolve(data)
       }
-      return Promise.reject(data.payload.status)
+      throw new Error(data.payload.status)
     })
-    .catch(error => Promise.reject(error.message))
+    .catch(error => {
+      throw new Error(error.message)
+    })
 }
 
 export function requestNewProject(projectConfigId) {
@@ -84,15 +86,17 @@ export function createProject(projectConfigId) {
       if (!data.error) {
         return dispatch(getProject(data.payload.project.id))
       }
-      return Promise.reject(data.payload.status)
+      throw new Error(data.payload.status)
     })
     .then(data => {
       if (!data.error) {
         return Promise.resolve(browserHistory.push('/project'))
       }
-      return Promise.reject(data.payload.status)
+      throw new Error(data.payload.status)
     })
-    .catch(error => Promise.reject(error.message))
+    .catch(error => {
+      throw new Error(error.message)
+    })
 }
 
 export function updateProject(event) {

@@ -66,9 +66,11 @@ export function login(username, password) {
         // if no ids, redirect to first project
         return Promise.resolve(browserHistory.push('/firstProject'))
       }
-      return Promise.reject(data.payload.status)
+      throw new Error(data.payload.status)
     })
-    .catch(error => Promise.reject(error.message))
+    .catch(error => {
+      throw new Error(error.message)
+    })
 }
 
 export function resetAuthentication() {
@@ -84,7 +86,9 @@ export function logout() {
         authService.resetAuth()
         return Promise.resolve()
       }
-      return Promise.reject(data.payload.status)
+      throw new Error(data.payload.status)
     })
-    .catch(error => Promise.reject(error.message))
+    .catch(error => {
+      throw new Error(error.message)
+    })
 }

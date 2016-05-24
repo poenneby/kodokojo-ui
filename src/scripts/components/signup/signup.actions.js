@@ -84,7 +84,7 @@ export function createAccount(email) {
       if (!data.error) {
         return dispatch(requestAccount(email, data))
       }
-      return Promise.reject(data.payload.status)
+      throw new Error(data.payload.status)
     })
     .then(data => {
       if (!data.error) {
@@ -92,7 +92,9 @@ export function createAccount(email) {
         putAuth(data.payload.account.id)
         return Promise.resolve(browserHistory.push('/firstProject'))
       }
-      return Promise.reject(data.payload.status)
+      throw new Error(data.payload.status)
     })
-    .catch(error => Promise.reject(error.message))
+    .catch(error => {
+      throw new Error(error.message)
+    })
 }

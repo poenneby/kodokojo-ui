@@ -1,0 +1,26 @@
+@import (once) '../../../../styles/_variables';
+
+// FIXME need important because of react-toolbox element weight, change for inline style?
+.nav {
+  background: @color-primary-2;
+  &.nav--open {
+    width: 200px !important;
+    max-width: 200px !important;
+    aside {
+      width: 200px !important;
+      max-width: 200px !important;
+    }
+  }
+  &.nav--close {
+    width: 0;
+    aside {
+      width: 0;
+    }
+  }
+  aside {
+    color: @color-font-3 !important;
+    background-color: @color-primary-2 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+}

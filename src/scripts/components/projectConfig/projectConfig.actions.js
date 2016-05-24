@@ -45,16 +45,20 @@ export function getProjectConfig(projectConfigId) {
   return dispatch => dispatch(fetchProjectConfig(projectConfigId))
     .then(data => {
       if (!data.error) {
+        const promises = []
         if (data.payload.projectConfig && data.payload.projectConfig.users) {
           data.payload.projectConfig.users.forEach((userId) => {
-            dispatch(getUser(userId))
+            promises.push(dispatch(getUser(userId)))
           })
+          Promise.all(promises)
         }
         return Promise.resolve(data)
       }
-      return Promise.reject(data.payload.status)
+      throw new Error(data.payload.status)
     })
-    .catch(error => Promise.reject(error.message))
+    .catch(error => {
+      throw new Error(error.message)
+    })
 }
 
 // TODO TU
@@ -64,15 +68,17 @@ export function getProjectConfigAndProject(projectConfigId, projectId) {
       if (!data.error) {
         return dispatch(getProject(projectId))
       }
-      return Promise.reject(data.payload.status)
+      throw new Error(data.payload.status)
     })
     .then(data => {
       if (!data.error) {
-        return data
+        return Promise.resolve(data)
       }
-      return Promise.reject(data.payload.status)
+      throw new Error(data.payload.status)
     })
-    .catch(error => Promise.reject(error.message))
+    .catch(error => {
+      throw new Error(error.message)
+    })
 }
 
 export function requestProjectConfig(projectConfigName, projectConfigOwner, projectConfigUsers) {
@@ -113,12 +119,14 @@ export function createProjectConfig(projectConfigName, projectConfigOwner, proje
       if (!data.error) {
         return dispatch(getProjectConfig(data.payload.projectConfig.id))
       }
-      return Promise.reject(data.payload.status)
+      throw new Error(data.payload.status)
     })
     .then(() => {
       Promise.resolve(browserHistory.push('/projectConfig'))
     })
-    .catch(error => Promise.reject(error.message))
+    .catch(error => {
+      throw new Error(error.message)
+    })
 }
 
 export function requestAddUserToProjectConfig(projectConfigId, userId) {
@@ -147,13 +155,15 @@ export function addUserToProjectConfig(projectConfigId, email) {
         // TODO add dispatch show user details when user is created
         return dispatch(requestAddUserToProjectConfig(projectConfigId, data.payload.account.id))
       }
-      return Promise.reject(data.payload.status)
+      throw new Error(data.payload.status)
     })
     .then(data => {
       if (!data.error) {
         return dispatch(getProjectConfig(projectConfigId))
       }
-      return Promise.reject(data.payload.status)
+      throw new Error(data.payload.status)
     })
-    .catch(error => Promise.reject(error.message))
+    .catch(error => {
+      throw new Error(error.message)
+    })
 }
