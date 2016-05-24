@@ -12,14 +12,15 @@ export class User extends Component {
 
   static propTypes = {
     user: PropTypes.object,
-    userId: PropTypes.string
+    userId: PropTypes.string,
+    users: PropTypes.array
   }
 
   render() {
-    const { user } = this.props // eslint-disable-line no-shadow
-
+    const { users, user, userId } = this.props // eslint-disable-line no-shadow
+    console.log(users, user, userId)
     return (
-      <div className="user">
+      <div className="user user-item">
         <div className="user-column">
           <Avatar>
             <div className="user-initials">
@@ -50,9 +51,10 @@ export class User extends Component {
 }
 
 // User container
-const mapStateProps = (state) => (
+const mapStateProps = (state, ownProps) => (
   {
-    users: state.users
+    users: state.users,
+    userId: ownProps.userId
   }
 )
 
