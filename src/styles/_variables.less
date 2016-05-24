@@ -5,6 +5,7 @@
 @font-family-primary: 'Catamaran', sans-serif;
 @font-family-secondary: 'Roboto', sans-serif;
 
+// font weights
 .font-standard--thin {
   font-family: @font-family-primary;
   font-weight: 100;
@@ -24,7 +25,7 @@
 @font-size-default: .9286rem;
 
 // titles
-@title-size-1: 2.857rem;
+@title-size-1: 2.714rem;
 @title-size-2: 1.8rem;
 @title-size-3: 1.5rem;
 
@@ -60,9 +61,6 @@
   font-size: @font-size-larger;
 }
 
-// TODO
-// font weights
-
 // colors
 // primary
 @color-primary-0: #36353A;
@@ -82,13 +80,36 @@
 @color-font-3: #A6A6B2;
 @color-font-4: #FFFFFF;
 
+// contextual colors
+.contextual-color--1 {
+  color: @color-secondary-0;
+}
+
+.contextual-color--2 {
+  color: @color-secondary-1;
+}
+
+.contextual-color--3 {
+  color: @color-secondary-2;
+}
+
+.contextual-color--1 {
+  color: @color-secondary-0;
+}
+
+
+
 // positions
 // TODO move to a new _layout.less
 .center {
   text-align: center;
 }
-// reset
-body {
-  .font-standard--light;
-  font-size: @font-size-default;
-}
+
+// FIXME dirty hack, refactor layout to prevent overflow hidden
+//#app {
+//  height: 100%;
+//  width: 100%;
+//  position: absolute;
+//  overflow: auto;
+//}
+//
