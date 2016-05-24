@@ -8,6 +8,7 @@
     "url": "https://github.com/kodokojo/kodokojo-ui.git"
   },
   "scripts": {
+    "clean": "test -d ./node_modules12/ && rm -rf ./node_modules || echo \"no node_modules/ folder, continue\"",
     "storybook": "start-storybook -p 9001",
     "build:dev": "webpack --config webpack.config.dev.js --progress --colors && mustache config/json/index.dev.json src/index.mustache > static/index.html",
     "start:dev": "npm run build:dev && node server.js",

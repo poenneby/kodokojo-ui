@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm -rf /src/node_modules/
+npm run clean
 rc=$?
 if [ "$rc" != 0 ]; then
   exit $rc
