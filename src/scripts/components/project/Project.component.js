@@ -50,7 +50,7 @@ class Project extends Component {
 
   componentWillUnmount = () => {
     // TODO pass userName to stop method
-    websocketService.stop()
+    websocketService.stopSocket()
   }
 
   render() {
