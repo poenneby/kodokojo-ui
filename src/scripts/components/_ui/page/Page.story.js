@@ -17,7 +17,7 @@ storiesOf('Page', module)
     <Provider store={store}>
       <Page>
         <h1>Title</h1>
-        <p>
+        <div className="paragraph">
           Lorem ipsum dolor sit amet, quo ea autem dolorum expetenda. Ei case brute liber ius, eos ut diam eius,
           graecis corrumpit molestiae in has. Velit corrumpit per ad, no democritum scribentur pro.
           Quo fabellas legendos cu, velit deserunt evertitur at eam.<br/>
@@ -32,7 +32,7 @@ storiesOf('Page', module)
           mel ei atqui nostrud consectetuer. Sale ullum falli cu ius, errem discere aliquam vis eu.
           Inermis ceteros periculis mei ne, eius tritani antiopam ex vel.
           Vel probo alterum an, sea ut quidam consequuntur.<br/>
-        </p>
+        </div>
       </Page>
     </Provider>
   ))
