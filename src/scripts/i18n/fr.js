@@ -21,5 +21,9 @@ export default {
   'signup-create-account-email-required': 'l’email est obligatoire',
   'signup-create-account-409': 'L’email existe déjà',
   'login-authenticate-401': 'Account not found. Check your email or / and your password',
-  'members-label': 'Members'
+  'members-label': 'Members',
+  'name-label': 'Name',
+  'username-label': 'User name',
+  'group-label': 'Group',
+  'email-label': 'Email'
 }

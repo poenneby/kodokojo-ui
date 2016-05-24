@@ -43,16 +43,16 @@ export class MembersPage extends Component {
               className="user-column"
             >
               <Avatar />
-              Name Name
+              <FormattedMessage id={'name-label'} />
             </div>
             <div className="user-column">
-              User name
+              <FormattedMessage id={'username-label'} />
             </div>
             <div className="user-column">
-              Group
+              <FormattedMessage id={'group-label'} />
             </div>
             <div className="user-column">
-              Email
+              <FormattedMessage id={'email-label'} />
             </div>
           </div>
           { members && members.length &&
