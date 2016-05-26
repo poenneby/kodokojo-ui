@@ -12,6 +12,10 @@ export class Brick extends Component {
     brick: PropTypes.object
   }
 
+  handleLoadStatus(e) {
+    e.target.classList.add('brick-status--loaded')
+  }
+
   render() {
     const { brick } = this.props // eslint-disable-line no-shadow
     const status = getBrickStatus(brick && brick.state ? brick.state : undefined)
@@ -25,7 +29,11 @@ export class Brick extends Component {
           { brick ? brick.name : '-' }
         </div>
         <div className="brick-column brick-state" >
-          <img className="brick-status" src={ status.image } />
+          <img
+            className="brick-status"
+            onLoad={ this.handleLoadStatus }
+            src={ status.image }
+          />
         </div>
         <div className="brick-column brick-version">
           { brick ? brick.version : '-' }
