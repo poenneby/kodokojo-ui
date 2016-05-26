@@ -11,17 +11,15 @@ import Avatar from '../_ui/avatar/Avatar.component'
 export class User extends Component {
 
   static propTypes = {
-    user: PropTypes.object,
-    userId: PropTypes.string,
-    users: PropTypes.array
+    user: PropTypes.object
   }
 
   render() {
-    const { users, user, userId } = this.props // eslint-disable-line no-shadow
-    console.log(users, user, userId)
+    const { user } = this.props // eslint-disable-line no-shadow
+
     return (
       <div className="user user-item">
-        <div className="user-column">
+        <div className="user-column user-name">
           <Avatar>
             <div className="user-initials">
             { user &&
@@ -36,13 +34,13 @@ export class User extends Component {
             `${capitalise(user.firstName)} ${capitalise(user.lastName)}`
           }
         </div>
-        <div className="user-column">
+        <div className="user-column user-username">
           { user ? user.userName : '-' }
         </div>
-        <div className="user-column">
+        <div className="user-column user-group">
           { user ? 'admin' : '-' }
         </div>
-        <div className="user-column">
+        <div className="user-column user-email">
           { user ? user.email : '-' }
         </div>
       </div>
