@@ -11,6 +11,7 @@ function loadStories() {
   require('../src/scripts/components/user/User.story')
   require('../src/scripts/components/brick/Brick.story')
   require('../src/scripts/pages/Members.page.story')
+  require('../src/scripts/pages/Stacks.page.story')
 }
 
 configure(loadStories, module)

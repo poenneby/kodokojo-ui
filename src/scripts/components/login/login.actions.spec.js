@@ -121,7 +121,7 @@ describe('login actions', () => {
         expect(getHeadersSpy).to.have.callCount(1)
         expect(getProjectConfigAndProjectSpy).to.have.callCount(1)
         expect(historyPushSpy).to.have.callCount(1)
-        expect(historyPushSpy).to.have.been.calledWith('/project')
+        expect(historyPushSpy).to.have.been.calledWith('/stacks')
         done()
       }).catch(done)
     })
