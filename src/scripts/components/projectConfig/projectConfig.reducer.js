@@ -1,6 +1,6 @@
 import merge from 'lodash/merge'
-import findIndex from 'lodash/findIndex'
-import cloneDeep from 'lodash/cloneDeep'
+
+import { updateBricks } from '../../services/updateState.service'
 
 import {
   PROJECT_CONFIG_NEW_REQUEST,
@@ -71,20 +71,27 @@ export default function projectConfig(state = initialState, action) {
 
 
   if (action.type === PROJECT_SUCCESS) {
-    return {
-      ...state,
-      project: {
-        id: action.payload.project.id,
-        updateDate: action.payload.project.updateDate
+    const bricks = updateBricks(state.stacks[0].bricks, action.payload.project.stacks[0].bricks)
+    return merge(
+      {},
+      state,
+      {
+        project: {
+          id: action.payload.project.id,
+          updateDate: action.payload.project.updateDate
+        },
+        stacks: [
+          {
+            bricks
+          }
+        ],
+        isFetching: false
       }
-    }
+    )
   }
 
-  if (action.type === PROJECT_UPDATE && action.payload.data.brickType !== 'LOADBALANCER') {
-    const bricks = cloneDeep(state.stacks[0].bricks)
-    const brickIndex = findIndex(bricks, { name: action.payload.data.brickName })
-    bricks[brickIndex].state = action.payload.data.brickState
-    bricks[brickIndex].url = action.payload.data.brickUrl
+  if (action.type === PROJECT_UPDATE && action.payload.brick.type !== 'LOADBALANCER') {
+    const bricks = updateBricks(state.stacks[0].bricks, [action.payload.brick])
     return merge(
       {},
       state,
