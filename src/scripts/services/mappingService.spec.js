@@ -174,7 +174,8 @@ describe('mapping service', () => {
         type: 'type',
         name: 'name',
         state: 'state',
-        url: 'url'
+        url: 'url',
+        version: 'version'
       }
 
       // When
@@ -185,7 +186,8 @@ describe('mapping service', () => {
         type: 'type',
         name: 'name',
         state: 'state',
-        url: 'url'
+        url: 'url',
+        version: 'version'
       })
     })
   })
@@ -288,10 +290,11 @@ describe('mapping service', () => {
         action: 'action',
         data: {
           projectConfiguration: 'projectConfigId',
-          brickType: 'brickType',
-          brickName: 'brickName',
+          brickType: 'type',
+          brickName: 'name',
           state: 'state',
-          url: 'url'
+          url: 'url',
+          version: 'version'
         }
       }
 
@@ -302,11 +305,12 @@ describe('mapping service', () => {
       expect(returns).to.deep.equal({
         entity: 'entity',
         action: 'action',
-        data: {
-          brickType: 'brickType',
-          brickName: 'brickName',
-          brickState: 'state',
-          brickUrl: 'url'
+        brick: {
+          type: 'type',
+          name: 'name',
+          state: 'state',
+          url: 'url',
+          version: 'version'
         }
       })
     })
