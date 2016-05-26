@@ -28,8 +28,8 @@ import HomePage from './scripts/pages/HomePage'
 import LoginPage from './scripts/pages/LoginPage'
 import FirstProjectPage from './scripts/pages/FirstProjectPage'
 import ProjectConfigPage from './scripts/pages/ProjectConfigPage'
-import ProjectPage from './scripts/pages/ProjectPage'
-import MembersPage from './scripts/pages/MembersPage'
+import StacksPage from './scripts/pages/Stacks.page'
+import MembersPage from './scripts/pages/Members.page'
 import UsersPage from './scripts/pages/UsersPage'
 import NotFoundPage from './scripts/pages/NotFoundPage'
 
@@ -76,9 +76,9 @@ ReactDOM.render(
               path="projectConfig"
             />
             <Route
-              component={ProjectPage}
+              component={StacksPage}
               onEnter={AuthService.checkAuth}
-              path="project"
+              path="stacks"
             />
             <Route
               component={MembersPage}

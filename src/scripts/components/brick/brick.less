@@ -1,0 +1,55 @@
+@import (once) '../../../styles/_form-elements';
+
+.brick {
+  display: flex;
+  align-items: flex-end;
+  flex-flow: row;
+  justify-content: space-between;
+  margin-left: 70px;
+  &.brick-item {
+    height: 40px;
+    color: @color-font-3;
+    border-bottom: 1px solid @color-primary-3;
+    &:not(:first-child) {
+      margin-bottom: 7px;
+    }
+  }
+  &.brick-header {
+    //margin-bottom: 10px;
+    // FIXME dirty
+    &.brick-header .brick-column {
+      color: @color-font-3;
+      .font-standard--thin;
+    }
+  }
+  .brick-column {
+    height: 22px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    &.brick-type {
+      flex: 15% 1 1;
+    }
+    &.brick-name {
+      flex: 20% 1 1;
+      .font-standard--semi-bold;
+      color: @color-font-4;
+    }
+    &.brick-state {
+      flex: 15% 1 1;
+    }
+    &.brick-version {
+      flex: 15% 1 1;
+    }
+    &.brick-link {
+      flex: 35% 1 1;
+      & a {
+        color: @color-font-4;
+        text-decoration: underline;
+      }
+    }
+  }
+  img.brick-status {
+    height: 17px;
+  }
+}

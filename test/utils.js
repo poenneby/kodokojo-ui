@@ -6,7 +6,9 @@ import { jsdom } from 'jsdom'
 global.document = jsdom('<!doctype html><html><body></body></html>', {
   url: 'http://localhost',
   headers: {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_7) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/11.0.696.71 Safari/534.24'
+    'User-Agent':
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_7)' +
+      ' AppleWebKit/534.24 (KHTML, like Gecko) Chrome/11.0.696.71 Safari/534.24'
   }
 })
 global.window = document.defaultView

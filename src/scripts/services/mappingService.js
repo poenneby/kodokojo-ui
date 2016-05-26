@@ -77,9 +77,10 @@ mappingService.mapStack = (data) => {
 mappingService.mapBrick = (data) => {
   if (data.type !== 'LOADBALANCER') {
     return {
-      type: data.type,
-      name: data.name,
+      type: data.type || data.brickType,
+      name: data.name || data.brickName,
       state: data.state,
+      version: data.version,
       url: data.url
     }
   }
@@ -96,14 +97,12 @@ mappingService.mapProjectConfig = (data) => (
   {
     id: data.identifier,
     name: data.name,
-    // admins: data.admins ? data.admins.map(admin => mappingService.mapUser(admin)) : undefined,
     admins: data.admins ?
       data.admins.map(admin => admin.identifier) :
       undefined,
     stacks: data.stackConfigs ?
       data.stackConfigs.map(stack => mappingService.mapStack(stack)) :
       undefined,
-    // users: data.users ? data.users.map(user => mappingService.mapUser(user)) : undefined
     users: data.users ?
       data.users.map(user => user.identifier) :
       undefined
@@ -136,12 +135,7 @@ mappingService.mapBrickEvent = (data) => (
   {
     entity: data.entity,
     action: data.action,
-    data: {
-      brickType: data.data.brickType,
-      brickName: data.data.brickName,
-      brickState: data.data.state,
-      brickUrl: data.data.url
-    }
+    brick: mappingService.mapBrick(data.data)
   }
 )
 

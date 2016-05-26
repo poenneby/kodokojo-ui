@@ -62,7 +62,7 @@ module.exports = {
         loader: 'style!css?modules&importLoaders=2!sass'
       },
       {
-        test: /\.jpg|png|svg$/, loader: 'file-loader?name=images/[name].[ext]'
+        test: /\.jpg|png|svg$/, loader: 'file-loader?name=assets/images/[name].[ext]'
       },
       {
         test: /\.ico$/, loader: 'file-loader?name=./[name].[ext]'
