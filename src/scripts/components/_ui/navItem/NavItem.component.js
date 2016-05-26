@@ -11,7 +11,7 @@ export class NavItem extends Component {
 
   static propTypes = {
     active: PropTypes.bool,
-    index: PropTypes.number.isRequired,
+    index: PropTypes.number,
     label: PropTypes.string.isRequired,
     number: PropTypes.number
   }
@@ -21,10 +21,10 @@ export class NavItem extends Component {
 
     return (
       <div
-        className={ `nav-item nav-${index}${active ? ' nav--active' : ''}` }
+        className={ `nav-item${index ? ` nav-${index}` : ' nav-default'}${active ? ' nav--active' : ''}` }
       >
         <div
-          className={ 'nav-highlight' }
+          className="nav-highlight"
         >
           &nbsp;
         </div>

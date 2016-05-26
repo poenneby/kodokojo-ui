@@ -12,7 +12,14 @@ const initialState = {}
 const store = configureStore(initialState)
 
 storiesOf('NavItem', module)
-  .add('nav 1', () => (
+  .add('nav default', () => (
+    <div style={{ width: '200px' }} store={store}>
+      <NavItem
+        label="Nav Item"
+      />
+    </div>
+  ))
+  .add('nav 1 - (3) - active', () => (
     <div style={{ width: '200px' }} store={store}>
       <NavItem
         active
@@ -22,11 +29,12 @@ storiesOf('NavItem', module)
       />
     </div>
   ))
-  .add('nav 2', () => (
+  .add('nav 2 - (2)', () => (
     <div style={{ width: '200px' }} store={store}>
       <NavItem
         index={ 2 }
         label="Nav Item"
+        number={ 2 }
       />
     </div>
   ))
