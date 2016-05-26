@@ -26,14 +26,15 @@ export class StacksPage extends Component {
   }
 
   componentWillMount = () => {
-    const { stacks, projectConfigId, updateProject } = this.props // eslint-disable-line no-shadow
+    const { stacks, projectConfigId } = this.props // eslint-disable-line no-shadow
 
     if (!stacks && projectConfigId) {
       getProjectConfig(projectConfigId)
-        .then(this.initWebsocket)
-    } else {
-      // TODO
     }
+
+    // TODO no projectConfigId case
+
+    this.initWebsocket()
   }
 
   componentWillUnmount = () => {
