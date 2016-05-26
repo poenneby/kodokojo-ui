@@ -1,0 +1,70 @@
+@import (once) '../../../../styles/_variables';
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  background: @color-primary-2;
+  .nav-highlight {
+    width: 6px;
+    height: 100%;
+  }
+  &.nav-1 {
+    & > .nav-highlight {
+      .contextual-background--1;
+    }
+    &.nav--active {
+      & > .nav-label {
+        .font-standard--bold;
+        .contextual-color--1;
+      }
+    }
+  }
+  &.nav-2 {
+    & > .nav-highlight {
+      .contextual-background--2;
+    }
+  }
+  &.nav-3 {
+    & > .nav-highlight {
+      .contextual-background--3;
+    }
+  }
+  &.nav-4 {
+    & > .nav-highlight {
+      .contextual-background--4;
+    }
+  }
+  .nav-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    flex: 75% 1 1;
+    color: @color-font-2;
+  }
+  .nav-number {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+    flex: 25% 1 1;
+    .font-size--large;
+    .font-standard--bold;
+    color: @color-font-2;
+  }
+  &.nav--active {
+    &::after {
+      content: ' ';
+      position: absolute;
+      display: flex;
+      width: 0;
+      height: 0;
+      top: 18px;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-left: 14px solid @color-primary-2;
+    }
+  }
+}
