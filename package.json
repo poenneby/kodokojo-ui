@@ -20,8 +20,8 @@
     "coverage": "BABEL_ENV=test babel-node node_modules/isparta/bin/isparta cover _mocha --root src/ --include-all-sources --default-excludes -- --recursive './src/**/*.spec.js' --require ignore-styles --require intl --require ./test/utils.js"
   },
   "author": {
-    "name" : "ModuloM / Antoine Le Taxin",
-    "url" : "https://twitter.com/ModuloM"
+    "name": "ModuloM / Antoine Le Taxin",
+    "url": "https://twitter.com/ModuloM"
   },
   "contributors": [
     {
