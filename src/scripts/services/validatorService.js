@@ -36,7 +36,7 @@ validatorService.emailValidator = composeValidators(
  * @returns {boolean}
  */
 validatorService.isProjectNameValid = (value) => !validatorService.isEmpty(value) &&
-  /([a-zA-Z0-9\-_]){4,20}/.test(value)
+  /([a-zA-Z0-9\-_]){4,20}$/.test(value)
 
 /**
  * Revalidate projectConfig name validator
