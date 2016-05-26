@@ -40,18 +40,18 @@ export class MembersPage extends Component {
             className="user user-header"
           >
             <div
-              className="user-column"
+              className="user-column user-name"
             >
               <Avatar />
               <FormattedMessage id={'name-label'} />
             </div>
-            <div className="user-column">
+            <div className="user-column user-username">
               <FormattedMessage id={'username-label'} />
             </div>
-            <div className="user-column">
+            <div className="user-column user-group">
               <FormattedMessage id={'group-label'} />
             </div>
-            <div className="user-column">
+            <div className="user-column user-email">
               <FormattedMessage id={'email-label'} />
             </div>
           </div>
@@ -69,7 +69,7 @@ export class MembersPage extends Component {
   }
 }
 
-// MembersPage container
+// StacksPage container
 const mapStateProps = (state) => (
   {
     projectConfigId: state.projectConfig.id,

@@ -7,7 +7,7 @@ import configureStore from '../store/configureStore'
 import { IntlProvider } from 'react-intl'
 
 // component to story
-import MembersPage from './MembersPage'
+import MembersPage from './Members.page'
 import en from '../i18n/en'
 
 const initialState = {
