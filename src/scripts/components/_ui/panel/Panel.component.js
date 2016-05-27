@@ -1,8 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 
-// UI library component
-import { Panel as ToolboxPanel } from 'react-toolbox'
-
 // component
 import './panel.less'
 
@@ -16,20 +13,18 @@ export class Panel extends Component {
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.element),
       PropTypes.element
-    ]),
-    scrollY: PropTypes.bool
+    ])
   }
 
   render() {
-    const { children, scrollY } = this.props // eslint-disable-line no-shadow
+    const { children } = this.props // eslint-disable-line no-shadow
 
     return (
-      <ToolboxPanel
+      <div
         className="panel"
-        scrollY={ scrollY }
       >
         { children }
-      </ToolboxPanel>
+      </div>
     )
   }
 }
