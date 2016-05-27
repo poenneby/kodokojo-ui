@@ -9,17 +9,34 @@ import configureStore from '../../store/configureStore'
 // component to story
 import App from './App.component'
 
-const initialState = {
+const initialStateNoNav = {
   auth: {
     isAuthenticated: false
+  },
+  prefs: {
+    navigation: false,
+    locale: 'en',
+    theme: 'dark'
   }
 }
 
-const store = configureStore(initialState)
+const initialStateNav = {
+  auth: {
+    isAuthenticated: false
+  },
+  prefs: {
+    navigation: true,
+    locale: 'en',
+    theme: 'dark'
+  }
+}
+
+const storeWithNav = configureStore(initialStateNav)
+const storeWithoutNav = configureStore(initialStateNoNav)
 
 storiesOf('App', module)
-  .add('with nav', () => (
-    <Provider store={store}>
+  .add('without nav', () => (
+    <Provider store={storeWithoutNav}>
       <IntlProvider locale="en">
         <App>
           <div>children</div>
@@ -27,12 +44,10 @@ storiesOf('App', module)
       </IntlProvider>
     </Provider>
   ))
-  .add('without nav', () => (
-    <Provider store={store}>
+  .add('with nav', () => (
+    <Provider store={storeWithNav}>
       <IntlProvider locale="en">
-        <App
-          isNavVisible
-        >
+        <App>
           <div>children</div>
         </App>
       </IntlProvider>
