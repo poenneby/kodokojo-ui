@@ -15,6 +15,7 @@ pids
 
 node_modules
 static
+styleguide/dist
 reports
 coverage
 transpiled
