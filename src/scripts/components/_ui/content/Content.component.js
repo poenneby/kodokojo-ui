@@ -1,13 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 
 // component
-import './panel.less'
+import './content.less'
 
 /**
- * UI: Panel component
+ * UI: Content component
  *
  */
-export class Panel extends Component {
+export class Content extends Component {
 
   static propTypes = {
     children: PropTypes.oneOfType([
@@ -21,7 +21,7 @@ export class Panel extends Component {
 
     return (
       <div
-        className="panel"
+        className="content"
       >
         { children }
       </div>
@@ -29,4 +29,4 @@ export class Panel extends Component {
   }
 }
 
-export default Panel
+export default Content

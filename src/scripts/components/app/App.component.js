@@ -6,7 +6,7 @@ import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
-import { setTheme, setLocale } from './app.actions'
+import { setTheme, setLocale, setNavVisiblity } from './app.actions'
 const lightTheme = getMuiTheme()
 const darkTheme = getMuiTheme(darkBaseTheme)
 
@@ -16,8 +16,9 @@ import '../../../images/logo-kodokojo-icon.png'
 import '../../../styles/_variables.less'
 import '../../../styles/_reset.less'
 import Layout from '../_ui/layout/Layout.component'
-import NavDrawer from '../_ui/navDrawer/NavDrawer.component'
+import Nav from '../_ui/nav/Nav.component.js'
 import Panel from '../_ui/panel/Panel.component'
+import Content from '../_ui/content/Content.component.js'
 import AppHeader from './AppHeader.component'
 
 class App extends Component {
@@ -25,36 +26,34 @@ class App extends Component {
   static propTypes = {
     children: PropTypes.element.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
-    isNavVisible: PropTypes.bool,
     locale: PropTypes.string.isRequired,
+    navigation: PropTypes.bool,
     setLocale: PropTypes.func.isRequired,
-    themeSelected: PropTypes.string.isRequired
+    theme: PropTypes.string.isRequired
   }
 
   render() {
-    const { children, themeSelected, locale, setLocale, isAuthenticated, isNavVisible } = this.props // eslint-disable-line no-shadow
-    const currentMuiTheme = (themeSelected === 'light') ? lightTheme : darkTheme
+    const { children, theme, locale, setLocale, isAuthenticated, navigation, setNavVisiblity } = this.props // eslint-disable-line no-shadow
+    const currentTheme = (theme === 'light') ? lightTheme : darkTheme
 
     return (
-      <MuiThemeProvider muiTheme={currentMuiTheme}>
-        <Layout>
-          <Panel>
-            <AppHeader
-              isAuthenticated={isAuthenticated}
-              languageSelected={locale}
-              onLanguageChange={(value) => setLocale(value)}
-            />
-            <Layout>
-              <NavDrawer
-                pinned={ !isNavVisible }
-              />
-              <Panel>
-                {children}
-              </Panel>
-            </Layout>
-          </Panel>
-        </Layout>
-      </MuiThemeProvider>
+      <Layout>
+        <AppHeader
+          isAuthenticated={isAuthenticated}
+          languageSelected={locale}
+          onLanguageChange={(value) => setLocale(value)}
+        />
+        <Panel>
+          <Nav
+            active={ navigation }
+          >
+            <div>children</div>
+          </Nav>
+          <Content>
+            {children}
+          </Content>
+        </Panel>
+      </Layout>
     )
   }
 }
@@ -62,9 +61,9 @@ class App extends Component {
 const mapStateProps = (state, ownProps) => (
   {
     locale: state.prefs.locale,
-    themeSelected: state.prefs.theme,
-    isAuthenticated: state.auth.isAuthenticated,
-    isNavVisible: ownProps.isNavVisible
+    theme: state.prefs.theme,
+    navigation: state.prefs.navigation,
+    isAuthenticated: state.auth.isAuthenticated
   }
 )
 
@@ -72,6 +71,7 @@ export default connect(
   mapStateProps,
   {
     setTheme,
-    setLocale
+    setLocale,
+    setNavVisiblity
   }
 )(App)

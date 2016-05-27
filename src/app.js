@@ -8,7 +8,6 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 
 // UI stack
-import 'normalize-css'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 
 // i18n

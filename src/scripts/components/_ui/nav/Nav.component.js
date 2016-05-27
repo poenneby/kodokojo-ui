@@ -1,16 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 
-// UI library component
-import { NavDrawer as ToolboxNavDrawer } from 'react-toolbox'
-
 // component
-import './navDrawer.less'
+import './nav.less'
 
 /**
- * UI: NavDrawer component
+ * UI: Nav component
  *
  */
-export class NavDrawer extends Component {
+export class Nav extends Component {
 
   static propTypes = {
     active: PropTypes.bool,
@@ -30,19 +27,20 @@ export class NavDrawer extends Component {
     const { children, active, onOverlayClick, permanentAt, pinned, scrollY, width } = this.props // eslint-disable-line no-shadow
 
     return (
-      <ToolboxNavDrawer
-        active={ active }
+      <div
         className={ (pinned || active) ? 'nav nav--open' : 'nav nav--closed' }
-        onOverlayClick={ onOverlayClick }
-        permanentAt={ permanentAt }
-        pinned={ pinned }
-        scrollY={ scrollY }
-        width={ width }
       >
-        { children }
-      </ToolboxNavDrawer>
+        <aside
+          // onOverlayClick={ onOverlayClick }
+          // permanentAt={ permanentAt }
+          // pinned={ pinned }
+          // scrollY={ scrollY }
+        >
+          { children }
+        </aside>
+      </div>
     )
   }
 }
 
-export default NavDrawer
+export default Nav
