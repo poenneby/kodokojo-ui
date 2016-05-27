@@ -8,7 +8,7 @@ import configureStore from '../../../store/configureStore'
 // component to story
 import Layout from './Layout.component'
 import Panel from '../panel/Panel.component'
-import NavDrawer from '../navDrawer/NavDrawer.component'
+import Nav from '../nav/Nav.component.js'
 
 const initialState = {}
 
@@ -18,19 +18,21 @@ storiesOf('Layout', module)
   .add('with Panel', () => (
     <Provider store={store}>
       <Layout>
-        <Panel>children</Panel>
+        <Panel>
+          <div>children</div>
+        </Panel>
       </Layout>
     </Provider>
   ))
-  .add('with Panel and NavDrawer', () => (
+  .add('with Panel and Nav', () => (
     <Provider store={store}>
       <Layout>
-        <NavDrawer
-          pinned
-        >
-          <div>children</div>
-        </NavDrawer>
         <Panel>
+          <Nav
+            pinned
+          >
+            <div>children</div>
+          </Nav>
           <div>children</div>
         </Panel>
       </Layout>

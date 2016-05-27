@@ -1,9 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 
-// UI library component
-import { Layout as ToolboxLayout } from 'react-toolbox'
-
 // component
+import './layout.less'
 
 /**
  * UI: Layout component
@@ -22,9 +20,9 @@ export class Layout extends Component {
     const { children } = this.props // eslint-disable-line no-shadow
 
     return (
-      <ToolboxLayout>
+      <div className="layout">
         { children }
-      </ToolboxLayout>
+      </div>
     )
   }
 }
