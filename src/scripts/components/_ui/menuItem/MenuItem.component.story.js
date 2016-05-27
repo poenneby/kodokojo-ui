@@ -5,7 +5,7 @@ import { storiesOf, action } from '@kadira/storybook'
 import configureStore from '../../../store/configureStore'
 
 // component to story
-import NavItem from './NavItem.component'
+import NavItem from './MenuItem.component.js'
 
 const initialState = {}
 

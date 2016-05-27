@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 
 // component
-import './navItem.less'
+import './menuItem.less'
 
 /**
  * UI: NavItem component
