@@ -13,7 +13,7 @@ const initialState = {}
 const store = configureStore(initialState)
 
 storiesOf('Avatar', module)
-  .add('with nav', () => (
+  .add('default', () => (
     <Avatar
       store={store}
     >

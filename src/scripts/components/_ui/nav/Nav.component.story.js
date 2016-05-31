@@ -6,7 +6,7 @@ import { storiesOf, action } from '@kadira/storybook'
 import configureStore from '../../../store/configureStore'
 
 // component to story
-import NavDrawer from './Nav.component.js'
+import Nav from './Nav.component.js'
 
 const initialState = {}
 
@@ -15,10 +15,10 @@ const store = configureStore(initialState)
 storiesOf('Nav', module)
   .add('pinned', () => (
     <Provider store={store}>
-      <NavDrawer
+      <Nav
         pinned
       >
         <div>children</div>
-      </NavDrawer>
+      </Nav>
     </Provider>
   ))
