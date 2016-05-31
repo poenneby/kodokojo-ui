@@ -53,7 +53,6 @@ describe('project config actions', () => {
     nock.cleanAll()
   })
 
-  // TODO failure TU
   describe('create project config', () => {
     let getProjectConfigSpy
 
@@ -118,16 +117,22 @@ describe('project config actions', () => {
   // TODO failure TU
   describe('get project config', () => {
     let getUserSpy
+    let initMenuSpy
 
     beforeEach(() => {
       getUserSpy = sinon.stub().returns({
-        type: 'MOCKED_ACTION'
+        type: 'MOCKED_ACTION_USER_GET'
       })
       actionsRewireApi.__Rewire__('getUser', getUserSpy)
+      initMenuSpy = sinon.stub().returns({
+        type: 'MOCKED_ACTION_MENU_INIT'
+      })
+      actionsRewireApi.__Rewire__('initMenu', initMenuSpy)
     })
 
     afterEach(() => {
       actionsRewireApi.__ResetDependency__('getUser')
+      actionsRewireApi.__ResetDependency__('initMenu')
     })
 
     it('should return project config', (done) => {
@@ -161,7 +166,10 @@ describe('project config actions', () => {
           meta: undefined
         },
         {
-          type: 'MOCKED_ACTION'
+          type: 'MOCKED_ACTION_USER_GET'
+        },
+        {
+          type: 'MOCKED_ACTION_MENU_INIT'
         }
       ]
       nock('http://localhost')
@@ -186,6 +194,8 @@ describe('project config actions', () => {
           })
           expect(getUserSpy).to.have.callCount(1)
           expect(getUserSpy).to.have.calledWith('otherUserId')
+          expect(initMenuSpy).to.have.callCount(1)
+          expect(initMenuSpy).to.have.calledWith('Acme')
           done()
         })
         .catch(done)

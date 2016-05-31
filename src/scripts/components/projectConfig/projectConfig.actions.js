@@ -1,11 +1,13 @@
 import { browserHistory } from 'react-router'
 import { CALL_API } from 'redux-api-middleware'
+import Promise from 'bluebird'
 
 import api from '../../commons/config'
 import { getHeaders } from '../../services/ioService'
 import { mapProjectConfig } from '../../services/mappingService'
 import { createUser, getUser } from '../user/user.actions'
 import { getProject } from '../project/project.actions'
+import { initMenu } from '../menu/menu.actions'
 import {
   PROJECT_CONFIG_NEW_REQUEST,
   PROJECT_CONFIG_NEW_SUCCESS,
@@ -51,6 +53,9 @@ export function getProjectConfig(projectConfigId) {
             promises.push(dispatch(getUser(userId)))
           })
           Promise.all(promises)
+        }
+        if (data.payload.projectConfig && data.payload.projectConfig.name) {
+          dispatch(initMenu(data.payload.projectConfig.name))
         }
         return Promise.resolve(data)
       }
@@ -121,9 +126,7 @@ export function createProjectConfig(projectConfigName, projectConfigOwner, proje
       }
       throw new Error(data.payload.status)
     })
-    .then(() => {
-      Promise.resolve(browserHistory.push('/projectConfig'))
-    })
+    .then(Promise.resolve(browserHistory.push('/projectConfig')))
     .catch(error => {
       throw new Error(error.message)
     })
