@@ -17,17 +17,34 @@ export class MembersPage extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
     members: PropTypes.array,
-    projectConfigId: PropTypes.string
+    projectConfigId: PropTypes.string,
+    setNavVisibility: PropTypes.func.isRequired,
+    updateMenuPath: PropTypes.func.isRequired
   }
 
   componentWillMount() {
-    const { members, projectConfigId } = this.props // eslint-disable-line no-shadow
+    const { members, projectConfigId, updateMenuPath } = this.props // eslint-disable-line no-shadow
+
+    this.initNav()
+
+    const getProjectConfigPromise = Promise.promisify(getProjectConfig(projectConfigId))
 
     if (!members && projectConfigId) {
-      getProjectConfig(projectConfigId)
-    } else {
-      // TODO
+      getProjectConfigPromise(projectConfigId)
+        .then(() => {
+          updateMenuPath(location.pathname)
+        })
+    } else if (members) {
+      updateMenuPath(location.pathname)
+    } else if (!projectConfigId) {
+      // TODO no projectConfigId case
     }
+  }
+
+  initNav = () => {
+    const { setNavVisibility } = this.props // eslint-disable-line no-shadow
+
+    setNavVisibility(true)
   }
 
   render() {
@@ -84,7 +101,9 @@ const MembersPageContainer = compose(
   connect(
     mapStateProps,
     {
-      getProjectConfig
+      getProjectConfig,
+      setNavVisibility,
+      updateMenuPath
     }
   ),
   injectIntl
