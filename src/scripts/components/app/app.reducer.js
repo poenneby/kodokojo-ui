@@ -2,25 +2,25 @@ import has from 'lodash/has'
 
 import { prefs as prefsDefault } from './prefs'
 import {
-  SET_THEME,
-  SET_LOCALE,
-  SET_NAV_VISIBILITY
+  PREF_THEME_SET,
+  PREF_LOCALE_SET,
+  PREF_NAV_VISIBILITY_SET
 } from '../../commons/constants'
 
 export default function prefs(state = prefsDefault, action) {
-  if (action.type === SET_THEME && has(action, 'theme')) {
+  if (action.type === PREF_THEME_SET && has(action, 'theme')) {
     return {
       ...state,
       theme: action.theme
     }
   }
-  if (action.type === SET_LOCALE && has(action, 'locale')) {
+  if (action.type === PREF_LOCALE_SET && has(action, 'locale')) {
     return {
       ...state,
       locale: action.locale
     }
   }
-  if (action.type === SET_NAV_VISIBILITY && has(action, 'locale')) {
+  if (action.type === PREF_NAV_VISIBILITY_SET && has(action, 'navigation')) {
     return {
       ...state,
       navigation: action.navigation

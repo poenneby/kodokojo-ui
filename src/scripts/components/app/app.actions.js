@@ -1,26 +1,26 @@
 import {
-  SET_THEME,
-  SET_LOCALE,
-  SET_NAV_VISIBILITY
+  PREF_THEME_SET,
+  PREF_LOCALE_SET,
+  PREF_NAV_VISIBILITY_SET
 } from '../../commons/constants'
 
 export function setTheme(theme) {
   return {
-    type: SET_THEME,
+    type: PREF_THEME_SET,
     theme
   }
 }
 
 export function setLocale(locale) {
   return {
-    type: SET_LOCALE,
+    type: PREF_LOCALE_SET,
     locale
   }
 }
 
-export function setNavVisiblity(visibility) {
+export function setNavVisibility(navigation) {
   return {
-    type: SET_NAV_VISIBILITY,
-    visibility
+    type: PREF_NAV_VISIBILITY_SET,
+    navigation
   }
 }
