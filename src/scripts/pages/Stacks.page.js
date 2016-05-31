@@ -2,12 +2,15 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
+import Promise from 'bluebird'
 
 // Component
 import Page from '../components/_ui/page/Page.component'
 import Brick from '../components/brick/Brick.component'
 import { mapBrickEvent } from '../services/mappingService'
 import websocketService from '../services/websocketService'
+import { setNavVisibility } from '../components/app/app.actions'
+import { updateMenuPath } from '../components/menu/menu.actions'
 import { updateProject } from '../components/project/project.actions'
 import { getProjectConfig } from '../components/projectConfig/projectConfig.actions'
 
@@ -15,8 +18,12 @@ export class StacksPage extends Component {
 
   static propTypes = {
     intl: intlShape.isRequired,
+    location: PropTypes.object.isRequired,
     projectConfigId: PropTypes.string,
+    projectConfigName: PropTypes.string,
+    setNavVisibility: PropTypes.func.isRequired,
     stacks: PropTypes.array,
+    updateMenuPath: PropTypes.func.isRequired,
     updateProject: PropTypes.func.isRequired
   }
 
@@ -26,15 +33,23 @@ export class StacksPage extends Component {
   }
 
   componentWillMount = () => {
-    const { stacks, projectConfigId } = this.props // eslint-disable-line no-shadow
+    const { location, projectConfigId, stacks, updateMenuPath } = this.props // eslint-disable-line no-shadow
+
+    this.initNav()
+    this.initWebsocket()
+
+    const getProjectConfigPromise = Promise.promisify(getProjectConfig(projectConfigId))
 
     if (!stacks && projectConfigId) {
-      getProjectConfig(projectConfigId)
+      getProjectConfigPromise(projectConfigId)
+        .then(() => {
+          updateMenuPath(location.pathname)
+        })
+    } else if (stacks) {
+      updateMenuPath(location.pathname)
+    } else if (!projectConfigId) {
+      // TODO no projectConfigId case
     }
-
-    // TODO no projectConfigId case
-
-    this.initWebsocket()
   }
 
   componentWillUnmount = () => {
@@ -42,8 +57,16 @@ export class StacksPage extends Component {
     websocketService.stopSocket()
   }
 
+  initNav = () => {
+    const { setNavVisibility } = this.props // eslint-disable-line no-shadow
+
+    setNavVisibility(true)
+  }
+
   initWebsocket = () => {
     // TODO let the dev backend reroute ws calls
+    // TODO dynamically set the ws url (end point?)
+    // TODO move this to actions
     // maybe with https://www.npmjs.com/package/express-ws
     // this.socket = new WebSocket('ws://localhost/api/v1/event')
     this.socket = websocketService
@@ -61,7 +84,7 @@ export class StacksPage extends Component {
   }
 
   render() {
-    const { stacks } = this.props
+    const { stacks } = this.props // eslint-disable-line no-shadow
 
     return (
       <Page>
@@ -98,9 +121,11 @@ export class StacksPage extends Component {
 }
 
 // StacksPage container
-const mapStateProps = (state) => (
+const mapStateProps = (state, ownProps) => (
   {
+    location: ownProps.location,
     projectConfigId: state.projectConfig.id,
+    projectConfigName: state.projectConfig.name,
     stacks: state.projectConfig.stacks
   }
 )
@@ -110,7 +135,9 @@ const StacksPageContainer = compose(
     mapStateProps,
     {
       getProjectConfig,
-      updateProject
+      updateProject,
+      setNavVisibility,
+      updateMenuPath
     }
   ),
   injectIntl
