@@ -1,0 +1,41 @@
+@import (once) '../../../../styles/_commons';
+
+@radius-standard: 4px;
+@spacing-standard: 60px;
+@spacing-large: 80px;
+@spacing-small: 50px;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  .general-background--3;
+  &:first-of-type {
+    border-top-left-radius: @radius-standard;
+    border-bottom-left-radius: @radius-standard;
+  }
+  &:last-of-type {
+    border-top-right-radius: @radius-standard;
+    border-bottom-right-radius: @radius-standard;
+  }
+}
+.card-title {
+  .font-standard--thin;
+  .font-size--large;
+  .contextual-color--1;
+  .card-padding-left-right;
+  padding-top: @spacing-standard;
+  padding-bottom: @spacing-small;
+}
+.card-content {
+  .card-padding-left-right;
+  .card-padding-left-right;
+  &:first-child {
+    padding-top: @spacing-small;
+  }
+  padding-bottom: @spacing-small;
+}
+
+.card-padding-left-right {
+  padding-left: @spacing-large;
+  padding-right: @spacing-standard;
+}
