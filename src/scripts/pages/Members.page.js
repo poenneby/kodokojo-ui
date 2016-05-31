@@ -2,11 +2,14 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
+import Promise from 'bluebird'
 
 // Component
 import Page from '../components/_ui/page/Page.component'
 import User from '../components/user/User.component'
 import Avatar from '../components/_ui/avatar/Avatar.component'
+import { setNavVisibility } from '../components/app/app.actions'
+import { updateMenuPath } from '../components/menu/menu.actions'
 import { getProjectConfig } from '../components/projectConfig/projectConfig.actions'
 
 export class MembersPage extends Component {

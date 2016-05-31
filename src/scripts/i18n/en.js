@@ -3,6 +3,7 @@ export default {
   'app-lang-en-label': 'English',
   'app-nav-home-label': 'Home',
   'app-nav-users-label': 'Users',
+  'dashboard-label': 'Dashboard',
   'email-input-label': 'Email',
   'email-label': 'Email',
   'email-pattern-error': 'Invalid email address',
@@ -19,6 +20,7 @@ export default {
   'project-name-label': 'name',
   'project-name-pattern-error':
     'Invalid projectConfig name, must be between 4 and 20 non special, unaccented characters long',
+  'projects-label': 'Projects',
   'signup-email-label': 'Email',
   'signup-email-hint-label': 'your.email@domain.ext',
   'signup-entity-label': 'Entity',
@@ -31,5 +33,6 @@ export default {
   'status-label': 'Status',
   'type-label': 'Type',
   'username-label': 'Brick name',
+  'report-label': 'Report',
   'version-label': 'Version'
 }
