@@ -8,6 +8,7 @@ import login from '../components/login/login.reducer'
 import prefs from '../components/app/app.reducer'
 import projectConfig from '../components/projectConfig/projectConfig.reducer'
 import users from '../components/user/user.reducer'
+import menu from '../components/menu/menu.reducer'
 
 const rootReducer = combineReducers({
   auth,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   prefs,
   projectConfig,
   users,
+  menu,
   form: formReducer,
   routing: routerReducer
 })
