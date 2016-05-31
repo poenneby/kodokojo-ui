@@ -11,6 +11,8 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 
 // i18n
+// shim intl if not supported buy browser
+import { shimIntl } from './scripts/i18n/shimIntl'
 import IntlProviderContainer from './scripts/commons/IntlProviderContainer'
 import { addLocaleData } from 'react-intl'
 import en from 'react-intl/locale-data/en'
@@ -48,7 +50,8 @@ history.listen(location => handleHistoryChange(location.pathname))
 // https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin()
 
-ReactDOM.render(
+const initApp = () => {
+  ReactDOM.render(
     <IntlProviderContainer store={store}>
       <Provider store={store}>
         { /* Tell the Router to use our enhanced history */ }
@@ -100,4 +103,9 @@ ReactDOM.render(
       </Provider>
     </IntlProviderContainer>,
     document.getElementById('app')
-)
+  )
+}
+
+// FIXME
+// shim intl is necessary for safari (v9.1.1), remove later ?
+shimIntl(initApp)
