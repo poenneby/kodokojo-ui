@@ -33,11 +33,11 @@ export class AppHeader extends Component {
       // FIXME this is for testing purpose, delete when tabs are implemented
       // <Navigation type="horizontal">
       //   <Link to="/">
-      //   <FormattedMessage id={'app-nav-home-label'}/>
+      //   <FormattedMessage id={'app-menu-home-label'}/>
       //   </Link>
       //   {' | '}
       //   <Link to="/users">
-      //     <FormattedMessage id={'app-nav-users-label'}/>
+      //     <FormattedMessage id={'app-menu-users-label'}/>
       //   </Link>
       // </Navigation>
 

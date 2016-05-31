@@ -1,48 +1,94 @@
 @import (once) '../../../../styles/_commons';
 
-.nav-item {
+a.menu-item,
+a.menu-item:hover,
+a.menu-item:visited,
+a.menu-item:active,
+a.menu-item:link {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 40px;
   background: @color-primary-2;
-  .nav-highlight {
+  text-decoration: none;
+  user-select: none;
+  cursor: pointer;
+  &.menu-item--disabled {
+    pointer-events: none !important;
+    cursor: default;
+  }
+  .menu-highlight {
     width: 6px;
     height: 100%;
   }
-  &.nav-default {
-    & > .nav-label {
+  &.menu-default {
+    & > .menu-label {
       .font-standard--bold;
       color: @color-font-4;
     }
   }
-  &.nav-1 {
-    & > .nav-highlight {
+  &.menu--active {
+    & > .menu-label {
+      .font-standard--bold;
+    }
+  }
+  &.menu-0 {
+    background: @color-primary-3;
+    .menu-label {
+      color: @color-font-0;
+    }
+    &.menu--active {
+      .contextual-background--1;
+      & > .menu-label {
+        
+      }
+      &::after {
+        border-left: 14px solid @color-secondary-0;
+      }
+    }
+  }
+  &.menu-1 {
+    & > .menu-highlight {
       .contextual-background--1;
     }
-    &.nav--active {
-      & > .nav-label {
-        .font-standard--bold;
+    &.menu--active {
+      & > .menu-label {
         .contextual-color--1;
       }
     }
   }
-  &.nav-2 {
-    & > .nav-highlight {
+  &.menu-2 {
+    & > .menu-highlight {
       .contextual-background--2;
     }
+    &.menu--active {
+      & > .menu-label {
+        .contextual-color--2;
+      }
+    }
   }
-  &.nav-3 {
-    & > .nav-highlight {
+  &.menu-3 {
+    & > .menu-highlight {
       .contextual-background--3;
     }
-  }
-  &.nav-4 {
-    & > .nav-highlight {
-      .contextual-background--4;
+    &.menu--active {
+      & > .menu-label {
+        .contextual-color--3;
+      }
     }
   }
-  .nav-label {
+  &.menu-4 {
+    & > .menu-highlight {
+      .contextual-background--4;
+    }
+    &.menu--active {
+      & > .menu-label {
+        .contextual-color--4;
+      }
+    }
+  }
+  .menu-label {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -50,7 +96,7 @@
     flex: 75% 1 1;
     color: @color-font-2;
   }
-  .nav-number {
+  .menu-number {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -60,7 +106,7 @@
     .font-standard--bold;
     color: @color-font-2;
   }
-  &.nav--active {
+  &.menu--active {
     &::after {
       content: ' ';
       position: absolute;
