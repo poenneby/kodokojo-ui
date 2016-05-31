@@ -1,6 +1,6 @@
 import merge from 'lodash/merge'
 
-import { updateBricks } from '../../services/updateState.service'
+import { updateBricks } from '../../services/stateUpdate.service'
 
 import {
   PROJECT_CONFIG_NEW_REQUEST,
