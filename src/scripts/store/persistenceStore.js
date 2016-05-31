@@ -11,6 +11,8 @@ export default function persistenceHandler(next) {
         storageService.put('locale', store.getState().prefs.locale)
         storageService.put('theme', store.getState().prefs.theme)
         storageService.put('navigation', store.getState().prefs.navigation)
+        storageService.put('navigation', store.getState().prefs.navigation)
+        storageService.put('projectConfigId', store.getState().projectConfig.id)
 
         return action
       }

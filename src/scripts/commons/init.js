@@ -10,7 +10,12 @@ const auth = {
   isAuthenticated: authService.isAuth() || false
 }
 
+const projectConfig = {
+  id: storageService.get('projectConfigId')
+}
+
 export default {
   prefs,
-  auth
+  auth,
+  projectConfig
 }
