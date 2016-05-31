@@ -41,16 +41,4 @@ export class Menu extends Component {
   }
 }
 
-// User container
-const mapStateProps = (state) => (
-  {
-    menu: state.menu
-  }
-)
-
-const MenuContainer = connect(
-  mapStateProps,
-  {}
-)(Menu)
-
-export default MenuContainer
+export default Menu

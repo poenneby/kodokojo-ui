@@ -54,9 +54,7 @@ export function updateMenu(menu) {
 }
 
 export function updateMenuPath(path) {
-  console.log('youhou', path)
   return dispatch => {
-    console.log('coucou')
     let nextMenu
     const rootMenu = [{
       disabled: true,

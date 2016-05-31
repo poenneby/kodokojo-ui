@@ -28,6 +28,7 @@ class App extends Component {
     children: PropTypes.element.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
     locale: PropTypes.string.isRequired,
+    menu: PropTypes.array,
     navigation: PropTypes.bool,
     setLocale: PropTypes.func.isRequired,
     setNavVisibility: PropTypes.func.isRequired,
@@ -35,7 +36,7 @@ class App extends Component {
   }
 
   render() {
-    const { children, theme, locale, location, setLocale, isAuthenticated, navigation, setNavVisibility } = this.props // eslint-disable-line no-shadow
+    const { children, isAuthenticated, locale, menu, navigation, setLocale, theme } = this.props // eslint-disable-line no-shadow
     const currentMuiTheme = (theme === 'light') ? lightTheme : darkTheme
 
     return (
@@ -51,7 +52,9 @@ class App extends Component {
           <Nav
             active={ navigation }
           >
-            <Menu />
+            <Menu
+              menu={ menu }
+            />
           </Nav>
           <Content>
             { children }
@@ -67,6 +70,7 @@ const mapStateProps = (state, ownProps) => (
   {
     locale: state.prefs.locale,
     theme: state.prefs.theme,
+    menu: state.menu,
     navigation: state.prefs.navigation,
     isAuthenticated: state.auth.isAuthenticated
   }
