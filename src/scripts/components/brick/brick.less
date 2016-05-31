@@ -8,8 +8,8 @@
   margin-left: 70px;
   &.brick-item {
     height: 40px;
-    color: @color-font-3;
-    border-bottom: 1px solid @color-primary-3;
+    .font-color--4;
+    border-bottom: 1px solid @color-primary-4;
     &:not(:first-child) {
       margin-bottom: 7px;
     }
@@ -18,7 +18,7 @@
     //margin-bottom: 10px;
     // FIXME dirty
     &.brick-header .brick-column {
-      color: @color-font-3;
+      .font-color--4;
       .font-standard--thin;
     }
   }
@@ -33,7 +33,7 @@
     &.brick-name {
       flex: 20% 1 1;
       .font-standard--semi-bold;
-      color: @color-font-4;
+      .font-color--5;
     }
     &.brick-state {
       flex: 15% 1 1;
@@ -44,7 +44,7 @@
     &.brick-link {
       flex: 35% 1 1;
       & a {
-        color: @color-font-4;
+        .font-color--5;
         text-decoration: underline;
       }
     }

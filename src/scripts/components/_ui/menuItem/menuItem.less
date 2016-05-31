@@ -10,10 +10,10 @@ a.menu-item:link {
   align-items: center;
   justify-content: center;
   height: 40px;
-  background: @color-primary-2;
   text-decoration: none;
   user-select: none;
   cursor: pointer;
+  .general-background--3;
   &.menu-item--disabled {
     pointer-events: none !important;
     cursor: default;
@@ -25,7 +25,7 @@ a.menu-item:link {
   &.menu-default {
     & > .menu-label {
       .font-standard--bold;
-      color: @color-font-4;
+      .font-color--5;
     }
   }
   &.menu--active {
@@ -34,9 +34,9 @@ a.menu-item:link {
     }
   }
   &.menu-0 {
-    background: @color-primary-3;
+    .general-background--4;
     .menu-label {
-      color: @color-font-0;
+      .font-color--1;
     }
     &.menu--active {
       .contextual-background--1;
@@ -44,7 +44,7 @@ a.menu-item:link {
         
       }
       &::after {
-        border-left: 14px solid @color-secondary-0;
+        border-left: 14px solid @color-secondary-1;
       }
     }
   }
@@ -94,7 +94,7 @@ a.menu-item:link {
     justify-content: center;
     height: 100%;
     flex: 75% 1 1;
-    color: @color-font-2;
+    .font-color--3
   }
   .menu-number {
     display: flex;
@@ -104,7 +104,7 @@ a.menu-item:link {
     flex: 25% 1 1;
     .font-size--large;
     .font-standard--bold;
-    color: @color-font-2;
+    .font-color--3;
   }
   &.menu--active {
     &::after {
@@ -116,7 +116,7 @@ a.menu-item:link {
       top: 10px;
       border-top: 10px solid transparent;
       border-bottom: 10px solid transparent;
-      border-left: 14px solid @color-primary-2;
+      border-left: 14px solid @color-primary-3;
     }
   }
 }
