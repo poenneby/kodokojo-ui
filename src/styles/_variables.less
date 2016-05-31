@@ -39,6 +39,18 @@
 @title-size-2: 1.8rem;
 @title-size-3: 1.5rem;
 
+.title-size--1 {
+  font-size: @title-size-1;
+}
+
+.title-size--2 {
+  font-size: @title-size-2;
+}
+
+.title-size--3 {
+  font-size: @title-size-3;
+}
+
 // paragraph
 @font-size-smaller: .5rem;
 @font-size-small: .8rem;
@@ -90,21 +102,21 @@
 @color-font-3: #A6A6B2;
 @color-font-4: #FFFFFF;
 
-// contextual colors
-.contextual-color--1 {
-  color: @color-secondary-0;
+// general backgrounds
+.general-background--1 {
+  background: @color-primary-0;
 }
 
-.contextual-color--2 {
-  color: @color-secondary-1;
+.general-background--2 {
+  background: @color-primary-1;
 }
 
-.contextual-color--3 {
-  color: @color-secondary-2;
+.general-background--3 {
+  background: @color-primary-2;
 }
 
-.contextual-color--4 {
-  color: @color-secondary-3;
+.general-background--4 {
+  background: @color-primary-3;
 }
 
 // contextual backgrounds
@@ -124,17 +136,46 @@
   background: @color-secondary-3;
 }
 
+// contextual colors
+.contextual-color--1 {
+  color: @color-secondary-0;
+}
+
+.contextual-color--2 {
+  color: @color-secondary-1;
+}
+
+.contextual-color--3 {
+  color: @color-secondary-2;
+}
+
+.contextual-color--4 {
+  color: @color-secondary-3;
+}
+
+// fonts colors
+.font-color--1 {
+  color: @color-font-0
+}
+
+.font-color--2 {
+  color: @color-font-1
+}
+
+.font-color--3 {
+  color: @color-font-2
+}
+
+.font-color--4 {
+  color: @color-font-3
+}
+
+.font-color--5 {
+  color: @color-font-4
+}
+
 // positions
 // TODO move to a new _layout.less
 .center {
   text-align: center;
 }
-
-// FIXME dirty hack, refactor layout to prevent overflow hidden
-//#app {
-//  height: 100%;
-//  width: 100%;
-//  position: absolute;
-//  overflow: auto;
-//}
-//
