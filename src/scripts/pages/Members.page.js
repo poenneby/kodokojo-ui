@@ -16,6 +16,7 @@ export class MembersPage extends Component {
 
   static propTypes = {
     intl: intlShape.isRequired,
+    location: PropTypes.string,
     members: PropTypes.array,
     projectConfigId: PropTypes.string,
     setNavVisibility: PropTypes.func.isRequired,
@@ -23,7 +24,7 @@ export class MembersPage extends Component {
   }
 
   componentWillMount() {
-    const { members, projectConfigId, updateMenuPath } = this.props // eslint-disable-line no-shadow
+    const { location, members, projectConfigId, updateMenuPath } = this.props // eslint-disable-line no-shadow
 
     this.initNav()
 

@@ -90,6 +90,10 @@ const initialState = {
   }
 }
 
+const location = {
+  pathname: '/stacks'
+}
+
 const store = configureStore(initialState)
 
 storiesOf('StacksPage', module)
@@ -97,7 +101,9 @@ storiesOf('StacksPage', module)
     <Provider store={store}>
       <IntlProvider locale="en" messages={ en }>
         <App>
-          <StacksPage />
+          <StacksPage
+            location={ location }
+          />
         </App>
       </IntlProvider>
     </Provider>

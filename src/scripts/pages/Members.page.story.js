@@ -1,10 +1,10 @@
 import React from 'react'
 import { Provider } from 'react-redux'
+import { IntlProvider } from 'react-intl'
 import { storiesOf, linkTo } from '@kadira/storybook'
 
 // contexte
 import configureStore from '../store/configureStore'
-import { IntlProvider } from 'react-intl'
 import en from '../i18n/en'
 
 // component to story
@@ -80,6 +80,10 @@ const initialState = {
   ]
 }
 
+const location = {
+  pathname: '/members'
+}
+
 const store = configureStore(initialState)
 
 storiesOf('MembersPage', module)
@@ -87,7 +91,9 @@ storiesOf('MembersPage', module)
     <Provider store={store}>
       <IntlProvider locale="en" messages={ en }>
         <App>
-          <MembersPage />
+          <MembersPage
+            location={ location }
+          />
         </App>
       </IntlProvider>
     </Provider>
