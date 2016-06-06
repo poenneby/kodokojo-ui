@@ -11,32 +11,39 @@ storiesOf('Colors', module)
         Primary background colors
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <div
-            className="general-background--1"
+            className="primary-background--1"
             style={{ width: '200px', height: '200px', display: 'flex',
               alignItems: 'center', justifyContent: 'center',
               marginRight: '40px', marginBottom: '40px', border: '1px dotted black' }}>
-            .general-background--1
+            .primary-background--1
           </div>
           <div
-            className="general-background--2"
+            className="primary-background--2"
             style={{ width: '200px', height: '200px', display: 'flex',
               alignItems: 'center', justifyContent: 'center',
               marginRight: '40px', marginBottom: '40px', border: '1px dotted black' }}>
-            .general-background--2
+            .primary-background--2
           </div>
           <div
-            className="general-background--3"
+            className="primary-background--3"
             style={{ width: '200px', height: '200px', display: 'flex',
               alignItems: 'center', justifyContent: 'center',
               marginRight: '40px', marginBottom: '40px', border: '1px dotted black' }}>
-            .general-background--3
+            .primary-background--3
           </div>
           <div
-            className="general-background--4"
+            className="primary-background--4"
             style={{ width: '200px', height: '200px', display: 'flex',
               alignItems: 'center', justifyContent: 'center',
               marginRight: '40px', marginBottom: '40px', border: '1px dotted black' }}>
-            .general-background--4
+            .primary-background--4
+          </div>
+          <div
+            className="primary-background--5"
+            style={{ width: '200px', height: '200px', display: 'flex',
+              alignItems: 'center', justifyContent: 'center',
+              marginRight: '40px', marginBottom: '40px', border: '1px dotted black' }}>
+            .primary-background--5
           </div>
         </div>
       </div>
@@ -44,32 +51,32 @@ storiesOf('Colors', module)
         Secondary background colors
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <div
-            className="contextual-background--1"
+            className="secondary-background--1"
             style={{ width: '200px', height: '200px', display: 'flex',
               alignItems: 'center', justifyContent: 'center',
               marginRight: '40px', marginBottom: '40px', border: '1px dotted black' }}>
-            .contextual-background--1
+            .secondary-background--1
           </div>
           <div
-            className="contextual-background--2"
+            className="secondary-background--2"
             style={{ width: '200px', height: '200px', display: 'flex',
               alignItems: 'center', justifyContent: 'center',
               marginRight: '40px', marginBottom: '40px', border: '1px dotted black' }}>
-            .contextual-background--2
+            .secondary-background--2
           </div>
           <div
-            className="contextual-background--3"
+            className="secondary-background--3"
             style={{ width: '200px', height: '200px', display: 'flex',
               alignItems: 'center', justifyContent: 'center',
               marginRight: '40px', marginBottom: '40px', border: '1px dotted black' }}>
-            .contextual-background--3
+            .secondary-background--3
           </div>
           <div
-            className="contextual-background--4"
+            className="secondary-background--4"
             style={{ width: '200px', height: '200px', display: 'flex',
               alignItems: 'center', justifyContent: 'center',
               marginRight: '40px', marginBottom: '40px', border: '1px dotted black' }}>
-            .contextual-background--4
+            .secondary-background--4
           </div>
         </div>
       </div>
@@ -81,7 +88,7 @@ storiesOf('Colors', module)
         Primary fonts colors
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div
-            className="font-color--1 general-background--1">
+            className="font-color--1 primary-background--1">
             .font-color--1
           </div>
           <div
@@ -100,25 +107,48 @@ storiesOf('Colors', module)
             className="font-color--5">
             .font-color--5
           </div>
+          <div
+            className="font-color--6">
+            .font-color--6
+          </div>
         </div>
       </div>
       <div style={{ margin: '30px' }}>
-        Secondary fonts colors
+        Primary colors
         <div
-          className="contextual-color--1">
-          .contextual-color--1
+          className="primary-color--1">
+          .primary-color--1
         </div>
         <div
-          className="contextual-color--2">
-          .contextual-color--2
+          className="primary-background--1 primary-color--2">
+          .primary-color--2
         </div>
         <div
-          className="contextual-color--3">
-          .contextual-color--3
+          className="primary-color--3">
+          .primary-color--3
         </div>
         <div
-          className="contextual-color--4">
-          .contextual-color--4
+          className="primary-color--4">
+          .primary-color--4
+        </div>
+      </div>
+      <div style={{ margin: '30px' }}>
+        Secondary colors
+        <div
+          className="secondary-color--1">
+          .secondary-color--1
+        </div>
+        <div
+          className="secondary-color--2">
+          .secondary-color--2
+        </div>
+        <div
+          className="secondary-color--3">
+          .secondary-color--3
+        </div>
+        <div
+          className="secondary-color--4">
+          .secondary-color--4
         </div>
       </div>
     </div>

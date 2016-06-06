@@ -88,7 +88,7 @@ export class StacksPage extends Component {
 
     return (
       <Page>
-        <h1 className="contextual-color--1">
+        <h1 className="secondary-color--1">
           <FormattedMessage id={'stacks-label'} />
         </h1>
         <div className="paragraph">

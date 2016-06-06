@@ -18,7 +18,7 @@ storiesOf('Card', module)
   .add('two cards', () => (
     <div style={{ margin: '40px', display: 'flex', flexDirection: 'row' }}>
       <Card
-        className="general-background--4"
+        className="primary-background--4"
         style={{ width: '400px', height: '360px' }}
         title="First title"
       >
@@ -35,7 +35,7 @@ storiesOf('Card', module)
   .add('two cards with card-content', () => (
     <div style={{ margin: '40px', display: 'flex', flexDirection: 'row' }}>
       <Card
-        className="general-background--4"
+        className="primary-background--4"
         style={{ width: '400px', height: '360px' }}
         title="First title"
       >

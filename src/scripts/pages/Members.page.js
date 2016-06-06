@@ -53,7 +53,7 @@ export class MembersPage extends Component {
 
     return (
       <Page>
-        <h1 className="contextual-color--2">
+        <h1 className="secondary-color--2">
           <FormattedMessage id={'members-label'} />
         </h1>
         <div className="paragraph">
