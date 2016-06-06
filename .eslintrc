@@ -78,7 +78,7 @@
     // overwrite airbnb-base
     ,"global-require": 0
     ,"comma-dangle": [2, "only-multiline"]
-    ,"max-len": [2, 120, 2, {
+    ,"max-len": [2, 150, 2, {
       "ignoreUrls": true,
       "ignoreComments": true
     }]
