@@ -29,9 +29,6 @@ module.exports = {
       path.resolve(__dirname, './node_modules')
     ]
   },
-  toolbox: {
-    theme: 'src/styles/_variables_theme.scss'
-  },
   module: {
     preLoaders: [
       {
@@ -67,7 +64,7 @@ module.exports = {
       {
         test: /(\.scss|\.css)$/,
         loader:
-          'style!css&modules&localIdentName=[name]---[local]---[hash:base64:5]&importLoaders=2!resolve-url!sass!toolbox'
+          'style!css&modules&localIdentName=[name]---[local]---[hash:base64:5]&importLoaders=2!resolve-url!sass'
       },
       {
         test: /\.jpg|png|svg$/, loader: 'file-loader?name=assets/images/[name].[ext]'
