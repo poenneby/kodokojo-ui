@@ -1,20 +1,102 @@
-@import '../../../../styles/variables_theme';
-@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+@import '~react-toolbox/lib/input/theme';
+@import '../../../../styles/meta';
 
-.input {
-  & label {
-    font-weight: $font-standard--thin;
-    //font-size: $font-size-normal;
-  }
-  & input {
-    font-weight: $font-standard--thin;
-    margin-top: 0 !important;
-    &:disabled {
-      border-bottom-style: dotted;
+// -- react-toolbox input: theme API -- //
+//  bar
+//  counter
+//  disabled
+//  error
+//  errored
+//  hidden
+//  hint
+//  icon
+//  input
+//  inputElement
+//  required
+//  withIcon
+
+// input theme variables
+$input-field-font-size: $font-size-normal;
+$input-field-padding: .5 * $unit;
+$color-text: $color-font-5;
+$input-text-bottom-border-color: $color-primary-5;
+$input-text-label-color: $color-primary-5;
+$input-label-font-size: $font-size-small;
+$input-focus-label-top: $font-size-small;
+$input-text-background-color: transparent !default;
+$input-text-highlight-color: $color-secondary-1;
+$input-text-error-color: $color-secondary-1;
+$input-text-required-color: $color-secondary-1;
+$input-icon-font-size: $font-size-normal;
+$input-hint-opacity: .8;
+
+.inputElement {
+  padding: $input-field-padding 0;
+  font-weight: $font-standard--thin;
+  font-size: $input-field-font-size;
+  margin-top: 0 !important;
+  color: $color-text;
+  border-bottom: 1px solid $input-text-bottom-border-color;
+  &:focus {
+    ~ .bar:before, ~ .bar:after {
+      width: 50%;
+    }
+    ~ .label:not(.fixed) {
+      color: $input-text-highlight-color;
+    }
+    ~ .label > .required {
+      color: $input-text-required-color;
+    }
+    ~ .hint {
+      opacity: $input-hint-opacity;
+    }
+    ~ .icon {
+      color: $input-text-highlight-color;
     }
   }
-  & span[data-react-toolbox="font-icon"] {
-    color: $color-primary-3;
+  &:focus, &.filled, &[type="date"], &[type="time"] {
+    ~ .label:not(.fixed) {
+      top: $input-focus-label-top;
+      font-size: $input-label-font-size;
+    }
   }
 }
-  
+
+.label {
+  font-weight: $font-standard--thin;
+  font-size: $font-size-normal;
+  color: $input-text-label-color;
+  line-height: $input-field-font-size;
+  & > .required {
+    color: $input-text-required-color;
+  }
+}
+
+.errored {
+  padding-bottom: 0;
+  > .inputElement {
+    margin-top: 0;
+  }
+}
+
+.hint {
+  top: $input-padding + (1.5 * $input-field-padding);
+  font-size: $input-field-font-size;
+  line-height: $input-field-font-size;
+  color: $input-text-label-color;
+}
+
+.bar {
+  &:before, &:after {
+    background-color: $input-text-highlight-color;
+  }
+}
+
+.disabled > .inputElement {
+  color: $input-text-disabled-text-color;
+}
+
+.icon {
+  color: $color-primary-3;
+  font-size: $input-icon-font-size !important;
+}
