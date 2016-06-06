@@ -1,0 +1,20 @@
+@import '../../../../styles/variables_theme';
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+
+.input {
+  & label {
+    font-weight: $font-standard--thin;
+    //font-size: $font-size-normal;
+  }
+  & input {
+    font-weight: $font-standard--thin;
+    margin-top: 0 !important;
+    &:disabled {
+      border-bottom-style: dotted;
+    }
+  }
+  & span[data-react-toolbox="font-icon"] {
+    color: $color-primary-3;
+  }
+}
+  

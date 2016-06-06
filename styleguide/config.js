@@ -4,6 +4,7 @@ function loadStories() {
   require('../src/scripts/components/_ui/avatar/Avatar.component.story.js')
   require('../src/scripts/components/_ui/appBar/AppBar.component.story.js')
   require('../src/scripts/components/_ui/colors/colors.story.js')
+  require('../src/scripts/components/_ui/input/Input.component.story.js')
   require('../src/scripts/components/_ui/layout/Layout.component.story.js')
   require('../src/scripts/components/_ui/panel/Panel.component.story.js')
   require('../src/scripts/components/_ui/content/Content.component.story.js')
