@@ -29,11 +29,14 @@ module.exports = {
       path.resolve(__dirname, './node_modules')
     ]
   },
+  toolbox: {
+    theme: 'src/styles/_variables_theme.scss'
+  },
   module: {
     preLoaders: [
       {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
+        exclude: [/node_modules/, /styleguide/],
         loaders: ['eslint'],
         include: [
           path.join(__dirname, 'api'),
@@ -59,7 +62,8 @@ module.exports = {
       },
       {
         test: /(\.scss|\.css)$/,
-        loader: 'style!css?sourceMap&modules&importLoaders=2!sass?sourceMap'
+        loader:
+          'style!css?sourceMap&modules&localIdentName=[name]---[local]---[hash:base64:5]&importLoaders=2!resolve-url!sass?sourceMap!toolbox'
       },
       {
         test: /\.jpg|png|svg$/, loader: 'file-loader?name=assets/images/[name].[ext]'
