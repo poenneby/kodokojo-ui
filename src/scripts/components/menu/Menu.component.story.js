@@ -3,7 +3,6 @@ import { IntlProvider } from 'react-intl'
 import { storiesOf } from '@kadira/storybook'
 
 // context
-import configureStore from '../../store/configureStore'
 import en from '../../i18n/en'
 
 // component to story
@@ -52,14 +51,6 @@ const menu = [
     titleKey: 'dashboard-label'
   }
 ]
-
-const initialState = {
-  router: {
-    push: () => {}
-  }
-}
-
-const store = configureStore(initialState)
 
 storiesOf('Menu', module)
   .add('default', () => (
