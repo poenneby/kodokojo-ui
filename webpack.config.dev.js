@@ -20,14 +20,18 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new webpack.NormalModuleReplacementPlugin(/^\.\/header/, 'custom-header')
   ],
   resolve: {
     extensions: ['', '.jsx', '.scss', '.js', '.json'],
     modulesDirectories: [
       'node_modules',
       path.resolve(__dirname, './node_modules')
-    ]
+    ],
+    alias: {
+      'custom-header': path.resolve('styleguide/ui/header.js')
+    }
   },
   module: {
     preLoaders: [

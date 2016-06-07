@@ -1,11 +1,19 @@
 const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
+  plugins: [
+    new webpack.NormalModuleReplacementPlugin(/^\.\/header/, 'custom-header')
+  ],
   resolve: {
     extensions: ['', '.jsx', '.scss', '.js', '.json'],
     modulesDirectories: [
       'node_modules',
       path.resolve(__dirname, './node_modules')
+    ],
+    alias: {
+      'custom-header': path.resolve('styleguide/ui/header.js')
+    }
   },
   module: {
     loaders: [
