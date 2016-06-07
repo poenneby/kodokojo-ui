@@ -3,8 +3,12 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 import Promise from 'bluebird'
+import classNames from 'classnames'
 
 // Component
+import '../../styles/_commons.less'
+import utilsTheme from '../../styles/_utils.scss'
+import brickTheme from '../components/brick/brick.scss'
 import Page from '../components/_ui/page/Page.component'
 import Brick from '../components/brick/Brick.component'
 import { mapBrickEvent } from '../services/mappingService'
@@ -85,27 +89,28 @@ export class StacksPage extends Component {
 
   render() {
     const { stacks } = this.props // eslint-disable-line no-shadow
+    const brickClasses = classNames(brickTheme.brick, brickTheme['brick-header'])
 
     return (
       <Page>
-        <h1 className="secondary-color--1">
+        <h1 className={ utilsTheme['secondary-color--1'] }>
           <FormattedMessage id={'stacks-label'} />
         </h1>
         <div className="paragraph">
-          <div className="brick brick-header">
-            <div className="brick-column brick-type">
+          <div className={ brickClasses }>
+            <div className={ brickTheme['brick-type'] }>
               <FormattedMessage id={ 'type-label' } />
             </div>
-            <div className="brick-column brick-name">
+            <div className={ brickTheme['brick-name'] }>
               <FormattedMessage id={ 'name-label' } />
             </div>
-            <div className="brick-column brick-state" >
+            <div className={ brickTheme['brick-state'] }>
               <FormattedMessage id={ 'status-label' } />
             </div>
-            <div className="brick-column brick-version">
+            <div className={ brickTheme['brick-version'] }>
               <FormattedMessage id={ 'version-label' } />
             </div>
-            <div className="brick-column brick-link">
+            <div className={ brickTheme['brick-link'] }>
               <FormattedMessage id={ 'link-label' } />
             </div>
           </div>

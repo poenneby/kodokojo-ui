@@ -3,8 +3,12 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 import Promise from 'bluebird'
+import classNames from 'classnames'
 
 // Component
+import '../../styles/_commons.less'
+import utilsTheme from '../../styles/_utils.scss'
+import userTheme from '../components/user/user.scss'
 import Page from '../components/_ui/page/Page.component'
 import User from '../components/user/User.component'
 import Avatar from '../components/_ui/avatar/Avatar.component'
@@ -50,29 +54,26 @@ export class MembersPage extends Component {
 
   render() {
     const { members } = this.props
+    const userClasses = classNames(userTheme.user, userTheme['user-header'])
 
     return (
       <Page>
-        <h1 className="secondary-color--2">
+        <h1 className={ utilsTheme['secondary-color--2'] }>
           <FormattedMessage id={'members-label'} />
         </h1>
         <div className="paragraph">
-          <div
-            className="user user-header"
-          >
-            <div
-              className="user-column user-name"
-            >
+          <div className={ userClasses }>
+            <div className={ userTheme['user-name'] }>
               <Avatar />
               <FormattedMessage id={'name-label'} />
             </div>
-            <div className="user-column user-username">
+            <div className={ userTheme['user-username'] }>
               <FormattedMessage id={'username-label'} />
             </div>
-            <div className="user-column user-group">
+            <div className={ userTheme['user-group'] }>
               <FormattedMessage id={'group-label'} />
             </div>
-            <div className="user-column user-email">
+            <div className={ userTheme['user-email'] }>
               <FormattedMessage id={'email-label'} />
             </div>
           </div>

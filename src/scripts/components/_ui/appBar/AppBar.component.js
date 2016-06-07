@@ -1,10 +1,13 @@
 import React, { Component, PropTypes } from 'react'
+import { themr } from 'react-css-themr'
 
 // UI library component
 import { AppBar as ToolboxAppBar } from 'react-toolbox'
 
 // component
-import './appBar.less'
+import { APP_BAR } from '../../../commons/identifiers'
+import '../../../../styles/_commons.less'
+import appBarTheme from './appBar.scss'
 import logoKodoKojo from '../../../../images/logo-white-kodokojo.svg'
 
 /**
@@ -27,15 +30,15 @@ export class AppBar extends Component {
 
     return (
       <ToolboxAppBar
-        className="header-bar"
+        className={ appBarTheme['header-bar'] }
         fixed={ fixed }
         flat={ flat }
       >
-        <img className="logo-kodokojo" src={logoKodoKojo} />
+        <img className={ appBarTheme['logo-kodokojo'] } src={logoKodoKojo} />
         { children }
       </ToolboxAppBar>
     )
   }
 }
 
-export default AppBar
+export default themr(APP_BAR, appBarTheme)(AppBar)

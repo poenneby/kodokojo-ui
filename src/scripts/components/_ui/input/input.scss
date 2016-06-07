@@ -27,12 +27,21 @@ $input-text-background-color: transparent !default;
 $input-text-highlight-color: $color-secondary-1;
 $input-text-error-color: $color-secondary-1;
 $input-text-required-color: $color-secondary-1;
+$input-icon-size: $font-size-normal;
 $input-icon-font-size: $font-size-normal;
 $input-hint-opacity: .8;
 
+.input {
+  position: relative;
+  padding: $input-padding 0;
+  &.withIcon {
+    margin-left: $input-icon-size;
+  }
+}
+
 .inputElement {
   padding: $input-field-padding 0;
-  font-weight: $font-standard--thin;
+  font-weight: $font-weight-thin;
   font-size: $input-field-font-size;
   margin-top: 0 !important;
   color: $color-text;
@@ -63,7 +72,7 @@ $input-hint-opacity: .8;
 }
 
 .label {
-  font-weight: $font-standard--thin;
+  font-weight: $font-weight-thin;
   font-size: $font-size-normal;
   color: $input-text-label-color;
   line-height: $input-field-font-size;

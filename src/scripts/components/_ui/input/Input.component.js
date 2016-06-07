@@ -4,6 +4,7 @@ import React, { Component, PropTypes } from 'react'
 import { Input as ToolboxInput } from 'react-toolbox/lib/input'
 
 // component
+import '../../../../styles/_commons.less'
 import inputTheme from './input.scss'
 
 /**
@@ -11,7 +12,7 @@ import inputTheme from './input.scss'
  *
  */
 const Input = (props) => (
-  <ToolboxInput{...props} theme={ inputTheme } />
+  <ToolboxInput {...props} theme={ inputTheme } />
 )
 
 export default Input

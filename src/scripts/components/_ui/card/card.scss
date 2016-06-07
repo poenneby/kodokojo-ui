@@ -1,0 +1,26 @@
+@import '../../../../styles/meta';
+
+.card {
+  display: flex;
+  flex-direction: column;
+  &:first-of-type {
+    border-top-left-radius: $radius-standard;
+    border-bottom-left-radius: $radius-standard;
+  }
+  &:last-of-type {
+    border-top-right-radius: $radius-standard;
+    border-bottom-right-radius: $radius-standard;
+  }
+}
+.card--default {
+  background: $color-primary-3;
+}
+.card--primary {
+  background: $color-primary-4;
+}
+.card-title {
+  font-weight: $font-weight-thin;
+  font-size: $font-size-large;
+  color: $color-secondary-1;
+  padding: $spacing-standard $spacing-standard $spacing-small $spacing-large;
+}

@@ -1,7 +1,11 @@
 import React, { Component, PropTypes } from 'react'
+import { themr } from 'react-css-themr'
+import classNames from 'classnames'
 
 // component
-import './nav.less'
+import { NAV } from '../../../commons/identifiers'
+import '../../../../styles/_commons.less'
+import navTheme from './nav.scss'
 
 /**
  * UI: Nav component
@@ -25,10 +29,14 @@ export class Nav extends Component {
 
   render() {
     const { children, active, onOverlayClick, permanentAt, pinned, scrollY, width } = this.props // eslint-disable-line no-shadow
+    const navClasses = classNames(navTheme.nav, {
+      [navTheme['nav--open']]: (pinned || active),
+      [navTheme['nav--closed']]: (!pinned && !active)
+    })
 
     return (
       <div
-        className={ (pinned || active) ? 'nav nav--open' : 'nav nav--closed' }
+        className={ navClasses }
       >
         <aside
           // onOverlayClick={ onOverlayClick }
@@ -43,4 +51,4 @@ export class Nav extends Component {
   }
 }
 
-export default Nav
+export default themr(NAV, navTheme)(Nav)

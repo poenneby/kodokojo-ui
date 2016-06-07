@@ -1,4 +1,4 @@
-@import (once) '../../../../styles/_commons';
+@import '../../../../styles/meta';
 
 a.menu-item,
 a.menu-item:hover,
@@ -13,7 +13,7 @@ a.menu-item:link {
   text-decoration: none;
   user-select: none;
   cursor: pointer;
-  .primary-background--3;
+  background: $color-primary-3;
   &.menu-item--disabled {
     pointer-events: none !important;
     cursor: default;
@@ -24,67 +24,66 @@ a.menu-item:link {
   }
   &.menu-default {
     & > .menu-label {
-      .font-standard--bold;
-      .font-color--6;
+      font-weight: $font-weight-bold;
+      color: $color-font-6;
     }
   }
   &.menu--active {
-    & > .menu-label {
-      .font-standard--bold;
+    & > .menu-label {  
+      font-weight: $font-weight-bold;
     }
   }
   &.menu-0 {
-    .primary-background--4;
+    background: $color-primary-4;
     .menu-label {
-      .font-color--1;
+      color: $color-font-1;
     }
     &.menu--active {
-      .secondary-background--1;
+      background: $color-secondary-1;
       & > .menu-label {
-        
       }
       &::after {
-        border-left: 14px solid @color-secondary-1;
+        border-left: 14px solid $color-secondary-1;
       }
     }
   }
   &.menu-1 {
     & > .menu-highlight {
-      .secondary-background--1;
+      background: $color-secondary-1;
     }
     &.menu--active {
       & > .menu-label {
-        .secondary-color--1;
+        color: $color-secondary-1;
       }
     }
   }
   &.menu-2 {
     & > .menu-highlight {
-      .secondary-background--2;
+      background: $color-secondary-2;
     }
     &.menu--active {
       & > .menu-label {
-        .secondary-color--2;
+        color: $color-secondary-2;
       }
     }
   }
   &.menu-3 {
     & > .menu-highlight {
-      .secondary-background--3;
+      background: $color-secondary-3;
     }
     &.menu--active {
       & > .menu-label {
-        .secondary-color--3;
+        color: $color-secondary-3;
       }
     }
   }
   &.menu-4 {
     & > .menu-highlight {
-      .secondary-background--4;
+      background: $color-secondary-4;
     }
     &.menu--active {
       & > .menu-label {
-        .secondary-color--4;
+        color: $color-secondary-4;
       }
     }
   }
@@ -94,7 +93,7 @@ a.menu-item:link {
     justify-content: center;
     height: 100%;
     flex: 75% 1 1;
-    .font-color--3
+    color: $color-font-3;
   }
   .menu-number {
     display: flex;
@@ -102,9 +101,9 @@ a.menu-item:link {
     justify-content: flex-start;
     height: 100%;
     flex: 25% 1 1;
-    .font-size--large;
-    .font-standard--bold;
-    .font-color--3;
+    font-size: $font-size-large;
+    font-weight: $font-weight-bold;
+    color: $color-font-3;
   }
   &.menu--active {
     &::after {
@@ -116,7 +115,7 @@ a.menu-item:link {
       top: 10px;
       border-top: 10px solid transparent;
       border-bottom: 10px solid transparent;
-      border-left: 14px solid @color-primary-3;
+      border-left: 14px solid $color-primary-3;
     }
   }
 }

@@ -1,0 +1,10 @@
+@import '../../../../styles/meta';
+
+.card-content {
+  padding-left: $spacing-large;
+  padding-right: $spacing-standard;
+  &:first-child {
+    padding-top: $spacing-small;
+  }
+  padding-bottom: $spacing-small;
+}

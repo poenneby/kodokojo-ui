@@ -1,19 +1,19 @@
-@import (reference) '../../../styles/_commons';
+@import '../../../styles/meta';
 
 .breadcrumb {
   display: flex;
   flex: 1 0 auto;
   flex-flow: row wrap;
   align-items: center;
-  .font-color--4;
+  color: $color-font-4;
   & > span {
     display: flex;
     margin-right: 1em;
     margin-left: 1em;
   }
   a {
-    .font-color--4;
-    .font-size--normal;
+    color: $color-font-4;
+    font-size: $font-size-normal;
     text-decoration: underline;
     &:hover {
       text-decoration: none;

@@ -1,9 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 import { intlShape, injectIntl } from 'react-intl'
 import { Link } from 'react-router'
+import { themr } from 'react-css-themr'
+import classNames from 'classnames'
 
 // component
-import './menuItem.less'
+import { MENU_ITEM } from '../../../commons/identifiers'
+import '../../../../styles/_commons.less'
+import menuItemTheme from './menuItem.scss'
 
 /**
  * UI: MenuItem component
@@ -22,6 +26,7 @@ export class MenuItem extends Component {
     number: PropTypes.number,
     onClick: PropTypes.func,
     route: PropTypes.string,
+    theme: PropTypes.object,
     titleKey: PropTypes.string,
     titleText: PropTypes.string
   }
@@ -30,14 +35,18 @@ export class MenuItem extends Component {
     const { active, disabled, index, labelKey, labelText,
       level, number, onClick, route, titleKey, titleText } = this.props // eslint-disable-line no-shadow
     const { formatMessage } = this.props.intl
+    const { theme } = this.props
+
+    const menuItemClasses = classNames(theme['menu-item'], {
+      [theme[`menu-${level}`]]: level !== undefined,
+      [theme['menu-default']]: level === undefined,
+      [theme['menu--active']]: (!disabled && active),
+      [theme['menu-item--disabled']]: (disabled || active)
+    })
 
     return (
       <Link
-        className={
-          `menu-item${level !== undefined ? ` menu-${level}` : ' menu-default'}` +
-          `${active && !disabled ? ' menu--active' : ''}` +
-          `${disabled || active ? ' menu-item--disabled' : ''}`
-        }
+        className={ menuItemClasses }
         onClick={ onClick }
         title= { titleKey ?
           formatMessage({ id: titleKey }) :
@@ -46,17 +55,17 @@ export class MenuItem extends Component {
         to={ route || '#' }
       >
         <div
-          className="menu-highlight"
+          className={ theme['menu-highlight'] }
         >
           &nbsp;
         </div>
-        <div className="menu-label">
+        <div className={ theme['menu-label'] }>
           { labelKey ?
             formatMessage({ id: labelKey }) :
             labelText
           }
         </div>
-        <div className="menu-number">
+        <div className={ theme['menu-number'] }>
           { number }
         </div>
       </Link>
@@ -64,4 +73,4 @@ export class MenuItem extends Component {
   }
 }
 
-export default injectIntl(MenuItem)
+export default themr(MENU_ITEM, menuItemTheme)(injectIntl(MenuItem))

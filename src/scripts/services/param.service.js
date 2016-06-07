@@ -1,8 +1,9 @@
 import find from 'lodash/find'
 
-import statusStarting from '../../images/status-starting.svg'
-import statusRunning from '../../images/status-running.svg'
-import statusFailure from '../../images/status-failure.svg'
+import statusDefault from '../../images/status-default-small.svg'
+import statusStarting from '../../images/status-starting-small.svg'
+import statusRunning from '../../images/status-running-small.svg'
+import statusFailure from '../../images/status-failure-small.svg'
 
 const enumBrickStatus = {
   CONFIGURING: {
@@ -32,9 +33,8 @@ const enumBrickStatus = {
 }
 
 export const getBrickStatus = (state) => (
-  // TODO set an other default status image?
   find(enumBrickStatus, { label: state }) || {
     label: 'DEFAULT',
-    image: statusStarting
+    image: statusDefault
   }
 )

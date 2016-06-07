@@ -4,6 +4,7 @@ import React, { Component, PropTypes } from 'react'
 import { Button as ToolboxButton } from 'react-toolbox/lib/button'
 
 // component
+import '../../../../styles/_commons.less'
 import buttonTheme from './button.scss'
 
 /**

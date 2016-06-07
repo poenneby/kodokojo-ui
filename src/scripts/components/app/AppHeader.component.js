@@ -11,7 +11,7 @@ import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 import AppBar from '../_ui/appBar/AppBar.component'
 
 // Component
-import './appHeader.less'
+import '../../../styles/_commons.less'
 
 // AppHeader
 export class AppHeader extends Component {
