@@ -111,6 +111,7 @@
     "babel-polyfill": "^6.5.0",
     "better-console": "^0.2.4",
     "bluebird": "^3.4.0",
+    "classnames": "^2.2.5",
     "del": "^2.2.0",
     "eventsource-polyfill": "^0.9.6",
     "extend": "^3.0.0",
