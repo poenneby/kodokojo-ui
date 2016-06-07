@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import sortBy from 'lodash/sortBy'
 
 // Component
-// import './menu.less'
+import '../../../styles/_commons.less'
 import MenuItem from '../_ui/menuItem/MenuItem.component'
 
 // TODO TU
@@ -18,7 +18,7 @@ export class Menu extends Component {
     const { menu } = this.props // eslint-disable-line no-shadow
 
     return (
-      <nav className="menu">
+      <nav role="navigation">
         { menu.length > 0 &&
           sortBy(menu, ['index']).map((menuItem, index) => (
             <MenuItem

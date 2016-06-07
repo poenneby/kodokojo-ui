@@ -1,21 +1,23 @@
 import React, { Component, PropTypes } from 'react'
 import { themr } from 'react-css-themr'
+import classNames from 'classnames'
 
 // component
-import { LAYOUT } from '../../../commons/identifiers'
+import { CARD_CONTENT } from '../../../commons/identifiers'
 import '../../../../styles/_commons.less'
-import layoutTheme from './layout.scss'
+import cardContentTheme from './cardContent.scss'
 
 /**
- * UI: Layout component
+ * UI: Card component
  *
  */
-export class Layout extends Component {
+export class Card extends Component {
 
   static propTypes = {
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.element),
-      PropTypes.element
+      PropTypes.element,
+      PropTypes.string
     ])
   }
 
@@ -23,11 +25,13 @@ export class Layout extends Component {
     const { children } = this.props // eslint-disable-line no-shadow
 
     return (
-      <div className={ layoutTheme.layout }>
+      <div
+        className={ cardContentTheme['card-content'] }
+      >
         { children }
       </div>
     )
   }
 }
 
-export default themr(LAYOUT, layoutTheme)(Layout)
+export default themr(CARD_CONTENT, cardContentTheme)(Card)

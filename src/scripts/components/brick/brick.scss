@@ -1,0 +1,76 @@
+@import '../../../styles/meta';
+
+.brick {
+  display: flex;
+  align-items: flex-end;
+  flex-flow: row;
+  justify-content: space-between;
+  margin-left: 70px;
+}
+
+.brick-item {
+  height: 40px;
+  color: $color-font-4;
+  border-bottom: 1px solid $color-primary-4;
+  &:not(:first-child) {
+    margin-bottom: 7px;
+  }
+}
+
+.brick-header {
+  //margin-bottom: 10px;
+  // FIXME dirty
+  &.brick-header .brick-column {
+    color: $color-font-4;
+    font-weight: $font-weight-thin;
+  }
+}
+
+%brick-column {
+  height: 22px;
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+
+.brick-type {
+  @extend %brick-column;
+  flex: 15% 1 1;
+}
+
+.brick-name {
+  @extend %brick-column;
+  flex: 20% 1 1;
+  color: $color-font-6;
+  font-weight: $font-weight-semi-bold;
+}
+
+.brick-state {
+  @extend %brick-column;
+  flex: 15% 1 1;
+}
+
+.brick-version {
+  @extend %brick-column;
+  flex: 15% 1 1;
+}
+
+.brick-link {
+  @extend %brick-column;
+  flex: 35% 1 1;
+  & a {
+    color: $color-font-6;
+    text-decoration: underline;
+  }
+}
+
+img.brick-status {
+  height: 17px;
+  background-size: 100% 100%;
+  opacity: 0;
+  transition: opacity .7s ease-out;
+}
+
+img.brick-status--loaded {
+  opacity: 1;
+}

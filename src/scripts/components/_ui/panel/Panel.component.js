@@ -1,7 +1,10 @@
 import React, { Component, PropTypes } from 'react'
+import { themr } from 'react-css-themr'
 
 // component
-import './panel.less'
+import { PANEL } from '../../../commons/identifiers'
+import '../../../../styles/_commons.less'
+import panelTheme from './panel.scss'
 
 /**
  * UI: Panel component
@@ -21,7 +24,7 @@ export class Panel extends Component {
 
     return (
       <div
-        className="panel"
+        className={ panelTheme.panel }
       >
         { children }
       </div>
@@ -29,4 +32,4 @@ export class Panel extends Component {
   }
 }
 
-export default Panel
+export default themr(PANEL, panelTheme)(Panel)

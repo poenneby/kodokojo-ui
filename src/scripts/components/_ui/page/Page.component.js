@@ -1,13 +1,16 @@
 import React, { Component, PropTypes } from 'react'
+import { themr } from 'react-css-themr'
 
 // component
-import './page.less'
+import { PAGE } from '../../../commons/identifiers'
+import '../../../../styles/_commons.less'
+import pageTheme from './page.scss'
 
 /**
  * UI: Page component
  *
  */
-export class NavDrawer extends Component {
+export class Page extends Component {
 
   static propTypes = {
     children: PropTypes.oneOfType([
@@ -21,7 +24,7 @@ export class NavDrawer extends Component {
 
     return (
       <section
-        className="page"
+        className={ pageTheme.page }
       >
         { children }
       </section>
@@ -29,4 +32,4 @@ export class NavDrawer extends Component {
   }
 }
 
-export default NavDrawer
+export default themr(PAGE, pageTheme)(Page)

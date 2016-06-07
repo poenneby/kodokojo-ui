@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { themr } from 'react-css-themr'
 
 // UI
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
@@ -11,10 +12,10 @@ const lightTheme = getMuiTheme()
 const darkTheme = getMuiTheme(darkBaseTheme)
 
 // Component
+import { APP } from '../../commons/identifiers'
+import '../../../styles/_commons.less'
 import '../../../favicon.ico'
 import '../../../images/logo-kodokojo-icon.png'
-import '../../../styles/_variables.less'
-import '../../../styles/_reset.less'
 import Layout from '../_ui/layout/Layout.component'
 import Nav from '../_ui/nav/Nav.component.js'
 import Panel from '../_ui/panel/Panel.component'
@@ -41,6 +42,7 @@ class App extends Component {
 
     return (
       // TODO remove MuiThemeProvider after removing all dependency to MUI (replace by custom theme provider)
+      // Replace by themr, see https://github.com/javivelasco/react-css-themr for detail to how implement theme configuration
       <MuiThemeProvider muiTheme={ currentMuiTheme }>
       <Layout>
         <AppHeader
@@ -76,11 +78,11 @@ const mapStateProps = (state, ownProps) => (
   }
 )
 
-export default connect(
+export default themr(APP)(connect(
   mapStateProps,
   {
     setTheme,
     setLocale,
     setNavVisibility
   }
-)(App)
+)(App))

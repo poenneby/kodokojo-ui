@@ -1,0 +1,70 @@
+@import '~react-toolbox/lib/button/theme';
+@import '../../../../styles/meta';
+
+// -- react-toolbox button: theme API -- //
+//  accent
+//  button
+//  flat
+//  floating
+//  icon
+//  inverse
+//  mini
+//  neutral
+//  primary
+//  raised
+//  rippleWrapper
+//  toggle
+
+// button theme variables
+$button-height: 40px;
+
+.button {
+  position: relative;
+}
+
+%button {
+  font-family: $font-family-primary;
+  font-weight: $font-weight-thin;
+  font-size: $font-size-normal;
+  height: $button-height;
+  border: 1px solid $color-primary-4;
+  user-select: none;
+  &[disabled] {
+    color: $color-font-2;
+  }
+}
+
+.neutral:not([disabled]) {
+  &.raised, &.floating {
+    color: $button-neutral-color-contrast;
+    background-color: $button-neutral-color;
+  }
+  &.flat, &.toggle {
+    color: $color-secondary-1;
+    &:focus:not(:active) {
+      background: $color-secondary-1;
+    }
+  }
+  &.flat:hover {
+    color: $color-font-1;
+    background: $color-secondary-1;
+    border: 1px solid $color-secondary-1;
+  }
+}
+
+@include btn-colors("primary", $color-font-6, $color-primary-1, $color-secondary-1);
+
+.primary:not([disabled]) {
+  border: 1px solid $color-secondary-1;
+  &.flat, &.toggle {
+    color: $color-secondary-1;
+    &:focus:not(:active) {
+      background: $color-secondary-1;
+    }
+  }
+
+  &.flat:hover {
+    color: $color-font-1;
+    background: $color-secondary-1;
+  }
+}

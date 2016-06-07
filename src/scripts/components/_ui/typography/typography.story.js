@@ -8,7 +8,8 @@ storiesOf('Typography', module)
   .add('family & weight', () => (
     <div>
       <div style={{ margin: '30px' }}>
-        Primary fonts : Catamaran
+        Primary font : Catamaran<br/>
+        <a href="https://www.google.com/fonts/specimen/Catamaran" target="_blank">See font</a>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div>
             <h1>default h1</h1>
@@ -42,6 +43,13 @@ storiesOf('Typography', module)
             className="font-standard--bold">
             .font-standard--bold 700
           </div>
+        </div>
+      </div>
+      <div style={{ margin: '30px' }}>
+        Primary icon-font : Material Design Icons<br/>
+        <a href="http://google.github.io/material-design-icons/" target="_blank">See font</a>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <i className="material-icons">domain</i>
         </div>
       </div>
     </div>

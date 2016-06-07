@@ -1,0 +1,55 @@
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+
+$font-family-primary: 'Catamaran', sans-serif;
+$font-family-secondary: 'Roboto', sans-serif;
+$icon-font-family-primary: 'MaterialIcons';
+
+// font sizes (we suppose that default font size is 16px)
+$font-size-default-: .9286rem; // ?px
+$font-size-default: 1rem; // 16px
+
+// titles
+$title-size-1: 2.714rem;
+$title-size-2: 1.8rem;
+$title-size-3: 1.5rem;
+
+// paragraph
+$font-size-smaller: .5rem;
+$font-size-small: .8rem;
+$font-size-normal: 1.143rem;
+$font-size-medium: 1.2rem;
+$font-size-large: 1.4rem;
+$font-size-larger: 1.7rem;
+
+$font-weight-thin: 100;
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-semi-bold: 600;
+$font-weight-bold: 700;
+
+// colors
+// primary
+$color-primary-1: #36353A;
+$color-primary-2: #4A4A52;
+$color-primary-3: #5D5D66;
+$color-primary-4: #75757F;
+$color-primary-5: #8F8F99;
+// secondary
+$color-secondary-1: #60DADF;
+$color-secondary-2: #6CBDEC;
+$color-secondary-3: #84A5EC;
+$color-secondary-4: #9991CD;
+
+// font colors
+$color-font-1: #47474C;
+$color-font-2: #75757F;
+$color-font-3: #8F8F99;
+$color-font-4: #A6A6B2;
+$color-font-5: #C0C0CC;
+$color-font-6: #FFFFFF;
+
+// spaces
+$radius-standard: 4px;
+$spacing-standard: 60px;
+$spacing-large: 80px;
+$spacing-small: 50px;

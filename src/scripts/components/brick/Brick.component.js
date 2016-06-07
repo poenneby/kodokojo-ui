@@ -1,7 +1,11 @@
 import React, { Component, PropTypes } from 'react'
+import { themr } from 'react-css-themr'
+import classNames from 'classnames'
 
 // Component
-import './brick.less'
+import { BRICK } from '../../commons/identifiers'
+import '../../../styles/_commons.less'
+import brickTheme from './brick.scss'
 import { getBrickStatus } from '../../services/param.service'
 
 // TODO TU
@@ -13,32 +17,33 @@ export class Brick extends Component {
   }
 
   handleLoadStatus(e) {
-    e.target.classList.add('brick-status--loaded')
+    e.target.classList.add(brickTheme['brick-status--loaded'])
   }
 
   render() {
     const { brick } = this.props // eslint-disable-line no-shadow
     const status = getBrickStatus(brick && brick.state ? brick.state : undefined)
+    const brickClasses = classNames(brickTheme.brick, brickTheme['brick-item'])
 
     return (
-      <div className="brick brick-item">
-        <div className="brick-column brick-type">
+      <div className={ brickClasses }>
+        <div className={ brickTheme['brick-type'] }>
           { brick ? brick.type : '-' }
         </div>
-        <div className="brick-column brick-name">
+        <div className={ brickTheme['brick-name'] }>
           { brick ? brick.name : '-' }
         </div>
-        <div className="brick-column brick-state" >
+        <div className={ brickTheme['brick-state'] }>
           <img
-            className="brick-status"
+            className={ brickTheme['brick-status'] }
             onLoad={ this.handleLoadStatus }
             src={ status.image }
           />
         </div>
-        <div className="brick-column brick-version">
+        <div className={ brickTheme['brick-version'] }>
           { brick ? brick.version : '-' }
         </div>
-        <div className="brick-column brick-link">
+        <div className={ brickTheme['brick-link'] }>
           { brick && brick.url ?
             <a href={ brick.url }>{ brick.url }</a> :
             '-'
@@ -49,4 +54,4 @@ export class Brick extends Component {
   }
 }
 
-export default Brick
+export default themr(BRICK, brickTheme)(Brick)

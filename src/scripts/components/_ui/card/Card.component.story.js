@@ -3,6 +3,7 @@ import { storiesOf, action } from '@kadira/storybook'
 
 // component to story
 import Card from './Card.component.js'
+import CardContent from './CardContent.component.js'
 
 storiesOf('Card', module)
   .add('one card', () => (
@@ -18,7 +19,7 @@ storiesOf('Card', module)
   .add('two cards', () => (
     <div style={{ margin: '40px', display: 'flex', flexDirection: 'row' }}>
       <Card
-        className="general-background--4"
+        primary
         style={{ width: '400px', height: '360px' }}
         title="First title"
       >
@@ -35,17 +36,17 @@ storiesOf('Card', module)
   .add('two cards with card-content', () => (
     <div style={{ margin: '40px', display: 'flex', flexDirection: 'row' }}>
       <Card
-        className="general-background--4"
+        primary
         style={{ width: '400px', height: '360px' }}
         title="First title"
       >
-        <div className="card-content">children</div>
+        <CardContent className="card-content">children</CardContent>
       </Card>
       <Card
         style={{ width: '400px', height: '360px' }}
         title="Second title"
       >
-        <div className="card-content">children</div>
+        <CardContent className="card-content">children</CardContent>
       </Card>
     </div>
   ))

@@ -1,7 +1,10 @@
 import React, { Component, PropTypes } from 'react'
+import { themr } from 'react-css-themr'
 
 // component
-import './content.less'
+import { CONTENT } from '../../../commons/identifiers'
+import '../../../../styles/_commons.less'
+import contentTheme from './content.scss'
 
 /**
  * UI: Content component
@@ -21,7 +24,7 @@ export class Content extends Component {
 
     return (
       <div
-        className="content"
+        className={ contentTheme.content }
       >
         { children }
       </div>
@@ -29,4 +32,4 @@ export class Content extends Component {
   }
 }
 
-export default Content
+export default themr(CONTENT, contentTheme)(Content)
