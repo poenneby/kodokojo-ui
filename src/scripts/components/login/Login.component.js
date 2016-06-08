@@ -62,6 +62,7 @@ export class Login extends Component {
             <Input
                 { ...username }
                 hint={ formatMessage({ id: 'username-hint-label' }) }
+                icon="account_box"
                 id="username"
                 label={ formatMessage({ id: 'username-label' }) }
                 name="username"
@@ -71,6 +72,7 @@ export class Login extends Component {
             <Input
                 { ...psw }
                 error={ psw.touched && psw.error ? formatMessage({ id: psw.error }) : '' }
+                icon="lock_open"
                 id="psw"
                 label={ formatMessage({ id: 'password-label' }) }
                 name="psw"
