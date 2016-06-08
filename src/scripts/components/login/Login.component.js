@@ -11,7 +11,6 @@ import Button from '../../components/_ui/button/Button.component'
 import { login, logout } from './login.actions.js'
 import { returnErrorKey } from '../../services/errorService'
 
-// TODO implement i18n
 // TODO if user already logged in, fetch user id from storage and fetch user from api to store
 // Login component
 export class Login extends Component {
