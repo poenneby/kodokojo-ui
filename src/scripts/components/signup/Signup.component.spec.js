@@ -49,10 +49,11 @@ describe('<Signup> component', () => {
       createAccount: () => {}
     }
     messages = {
-      'signup-email-label': 'signup-email-label',
-      'signup-email-hint-label': 'signup-email-hint-label',
-      'signup-button-label': 'signup-button-label',
-      'signup-login-link-label': 'signup-login-link-label'
+      'email-label': 'email-label',
+      'email-hint-label': 'email-hint-label',
+      'entity-label': 'entity-label',
+      'entity-hint-label': 'entity-hint-label',
+      'signup-label': 'signup-button-label'
     }
     intlProvider = new IntlProvider({ locale: 'en' }, {})
   })
@@ -92,12 +93,11 @@ describe('<Signup> component', () => {
 
     // Then
     expect(nextProps.intl.formatMessage).to.have.callCount(6)
-    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signup-email-label' })
-    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signup-email-hint-label' })
-    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signup-button-label' })
-    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signup-login-link-label' })
-    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signup-entity-label' })
-    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signup-entity-hint-label' })
+    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'email-label' })
+    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'email-hint-label' })
+    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signup-label' })
+    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'entity-label' })
+    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'entity-hint-label' })
   })
 
   it('should set props properly', () => {
