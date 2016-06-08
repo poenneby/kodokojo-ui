@@ -25,8 +25,8 @@ addLocaleData(fr)
 import configureStore from './scripts/store/configureStore'
 import initialState from './scripts/commons/init'
 import App from './scripts/components/app/App.component'
-import HomePage from './scripts/pages/HomePage'
-import LoginPage from './scripts/pages/LoginPage'
+import SignupPage from './scripts/pages/Signup.page.js'
+import LoginPage from './scripts/pages/Login.page'
 import FirstProjectPage from './scripts/pages/FirstProjectPage'
 import ProjectConfigPage from './scripts/pages/ProjectConfigPage'
 import StacksPage from './scripts/pages/Stacks.page'
@@ -61,7 +61,7 @@ const initApp = () => {
             path="/"
           >
             <IndexRoute
-              component={HomePage}
+              component={SignupPage}
             />
             <Route
               component={LoginPage}
