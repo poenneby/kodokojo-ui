@@ -22,14 +22,15 @@ export class Card extends Component {
     className: PropTypes.string,
     primary: PropTypes.bool,
     style: PropTypes.object,
+    theme: PropTypes.object,
     title: PropTypes.string
   }
 
   render() {
-    const { children, className, primary, style, title } = this.props // eslint-disable-line no-shadow
-    const cardClasses = classNames(cardTheme.card, {
-      [cardTheme['card--primary']]: primary,
-      [cardTheme['card--default']]: !primary
+    const { children, className, primary, style, theme, title } = this.props // eslint-disable-line no-shadow
+    const cardClasses = classNames(theme.card, {
+      [theme['card--primary']]: primary,
+      [theme['card--default']]: !primary
     }, className)
 
     return (
@@ -38,7 +39,7 @@ export class Card extends Component {
         style={ style }
       >
         { title &&
-          <div className={ cardTheme['card-title'] }>
+          <div className={ theme['card-title'] }>
             { title }
           </div>
         }

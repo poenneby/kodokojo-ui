@@ -16,15 +16,16 @@ export class Page extends Component {
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.element),
       PropTypes.element
-    ])
+    ]),
+    theme: PropTypes.theme
   }
 
   render() {
-    const { children } = this.props // eslint-disable-line no-shadow
+    const { children, theme } = this.props // eslint-disable-line no-shadow
 
     return (
       <section
-        className={ pageTheme.page }
+        className={ theme.page }
       >
         { children }
       </section>

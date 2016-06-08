@@ -14,17 +14,17 @@ const store = configureStore(initialState)
 
 storiesOf('AppBar', module)
   .add('with children', () => (
-      <AppBar
-        store={store}
-      >
-        <div>children</div>
-      </AppBar>
+    <AppBar
+      store={store}
+    >
+      <div>children</div>
+    </AppBar>
   ))
   .add('with flat prop', () => (
-      <AppBar
-        flat
-        store={store}
-      />
+    <AppBar
+      flat
+      store={store}
+    />
   ))
   .add('with fixed prop', () => (
       <Provider store={store}>

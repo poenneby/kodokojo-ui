@@ -13,7 +13,8 @@ import { getBrickStatus } from '../../services/param.service'
 export class Brick extends Component {
 
   static propTypes = {
-    brick: PropTypes.object
+    brick: PropTypes.object,
+    theme: PropTypes.theme
   }
 
   handleLoadStatus(e) {
@@ -21,29 +22,29 @@ export class Brick extends Component {
   }
 
   render() {
-    const { brick } = this.props // eslint-disable-line no-shadow
+    const { brick, theme } = this.props // eslint-disable-line no-shadow
     const status = getBrickStatus(brick && brick.state ? brick.state : undefined)
-    const brickClasses = classNames(brickTheme.brick, brickTheme['brick-item'])
+    const brickClasses = classNames(theme.brick, theme['brick-item'])
 
     return (
       <div className={ brickClasses }>
-        <div className={ brickTheme['brick-type'] }>
+        <div className={ theme['brick-type'] }>
           { brick ? brick.type : '-' }
         </div>
-        <div className={ brickTheme['brick-name'] }>
+        <div className={ theme['brick-name'] }>
           { brick ? brick.name : '-' }
         </div>
-        <div className={ brickTheme['brick-state'] }>
+        <div className={ theme['brick-state'] }>
           <img
-            className={ brickTheme['brick-status'] }
+            className={ theme['brick-status'] }
             onLoad={ this.handleLoadStatus }
             src={ status.image }
           />
         </div>
-        <div className={ brickTheme['brick-version'] }>
+        <div className={ theme['brick-version'] }>
           { brick ? brick.version : '-' }
         </div>
-        <div className={ brickTheme['brick-link'] }>
+        <div className={ theme['brick-link'] }>
           { brick && brick.url ?
             <a href={ brick.url }>{ brick.url }</a> :
             '-'

@@ -22,19 +22,20 @@ export class AppBar extends Component {
       PropTypes.string
     ]),
     fixed: PropTypes.bool,
-    flat: PropTypes.bool
+    flat: PropTypes.bool,
+    theme: PropTypes.theme
   }
 
   render() {
-    const { children, fixed, flat } = this.props // eslint-disable-line no-shadow
+    const { children, fixed, flat, theme } = this.props // eslint-disable-line no-shadow
 
     return (
       <ToolboxAppBar
-        className={ appBarTheme['header-bar'] }
+        className={ theme['header-bar'] }
         fixed={ fixed }
         flat={ flat }
       >
-        <img className={ appBarTheme['logo-kodokojo'] } src={logoKodoKojo} />
+        <img className={ theme['logo-kodokojo'] } src={logoKodoKojo} />
         { children }
       </ToolboxAppBar>
     )

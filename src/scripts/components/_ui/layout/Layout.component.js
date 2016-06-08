@@ -16,14 +16,15 @@ export class Layout extends Component {
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.element),
       PropTypes.element
-    ])
+    ]),
+    theme: PropTypes.theme
   }
 
   render() {
-    const { children } = this.props // eslint-disable-line no-shadow
+    const { children, theme } = this.props // eslint-disable-line no-shadow
 
     return (
-      <div className={ layoutTheme.layout }>
+      <div className={ theme.layout }>
         { children }
       </div>
     )
