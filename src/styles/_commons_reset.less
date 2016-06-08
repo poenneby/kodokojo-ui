@@ -19,6 +19,7 @@ body,
   padding: 0;
 }
 
+// reset chrome default link style
 a:focus,
 a:active,
 a:hover,
@@ -27,6 +28,20 @@ a:visited {
   outline: 0;
 }
 
+// reset firefox input default style
 input::-moz-focus-inner {
   border: 0;
+}
+
+// reset chrome autofill default styles
+@keyframes autofill {
+  to {
+    color: @color-font-5;
+    background: transparent;
+  }
+}
+
+input:-webkit-autofill {
+  -webkit-animation-name: autofill;
+  -webkit-animation-fill-mode: both;
 }

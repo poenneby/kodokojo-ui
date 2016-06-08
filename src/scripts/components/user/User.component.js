@@ -15,18 +15,19 @@ import Avatar from '../_ui/avatar/Avatar.component'
 export class User extends Component {
 
   static propTypes = {
+    theme: PropTypes.theme,
     user: PropTypes.object
   }
 
   render() {
-    const { user } = this.props // eslint-disable-line no-shadow
-    const userClasses = classNames(userTheme.user, userTheme['user-item'])
+    const { user, theme } = this.props // eslint-disable-line no-shadow
+    const userClasses = classNames(theme.user, theme['user-item'])
 
     return (
       <div className={ userClasses }>
-        <div className={ userTheme['user-name'] }>
+        <div className={ theme['user-name'] }>
           <Avatar>
-            <div className={ userTheme['user-initials'] }>
+            <div className={ theme['user-initials'] }>
             { user &&
               user.firstName.substr(0, 1).toUpperCase()
             }
@@ -39,13 +40,13 @@ export class User extends Component {
             `${capitalise(user.firstName)} ${capitalise(user.lastName)}`
           }
         </div>
-        <div className={ userTheme['user-username'] }>
+        <div className={ theme['user-username'] }>
           { user ? user.userName : '-' }
         </div>
-        <div className={ userTheme['user-group'] }>
+        <div className={ theme['user-group'] }>
           { user ? 'admin' : '-' }
         </div>
-        <div className={ userTheme['user-email'] }>
+        <div className={ theme['user-email'] }>
           { user ? user.email : '-' }
         </div>
       </div>

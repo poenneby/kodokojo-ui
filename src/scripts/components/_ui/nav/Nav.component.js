@@ -24,14 +24,15 @@ export class Nav extends Component {
     permanentAt: PropTypes.string,
     pinned: PropTypes.bool,
     scrollY: PropTypes.bool,
+    theme: PropTypes.theme,
     width: PropTypes.string
   }
 
   render() {
-    const { children, active, onOverlayClick, permanentAt, pinned, scrollY, width } = this.props // eslint-disable-line no-shadow
-    const navClasses = classNames(navTheme.nav, {
-      [navTheme['nav--open']]: (pinned || active),
-      [navTheme['nav--closed']]: (!pinned && !active)
+    const { children, active, onOverlayClick, permanentAt, pinned, scrollY, theme, width } = this.props // eslint-disable-line no-shadow
+    const navClasses = classNames(theme.nav, {
+      [theme['nav--open']]: (pinned || active),
+      [theme['nav--closed']]: (!pinned && !active)
     })
 
     return (

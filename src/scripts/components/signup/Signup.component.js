@@ -1,16 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 import { compose } from 'redux'
-import { Link } from 'react-router'
 import { reduxForm } from 'redux-form'
 import { combineValidators } from 'revalidate'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 
-// UI
-import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton'
-
 // Component
-import './signup.less'
+import '../../../styles/_commons.less'
+import Input from '../../components/_ui/input/Input.component'
+import Button from '../../components/_ui/button/Button.component'
 import { createAccount } from './signup.actions.js'
 import { emailValidator } from '../../services/validatorService'
 import { returnErrorKey } from '../../services/errorService'
@@ -59,38 +56,37 @@ export class Signup extends Component {
             noValidate
             onSubmit={ handleSubmit(this.handleSubmit) }
       >
-        <TextField
+        <Input
             { ...email }
-            errorText={
+            error={
               email.touched && email.error ?
               formatMessage({ id: email.error }, { fieldName: formatMessage({ id: 'email-input-label' }) }) :
               ''
             }
-            floatingLabelText={ formatMessage({ id: 'signup-email-label' }) }
-            hintText={ formatMessage({ id: 'signup-email-hint-label' }) }
+            hint={ formatMessage({ id: 'email-hint-label' }) }
+            icon="email"
+            label={ formatMessage({ id: 'email-label' }) }
             name="email"
+            required
             type="email"
-        /><br />
-        <TextField
+        />
+        <Input
           { ...entity }
-          floatingLabelText={ formatMessage({ id: 'signup-entity-label' }) }
-          hintText={ formatMessage({ id: 'signup-entity-hint-label' }) }
+          hint={ formatMessage({ id: 'entity-hint-label' }) }
+          icon="domain"
+          label={ formatMessage({ id: 'entity-label' }) }
           name="entity"
           type="text"
-        /><br />
-        <RaisedButton
+        />
+        <Button
             className="form-submit"
             disabled={ submitting }
-            label={ formatMessage({ id: 'signup-button-label' }) }
+            label={ formatMessage({ id: 'signup-label' }) }
             onTouchTap={ handleSubmit(this.handleSubmit) }
             primary
+            title={ formatMessage({ id: 'signup-label' }) }
             type="submit"
         /><br/>
-        <Link title={ formatMessage({ id: 'signup-login-link-label' }) }
-              to="/login"
-        >
-          <FormattedMessage id={'signup-login-link-label'}/>
-        </Link>
       </form>
     )
   }

@@ -1,8 +1,10 @@
-.content {
+@import '../../../../styles/meta';
+
+.card-container {
   display: flex;
-  flex: 1;
+  flex-direction: row;
+  flex: 100% 0;
   overflow: auto;
-  min-height: 380px;
   align-items: center;
   justify-content: center;
   align-content: stretch;

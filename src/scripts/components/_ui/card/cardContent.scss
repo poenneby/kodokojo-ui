@@ -4,7 +4,10 @@
   padding-left: $spacing-large;
   padding-right: $spacing-standard;
   &:first-child {
-    padding-top: $spacing-small;
+    padding-top: $spacing-small / 2;
   }
   padding-bottom: $spacing-small;
+  p {
+    color: $color-font-3;
+  }
 }
