@@ -4,14 +4,12 @@ import { Link } from 'react-router'
 import { reduxForm } from 'redux-form'
 import { intlShape, injectIntl } from 'react-intl'
 
-// UI
-import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton'
-
 // Component
-import { returnErrorKey } from '../../services/errorService'
-import './login.less'
+import '../../../styles/_commons.less'
+import Input from '../../components/_ui/input/Input.component'
+import Button from '../../components/_ui/button/Button.component'
 import { login, logout } from './login.actions.js'
+import { returnErrorKey } from '../../services/errorService'
 
 // TODO implement i18n
 // TODO if user already logged in, fetch user id from storage and fetch user from api to store
@@ -62,38 +60,38 @@ export class Login extends Component {
                 name="loginForm"
                 onSubmit={ handleSubmit(this.handleSubmit) }
           >
-            <TextField
+            <Input
                 { ...username }
-                floatingLabelText="User name"
-                hintText="all of what is before @email.com"
+                hint={ formatMessage({ id: 'username-hint-label' }) }
                 id="username"
+                label={ formatMessage({ id: 'username-label' }) }
                 name="username"
+                required
                 type="text"
-            /><br />
-            <TextField
+            />
+            <Input
                 { ...psw }
-                errorText={ psw.touched && psw.error ? formatMessage({ id: psw.error }) : '' }
-                floatingLabelText="Password"
+                error={ psw.touched && psw.error ? formatMessage({ id: psw.error }) : '' }
                 id="psw"
+                label={ formatMessage({ id: 'password-label' }) }
                 name="psw"
+                required
                 type="password"
-            /><br />
-            <RaisedButton
-                className="form-submit"
+            />
+            <Button
                 disabled={ submitting }
-                label="Log in"
+                label={ formatMessage({ id: 'login-label' }) }
                 onTouchTap={ handleSubmit(this.handleSubmit) }
                 primary
+                title={ formatMessage({ id: 'login-label' }) }
                 type="submit"
-            /><br/>
-            <Link to="/">Not a user? Sign in!</Link>
+            />
           </form>
         }
         { isAuthenticated &&
           <div>
             You are authenticated<br/>
-            <RaisedButton
-              className="form-submit"
+            <Button
               label="Log out"
               onTouchTap={ this.handleLogout }
               primary

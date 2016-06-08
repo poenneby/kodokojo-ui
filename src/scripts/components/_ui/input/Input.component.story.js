@@ -67,11 +67,11 @@ storiesOf('Input', module)
   ))
   .add('on error', () => (
     <Input
+      error="error in this input"
       hint="This is a hint"
       icon="email"
       label="input label"
       name="inputValue"
       value="some value"
-      error="error in this input"
     />
   ))

@@ -48,7 +48,7 @@ class SignupPage extends Component {
         </Card>
         <Card
           style={{ width: '400px', height: '370px', overflow: 'hidden' }}
-          title={ formatMessage({ id: 'signup-to-login-label' }) }
+          title={ formatMessage({ id: 'login-title-label' }) }
         >
           <CardContent>
             <p>

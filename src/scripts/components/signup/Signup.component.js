@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { compose } from 'redux'
 import { reduxForm } from 'redux-form'
 import { combineValidators } from 'revalidate'
-import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
+import { intlShape, injectIntl } from 'react-intl'
 
 // Component
 import '../../../styles/_commons.less'
@@ -79,7 +79,6 @@ export class Signup extends Component {
           type="text"
         />
         <Button
-            className="form-submit"
             disabled={ submitting }
             label={ formatMessage({ id: 'signup-label' }) }
             onTouchTap={ handleSubmit(this.handleSubmit) }
