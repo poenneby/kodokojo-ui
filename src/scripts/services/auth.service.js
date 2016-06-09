@@ -42,8 +42,8 @@ authService.setAuth = (login, password) => {
  * Put authentication
  *
  * @param id {string} user identifier
+ * @param userName {string} user name
  */
-// TODO TU
 authService.putAuth = (id, userName) => {
   storageService.put('isAuthenticated', true, 'session')
   storageService.put('userId', id, 'session')
@@ -78,7 +78,6 @@ authService.getToken = () => storageService.get('token', 'session') || ''
  *
  * @returns {object} account
  */
-// TODO TU
 authService.getAccount = () => (
   {
     userName: storageService.get('userName', 'session'),

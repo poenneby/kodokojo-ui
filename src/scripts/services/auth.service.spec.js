@@ -97,15 +97,17 @@ describe('auth service', () => {
     it('should put auth', () => {
       // Given
       const id = 'userId'
+      const userName = 'userName'
       const putSpy = sinon.spy(storageService, 'put')
 
       // When
-      authService.putAuth(id)
+      authService.putAuth(id, userName)
 
       // Then
-      expect(putSpy).to.have.callCount(2)
+      expect(putSpy).to.have.callCount(3)
       expect(putSpy).to.have.been.calledWithExactly('isAuthenticated', true, 'session')
       expect(putSpy).to.have.been.calledWithExactly('userId', id, 'session')
+      expect(putSpy).to.have.been.calledWithExactly('userName', userName, 'session')
     })
   })
 
@@ -203,6 +205,34 @@ describe('auth service', () => {
       expect(returned).to.equal('token')
       expect(getSpy).to.have.callCount(1)
       expect(getSpy).to.have.been.calledWithExactly('token', 'session')
+    })
+  })
+
+  describe('getAccount method', () => {
+    afterEach(() => {
+      storageService.get.restore()
+      authService.getToken.restore()
+    })
+
+    it('should return token', () => {
+      // Given
+      const token = 'token'
+      const userName = 'userName'
+      const getSpy = sinon.stub(storageService, 'get').returns(userName)
+      const getTokenSpy = sinon.stub(authService, 'getToken').returns(token)
+
+      // When
+      const returned = authService.getAccount()
+
+      // Then
+      expect(returned).to.deep.equal({
+        userName,
+        password: token
+      })
+      expect(getSpy).to.have.callCount(1)
+      expect(getSpy).to.have.been.calledWithExactly('userName', 'session')
+      expect(getTokenSpy).to.have.callCount(1)
+      expect(getTokenSpy).to.have.been.calledWithExactly()
     })
   })
 })
