@@ -22,6 +22,7 @@ import Panel from '../_ui/panel/Panel.component'
 import Content from '../_ui/content/Content.component.js'
 import AppHeader from './AppHeader.component'
 import Menu from '../menu/Menu.component'
+import { logout } from '../login/login.actions'
 
 class App extends Component {
 
@@ -29,6 +30,7 @@ class App extends Component {
     children: PropTypes.element.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
     locale: PropTypes.string.isRequired,
+    logout: PropTypes.func.isRequired,
     menu: PropTypes.array,
     navigation: PropTypes.bool,
     setLocale: PropTypes.func.isRequired,
@@ -37,7 +39,7 @@ class App extends Component {
   }
 
   render() {
-    const { children, isAuthenticated, locale, menu, navigation, setLocale, theme } = this.props // eslint-disable-line no-shadow
+    const { children, isAuthenticated, locale, logout, menu, navigation, setLocale, theme } = this.props // eslint-disable-line no-shadow
     const currentMuiTheme = (theme === 'light') ? lightTheme : darkTheme
 
     return (
@@ -46,9 +48,10 @@ class App extends Component {
       <MuiThemeProvider muiTheme={ currentMuiTheme }>
       <Layout>
         <AppHeader
-          isAuthenticated={ isAuthenticated }
+          isAuthenticated={ isAuthenticated || false }
           languageSelected={ locale }
           onLanguageChange={ (value) => setLocale(value) }
+          onLogout={ () => logout() }
         />
         <Panel>
           <Nav
@@ -81,6 +84,7 @@ const mapStateProps = (state, ownProps) => (
 export default themr(APP)(connect(
   mapStateProps,
   {
+    logout,
     setTheme,
     setLocale,
     setNavVisibility

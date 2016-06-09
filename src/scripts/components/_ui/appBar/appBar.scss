@@ -1,6 +1,9 @@
 @import '../../../../styles/meta';
 
 .header-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   background: $color-primary-1;
   height: 70px;
   padding: 0 1.5rem;

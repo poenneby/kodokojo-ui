@@ -41,7 +41,6 @@ export class StacksPage extends Component {
 
     this.initNav()
     this.initWebsocket()
-
     if (!stacks && projectConfigId) {
       getProjectConfig(projectConfigId)
         .then(() => {

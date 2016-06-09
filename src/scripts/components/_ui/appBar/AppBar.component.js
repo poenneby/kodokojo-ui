@@ -9,6 +9,7 @@ import { APP_BAR } from '../../../commons/identifiers'
 import '../../../../styles/_commons.less'
 import appBarTheme from './appBar.scss'
 import logoKodoKojo from '../../../../images/logo-white-kodokojo.svg'
+import IconButton from '../../_ui/button/IconButton.component'
 
 /**
  * UI: AppBar component
@@ -23,11 +24,13 @@ export class AppBar extends Component {
     ]),
     fixed: PropTypes.bool,
     flat: PropTypes.bool,
+    isAuthenticated: PropTypes.bool.isRequired,
+    onLogout: PropTypes.func.isRequired,
     theme: PropTypes.object
   }
 
   render() {
-    const { children, fixed, flat, theme } = this.props // eslint-disable-line no-shadow
+    const { children, fixed, flat, isAuthenticated, onLogout, theme } = this.props // eslint-disable-line no-shadow
 
     return (
       <ToolboxAppBar
@@ -37,6 +40,13 @@ export class AppBar extends Component {
       >
         <img className={ theme['logo-kodokojo'] } src={logoKodoKojo} />
         { children }
+        { isAuthenticated &&
+          <IconButton
+            icon="power_settings_new"
+            onClick={ () => onLogout() }
+            style={{ display: 'flex', selfAlign: 'flex-end' }}
+          />
+        }
       </ToolboxAppBar>
     )
   }

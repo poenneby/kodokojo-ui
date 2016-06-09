@@ -3,6 +3,7 @@ import merge from 'lodash/merge'
 import { updateBricks } from '../../services/stateUpdate.service'
 
 import {
+  AUTH_RESET,
   PROJECT_CONFIG_NEW_REQUEST,
   PROJECT_CONFIG_NEW_SUCCESS,
   PROJECT_CONFIG_NEW_FAILURE,
@@ -103,6 +104,21 @@ export default function projectConfig(state = initialState, action) {
         isFetching: false
       }
     )
+  }
+
+  // TODO refactor and DRY this
+  // TODO TU
+  if (action.type === AUTH_RESET) {
+    const nextProjectConfig = {}
+    if (state.id) {
+      nextProjectConfig.id = state.id
+    }
+    if (state.project) {
+      nextProjectConfig.project = {
+        id: state.project.id
+      }
+    }
+    return nextProjectConfig
   }
 
   return state

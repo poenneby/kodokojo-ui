@@ -2,33 +2,31 @@ import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 
-// UI
-// FIXME temporary commented, must be replace by toolbox or custom components
-// import DropDownMenu from 'material-ui/DropDownMenu'
-// import MenuItem from 'material-ui/MenuItem'
-// import Navigation from 'react-toolbox/lib/navigation'
-
-import AppBar from '../_ui/appBar/AppBar.component'
 
 // Component
 import '../../../styles/_commons.less'
+import AppBar from '../_ui/appBar/AppBar.component'
 
 // AppHeader
 export class AppHeader extends Component {
 
   static propTypes = {
     intl: intlShape.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
     languageSelected: PropTypes.string.isRequired,
-    onLanguageChange: PropTypes.func.isRequired
+    onLanguageChange: PropTypes.func.isRequired,
+    onLogout: PropTypes.func.isRequired
   }
 
   render() {
-    const { languageSelected, onLanguageChange } = this.props // eslint-disable-line no-shadow
+    const { languageSelected, onLanguageChange, onLogout, isAuthenticated } = this.props // eslint-disable-line no-shadow
     const { formatMessage } = this.props.intl
 
     return (
       <AppBar
         flat
+        isAuthenticated={ isAuthenticated }
+        onLogout={ () => onLogout() }
       />
       // FIXME this is for testing purpose, delete when tabs are implemented
       // <Navigation type="horizontal">

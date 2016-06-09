@@ -11,7 +11,7 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 
 // i18n
-// shim intl if not supported buy browser
+// shim intl if not supported by browser
 import { shimIntl } from './scripts/i18n/shimIntl'
 import IntlProviderContainer from './scripts/commons/IntlProviderContainer'
 import { addLocaleData } from 'react-intl'

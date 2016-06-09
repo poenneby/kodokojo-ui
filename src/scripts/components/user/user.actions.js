@@ -124,7 +124,7 @@ export function getUser(userId) {
   return dispatch => dispatch(requestUser(userId))
     .then(data => {
       if (!data.error) {
-        return Promise.resolve()
+        return Promise.resolve(data)
       }
       throw new Error(data.payload.status)
     })

@@ -91,7 +91,7 @@ export function logout() {
         authService.resetAuth()
         // TODO TU
         storageService.clean()
-        return Promise.resolve()
+        return Promise.resolve(browserHistory.push('/login'))
       }
       throw new Error(data.payload.status)
     })

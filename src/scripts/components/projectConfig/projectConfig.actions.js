@@ -55,7 +55,7 @@ export function getProjectConfig(projectConfigId) {
           Promise.all(promises)
         }
         if (data.payload.projectConfig && data.payload.projectConfig.name) {
-          dispatch(initMenu(data.payload.projectConfig.name))
+          return Promise.resolve(dispatch(initMenu(data.payload.projectConfig.name)))
         }
         return Promise.resolve(data)
       }

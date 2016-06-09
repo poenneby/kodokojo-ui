@@ -20,7 +20,7 @@ export class MembersPage extends Component {
   static propTypes = {
     getProjectConfig: PropTypes.func,
     intl: intlShape.isRequired,
-    location: PropTypes.string,
+    location: PropTypes.object.isRequired,
     members: PropTypes.array,
     projectConfigId: PropTypes.string,
     setNavVisibility: PropTypes.func.isRequired,

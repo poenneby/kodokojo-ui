@@ -54,9 +54,10 @@ authService.putAuth = (id, userName) => {
  * Reset authentication
  */
 authService.resetAuth = () => {
+  storageService.remove('token', 'session')
   storageService.remove('isAuthenticated', 'session')
   storageService.remove('userId', 'session')
-  storageService.remove('token', 'session')
+  storageService.remove('userName', 'session')
 }
 
 /**
