@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
-import Promise from 'bluebird'
 import classNames from 'classnames'
 
 // Component
@@ -19,6 +18,7 @@ import { getProjectConfig } from '../components/projectConfig/projectConfig.acti
 export class MembersPage extends Component {
 
   static propTypes = {
+    getProjectConfig: PropTypes.func,
     intl: intlShape.isRequired,
     location: PropTypes.string,
     members: PropTypes.array,
@@ -28,14 +28,12 @@ export class MembersPage extends Component {
   }
 
   componentWillMount() {
-    const { location, members, projectConfigId, updateMenuPath } = this.props // eslint-disable-line no-shadow
+    const { getProjectConfig, location, members, projectConfigId, updateMenuPath } = this.props // eslint-disable-line no-shadow
 
     this.initNav()
 
-    const getProjectConfigPromise = Promise.promisify(getProjectConfig(projectConfigId))
-
     if (!members && projectConfigId) {
-      getProjectConfigPromise(projectConfigId)
+      getProjectConfig(projectConfigId)
         .then(() => {
           updateMenuPath(location.pathname)
         })
