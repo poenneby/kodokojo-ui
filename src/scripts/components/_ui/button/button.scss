@@ -59,6 +59,7 @@ $button-height: 40px;
   &.flat, &.toggle {
     color: $color-secondary-1;
     &:focus:not(:active) {
+      color: $color-font-1;
       background: $color-secondary-1;
     }
   }
