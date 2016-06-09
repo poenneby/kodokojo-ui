@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
-import Promise from 'bluebird'
 import classNames from 'classnames'
 
 // Component
@@ -21,6 +20,7 @@ import { getProjectConfig } from '../components/projectConfig/projectConfig.acti
 export class StacksPage extends Component {
 
   static propTypes = {
+    getProjectConfig: PropTypes.func,
     intl: intlShape.isRequired,
     location: PropTypes.object.isRequired,
     projectConfigId: PropTypes.string,
@@ -37,15 +37,13 @@ export class StacksPage extends Component {
   }
 
   componentWillMount = () => {
-    const { location, projectConfigId, stacks, updateMenuPath } = this.props // eslint-disable-line no-shadow
+    const { getProjectConfig, location, projectConfigId, stacks, updateMenuPath } = this.props // eslint-disable-line no-shadow
 
     this.initNav()
     this.initWebsocket()
 
-    const getProjectConfigPromise = Promise.promisify(getProjectConfig(projectConfigId))
-
     if (!stacks && projectConfigId) {
-      getProjectConfigPromise(projectConfigId)
+      getProjectConfig(projectConfigId)
         .then(() => {
           updateMenuPath(location.pathname)
         })
