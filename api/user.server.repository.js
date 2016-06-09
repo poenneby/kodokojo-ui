@@ -44,7 +44,7 @@ userRepository.getUser = (credentials, userId) => {
     method: 'GET',
     uri: `${config.api.host}${config.api.routes.user}/${userId}`,
     headers: {
-      'Authorization': `${credentials}`
+      Authorization: `${credentials}`
     },
     json: true
   })
