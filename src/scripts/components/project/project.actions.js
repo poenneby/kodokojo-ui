@@ -1,9 +1,10 @@
 import { browserHistory } from 'react-router'
 import { CALL_API } from 'redux-api-middleware'
+import Promise from 'bluebird'
 
 import api from '../../commons/config'
-import { getHeaders } from '../../services/ioService'
-import { mapProject } from '../../services/mappingService'
+import { getHeaders } from '../../services/io.service'
+import { mapProject } from '../../services/mapping.service'
 import {
   PROJECT_REQUEST,
   PROJECT_SUCCESS,

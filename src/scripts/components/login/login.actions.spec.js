@@ -17,8 +17,8 @@ import { __RewireAPI__ as actionsRewireApi } from './login.actions.js'
 import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE, AUTH_RESET } from '../../commons/constants'
 
 // dependencies to mock
-import authService from '../../services/authService'
-import ioService from '../../services/ioService'
+import authService from '../../services/auth.service'
+import ioService from '../../services/io.service'
 
 // Apply the middleware to the store
 const middlewares = [

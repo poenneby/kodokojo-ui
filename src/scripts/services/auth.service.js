@@ -1,4 +1,4 @@
-import storageService from './storageService'
+import storageService from './storage.service'
 
 const authService = {}
 

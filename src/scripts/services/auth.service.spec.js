@@ -7,10 +7,10 @@ import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 chai.use(sinonChai)
 
-import authService from './authService'
+import authService from './auth.service'
 
 // dependencies to mock
-import storageService from './storageService'
+import storageService from './storage.service'
 
 describe('auth service', () => {
   describe('checkAuth method', () => {

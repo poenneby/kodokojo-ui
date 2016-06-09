@@ -1,5 +1,5 @@
-import storageService from '../services/storageService'
-import authService from '../services/authService'
+import storageService from '../services/storage.service'
+import authService from '../services/auth.service'
 
 const prefs = {
   locale: storageService.get('locale') || 'en',

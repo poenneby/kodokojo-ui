@@ -1,8 +1,8 @@
 import { CALL_API } from 'redux-api-middleware'
 
 import api from '../../commons/config'
-import { getHeaders } from '../../services/ioService'
-import { mapUser } from '../../services/mappingService'
+import { getHeaders } from '../../services/io.service'
+import { mapUser } from '../../services/mapping.service'
 import {
   USER_NEW_ID_REQUEST,
   USER_NEW_ID_SUCCESS,

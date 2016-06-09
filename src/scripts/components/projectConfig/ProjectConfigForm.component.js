@@ -9,8 +9,8 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import { createProjectConfig } from './projectConfig.actions'
-import { projectNameValidator } from '../../services/validatorService'
-import { returnErrorKey } from '../../services/errorService'
+import { projectNameValidator } from '../../services/validator.service'
+import { returnErrorKey } from '../../services/error.service'
 
 // validation function
 const validate = combineValidators({

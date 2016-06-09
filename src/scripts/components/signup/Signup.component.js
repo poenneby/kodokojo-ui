@@ -9,8 +9,8 @@ import '../../../styles/_commons.less'
 import Input from '../../components/_ui/input/Input.component'
 import Button from '../../components/_ui/button/Button.component'
 import { createAccount } from './signup.actions.js'
-import { emailValidator } from '../../services/validatorService'
-import { returnErrorKey } from '../../services/errorService'
+import { emailValidator } from '../../services/validator.service'
+import { returnErrorKey } from '../../services/error.service'
 
 // validate function
 const validate = combineValidators({

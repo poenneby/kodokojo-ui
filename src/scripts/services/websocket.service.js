@@ -1,4 +1,4 @@
-import { getToken } from './authService'
+import { getToken } from './auth.service'
 
 const websocketService = {
   socket: undefined,

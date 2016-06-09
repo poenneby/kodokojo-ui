@@ -7,7 +7,7 @@ import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 chai.use(sinonChai)
 
-import ioService from './ioService'
+import ioService from './io.service'
 
 describe('io service', () => {
   describe('getHeaders method', () => {

@@ -9,7 +9,7 @@ import '../../../styles/_commons.less'
 import Input from '../../components/_ui/input/Input.component'
 import Button from '../../components/_ui/button/Button.component'
 import { login, logout } from './login.actions.js'
-import { returnErrorKey } from '../../services/errorService'
+import { returnErrorKey } from '../../services/error.service'
 
 // TODO if user already logged in, fetch user id from storage and fetch user from api to store
 // Login component

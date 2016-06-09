@@ -2,9 +2,9 @@ import { browserHistory } from 'react-router'
 import { CALL_API } from 'redux-api-middleware'
 
 import api from '../../commons/config'
-import { getHeaders } from '../../services/ioService'
-import { setAuth, putAuth } from '../../services/authService'
-import { mapAccount } from '../../services/mappingService'
+import { getHeaders } from '../../services/io.service'
+import { setAuth, putAuth } from '../../services/auth.service'
+import { mapAccount } from '../../services/mapping.service'
 import {
   ACCOUNT_NEW_ID_REQUEST,
   ACCOUNT_NEW_ID_SUCCESS,

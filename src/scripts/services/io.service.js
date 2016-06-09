@@ -1,6 +1,6 @@
 import merge from 'lodash/merge'
 
-import { getToken } from './authService'
+import { getToken } from './auth.service'
 
 const ioService = {}
 

@@ -7,7 +7,7 @@ import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 chai.use(sinonChai)
 
-import mappingService from './mappingService'
+import mappingService from './mapping.service'
 
 describe('mapping service', () => {
   describe('map account', () => {

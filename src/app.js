@@ -34,8 +34,8 @@ import MembersPage from './scripts/pages/Members.page'
 import UsersPage from './scripts/pages/UsersPage'
 import NotFoundPage from './scripts/pages/NotFoundPage'
 
-import AuthService from './scripts/services/authService'
-import { handleHistoryChange } from './scripts/services/historyService'
+import AuthService from './scripts/services/auth.service'
+import { handleHistoryChange } from './scripts/services/history.service'
 
 // Add the reducer to your store on the `routing` key
 const store = configureStore(initialState)

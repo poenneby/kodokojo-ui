@@ -3,11 +3,19 @@ const storageService = {}
 
 storageService.put = (key, value, scope = 'local') => window[`${scope}Storage`].setItem(key, value)
 
-storageService.get = (key, scope = 'local') => window[`${scope}Storage`].getItem(key)
+storageService.get = (key, scope = 'local') => {
+  const value = window[`${scope}Storage`].getItem(key)
+  return value !== null ? value : undefined
+}
 
 storageService.remove = (key, scope = 'local') => window[`${scope}Storage`].removeItem(key)
 
 storageService.clear = (scope = 'local') => window[`${scope}Storage`].clear()
+
+storageService.clean = () => {
+  storageService.remove('projectConfigId')
+  storageService.remove('projectId')
+}
 
 // public API
 export const put = storageService.put

@@ -1,11 +1,13 @@
 import { browserHistory } from 'react-router'
 import { CALL_API } from 'redux-api-middleware'
+import Promise from 'bluebird'
 
 import api from '../../commons/config'
 // import { user } from '../../commons/schemas'
-import authService from '../../services/authService'
-import ioService from '../../services/ioService'
-import { mapAccount } from '../../services/mappingService'
+import authService from '../../services/auth.service'
+import storageService from '../../services/storage.service'
+import ioService from '../../services/io.service'
+import { mapAccount } from '../../services/mapping.service'
 import { getProject } from '../project/project.actions'
 import { getProjectConfigAndProject } from '../projectConfig/projectConfig.actions'
 import {

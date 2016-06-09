@@ -1,4 +1,4 @@
-import storageService from '../services/storageService'
+import storageService from '../services/storage.service'
 
 export default function persistenceHandler(next) {
   return (reducer, initialState) => {

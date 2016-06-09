@@ -4,7 +4,7 @@
 
 import { expect } from 'chai'
 
-import { returnErrorKey } from './errorService'
+import { returnErrorKey } from './error.service'
 
 describe('error service', () => {
   describe('returnError key', () => {
