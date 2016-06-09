@@ -124,10 +124,11 @@ describe('auth service', () => {
       authService.resetAuth()
 
       // Then
-      expect(removeSpy).to.have.callCount(3)
+      expect(removeSpy).to.have.callCount(4)
+      expect(removeSpy).to.have.been.calledWithExactly('token', 'session')
       expect(removeSpy).to.have.been.calledWithExactly('isAuthenticated', 'session')
       expect(removeSpy).to.have.been.calledWithExactly('userId', 'session')
-      expect(removeSpy).to.have.been.calledWithExactly('token', 'session')
+      expect(removeSpy).to.have.been.calledWithExactly('userName', 'session')
     })
   })
 
