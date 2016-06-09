@@ -1,5 +1,5 @@
 import express from 'express'
-const router = express.Router()
+const router = express.Router() // eslint-disable-line new-cap
 
 import config from '../config/config'
 import endpoints from '../config/shared/api.endpoints'

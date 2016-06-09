@@ -21,7 +21,7 @@ userRepository.postUser = (id, email) => {
     uri: `${config.api.host}${config.api.routes.user}/${id}`,
     json: true,
     body: {
-      email: email
+      email
     }
   })
 }
@@ -32,7 +32,7 @@ userRepository.getUserAccount = (credentials) => {
     method: 'GET',
     uri: `${config.api.host}${config.api.routes.user}`,
     headers: {
-      'Authorization': `${credentials}`
+      Authorization: `${credentials}`
     },
     json: true
   })
@@ -58,8 +58,3 @@ export const getUser = userRepository.getUser
 
 // Service instance
 export default userRepository
-
-
-
-
-

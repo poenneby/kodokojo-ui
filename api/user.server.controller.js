@@ -4,7 +4,7 @@ export const initUser = (request, response) => {
   userRepository
     .initUser()
     .then(data => response.status(201).send(data))
-    .catch((err, resp) =>response.status(err.response && err.response.statusCode ? err.response.statusCode : 500).send(err))
+    .catch((err, resp) => response.status(err.response && err.response.statusCode ? err.response.statusCode : 500).send(err))
 }
 
 export const postUser = (request, response) => {

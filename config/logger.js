@@ -3,9 +3,7 @@ import winston from 'winston'
 const loggerTransports = [new winston.transports.Console({
   handleExceptions: true,
   level: 'debug',
-  timestamp: function () {
-    return new Date().toISOString();
-  },
+  timestamp: () => new Date().toISOString(),
   colorize: true
 })]
 

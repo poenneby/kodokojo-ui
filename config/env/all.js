@@ -1,6 +1,5 @@
 import api from '../shared/api.endpoints'
 
-
 /**
  * Set docker host
  */

@@ -12,9 +12,9 @@ projectRepository.postProjectConfig = (headers, name, ownerId, userIds) => {
     method: 'POST',
     uri: `${config.api.host}${config.api.routes.projectConfig}`,
     json: true,
-    headers: headers,
+    headers,
     body: {
-      name: name,
+      name,
       ownerIdentifier: ownerId,
       userIdentifiers: userIds
     }
@@ -27,7 +27,7 @@ projectRepository.getProjectConfig = (headers, projectConfigId) => {
     method: 'GET',
     uri: `${config.api.host}${config.api.routes.projectConfig}/${projectConfigId}`,
     json: true,
-    headers: headers
+    headers
   })
 }
 
@@ -37,7 +37,7 @@ projectRepository.putUserToProjectConfig = (headers, projectConfigId, users) => 
     method: 'PUT',
     uri: `${config.api.host}${config.api.routes.projectConfig}/${projectConfigId}${endpoints.projectConfigUser}`,
     json: true,
-    headers: headers,
+    headers,
     body: users
   })
 }
@@ -48,7 +48,7 @@ projectRepository.postProject = (headers, projectConfigId) => {
     method: 'POST',
     uri: `${config.api.host}${config.api.routes.project}/${projectConfigId}`,
     json: true,
-    headers: headers
+    headers
   })
 }
 
@@ -58,7 +58,7 @@ projectRepository.getProject = (headers, projectId) => {
     method: 'GET',
     uri: `${config.api.host}${config.api.routes.project}/${projectId}`,
     json: true,
-    headers: headers
+    headers
   })
 }
 
