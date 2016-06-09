@@ -91,7 +91,7 @@ export class Login extends Component {
         }
         { isAuthenticated &&
           <div>
-            You are authenticated<br/>
+            <p>You are authenticated.</p>
             <Button
               label="Log out"
               onTouchTap={ this.handleLogout }

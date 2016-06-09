@@ -44,11 +44,14 @@ export function requestAuthentication() {
 }
 
 export function login(username, password) {
-  authService.setAuth(username, password)
+  const token = authService.getToken()
+  if (!token && username && password) {
+    authService.setAuth(username, password)
+  }
   return dispatch => dispatch(requestAuthentication())
     .then(data => {
       if (!data.error) {
-        authService.putAuth(data.payload.account.id)
+        authService.putAuth(data.payload.account.id, data.payload.account.userName)
 
         if (data.payload.account.projectConfigIds.length) {
           const projectConfig = data.payload.account.projectConfigIds[0]
@@ -86,6 +89,8 @@ export function logout() {
     .then(data => {
       if (!data.error) {
         authService.resetAuth()
+        // TODO TU
+        storageService.clean()
         return Promise.resolve()
       }
       throw new Error(data.payload.status)

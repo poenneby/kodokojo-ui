@@ -16,6 +16,7 @@ export default {
   'login-title-label': 'Déjà inscrit ?',
   'login-label': 'S’identifier',
   'login-authenticate-401': 'Account not found. Check your email or / and your password',
+  'login-to-signup-text': 'Create an account and deploy full software factory for all your projects. Manage users and monitor your stacks.',
   'logout-label': 'Log out',
   'link-label': 'Link',
   'members-label': 'Members',

@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
+import Promise from 'bluebird'
 import { browserHistory } from 'react-router'
 
 // Component
@@ -12,18 +13,28 @@ import CardContainer from '../components/_ui/card/CardContainer.component'
 import Button from '../components/_ui/button/Button.component'
 import Login from '../components/login/Login.component.js'
 import { setNavVisibility } from '../components/app/app.actions'
+import { login } from '../components/login/login.actions'
 
 class LoginPage extends Component {
 
   static propTypes = {
     intl: intlShape.isRequired,
+    isAuthenticated: PropTypes.bool,
     location: PropTypes.object.isRequired,
-    projectConfigId: PropTypes.string,
+    login: PropTypes.func,
     setNavVisibility: PropTypes.func.isRequired
   }
 
   componentWillMount = () => {
+    const { isAuthenticated, login } = this.props // eslint-disable-line no-shadow
+
     this.initNav()
+
+    if (isAuthenticated) {
+      return login()
+        .catch(err => err)
+    }
+    return Promise.resolve()
   }
 
   initNav = () => {
@@ -43,7 +54,7 @@ class LoginPage extends Component {
         >
           <CardContent>
             <p>
-              <FormattedMessage id={'signup-to-login-text'}/>
+              <FormattedMessage id={'login-to-signup-text'}/>
             </p>
             <Button
               label={ formatMessage({ id: 'signup-label' }) }
@@ -69,10 +80,8 @@ class LoginPage extends Component {
 // LoginPage container
 const mapStateProps = (state, ownProps) => (
   {
-    location: ownProps.location,
-    projectConfigId: state.projectConfig.id,
-    projectConfigName: state.projectConfig.name,
-    stacks: state.projectConfig.stacks
+    isAuthenticated: state.auth.isAuthenticated,
+    location: ownProps.location
   }
 )
 
@@ -80,6 +89,7 @@ const LoginPageContainer = compose(
   connect(
     mapStateProps,
     {
+      login,
       setNavVisibility
     }
   ),

@@ -43,9 +43,11 @@ authService.setAuth = (login, password) => {
  *
  * @param id {string} user identifier
  */
-authService.putAuth = (id) => {
+// TODO TU
+authService.putAuth = (id, userName) => {
   storageService.put('isAuthenticated', true, 'session')
   storageService.put('userId', id, 'session')
+  storageService.put('userName', userName, 'session')
 }
 
 /**
@@ -72,6 +74,19 @@ authService.isAuth = () => !!storageService.get('isAuthenticated', 'session')
 authService.getToken = () => storageService.get('token', 'session') || ''
 
 /**
+ * Return user id and password
+ *
+ * @returns {object} account
+ */
+// TODO TU
+authService.getAccount = () => (
+  {
+    userName: storageService.get('userName', 'session'),
+    password: authService.getToken()
+  }
+)
+
+/**
  * Return encrypted basic auth string
  *
  * @param auth {string}
@@ -94,6 +109,7 @@ export const putAuth = authService.putAuth
 export const resetAuth = authService.resetAuth
 export const isAuth = authService.isAuth
 export const getToken = authService.getToken
+export const getAccount = authService.getAccount
 
 // service
 export default authService

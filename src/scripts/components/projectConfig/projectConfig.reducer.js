@@ -69,7 +69,6 @@ export default function projectConfig(state = initialState, action) {
     }
   }
 
-
   if (action.type === PROJECT_SUCCESS) {
     const bricks = updateBricks(state.stacks[0].bricks, action.payload.project.stacks[0].bricks)
     return merge(
