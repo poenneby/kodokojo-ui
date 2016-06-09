@@ -9,9 +9,21 @@ const prefs = {
 const auth = {
   isAuthenticated: authService.isAuth() || false
 }
+if (auth.isAuthenticated) {
+  auth.account = authService.getAccount()
+}
 
-const projectConfig = {
-  id: storageService.get('projectConfigId')
+const projectConfigId = storageService.get('projectConfigId')
+const projectConfig = projectConfigId && projectConfigId !== 'null' ? {
+  id: projectConfigId
+} : {}
+
+const project = {
+  id: storageService.get('projectId')
+}
+
+if (project.id) {
+  projectConfig.project = project
 }
 
 export default {
