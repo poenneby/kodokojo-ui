@@ -23,7 +23,7 @@ export class AppBar extends Component {
     ]),
     fixed: PropTypes.bool,
     flat: PropTypes.bool,
-    theme: PropTypes.theme
+    theme: PropTypes.object
   }
 
   render() {

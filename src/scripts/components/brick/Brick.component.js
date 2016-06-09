@@ -14,7 +14,7 @@ export class Brick extends Component {
 
   static propTypes = {
     brick: PropTypes.object,
-    theme: PropTypes.theme
+    theme: PropTypes.object
   }
 
   handleLoadStatus(e) {

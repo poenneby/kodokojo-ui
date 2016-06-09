@@ -15,7 +15,7 @@ import Avatar from '../_ui/avatar/Avatar.component'
 export class User extends Component {
 
   static propTypes = {
-    theme: PropTypes.theme,
+    theme: PropTypes.object,
     user: PropTypes.object
   }
 

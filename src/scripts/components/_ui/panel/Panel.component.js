@@ -17,7 +17,7 @@ export class Panel extends Component {
       PropTypes.arrayOf(PropTypes.element),
       PropTypes.element
     ]),
-    theme: PropTypes.theme
+    theme: PropTypes.object
   }
 
   render() {

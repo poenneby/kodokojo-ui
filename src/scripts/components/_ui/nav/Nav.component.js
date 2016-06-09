@@ -24,7 +24,7 @@ export class Nav extends Component {
     permanentAt: PropTypes.string,
     pinned: PropTypes.bool,
     scrollY: PropTypes.bool,
-    theme: PropTypes.theme,
+    theme: PropTypes.object,
     width: PropTypes.string
   }
 
