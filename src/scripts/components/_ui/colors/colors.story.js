@@ -32,6 +32,8 @@ storiesOf('Colors', module)
               marginRight: '40px', marginBottom: '40px', border: '1px dotted black' }}>
             .primary-background--3
           </div>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
           <div
             className={ utilsTheme['primary-background--4'] }
             style={{ width: '200px', height: '200px', display: 'flex',
@@ -45,6 +47,13 @@ storiesOf('Colors', module)
               alignItems: 'center', justifyContent: 'center',
               marginRight: '40px', marginBottom: '40px', border: '1px dotted black' }}>
             .primary-background--5
+          </div>
+          <div
+            className={ utilsTheme['primary-background--6'] }
+            style={{ width: '200px', height: '200px', display: 'flex',
+              alignItems: 'center', justifyContent: 'center',
+              marginRight: '40px', marginBottom: '40px', border: '1px dotted black' }}>
+            .primary-background--6
           </div>
         </div>
       </div>
@@ -72,6 +81,8 @@ storiesOf('Colors', module)
               marginRight: '40px', marginBottom: '40px', border: '1px dotted black' }}>
             .secondary-background--3
           </div>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
           <div
             className={ utilsTheme['secondary-background--4'] }
             style={{ width: '200px', height: '200px', display: 'flex',
@@ -131,6 +142,14 @@ storiesOf('Colors', module)
         <div
           className={ utilsTheme['primary-color--4'] }>
           .primary-color--4
+        </div>
+        <div
+          className={ utilsTheme['primary-color--5'] }>
+          .primary-color--5
+        </div>
+        <div
+          className={ utilsTheme['primary-color--6'] }>
+          .primary-color--6
         </div>
       </div>
       <div style={{ margin: '30px' }}>
