@@ -7,7 +7,8 @@ const prefs = {
 }
 
 const auth = {
-  isAuthenticated: authService.isAuth() || false
+  isAuthenticated: authService.isAuth() || false,
+  isFetching: false
 }
 if (auth.isAuthenticated) {
   auth.account = authService.getAccount()
@@ -15,7 +16,8 @@ if (auth.isAuthenticated) {
 
 const projectConfigId = storageService.get('projectConfigId')
 const projectConfig = projectConfigId && projectConfigId !== 'null' ? {
-  id: projectConfigId
+  id: projectConfigId,
+  isFetching: false
 } : {}
 
 const project = {
