@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 import classNames from 'classnames'
-import api from '../../commons/config'
+import api from '../commons/config'
 
 // Component
 import '../../styles/_commons.less'
