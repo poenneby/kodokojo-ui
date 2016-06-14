@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 import classNames from 'classnames'
+import api from '../../commons/config'
 
 // Component
 import '../../styles/_commons.less'
@@ -71,7 +72,10 @@ export class StacksPage extends Component {
     // maybe with https://www.npmjs.com/package/express-ws
     // this.socket = new WebSocket('ws://localhost/api/v1/event')
     this.socket = websocketService
-      .initSocket('ws://192.168.99.100:9080/api/v1/event')
+      .initSocket(
+        `${window.location.protocol || 'http:'}//` +
+        `${window.location.host || 'localhost'}${api.event}/`
+      )
       .then(socket => {
         this.socket = socket
         this.socket.onmessage = (socketEvent) => {
