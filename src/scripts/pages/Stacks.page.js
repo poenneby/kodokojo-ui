@@ -73,8 +73,8 @@ export class StacksPage extends Component {
     // this.socket = new WebSocket('ws://localhost/api/v1/event')
     this.socket = websocketService
       .initSocket(
-        `${window.location.protocol === 'https' ? 'wss:' : 'ws:'}//` +
-        `${window.location.host || 'localhost'}${api.event}/`
+        `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//` +
+        `${window.location.host || 'localhost'}${api.event}`
       )
       .then(socket => {
         this.socket = socket
