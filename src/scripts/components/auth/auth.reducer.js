@@ -96,7 +96,7 @@ export default function auth(state = initialState, action) {
 
   if (action.type === AUTH_RESET) {
     return {
-      ...state,
+      account: {},
       isAuthenticated: false,
       isFetching: false
     }

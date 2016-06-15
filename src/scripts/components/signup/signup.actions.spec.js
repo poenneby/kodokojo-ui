@@ -11,6 +11,9 @@ import thunk from 'redux-thunk'
 import { apiMiddleware } from 'redux-api-middleware'
 import configureMockStore from 'redux-mock-store'
 
+// dependencies to mock
+import websocketService from '../../services/websocket.service'
+
 import api from '../../commons/config'
 import * as actions from './signup.actions.js'
 import { __RewireAPI__ as actionsRewireApi } from './signup.actions.js'
@@ -37,6 +40,7 @@ describe('signup actions', () => {
     let setAuthSpy
     let putAuthSpy
     let mapAccountSpy
+    let websocketServiceInitSpy
 
     beforeEach(() => {
       pushHistorySpy = sinon.spy()
@@ -49,6 +53,7 @@ describe('signup actions', () => {
       actionsRewireApi.__Rewire__('setAuth', setAuthSpy)
       putAuthSpy = sinon.spy()
       actionsRewireApi.__Rewire__('putAuth', putAuthSpy)
+      websocketServiceInitSpy = sinon.stub(websocketService, 'initSocket').returns(Promise.resolve())
     })
 
     afterEach(() => {
@@ -57,6 +62,7 @@ describe('signup actions', () => {
       actionsRewireApi.__ResetDependency__('setAuth')
       actionsRewireApi.__ResetDependency__('putAuth')
       actionsRewireApi.__ResetDependency__('mapAccount')
+      websocketService.initSocket.restore()
       nock.cleanAll()
     })
 
@@ -126,6 +132,7 @@ describe('signup actions', () => {
           expect(setAuthSpy).to.have.been.calledWith('test', 'password')
           expect(putAuthSpy).to.have.callCount(1)
           expect(putAuthSpy).to.have.been.calledWith(id)
+          expect(websocketServiceInitSpy).to.have.callCount(1)
           done()
         })
         .catch(done)
@@ -178,6 +185,7 @@ describe('signup actions', () => {
           expect(getHeadersSpy).to.have.callCount(1)
           expect(setAuthSpy).to.have.callCount(0)
           expect(putAuthSpy).to.have.callCount(0)
+          expect(websocketServiceInitSpy).to.have.callCount(0)
           done()
         })
         .catch(done)
@@ -251,6 +259,7 @@ describe('signup actions', () => {
           expect(getHeadersSpy).to.have.callCount(2)
           expect(setAuthSpy).to.have.callCount(0)
           expect(putAuthSpy).to.have.callCount(0)
+          expect(websocketServiceInitSpy).to.have.callCount(0)
           done()
         })
     })

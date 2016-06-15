@@ -10,6 +10,7 @@ import nock from 'nock'
 import thunk from 'redux-thunk'
 import { apiMiddleware } from 'redux-api-middleware'
 import configureMockStore from 'redux-mock-store'
+import Promise from 'bluebird'
 
 import api from '../../commons/config'
 import * as actions from './login.actions.js'
@@ -19,6 +20,7 @@ import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE, AUTH_RESET } from '../../comm
 // dependencies to mock
 import authService from '../../services/auth.service'
 import ioService from '../../services/io.service'
+import websocketService from '../../services/websocket.service'
 
 // Apply the middleware to the store
 const middlewares = [
@@ -36,6 +38,7 @@ describe('login actions', () => {
     let mapAccountSpy
     let historyPushSpy
     let getProjectConfigAndProjectSpy
+    let websocketServiceInitSpy
 
     beforeEach(() => {
       historyPushSpy = sinon.spy()
@@ -46,6 +49,7 @@ describe('login actions', () => {
         type: 'MOCKED_ACTION'
       })
       actionsRewireApi.__Rewire__('getProjectConfigAndProject', getProjectConfigAndProjectSpy)
+      websocketServiceInitSpy = sinon.stub(websocketService, 'initSocket').returns(Promise.resolve())
     })
 
     afterEach(() => {
@@ -57,6 +61,7 @@ describe('login actions', () => {
       actionsRewireApi.__ResetDependency__('getProjectConfigAndProject')
       actionsRewireApi.__ResetDependency__('putAuth')
       actionsRewireApi.__ResetDependency__('requestAuthentication')
+      websocketService.initSocket.restore()
     })
 
     it('should request auth', (done) => {
@@ -122,6 +127,7 @@ describe('login actions', () => {
         expect(getProjectConfigAndProjectSpy).to.have.callCount(1)
         expect(historyPushSpy).to.have.callCount(1)
         expect(historyPushSpy).to.have.been.calledWith('/stacks')
+        expect(websocketServiceInitSpy).to.have.callCount(1)
         done()
       }).catch(done)
     })
@@ -168,6 +174,7 @@ describe('login actions', () => {
         expect(requestAuthenticationSpy).to.have.callCount(1)
         expect(historyPushSpy).to.have.callCount(1)
         expect(historyPushSpy).to.have.been.calledWith('/firstProject')
+        expect(websocketServiceInitSpy).to.have.callCount(1)
         done()
       }).catch(done)
     })
@@ -225,12 +232,23 @@ describe('login actions', () => {
           expect(setAuthSpy).to.have.been.calledWith(username, password)
           expect(putAuthSpy).to.have.callCount(0)
           expect(getHeadersSpy).to.have.callCount(1)
+          expect(websocketServiceInitSpy).to.have.callCount(0)
           done()
         })
     })
   })
 
   describe('logout', () => {
+    let websocketServiceStopSpy
+
+    beforeEach(() => {
+      websocketServiceStopSpy = sinon.stub(websocketService, 'stopSocket').returns(Promise.resolve())
+    })
+
+    afterEach(() => {
+      websocketService.stopSocket.restore()
+    })
+
     it('should reset auth', (done) => {
       // Given
       const expectedActions = [
@@ -248,6 +266,7 @@ describe('login actions', () => {
         .then(() => {
           expect(store.getActions()).to.deep.equal(expectedActions)
           expect(resetAuthSpy).to.have.callCount(1)
+          expect(websocketServiceStopSpy).to.have.callCount(1)
           done()
         }).catch(done)
     })

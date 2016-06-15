@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 import classNames from 'classnames'
-import api from '../commons/config'
 
 // Component
 import '../../styles/_commons.less'
@@ -43,6 +42,8 @@ export class StacksPage extends Component {
     this.initNav()
     this.initWebsocket()
     if (!stacks && projectConfigId) {
+      // TODO if project id is defined, getProjectConfigAndProject
+      // TODO add project id into object retuned by getProjectConfig end point
       getProjectConfig(projectConfigId)
         .then(() => {
           updateMenuPath(location.pathname)
@@ -66,23 +67,19 @@ export class StacksPage extends Component {
   }
 
   initWebsocket = () => {
-    // TODO let the dev backend reroute ws calls
-    // TODO dynamically set the ws url (end point?)
+    const { updateProject } = this.props // eslint-disable-line no-shadow
     // TODO move this to actions
     // maybe with https://www.npmjs.com/package/express-ws
-    // this.socket = new WebSocket('ws://localhost/api/v1/event')
     this.socket = websocketService
-      .initSocket(
-        `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//` +
-        `${window.location.host || 'localhost'}${api.event}`
-      )
+      .getSocket()
       .then(socket => {
         this.socket = socket
         this.socket.onmessage = (socketEvent) => {
           const socketEventData = JSON.parse(socketEvent.data)
           if (socketEventData.entity === 'brick' && socketEventData.action === 'updateState') {
-            console.log('wsEvent', socketEventData)
-            updateProject(mapBrickEvent(socketEventData))
+            const mappedEvent = mapBrickEvent(socketEventData)
+            console.log('wsMapEvent', mappedEvent)
+            updateProject(mappedEvent)
           }
         }
       })

@@ -133,7 +133,7 @@ mappingService.mapProject = (data) => (
  */
 mappingService.mapBrickEvent = (data) => (
   {
-    entity: data.entity,
+    entity: data.entity, // type event
     action: data.action,
     brick: mappingService.mapBrick(data.data)
   }

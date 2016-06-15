@@ -4,6 +4,7 @@ import Promise from 'bluebird'
 
 import api from '../../commons/config'
 // import { user } from '../../commons/schemas'
+import websocketService from '../../services/websocket.service'
 import authService from '../../services/auth.service'
 import storageService from '../../services/storage.service'
 import ioService from '../../services/io.service'
@@ -43,6 +44,7 @@ export function requestAuthentication() {
   }
 }
 
+// FIXME DRY usage of websocket.initSocket
 export function login(username, password) {
   const token = authService.getToken()
   if (!token && username && password) {
@@ -60,16 +62,18 @@ export function login(username, password) {
             // get project config and project and redirect to project
             return dispatch(
               getProjectConfigAndProject(projectConfig.projectConfigId, projectConfig.projectId))
+                .then(() => websocketService.initSocket())
                 .then(Promise.resolve(browserHistory.push('/stacks')))
           }
           if (!projectConfig.projectId) {
             // TODO second case, project config has no project id
             // must redirect to project config stack, with a button to start it
-            return Promise.resolve()
+            return websocketService.initSocket()
           }
         }
         // if no ids, redirect to first project
-        return Promise.resolve(browserHistory.push('/firstProject'))
+        return websocketService.initSocket()
+          .then(() => Promise.resolve(browserHistory.push('/firstProject')))
       }
       throw new Error(data.payload.status)
     })
@@ -88,10 +92,11 @@ export function logout() {
   return dispatch => dispatch(resetAuthentication())
     .then(data => {
       if (!data.error) {
+        // reset auth
         authService.resetAuth()
-        // TODO TU
         storageService.clean()
-        return Promise.resolve(browserHistory.push('/login'))
+        return websocketService.stopSocket()
+          .then(() => Promise.resolve(browserHistory.push('/login')))
       }
       throw new Error(data.payload.status)
     })

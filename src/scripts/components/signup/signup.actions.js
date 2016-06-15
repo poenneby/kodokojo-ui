@@ -2,6 +2,7 @@ import { browserHistory } from 'react-router'
 import { CALL_API } from 'redux-api-middleware'
 
 import api from '../../commons/config'
+import websocketService from '../../services/websocket.service'
 import { getHeaders } from '../../services/io.service'
 import { setAuth, putAuth } from '../../services/auth.service'
 import { mapAccount } from '../../services/mapping.service'
@@ -88,12 +89,14 @@ export function createAccount(email) {
     })
     .then(data => {
       if (!data.error) {
+        // we set auth
         setAuth(data.payload.account.userName, data.payload.account.password)
         putAuth(data.payload.account.id)
         return Promise.resolve(browserHistory.push('/firstProject'))
       }
       throw new Error(data.payload.status)
     })
+    .then(() => websocketService.initSocket())
     .catch(error => {
       throw new Error(error.message)
     })
