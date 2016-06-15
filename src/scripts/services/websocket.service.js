@@ -20,7 +20,7 @@ websocketService.initSocket = () => new Promise((resolve, reject) => {
     // FIXME reroute ws call to express in dev, remove test on localhost:3000
     const uri =
       `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//` +
-      `${window.location.host === 'localhost:3000' ? '192.168.99.100:9080' : 'localhost'}${api.event}`
+      `${window.location.host === 'localhost:3000' ? '192.168.99.100:9080' : window.location.host}${api.event}`
     websocketService.startSocket(uri)
   }
 
