@@ -171,3 +171,11 @@
 .font-size--larger {
   font-size: $font-size-larger;
 }
+
+
+// utils classes
+.title--default {
+  font-weight: $font-weight-thin;
+  font-size: $font-size-large;
+  color: $color-secondary-1;
+}

@@ -18,16 +18,31 @@ export class Card extends Component {
       PropTypes.arrayOf(PropTypes.element),
       PropTypes.element,
       PropTypes.string
-    ])
+    ]),
+    row: PropTypes.bool,
+    small: PropTypes.bool,
+    standard: PropTypes.bool,
+    theme: PropTypes.object,
+    title: PropTypes.string
   }
 
   render() {
-    const { children } = this.props // eslint-disable-line no-shadow
+    const { children, row, small, standard, theme, title } = this.props // eslint-disable-line no-shadow
+
+    const contentClasses = classNames({
+      [theme['card-content--default']]: (!standard && !small),
+      [theme['card-content--standard']]: standard,
+      [theme['card-content--small']]: (small && !standard),
+      [theme['card-content--row']]: row
+    })
 
     return (
       <div
-        className={ cardContentTheme['card-content'] }
+        className={ contentClasses }
       >
+        <div className={ theme['content-title'] }>
+          { title }
+        </div>
         { children }
       </div>
     )

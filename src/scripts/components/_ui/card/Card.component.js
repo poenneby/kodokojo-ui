@@ -20,17 +20,21 @@ export class Card extends Component {
       PropTypes.string
     ]),
     className: PropTypes.string,
+    merged: PropTypes.bool,
     primary: PropTypes.bool,
+    row: PropTypes.bool,
     style: PropTypes.object,
     theme: PropTypes.object,
     title: PropTypes.string
   }
 
   render() {
-    const { children, className, primary, style, theme, title } = this.props // eslint-disable-line no-shadow
+    const { children, className, merged, primary, row, style, theme, title } = this.props // eslint-disable-line no-shadow
     const cardClasses = classNames(theme.card, {
+      [theme['card--merged']]: merged,
       [theme['card--primary']]: primary,
-      [theme['card--default']]: !primary
+      [theme['card--default']]: !primary,
+      [theme['card-row']]: row
     }, className)
 
     return (

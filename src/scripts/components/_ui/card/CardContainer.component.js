@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import { themr } from 'react-css-themr'
-import classNames from 'classnames'
 
 // component
 import { CARD_CONTAINER } from '../../../commons/identifiers'
@@ -26,7 +25,7 @@ export class CardContainer extends Component {
   }
 
   render() {
-    const { children, theme } = this.props // eslint-disable-line no-shadow
+    const { className, children, theme } = this.props // eslint-disable-line no-shadow
 
     return (
       <div

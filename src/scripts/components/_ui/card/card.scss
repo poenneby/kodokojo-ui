@@ -2,14 +2,30 @@
 
 .card {
   display: flex;
-  flex-direction: column;
+  flex-flow: column;
+  border-radius: $radius-standard;
   &:first-of-type {
-    border-top-left-radius: $radius-standard;
-    border-bottom-left-radius: $radius-standard;
+    margin-left: 0;
+  }
+}
+.card-row {
+  flex-flow: row;
+}
+.card--full-width {
+  flex: 1 1 100%;
+}
+.card--full-height {
+  
+}
+.card--merged {
+  margin: 0;
+  &:first-of-type {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
   }
   &:last-of-type {
-    border-top-right-radius: $radius-standard;
-    border-bottom-right-radius: $radius-standard;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
 }
 .card--default {
