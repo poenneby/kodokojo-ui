@@ -2,7 +2,7 @@
 
 .nav {
   display: flex;
-  flex: auto 0 0;
+  flex: 0 0 auto;
   color: $color-font-4;
   background: $color-primary-4;
   transition: transform .35s cubic-bezier(.4,0,.2,1),-webkit-transform .35s cubic-bezier(.4,0,.2,1);

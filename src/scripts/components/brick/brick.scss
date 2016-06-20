@@ -35,29 +35,29 @@
 
 .brick-type {
   @extend %brick-column;
-  flex: 15% 1 1;
+  flex: 1 1 15%;
 }
 
 .brick-name {
   @extend %brick-column;
-  flex: 20% 1 1;
+  flex: 1 1 20%;
   color: $color-font-6;
   font-weight: $font-weight-semi-bold;
 }
 
 .brick-state {
   @extend %brick-column;
-  flex: 15% 1 1;
+  flex: 1 1 15%;
 }
 
 .brick-version {
   @extend %brick-column;
-  flex: 15% 1 1;
+  flex: 1 1 15%;
 }
 
 .brick-link {
   @extend %brick-column;
-  flex: 35% 1 1;
+  flex: 1 1 35%;
   & a {
     color: $color-font-6;
     text-decoration: underline;
