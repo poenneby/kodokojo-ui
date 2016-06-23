@@ -5,7 +5,7 @@ import { storiesOf, action } from '@kadira/storybook'
 import Card from './Card.component.js'
 import CardContent from './CardContent.component.js'
 import CardContainer from './CardContainer.component.js'
-import theme from '../../../../styles/_utils.scss'
+import utils from '../../../../styles/_utils.scss'
 
 storiesOf('Card', module)
   .add('one card', () => (
@@ -129,7 +129,7 @@ storiesOf('Card', module)
             standard
           >
             <div
-              className={ theme['title--default'] }
+              className={ utils['title--default'] }
               style={{ flex: '0 40%' }}
             >{ 'First title'.toUpperCase() }</div>
             <div
