@@ -63,7 +63,7 @@ module.exports = {
           'style!css?modules&localIdentName=[name]---[local]---[hash:base64:5]&importLoaders=2!resolve-url!sass'
       },
       {
-        test: /\.jpg|png|svg$/, loader: 'file-loader?name=assets/images/[name].[ext]'
+        test: /\.jpg|gif|png|svg$/, loader: 'file-loader?name=assets/images/[name].[ext]'
       },
       {
         test: /\.ico$/, loader: 'file-loader?name=./[name].[ext]'

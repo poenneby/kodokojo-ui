@@ -67,7 +67,7 @@ module.exports = {
           'style!css?sourceMap&modules&localIdentName=[name]---[local]---[hash:base64:5]&importLoaders=2!resolve-url!sass?sourceMap'
       },
       {
-        test: /\.jpg|png|svg$/, loader: 'file-loader?name=assets/images/[name].[ext]'
+        test: /\.jpg|gif|png|svg$/, loader: 'file-loader?name=assets/images/[name].[ext]'
       },
       {
         test: /\.ico$/, loader: 'file-loader?name=./[name].[ext]'
