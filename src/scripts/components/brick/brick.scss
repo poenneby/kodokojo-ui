@@ -18,7 +18,6 @@
 }
 
 .brick-header {
-  //margin-bottom: 10px;
   // FIXME dirty
   &.brick-header .brick-column {
     color: $color-font-4;
@@ -65,8 +64,8 @@
 }
 
 img.brick-status {
+  width: 26px;
   height: 17px;
-  background-size: 100% 100%;
   opacity: 0;
   transition: opacity .7s ease-out;
 }
