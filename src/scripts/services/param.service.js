@@ -1,7 +1,8 @@
 import find from 'lodash/find'
 
+// status
 import statusDefault from '../../images/status-default-small.svg'
-import statusStarting from '../../images/status-starting-small.svg'
+import statusStarting from '../../images/status-starting-small.gif'
 import statusRunning from '../../images/status-running-small.svg'
 import statusFailure from '../../images/status-failure-small.svg'
 
