@@ -18,7 +18,6 @@ class SignupPage extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
     location: PropTypes.object.isRequired,
-    projectConfigId: PropTypes.string,
     setNavVisibility: PropTypes.func.isRequired
   }
 
@@ -73,10 +72,7 @@ class SignupPage extends Component {
 // SignupPage container
 const mapStateProps = (state, ownProps) => (
   {
-    location: ownProps.location,
-    projectConfigId: state.projectConfig.id,
-    projectConfigName: state.projectConfig.name,
-    stacks: state.projectConfig.stacks
+    location: ownProps.location
   }
 )
 

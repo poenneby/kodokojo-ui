@@ -7,9 +7,11 @@ import orderBy from 'lodash/orderBy'
 export const updateBricks = (prevBricks, bricks) => {
   const nextBricks = cloneDeep(prevBricks)
   if (bricks.length > []) {
-    bricks.forEach((brick) => {
-      const brickIndex = findIndex(prevBricks, { name: brick.name })
-      nextBricks[brickIndex] = brick
+    bricks.forEach(brick => {
+      if (brick) {
+        const brickIndex = findIndex(prevBricks, { name: brick.name })
+        nextBricks[brickIndex] = brick
+      }
     })
   }
   return nextBricks

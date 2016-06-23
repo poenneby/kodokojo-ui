@@ -24,7 +24,6 @@ export class StacksPage extends Component {
     intl: intlShape.isRequired,
     location: PropTypes.object.isRequired,
     projectConfigId: PropTypes.string,
-    projectConfigName: PropTypes.string,
     setNavVisibility: PropTypes.func.isRequired,
     stacks: PropTypes.array,
     updateMenuPath: PropTypes.func.isRequired,
@@ -40,7 +39,6 @@ export class StacksPage extends Component {
     const { getProjectConfig, location, projectConfigId, stacks, updateMenuPath } = this.props // eslint-disable-line no-shadow
 
     this.initNav()
-    this.initWebsocket()
     if (!stacks && projectConfigId) {
       // TODO if project id is defined, getProjectConfigAndProject
       // TODO add project id into object retuned by getProjectConfig end point
@@ -53,6 +51,10 @@ export class StacksPage extends Component {
     } else if (!projectConfigId) {
       // TODO no projectConfigId case
     }
+  }
+
+  componentDidMount = () => {
+    this.initWebsocket()
   }
 
   componentWillUnmount = () => {
@@ -127,8 +129,7 @@ export class StacksPage extends Component {
 const mapStateProps = (state, ownProps) => (
   {
     location: ownProps.location,
-    projectConfigId: state.projectConfig.id,
-    projectConfigName: state.projectConfig.name,
+    projectConfigId: state.projectConfig ? state.projectConfig.id : '',
     stacks: state.projectConfig.stacks
   }
 )
