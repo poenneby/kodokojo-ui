@@ -14,7 +14,7 @@ import brickDockerRegistry from '../../images/brick-docker-registry.svg'
 
 const enumBrickStatus = {
   CONFIGURING: {
-    label: 'STARTING',
+    label: 'CONFIGURING',
     image: statusStarting
   },
   STARTING: {
