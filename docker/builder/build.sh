@@ -10,6 +10,11 @@ rc=$?
 if [ "$rc" != 0 ]; then
   exit $rc
 fi
+npm run lint
+rc=$?
+if [ "$rc" != 0 ]; then
+  exit $rc
+fi
 npm test
 rc=$?
 if [ "$rc" != 0 ]; then

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# TODO get version from other file, automatically tag when build (replace package.json one)
 KODOKOJO_UI_VERSION="0.1.0"
 
 docker build --no-cache -t="kodokojo/kodokojo-ui:builder" docker/builder/
