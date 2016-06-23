@@ -104,8 +104,14 @@ describe('mapping service', () => {
   })
 
   describe('map stack', () => {
+    let reorderBricksSpy
+
+    beforeEach(() => {
+      reorderBricksSpy = sinon.stub(mappingService, 'reorderBricks', data => data)
+    })
+
     afterEach(() => {
-      mappingService.mapBrick.restore()
+      mappingService.reorderBricks.restore()
     })
 
     it('should map stack from project config', () => {
@@ -118,7 +124,6 @@ describe('mapping service', () => {
           'brick2'
         ]
       }
-      const mapBrickSpy = sinon.stub(mappingService, 'mapBrick', data => data)
 
       // When
       const returns = mappingService.mapStack(stackFromApi)
@@ -132,9 +137,8 @@ describe('mapping service', () => {
           'brick2'
         ]
       })
-      expect(mapBrickSpy).to.have.callCount(2)
-      expect(mapBrickSpy).to.have.been.calledWith('brick1')
-      expect(mapBrickSpy).to.have.been.calledWith('brick2')
+      expect(reorderBricksSpy).to.have.callCount(1)
+      expect(reorderBricksSpy).to.have.been.calledWith(stackFromApi.brickConfigs)
     })
 
     it('should map stack from project ', () => {
@@ -147,7 +151,6 @@ describe('mapping service', () => {
           'brick2'
         ]
       }
-      const mapBrickSpy = sinon.stub(mappingService, 'mapBrick', data => data)
 
       // When
       const returns = mappingService.mapStack(stackFromApi)
@@ -161,9 +164,8 @@ describe('mapping service', () => {
           'brick2'
         ]
       })
-      expect(mapBrickSpy).to.have.callCount(2)
-      expect(mapBrickSpy).to.have.been.calledWith('brick1')
-      expect(mapBrickSpy).to.have.been.calledWith('brick2')
+      expect(reorderBricksSpy).to.have.callCount(1)
+      expect(reorderBricksSpy).to.have.been.calledWith(stackFromApi.brickStates)
     })
   })
 
