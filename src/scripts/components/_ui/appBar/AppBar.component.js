@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { intlShape, injectIntl } from 'react-intl'
 import { themr } from 'react-css-themr'
 
 // UI library component
@@ -24,6 +25,7 @@ export class AppBar extends Component {
     ]),
     fixed: PropTypes.bool,
     flat: PropTypes.bool,
+    intl: intlShape.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
     onLogout: PropTypes.func.isRequired,
     theme: PropTypes.object
@@ -31,6 +33,7 @@ export class AppBar extends Component {
 
   render() {
     const { children, fixed, flat, isAuthenticated, onLogout, theme } = this.props // eslint-disable-line no-shadow
+    const { formatMessage } = this.props.intl
 
     return (
       <ToolboxAppBar
@@ -45,6 +48,7 @@ export class AppBar extends Component {
             icon="power_settings_new"
             onClick={ () => onLogout() }
             style={{ display: 'flex', selfAlign: 'flex-end' }}
+            title={ formatMessage({ id: 'logout-label' }) }
           />
         }
       </ToolboxAppBar>
@@ -52,4 +56,4 @@ export class AppBar extends Component {
   }
 }
 
-export default themr(APP_BAR, appBarTheme)(AppBar)
+export default themr(APP_BAR, appBarTheme)(injectIntl(AppBar))
