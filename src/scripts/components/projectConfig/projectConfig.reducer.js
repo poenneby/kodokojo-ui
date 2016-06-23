@@ -1,6 +1,6 @@
 import merge from 'lodash/merge'
 
-import { updateBricks } from '../../services/stateUpdate.service'
+import { updateBricks } from '../../services/stateUpdater.service.js'
 
 import {
   AUTH_RESET,
