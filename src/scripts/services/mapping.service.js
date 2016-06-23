@@ -1,3 +1,7 @@
+import toArray from 'lodash/toArray'
+import flatten from 'lodash/flatten'
+import groupBy from 'lodash/groupBy'
+
 const mappingService = {}
 
 // TODO TI
@@ -63,9 +67,9 @@ mappingService.mapStack = (data) => {
   return {
     type: data.type,
     name: data.name,
-    bricks: bricks ?
-      bricks.map(brick => mappingService.mapBrick(brick)).filter(brick => brick !== undefined) :
-      undefined
+    bricks: bricks && bricks.length > 0 ?
+      flatten(mappingService.reorderBricks(bricks)) :
+      []
   }
 }
 
@@ -139,6 +143,47 @@ mappingService.mapBrickEvent = (data) => (
   }
 )
 
+/**
+ * mapping for brick list
+ *
+ * @param {Array} data
+ * @returns {{bricks: array}} list of brick objects
+ */
+// TODO TU
+mappingService.mapBricksDetails = (data) => (
+  {
+    bricks: data.length ? mappingService.reorderBricks(data) : []
+  }
+)
+
+/**
+ * reorder bricks
+ *
+ * @param data
+ * @returns {Array} reordered array of bricks (SCM / CI / REPOSITORY)
+ */
+// TODO TU
+mappingService.reorderBricks = (data) => {
+  const groupedBricks = mappingService.groupBricks(data)
+  return toArray({
+    SCM: groupedBricks.SCM,
+    CI: groupedBricks.CI,
+    REPOSITORY: groupedBricks.REPOSITORY
+  })
+}
+
+/**
+ * group bricks by type
+ *
+ * @param data
+ * @returns {Object} filtered bricks and grouped by type
+ */
+// TODO TU
+mappingService.groupBricks = (data) => {
+  const bricks = data.map(brick => mappingService.mapBrick(brick)).filter(brick => brick !== undefined)
+  return groupBy(bricks, 'type')
+}
+
 
 // public API
 export const mapAccount = mappingService.mapAccount
@@ -147,5 +192,6 @@ export const mapProject = mappingService.mapProject
 export const mapProjectConfig = mappingService.mapProjectConfig
 export const mapProjectConfigId = mappingService.mapProjectConfigId
 export const mapBrickEvent = mappingService.mapBrickEvent
+export const mapBricksDetails = mappingService.mapBricksDetails
 
 export default mappingService

@@ -84,6 +84,11 @@
   color: $color-secondary-4;
 }
 
+// ternary colors
+.ternary-color--1 {
+  color: $color-ternary-1;
+}
+
 // fonts colors
 .font-color--1 {
   color: $color-font-1
@@ -170,4 +175,56 @@
 
 .font-size--larger {
   font-size: $font-size-larger;
+}
+
+// utils classes
+.title--default {
+  font-weight: $font-weight-thin;
+  font-size: $font-size-large;
+  color: $color-secondary-1;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+.content-gutter--default {
+  padding-left: $spacing-large;
+  padding-right: $spacing-standard;
+}
+
+.content-gutter--standard {
+  padding-left: $spacing-standard;
+  padding-right: $spacing-standard;
+}
+
+.content-gutter--small {
+  padding-left: $spacing-small;
+  padding-right: $spacing-small;
+}
+
+.content-gutter--smaller {
+  padding-left: $spacing-smaller;
+  padding-right: $spacing-smaller;
+}
+
+.content-spacer--standard {
+  padding-top: $spacing-standard;
+  padding-bottom: $spacing-standard;
+}
+
+.content-spacer--small {
+  padding-top: $spacing-smallest;
+  padding-bottom: $spacing-smallest;
+}
+
+.icon--large {
+  padding: 0;
+  margin: 0;
+  font-size: 140px !important;
+  color: $color-font-1;
 }

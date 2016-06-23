@@ -171,5 +171,12 @@ storiesOf('Colors', module)
           .secondary-color--4
         </div>
       </div>
+      <div style={{ margin: '30px' }}>
+        Ternary colors
+        <div
+          className={ utilsTheme['ternary-color--1'] }>
+          .ternary-color--1
+        </div>
+      </div>
     </div>
   ))

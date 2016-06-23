@@ -29,11 +29,12 @@ If you are running Kodo Kojo backend in local mode, set variables as follow:
     BABEL_ENV=development
     BUILD_ENV=development
     
-If you are running Kodo Kojo backend that reroute to AWS instance, set variables as follow:
+If you are running Kodo Kojo backend that reroute to AWS instance, set variables as follow:  
+**// FIXME BROKEN**
 
-    NODE_ENV=local
+    NODE_ENV=development
     BABEL_ENV=development
-    BUILD_ENV=development
+    BUILD_ENV=production
 
 
 First install npm packages, build development files into static/, start webpack dev server on localhost:3000.
@@ -52,9 +53,10 @@ In any case, you will need to run Kodo Kojo backend to be able to test and devel
 
 ### Local "production"
 
-Set environment variables to:
+Set environment variables to:  
+**// FIXME BROKEN**
 
-    NODE_ENV=local
+    NODE_ENV=development
     BABEL_ENV=production
     BUILD_ENV=production
 

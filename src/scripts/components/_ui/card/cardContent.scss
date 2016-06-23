@@ -1,6 +1,27 @@
 @import '../../../../styles/meta';
 
-.card-content {
+%content-p {
+  padding-bottom: $spacing-smaller;
+  color: $color-font-3;
+}
+
+%card-content {
+  display: flex;
+  flex-flow: column;
+}
+
+.card-content--row {
+  flex-flow: row;
+  align-items: center;
+  width: 100%;
+}
+
+.card-content--raw {
+  @extend %card-content;
+}
+
+.card-content--default {
+  @extend %card-content;
   padding-left: $spacing-large;
   padding-right: $spacing-standard;
   &:first-child {
@@ -8,7 +29,42 @@
   }
   padding-bottom: $spacing-small;
   p {
-    padding-bottom: $spacing-smaller;
-    color: $color-font-3;
+    @extend %content-p
   }
+}
+
+.card-content--standard {
+  @extend %card-content;
+  padding-left: $spacing-standard;
+  padding-right: $spacing-standard;
+  &:first-child {
+    padding-top: $spacing-standard;
+  }
+  &:last-child {
+    padding-bottom: $spacing-standard;
+  }
+  p {
+    @extend %content-p
+  }
+}
+
+.card-content--small {
+  @extend %card-content;
+  padding-left: $spacing-small;
+  padding-right: $spacing-small;
+  &:first-child {
+    padding-top: $spacing-smallest;
+  }
+  &:last-child {
+    padding-bottom: $spacing-smallest;
+  }
+  p {
+    @extend %content-p
+  }
+}
+
+.content-title {
+  font-weight: $font-weight-thin;
+  font-size: $font-size-large;
+  color: $color-secondary-1;
 }

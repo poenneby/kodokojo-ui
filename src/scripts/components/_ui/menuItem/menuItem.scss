@@ -92,7 +92,7 @@ a.menu-item:link {
     align-items: center;
     justify-content: center;
     height: 100%;
-    flex: 75% 1 1;
+    flex: 1 1 75%;
     color: $color-font-3;
   }
   .menu-number {
@@ -100,7 +100,7 @@ a.menu-item:link {
     align-items: center;
     justify-content: flex-start;
     height: 100%;
-    flex: 25% 1 1;
+    flex: 1 1 25%;
     font-size: $font-size-large;
     font-weight: $font-weight-bold;
     color: $color-font-3;

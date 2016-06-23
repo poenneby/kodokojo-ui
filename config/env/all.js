@@ -21,10 +21,11 @@ const all = {
   api: {
     host: localApiHost ? `http://${localApiHost}` : undefined,
     routes: {
-      user: `${api.user}`,
+      brick: `${api.brick}`,
+      event: `${api.event}`,
       projectConfig: `${api.projectConfig}`,
       project: `${api.project}`,
-      event: `${api.event}`
+      user: `${api.user}`
     }
   }
 }

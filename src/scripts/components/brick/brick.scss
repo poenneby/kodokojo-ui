@@ -18,7 +18,6 @@
 }
 
 .brick-header {
-  //margin-bottom: 10px;
   // FIXME dirty
   &.brick-header .brick-column {
     color: $color-font-4;
@@ -35,29 +34,29 @@
 
 .brick-type {
   @extend %brick-column;
-  flex: 15% 1 1;
+  flex: 1 1 15%;
 }
 
 .brick-name {
   @extend %brick-column;
-  flex: 20% 1 1;
+  flex: 1 1 20%;
   color: $color-font-6;
   font-weight: $font-weight-semi-bold;
 }
 
 .brick-state {
   @extend %brick-column;
-  flex: 15% 1 1;
+  flex: 1 1 15%;
 }
 
 .brick-version {
   @extend %brick-column;
-  flex: 15% 1 1;
+  flex: 1 1 15%;
 }
 
 .brick-link {
   @extend %brick-column;
-  flex: 35% 1 1;
+  flex: 1 1 35%;
   & a {
     color: $color-font-6;
     text-decoration: underline;
@@ -65,8 +64,8 @@
 }
 
 img.brick-status {
+  width: 26px;
   height: 17px;
-  background-size: 100% 100%;
   opacity: 0;
   transition: opacity .7s ease-out;
 }

@@ -1,9 +1,10 @@
 import api from './api.versions'
 
 export default {
-  user: `${api.v1}/user`,
+  brick: `${api.v1}/brick`,
+  event: `${api.v1}/event`,
+  project: `${api.v1}/project`,
   projectConfig: `${api.v1}/projectconfig`,
   projectConfigUser: '/user',
-  project: `${api.v1}/project`,
-  event: `${api.v1}/event`
+  user: `${api.v1}/user`
 }

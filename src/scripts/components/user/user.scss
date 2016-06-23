@@ -9,7 +9,7 @@
   padding-right: 20px;
   div[data-react-toolbox="avatar"] {
     display: flex;
-    flex: 40px 0 0;
+    flex: 0 0 40px;
     align-items: center;
     height: 40px;
     width: 40px;
@@ -47,17 +47,17 @@
 
 .user-name {
   @extend %user-column;
-  flex: 40% 1 1;
+  flex: 1 1 40%;
 }
 .user-username {
   @extend %user-column;
-  flex: 20% 1 1;
+  flex: 1 1 20%;
 }
 .user-group {
   @extend %user-column;
-  flex: 15% 1 1;
+  flex: 1 1 15%;
 }
 .user-email {
   @extend %user-column;
-  flex: 25% 1 1;
+  flex: 1 1 25%;
 }

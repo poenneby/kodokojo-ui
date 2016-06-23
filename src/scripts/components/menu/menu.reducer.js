@@ -3,7 +3,7 @@ import {
   MENU_SET,
   MENU_UPDATE
 } from '../../commons/constants'
-import { updateMenu } from '../../services/stateUpdate.service'
+import { updateMenu } from '../../services/stateUpdater.service.js'
 
 const stateDefault = []
 

@@ -1,9 +1,16 @@
 import find from 'lodash/find'
 
+// status
 import statusDefault from '../../images/status-default-small.svg'
-import statusStarting from '../../images/status-starting-small.svg'
+import statusStarting from '../../images/status-starting-small.gif'
 import statusRunning from '../../images/status-running-small.svg'
 import statusFailure from '../../images/status-failure-small.svg'
+
+// bricks
+import brickGitlab from '../../images/brick-gitlab.svg'
+import brickJenkins from '../../images/brick-jenkins.svg'
+import brickNexus from '../../images/brick-nexus.svg'
+import brickDockerRegistry from '../../images/brick-docker-registry.svg'
 
 const enumBrickStatus = {
   CONFIGURING: {
@@ -37,4 +44,27 @@ export const getBrickStatus = (state) => (
     label: 'DEFAULT',
     image: statusDefault
   }
+)
+
+const enumBrickLogos = {
+  GITLAB: {
+    name: 'gitlab',
+    image: brickGitlab
+  },
+  JENKINS: {
+    name: 'jenkins',
+    image: brickJenkins
+  },
+  NEXUS: {
+    name: 'nexus',
+    image: brickNexus
+  },
+  DOCKERREGISTRY: {
+    name: 'dockerregistry',
+    image: brickDockerRegistry
+  }
+}
+
+export const getBrickLogo = (state) => (
+  find(enumBrickLogos, { name: state.name }) || undefined
 )

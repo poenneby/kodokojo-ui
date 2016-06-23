@@ -38,6 +38,7 @@ class SignupPage extends Component {
     return (
       <CardContainer>
         <Card
+          merged
           primary
           style={{ width: '400px', height: '370px', overflow: 'hidden' }}
           title={ formatMessage({ id: 'signup-title-label' }) }
@@ -47,6 +48,7 @@ class SignupPage extends Component {
           </CardContent>
         </Card>
         <Card
+          merged
           style={{ width: '400px', height: '370px', overflow: 'hidden' }}
           title={ formatMessage({ id: 'login-title-label' }) }
         >
@@ -54,11 +56,13 @@ class SignupPage extends Component {
             <p>
               <FormattedMessage id={'signup-to-login-text'}/>
             </p>
-            <Button
-              label={ formatMessage({ id: 'login-label' }) }
-              onClick={ () => browserHistory.push('/login') }
-              title={ formatMessage({ id: 'login-label' }) }
-            />
+            <div>
+              <Button
+                label={ formatMessage({ id: 'login-label' }) }
+                onClick={ () => browserHistory.push('/login') }
+                title={ formatMessage({ id: 'login-label' }) }
+              />
+            </div>
           </CardContent>
         </Card>
       </CardContainer>

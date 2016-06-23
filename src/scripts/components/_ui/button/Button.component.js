@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 
 // UI library component
 import { Button as ToolboxButton } from 'react-toolbox/lib/button'

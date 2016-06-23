@@ -3,21 +3,23 @@ import { routerReducer } from 'react-router-redux'
 import { reducer as formReducer } from 'redux-form'
 
 import auth from '../components/auth/auth.reducer.js'
-import signup from '../components/signup/signup.reducer'
+import bricks from '../components/brick/brick.reducer.js'
 import login from '../components/login/login.reducer'
+import menu from '../components/menu/menu.reducer'
 import prefs from '../components/app/app.reducer'
 import projectConfig from '../components/projectConfig/projectConfig.reducer'
+import signup from '../components/signup/signup.reducer'
 import users from '../components/user/user.reducer'
-import menu from '../components/menu/menu.reducer'
 
 const rootReducer = combineReducers({
   auth,
-  signup,
+  bricks,
   login,
+  menu,
   prefs,
   projectConfig,
+  signup,
   users,
-  menu,
   form: formReducer,
   routing: routerReducer
 })

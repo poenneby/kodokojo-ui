@@ -1,9 +1,12 @@
 import merge from 'lodash/merge'
 
-import { updateBricks } from '../../services/stateUpdate.service'
+import { updateBricks } from '../../services/stateUpdater.service.js'
 
 import {
   AUTH_RESET,
+  PROJECT_CONFIG_REQUEST,
+  PROJECT_CONFIG_SUCCESS,
+  PROJECT_CONFIG_FAILURE,
   PROJECT_CONFIG_NEW_REQUEST,
   PROJECT_CONFIG_NEW_SUCCESS,
   PROJECT_CONFIG_NEW_FAILURE,
@@ -19,14 +22,14 @@ const initialState = {
 }
 
 export default function projectConfig(state = initialState, action) {
-  if (action.type === PROJECT_CONFIG_NEW_REQUEST) {
+  if (action.type === PROJECT_CONFIG_NEW_REQUEST || action.type === PROJECT_CONFIG_REQUEST) {
     return {
       ...state,
       isFetching: true
     }
   }
 
-  if (action.type === PROJECT_CONFIG_NEW_SUCCESS) {
+  if (action.type === PROJECT_CONFIG_NEW_SUCCESS || action.type === PROJECT_CONFIG_SUCCESS) {
     return merge(
       {},
       state,
@@ -37,7 +40,7 @@ export default function projectConfig(state = initialState, action) {
     )
   }
 
-  if (action.type === PROJECT_CONFIG_NEW_FAILURE) {
+  if (action.type === PROJECT_CONFIG_NEW_FAILURE || action.type === PROJECT_CONFIG_FAILURE) {
     // TODO
     return {
       ...state,

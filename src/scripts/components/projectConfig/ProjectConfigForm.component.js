@@ -2,15 +2,23 @@ import React, { Component, PropTypes } from 'react'
 import { compose } from 'redux'
 import { reduxForm } from 'redux-form'
 import { combineValidators } from 'revalidate'
-import { intlShape, injectIntl } from 'react-intl'
+import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
+import classNames from 'classnames'
 
-// UI
-import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton'
-
+// component
+import '../../../styles/_commons.less'
+import utilsTheme from '../../../styles/_utils.scss'
+import Card from '../_ui/card/Card.component'
+import CardContent from '../_ui/card/CardContent.component'
+import CardContainer from '../_ui/card/CardContainer.component'
+import Input from '../_ui/input/Input.component'
+import Checkbox from '../_ui/checkbox/Checkbox.component'
+import Button from '../_ui/button/Button.component'
+import FontIcon from '../_ui/fontIcon/FontIcon.component'
 import { createProjectConfig } from './projectConfig.actions'
 import { projectNameValidator } from '../../services/validator.service'
 import { returnErrorKey } from '../../services/error.service'
+import { getBrickLogo } from '../../services/param.service'
 
 // validation function
 const validate = combineValidators({
@@ -22,6 +30,7 @@ const validate = combineValidators({
 export class ProjectConfigForm extends Component {
 
   static propTypes = {
+    bricks: PropTypes.object,
     createProjectConfig: PropTypes.func.isRequired,
     fields: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
@@ -49,39 +58,172 @@ export class ProjectConfigForm extends Component {
   }
 
   render() {
-    const { fields: { projectName, projectUsers }, handleSubmit, submitting } = this.props // eslint-disable-line no-shadow
+    const { bricks, fields: { projectName, projectUsers }, handleSubmit, submitting } = this.props // eslint-disable-line no-shadow
     const { formatMessage } = this.props.intl
+
+    const bricksDetails = bricks && bricks.list && Object.keys(bricks.list).length ? bricks.list : undefined
 
     return (
       <form id="projectForm"
             name="projectForm"
             onSubmit={ handleSubmit(this.handleSubmit) }
       >
-        <TextField
-          { ...projectName }
-          errorText={
-            projectName.touched && projectName.error ?
-            formatMessage({ id: projectName.error }, { fieldName: formatMessage({ id: 'project-name-label' }) }) :
-            ''
-          }
-          floatingLabelText={ formatMessage({ id: 'project-name-label' }) }
-          hintText={ formatMessage({ id: 'project-name-hint-label' }) }
-          name="projectName"
-          type="text"
-        /><br />
-        <input
-          {...projectUsers}
-          id="projectUsers"
-          name="projectUsers"
-          type="hidden"
-        />
-        <RaisedButton
-          className="form-submit"
-          disabled={submitting}
-          label={ formatMessage({ id: 'project-config-create-button-label' }) }
-          primary
-          type="submit"
-        /><br/>
+        <CardContainer>
+          <div style={{ display: 'block', overflow: 'auto', width: '100%', height: '100%' }}>
+            <div style={{ display: 'flex', flexFlow: 'row' }}>
+              <Card
+                primary
+                row
+                style={{ flex: '1 100%', marginBottom: '10px' }}
+              >
+                <CardContent
+                  className={ utilsTheme['content-gutter--standard'] }
+                  raw
+                  row
+                >
+                  <div
+                    className={ classNames(utilsTheme['title--default'], utilsTheme['content-spacer--standard']) }
+                    style={{ flex: '0 220px' }}
+                  >
+                    <span className={ utilsTheme['text-uppercase'] }>
+                      <FormattedMessage id={ 'project-add-label' }/>
+                    </span>
+                  </div>
+                  <div
+                    style={{ flex: '0 60%', paddingTop: '20px' }}
+                  >
+                    <div style={{ width: '50%' }}>
+                      <Input
+                        { ...projectName }
+                        error={
+                          projectName.touched && projectName.error ?
+                          formatMessage({ id: projectName.error }, { fieldName: formatMessage({ id: 'project-name-label' }) }) :
+                          ''
+                        }
+                        label={ formatMessage({ id: 'project-name-label' }) }
+                        name="projectName"
+                        required
+                        type="text"
+                      />
+                      <input
+                        {...projectUsers}
+                        id="projectUsers"
+                        name="projectUsers"
+                        type="hidden"
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'no-wrap', justifyContent: 'stretch' }}>
+              <div style={{ display: 'flex', flex: '0 200px', flexFlow: 'column', alignItems: 'stretch', justifyContent: 'stretch' }}>
+                <Card
+                  style={{ height: '100%', marginRight: '10px' }}
+                >
+                  <CardContent
+                    className={ utilsTheme['content-gutter--standard'] }
+                    raw
+                  >
+                    <div
+                      className={ utilsTheme['content-spacer--standard'] }
+                      style={{ display: 'flex', flexFlow: 'column wrap', alignItems: 'flex-start' }}
+                    >
+                      <div
+                        style={{ display: 'flex', flexFlow: 'column wrap', alignItems: 'center', flex: '1 100%' }}
+                      >
+                        <div
+                          className={ classNames(utilsTheme['title--default']) }
+                        >
+                          <span className={ utilsTheme['text-uppercase'] }>
+                            <FormattedMessage id={ 'stack-bricks-label' }/>
+                          </span>
+                        </div>
+                        <FontIcon
+                          className={ utilsTheme['icon--large'] }
+                          value="layers"
+                        />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+              <div style={{ display: 'flex', flex: '1 60%', flexFlow: 'column' }} >
+                <div style={{ display: 'flex', flexFlow: 'column', flex: '1 100%' }}>
+                  { bricksDetails && bricksDetails.length > 0 &&
+                    bricksDetails.map((brickType, brickTypeIndex) => (
+                      <div
+                        key={ brickTypeIndex }
+                        style={{ dispay: 'flex', flex: '1 100%', flewFlow: 'column' }}
+                      >
+                        <Card
+                        style={ brickTypeIndex > 0 ?
+                          { flex: '1 1 100%', justifyContent: 'center', alignItems: 'stretch', display: 'flex',
+                            height: 'calc(100% - 10px)', marginTop: '10px' } :
+                          { flex: '1 1 100%', justifyContent: 'center', alignItems: 'stretch', display: 'flex', height: '100%' }
+                        }
+                      >
+                        <CardContent
+                          className={ utilsTheme['content-gutter--smaller'] }
+                          raw
+                          row
+                        >
+                          <div
+                            style={{ flex: '1 30%' }}
+                          >
+                            <div
+                              className={ classNames(utilsTheme['title--default']) }
+                            >
+                              <FormattedMessage id={ `${brickType[0].type.toLowerCase()}-label` }/>
+                            </div>
+                          </div>
+                          <div
+                            style={{ flex: '1 70%' }}
+                          >
+                            { brickType.length > 0 &&
+                              brickType.map((brick, brickIndex) => (
+                                <div
+                                  key={ brickIndex }
+                                  style={{ display: 'flex', minHeight: '70px', alignItems: 'center' }}
+                                >
+                                  <Checkbox
+                                    // TODO wire checkbox value on form when needed (multiple rick choices)
+                                    checked
+                                    disabled={ brickType.length < 2 }
+                                    label={
+                                      <span style={{ display: 'flex', flexFlow: 'row', alignItems: 'center' }}>
+                                        { getBrickLogo(brick).image &&
+                                          <img src={ getBrickLogo(brick).image } style={{ width: '70px', height: '70px' }} />
+                                        }
+                                        <span className={ utilsTheme['text-capitalize'] }>
+                                          <FormattedMessage id={ `brick-${getBrickLogo(brick).name}-label` } />
+                                        </span>
+                                      </span>
+                                    }
+                                  />
+                                </div>
+                              ))
+                            }
+                          </div>
+                        </CardContent>
+                      </Card>
+                      </div>
+                    ))
+                  }
+                </div>
+              </div>
+            </div>
+            <div style={{ display: 'flex', flexFlow: 'row wrap', justifyContent: 'flex-end', marginTop: '10px' }}>
+              <Button
+                disabled={ submitting }
+                label={ formatMessage({ id: 'create-label' }) }
+                primary
+                title={ formatMessage({ id: 'create-label' }) }
+                type="submit"
+              />
+            </div>
+          </div>
+        </CardContainer>
       </form>
     )
   }
@@ -90,6 +232,7 @@ export class ProjectConfigForm extends Component {
 // ProjectConfigForm container
 const mapStateProps = (state) => (
   {
+    bricks: state.bricks,
     userId: state.auth.account && state.auth.account.id ? state.auth.account.id : ''
   }
 )

@@ -10,11 +10,15 @@ import nock from 'nock'
 import thunk from 'redux-thunk'
 import { apiMiddleware } from 'redux-api-middleware'
 import configureMockStore from 'redux-mock-store'
+import Promise from 'bluebird'
 
 import api from '../../commons/config'
 import * as actions from './projectConfig.actions'
 import { __RewireAPI__ as actionsRewireApi } from './projectConfig.actions'
 import {
+  PROJECT_CONFIG_REQUEST,
+  PROJECT_CONFIG_SUCCESS,
+  PROJECT_CONFIG_FAILURE,
   PROJECT_CONFIG_NEW_REQUEST,
   PROJECT_CONFIG_NEW_SUCCESS,
   PROJECT_CONFIG_NEW_FAILURE,
@@ -55,16 +59,11 @@ describe('project config actions', () => {
 
   describe('create project config', () => {
     let getProjectConfigSpy
-
-    beforeEach(() => {
-      getProjectConfigSpy = sinon.stub().returns({
-        type: 'MOCKED_ACTION'
-      })
-      actionsRewireApi.__Rewire__('getProjectConfig', getProjectConfigSpy)
-    })
+    let createProjectSpy
 
     afterEach(() => {
       actionsRewireApi.__ResetDependency__('getProjectConfig')
+      actionsRewireApi.__ResetDependency__('createProject')
     })
 
     it('should create project config', (done) => {
@@ -72,6 +71,14 @@ describe('project config actions', () => {
       const projectConfigName = 'Acme'
       const projectConfigAdmins = ['idUs3r']
       const projectConfigId = 'projectId'
+      getProjectConfigSpy = sinon.stub().returns({
+        type: 'MOCKED_GET_PROJECT_CONFIG'
+      })
+      actionsRewireApi.__Rewire__('getProjectConfig', getProjectConfigSpy)
+      createProjectSpy = sinon.stub().returns({
+        type: 'MOCKED_CREATE_PROJECT'
+      })
+      actionsRewireApi.__Rewire__('createProject', createProjectSpy)
       const expectedActions = [
         {
           type: PROJECT_CONFIG_NEW_REQUEST,
@@ -88,7 +95,10 @@ describe('project config actions', () => {
           meta: undefined
         },
         {
-          type: 'MOCKED_ACTION'
+          type: 'MOCKED_GET_PROJECT_CONFIG'
+        },
+        {
+          type: 'MOCKED_CREATE_PROJECT'
         }
       ]
       nock('http://localhost')
@@ -96,18 +106,24 @@ describe('project config actions', () => {
         .reply(201, () => projectConfigId)
 
       // When
-      const store = mockStore({})
+      const store = mockStore({
+        projectConfig: {
+          id: projectConfigId
+        }
+      })
 
       // Then
       return store.dispatch(actions.createProjectConfig(projectConfigName, projectConfigAdmins))
         .then(() => {
           expect(store.getActions()).to.deep.equal(expectedActions)
-          expect(historyPushSpy).to.have.callCount(1)
-          expect(historyPushSpy).to.have.been.calledWith('/projectConfig')
           expect(getHeadersSpy).to.have.callCount(1)
           expect(mapProjectConfigSpy).to.have.callCount(0)
           expect(getProjectConfigSpy).to.have.callCount(1)
-          expect(getProjectConfigSpy).to.have.calledWith(projectConfigId)
+          expect(getProjectConfigSpy).to.have.been.calledWith(projectConfigId)
+          expect(createProjectSpy).to.have.callCount(1)
+          expect(createProjectSpy).to.have.been.calledWith(projectConfigId)
+          expect(historyPushSpy).to.have.callCount(1)
+          expect(historyPushSpy).to.have.been.calledWith('/stacks')
           done()
         })
         .catch(done)
@@ -154,12 +170,12 @@ describe('project config actions', () => {
       actionsRewireApi.__Rewire__('mapProjectConfig', mapProjectConfigSpy)
       const expectedActions = [
         {
-          type: PROJECT_CONFIG_NEW_REQUEST,
+          type: PROJECT_CONFIG_REQUEST,
           payload: undefined,
           meta: undefined
         },
         {
-          type: PROJECT_CONFIG_NEW_SUCCESS,
+          type: PROJECT_CONFIG_SUCCESS,
           payload: {
             projectConfig
           },
@@ -181,7 +197,9 @@ describe('project config actions', () => {
         ))
 
       // When
-      const store = mockStore({})
+      const store = mockStore({
+        projectConfig
+      })
 
       // Then
       return store.dispatch(actions.getProjectConfig(projectConfigId))

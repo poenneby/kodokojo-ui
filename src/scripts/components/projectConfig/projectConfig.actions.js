@@ -6,9 +6,12 @@ import api from '../../commons/config'
 import { getHeaders } from '../../services/io.service'
 import { mapProjectConfig } from '../../services/mapping.service'
 import { createUser, getUser } from '../user/user.actions'
-import { getProject } from '../project/project.actions'
+import { createProject, getProject } from '../project/project.actions'
 import { initMenu } from '../menu/menu.actions'
 import {
+  PROJECT_CONFIG_REQUEST,
+  PROJECT_CONFIG_SUCCESS,
+  PROJECT_CONFIG_FAILURE,
   PROJECT_CONFIG_NEW_REQUEST,
   PROJECT_CONFIG_NEW_SUCCESS,
   PROJECT_CONFIG_NEW_FAILURE,
@@ -17,7 +20,6 @@ import {
   PROJECT_CONFIG_ADD_USER_FAILURE
 } from '../../commons/constants'
 
-// TODO use a different action key for fetch, not NEW but PROJECT_CONFIG_(REQUEST/SUCCESS/FAILURE)
 export function fetchProjectConfig(projectConfigId) {
   return {
     [CALL_API]: {
@@ -27,9 +29,9 @@ export function fetchProjectConfig(projectConfigId) {
       `${window.location.host || 'localhost'}${api.projectConfig}/${projectConfigId}`,
       headers: getHeaders(),
       types: [
-        PROJECT_CONFIG_NEW_REQUEST,
+        PROJECT_CONFIG_REQUEST,
         {
-          type: PROJECT_CONFIG_NEW_SUCCESS,
+          type: PROJECT_CONFIG_SUCCESS,
           payload: (action, state, res) => res.json()
             .then(projectConfig => (
               {
@@ -37,14 +39,14 @@ export function fetchProjectConfig(projectConfigId) {
               }
             ))
         },
-        PROJECT_CONFIG_NEW_FAILURE
+        PROJECT_CONFIG_FAILURE
       ]
     }
   }
 }
 
 export function getProjectConfig(projectConfigId) {
-  return dispatch => dispatch(fetchProjectConfig(projectConfigId))
+  return (dispatch, getState) => dispatch(fetchProjectConfig(projectConfigId))
     .then(data => {
       if (!data.error) {
         const promises = []
@@ -52,10 +54,17 @@ export function getProjectConfig(projectConfigId) {
           data.payload.projectConfig.users.forEach((userId) => {
             promises.push(dispatch(getUser(userId)))
           })
-          Promise.all(promises)
+          return Promise.all(promises)
         }
-        if (data.payload.projectConfig && data.payload.projectConfig.name) {
-          return Promise.resolve(dispatch(initMenu(data.payload.projectConfig.name)))
+        return Promise.resolve(data)
+      }
+      throw new Error(data.payload.status)
+    })
+    .then(data => {
+      if (!data.error) {
+        const projectConfigState = getState().projectConfig
+        if (projectConfigState && projectConfigState.name) {
+          return Promise.resolve(dispatch(initMenu(projectConfigState.name)))
         }
         return Promise.resolve(data)
       }
@@ -119,14 +128,25 @@ export function requestProjectConfig(projectConfigName, projectConfigOwner, proj
 }
 
 export function createProjectConfig(projectConfigName, projectConfigOwner, projectConfigUsers) {
-  return dispatch => dispatch(requestProjectConfig(projectConfigName, projectConfigOwner, projectConfigUsers))
+  return (dispatch, getState) => dispatch(requestProjectConfig(projectConfigName, projectConfigOwner, projectConfigUsers))
     .then(data => {
       if (!data.error) {
         return dispatch(getProjectConfig(data.payload.projectConfig.id))
       }
       throw new Error(data.payload.status)
     })
-    .then(Promise.resolve(browserHistory.push('/projectConfig')))
+    .then(data => {
+      if (!data.error) {
+        return dispatch(createProject(getState().projectConfig.id))
+      }
+      throw new Error(data.payload.status)
+    })
+    .then(data => {
+      if (!data.error) {
+        return Promise.resolve(browserHistory.push('/stacks'))
+      }
+      throw new Error(data.payload.status)
+    })
     .catch(error => {
       throw new Error(error.message)
     })
