@@ -28,7 +28,6 @@ import App from './scripts/components/app/App.component'
 import SignupPage from './scripts/pages/Signup.page.js'
 import LoginPage from './scripts/pages/Login.page'
 import FirstProjectPage from './scripts/pages/FirstProject.page'
-import ProjectConfigPage from './scripts/pages/ProjectConfigPage'
 import StacksPage from './scripts/pages/Stacks.page'
 import MembersPage from './scripts/pages/Members.page'
 import UsersPage from './scripts/pages/UsersPage'
@@ -71,11 +70,6 @@ const initApp = () => {
               component={FirstProjectPage}
               onEnter={AuthService.checkAuth}
               path="firstProject"
-            />
-            <Route
-              component={ProjectConfigPage}
-              onEnter={AuthService.checkAuth}
-              path="projectConfig"
             />
             <Route
               component={StacksPage}
