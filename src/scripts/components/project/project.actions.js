@@ -89,12 +89,6 @@ export function createProject(projectConfigId) {
       }
       throw new Error(data.payload.status)
     })
-    .then(data => {
-      if (!data.error) {
-        return Promise.resolve(browserHistory.push('/stacks'))
-      }
-      throw new Error(data.payload.status)
-    })
     .catch(error => {
       throw new Error(error.message)
     })
