@@ -46,7 +46,7 @@ export class Brick extends Component {
         </div>
         <div className={ theme['brick-link'] }>
           { brick && brick.url ?
-            <a href={ brick.url }>{ brick.url }</a> :
+            <a href={ brick.url } target="_blank">{ brick.url }</a> :
             '-'
           }
         </div>
