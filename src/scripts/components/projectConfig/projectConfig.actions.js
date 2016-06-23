@@ -9,6 +9,9 @@ import { createUser, getUser } from '../user/user.actions'
 import { getProject } from '../project/project.actions'
 import { initMenu } from '../menu/menu.actions'
 import {
+  PROJECT_CONFIG_REQUEST,
+  PROJECT_CONFIG_SUCCESS,
+  PROJECT_CONFIG_FAILURE,
   PROJECT_CONFIG_NEW_REQUEST,
   PROJECT_CONFIG_NEW_SUCCESS,
   PROJECT_CONFIG_NEW_FAILURE,
@@ -17,7 +20,6 @@ import {
   PROJECT_CONFIG_ADD_USER_FAILURE
 } from '../../commons/constants'
 
-// TODO use a different action key for fetch, not NEW but PROJECT_CONFIG_(REQUEST/SUCCESS/FAILURE)
 export function fetchProjectConfig(projectConfigId) {
   return {
     [CALL_API]: {
@@ -27,9 +29,9 @@ export function fetchProjectConfig(projectConfigId) {
       `${window.location.host || 'localhost'}${api.projectConfig}/${projectConfigId}`,
       headers: getHeaders(),
       types: [
-        PROJECT_CONFIG_NEW_REQUEST,
+        PROJECT_CONFIG_REQUEST,
         {
-          type: PROJECT_CONFIG_NEW_SUCCESS,
+          type: PROJECT_CONFIG_SUCCESS,
           payload: (action, state, res) => res.json()
             .then(projectConfig => (
               {

@@ -10,11 +10,15 @@ import nock from 'nock'
 import thunk from 'redux-thunk'
 import { apiMiddleware } from 'redux-api-middleware'
 import configureMockStore from 'redux-mock-store'
+import Promise from 'bluebird'
 
 import api from '../../commons/config'
 import * as actions from './projectConfig.actions'
 import { __RewireAPI__ as actionsRewireApi } from './projectConfig.actions'
 import {
+  PROJECT_CONFIG_REQUEST,
+  PROJECT_CONFIG_SUCCESS,
+  PROJECT_CONFIG_FAILURE,
   PROJECT_CONFIG_NEW_REQUEST,
   PROJECT_CONFIG_NEW_SUCCESS,
   PROJECT_CONFIG_NEW_FAILURE,
@@ -154,12 +158,12 @@ describe('project config actions', () => {
       actionsRewireApi.__Rewire__('mapProjectConfig', mapProjectConfigSpy)
       const expectedActions = [
         {
-          type: PROJECT_CONFIG_NEW_REQUEST,
+          type: PROJECT_CONFIG_REQUEST,
           payload: undefined,
           meta: undefined
         },
         {
-          type: PROJECT_CONFIG_NEW_SUCCESS,
+          type: PROJECT_CONFIG_SUCCESS,
           payload: {
             projectConfig
           },
