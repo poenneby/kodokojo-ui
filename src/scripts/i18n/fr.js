@@ -34,7 +34,7 @@ export default {
   'project-config-owner-label': 'Created by',
   'project-name-label': 'Project name',
   'project-name-pattern-error':
-    'Invalid projectConfig name, must be between 4 and 20 non special, unaccented characters long',
+    'Name must have between 4 and 20 non special, unaccented characters',
   'projects-label': 'Projects',
   'scm-label': 'SCM',
   'signup-title-label': 'Don’t have an account?',
@@ -47,7 +47,7 @@ export default {
   'status-label': 'Status',
   'type-label': 'Type',
   'username-label': 'User name',
-  'username-hint-label': 'all of what is before @email.com',
+  'username-hint-label': 'characters before @email.com',
   'report-label': 'Report',
   'repository-label': 'Repository',
   'version-label': 'Version'

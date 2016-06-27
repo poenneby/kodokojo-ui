@@ -47,7 +47,7 @@ export default {
   'status-label': 'Status',
   'type-label': 'Type',
   'username-label': 'User name',
-  'username-hint-label': 'all of what is before @email.com',
+  'username-hint-label': 'characters before @email.com',
   'report-label': 'Report',
   'repository-label': 'Repository',
   'version-label': 'Version'
