@@ -1,4 +1,5 @@
 export default {
+  'account-label': 'Account',
   'app-lang-fr-label': 'Français',
   'app-lang-en-label': 'English',
   'app-nav-home-label': 'Accueil',

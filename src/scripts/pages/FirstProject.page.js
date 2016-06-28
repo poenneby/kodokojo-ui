@@ -7,7 +7,7 @@ import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 import '../../styles/_commons.less'
 import utilsTheme from '../../styles/_utils.scss'
 import Page from '../components/_ui/page/Page.component'
-import Card from '../components/_ui/card/Card.component'
+import Dialog from '../components/_ui/dialog/Dialog.component'
 import Account from '../components/auth/Account.component.js'
 import ProjectConfigForm from '../components/projectConfig/ProjectConfigForm.component'
 import { setNavVisibility } from '../components/app/app.actions'
@@ -19,6 +19,11 @@ export class FirstProjectPage extends Component {
     getBricks: PropTypes.func.isRequired,
     intl: intlShape.isRequired,
     setNavVisibility: PropTypes.func.isRequired
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = { accountActive: true }
   }
 
   componentWillMount() {
@@ -40,7 +45,15 @@ export class FirstProjectPage extends Component {
     setNavVisibility(false)
   }
 
+  handleClose = () => {
+    this.setState({
+      accountActive: false
+    })
+  }
+
   render() {
+    const { formatMessage } = this.props.intl
+
     return (
     <Page>
       <h1 className={ utilsTheme['secondary-color--1'] }>
@@ -48,9 +61,17 @@ export class FirstProjectPage extends Component {
       </h1>
       <div className="paragraph">
         <div style={{ display: 'flex', flexFlow: 'row wrap', marginBottom: '10px' }}>
-          <Card>
+          <Dialog
+            actions={[
+              { label: 'Close', onClick: this.handleClose }
+            ]}
+            active={ this.state.accountActive }
+            onEscKeyDown={ this.handleClose }
+            onOverlayClick={ this.handleClose }
+            title={ formatMessage({ id: 'account-label' }) }
+          >
             <Account />
-          </Card>
+          </Dialog>
         </div>
         <ProjectConfigForm />
       </div>

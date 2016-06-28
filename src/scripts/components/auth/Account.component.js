@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
 // Account component
+import utilsTheme from '../../../styles/_utils.scss'
+
 // TODO TU
 // TODO implement i18n
 export class Account extends Component {
@@ -18,16 +20,22 @@ export class Account extends Component {
         { account.id &&
           <div>
             <p>
-              Merci pour votre inscription !<br/>
-              Pensez surtout à <strong>enregistrer vos informations de connexion :</strong>
+              <b>Thanks for your subscription!</b><br/>
+              Remember to <strong className={ utilsTheme['secondary-color--1'] }>save all your connexion information:</strong>
             </p>
-            <div>email :</div>
+            <div>
+              <b>email:</b>
+            </div>
             <div>{account.email}</div>
             <br/>
-            <div>username :</div>
+            <div>
+              <b>username:</b>
+            </div>
             <div>{account.userName}</div>
             <br/>
-            <div>password:</div>
+            <div>
+              <b>password:</b>
+            </div>
             <div>{account.password}</div>
             { account.sshKeyPublic &&
               <p>
