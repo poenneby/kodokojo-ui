@@ -1,0 +1,23 @@
+@import '~react-toolbox/components/dialog/theme';
+@import '../../../../styles/meta';
+
+.dialog {
+  background-color: $color-primary-3;
+  border-radius: $radius-standard;
+}
+
+.title {
+  @include typo-title();
+  flex-grow: 0;
+  margin-bottom: 1.6 * $unit;
+  color: $color-font-4;
+}
+
+.body {
+  color: $color-font-3;
+}
+
+.title {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}

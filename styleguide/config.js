@@ -8,7 +8,7 @@ function loadStories() {
   require('../src/scripts/components/_ui/checkbox/Checkbox.component.story.js')
   require('../src/scripts/components/_ui/content/Content.component.story.js')
   require('../src/scripts/components/_ui/colors/colors.story.js')
-  // require('../src/scripts/components/_ui/dialog/dialog.component.story.js')
+  require('../src/scripts/components/_ui/dialog/Dialog.component.story.js')
   require('../src/scripts/components/_ui/button/IconButton.component.story.js')
   require('../src/scripts/components/_ui/input/Input.component.story.js')
   require('../src/scripts/components/_ui/layout/Layout.component.story.js')
