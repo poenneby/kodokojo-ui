@@ -1,7 +1,9 @@
 # Kodo Kojo UI
 
 This is the UI for Kodo Kojo project
-// WIP
+
+[![Join the chat at https://gitter.im/kodokojo/kodokojo](https://badges.gitter.im/kodokojo/kodokojo.svg)](https://gitter.im/kodokojo/kodokojo?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 
 ## License
 
