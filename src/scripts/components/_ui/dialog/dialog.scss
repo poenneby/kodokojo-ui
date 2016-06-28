@@ -7,14 +7,13 @@
 }
 
 .title {
-  @include typo-title();
-  flex-grow: 0;
-  margin-bottom: 1.6 * $unit;
-  color: $color-font-4;
+  font-size: $font-size-big;
+  font-weight: $font-weight-thin;
+  color: $color-secondary-1;
 }
 
 .body {
-  color: $color-font-3;
+  color: $color-font-4;
 }
 
 .title {
