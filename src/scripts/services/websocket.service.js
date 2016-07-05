@@ -1,6 +1,8 @@
 import { getToken } from './auth.service'
 import Promise from 'bluebird'
 import api from '../commons/config'
+import { mapBrickEvent } from '../services/mapping.service'
+import { updateProject } from '../components/project/project.actions'
 
 // TODO let the dev backend reroute ws calls
 // TODO move this in actions
@@ -49,6 +51,15 @@ websocketService.startSocket = (uri) => {
         authorization: `Basic ${getToken()}`
       }
     }))
+
+    websocketService.socket.onmessage = (socketEvent) => {
+      const socketEventData = JSON.parse(socketEvent.data)
+      if (socketEventData.entity === 'brick' && socketEventData.action === 'updateState') {
+        const mappedEvent = mapBrickEvent(socketEventData)
+        console.log('wsMapEvent', mappedEvent)
+        updateProject(mappedEvent)
+      }
+    }
 
     // TODO implement error messages handling
 

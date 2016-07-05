@@ -92,7 +92,9 @@ export function createAccount(email) {
         // we set auth
         setAuth(data.payload.account.userName, data.payload.account.password)
         putAuth(data.payload.account.id)
-        return Promise.resolve(browserHistory.push('/firstProject'))
+        // init websocket and go to first project
+        return websocketService.initSocket()
+          .then(() => Promise.resolve(browserHistory.push('/firstProject')))
       }
       throw new Error(data.payload.status)
     })
