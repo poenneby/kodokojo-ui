@@ -13,19 +13,20 @@ import Brick from '../components/brick/Brick.component'
 import { setNavVisibility } from '../components/app/app.actions'
 import { updateMenuPath } from '../components/menu/menu.actions'
 // import { updateProject } from '../components/project/project.actions'
-import { getProjectConfig } from '../components/projectConfig/projectConfig.actions'
+import { getProjectConfig, getProjectConfigAndProject } from '../components/projectConfig/projectConfig.actions'
 
 export class StacksPage extends Component {
 
   static propTypes = {
     getProjectConfig: PropTypes.func,
+    getProjectConfigAndProject: PropTypes.func,
     intl: intlShape.isRequired,
     location: PropTypes.object.isRequired,
     projectConfigId: PropTypes.string,
+    projectId: PropTypes.string,
     setNavVisibility: PropTypes.func.isRequired,
     stacks: PropTypes.array,
     updateMenuPath: PropTypes.func.isRequired
-    // updateProject: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -34,13 +35,16 @@ export class StacksPage extends Component {
   }
 
   componentWillMount = () => {
-    const { getProjectConfig, location, projectConfigId, stacks, updateMenuPath } = this.props // eslint-disable-line no-shadow
+    const { getProjectConfig, getProjectConfigAndProject, location, projectConfigId, projectId, stacks, updateMenuPath } = this.props // eslint-disable-line no-shadow
 
     this.initNav()
-    if (projectConfigId) {
-      // TODO if project id is defined, getProjectConfigAndProject
-      // TODO add project id into object retuned by getProjectConfig end point
+    if (projectConfigId && !projectId) {
       getProjectConfig(projectConfigId)
+        .then(() => {
+          updateMenuPath(location.pathname)
+        })
+    } else if (projectConfigId && projectId) {
+      getProjectConfigAndProject(projectConfigId, projectId)
         .then(() => {
           updateMenuPath(location.pathname)
         })
@@ -110,7 +114,7 @@ const StacksPageContainer = compose(
     mapStateProps,
     {
       getProjectConfig,
-      // updateProject,
+      getProjectConfigAndProject,
       setNavVisibility,
       updateMenuPath
     }
