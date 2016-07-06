@@ -10,8 +10,6 @@ import utilsTheme from '../../styles/_utils.scss'
 import brickTheme from '../components/brick/brick.scss'
 import Page from '../components/_ui/page/Page.component'
 import Brick from '../components/brick/Brick.component'
-// import { mapBrickEvent } from '../services/mapping.service'
-import websocketService from '../services/websocket.service'
 import { setNavVisibility } from '../components/app/app.actions'
 import { updateMenuPath } from '../components/menu/menu.actions'
 // import { updateProject } from '../components/project/project.actions'
@@ -57,25 +55,6 @@ export class StacksPage extends Component {
     const { setNavVisibility } = this.props // eslint-disable-line no-shadow
 
     setNavVisibility(true)
-  }
-
-  initWebsocket = () => {
-    const { updateProject } = this.props // eslint-disable-line no-shadow
-    // TODO move this to actions
-    // maybe with https://www.npmjs.com/package/express-ws
-    // this.socket = websocketService
-    //   .getSocket()
-    //   .then(socket => {
-    //     this.socket = socket
-    //     this.socket.onmessage = (socketEvent) => {
-    //       const socketEventData = JSON.parse(socketEvent.data)
-    //       if (socketEventData.entity === 'brick' && socketEventData.action === 'updateState') {
-    //         const mappedEvent = mapBrickEvent(socketEventData)
-    //         console.log('wsMapEvent', mappedEvent)
-    //         updateProject(mappedEvent)
-    //       }
-    //     }
-    //   })
   }
 
   render() {
