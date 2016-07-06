@@ -30,6 +30,12 @@
   &[disabled] {
     color: $color-font-2;
   }
+  > span:not([data-react-toolbox="tooltip"]) {
+    display: inline-block;
+    line-height: $button-height;
+    vertical-align: middle;
+    margin-left: -.5rem;
+  }
 }
 
 .neutral:not([disabled]) {
@@ -66,5 +72,21 @@
   &.flat:hover {
     color: $color-font-1;
     background: $color-secondary-1;
+  }
+}
+
+.accent:not([disabled]) {
+  border: 1px solid $color-primary-3;
+  &.flat, &.toggle {
+    color: $color-font-6;
+    &:focus:not(:active) {
+      color: $color-font-1;
+      background: $color-primary-7;
+    }
+  }
+
+  &.flat:hover {
+    color: $color-font-1;
+    background: $color-primary-7;
   }
 }
