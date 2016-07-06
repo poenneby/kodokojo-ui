@@ -2,10 +2,10 @@ import { browserHistory } from 'react-router'
 import { CALL_API } from 'redux-api-middleware'
 
 import api from '../../commons/config'
-import websocketService from '../../services/websocket.service'
 import { getHeaders } from '../../services/io.service'
 import { setAuth, putAuth } from '../../services/auth.service'
 import { mapAccount } from '../../services/mapping.service'
+import { requestWebsocket } from '../websocket/websocket.actions.js'
 import {
   ACCOUNT_NEW_ID_REQUEST,
   ACCOUNT_NEW_ID_SUCCESS,
@@ -92,11 +92,12 @@ export function createAccount(email) {
         // we set auth
         setAuth(data.payload.account.userName, data.payload.account.password)
         putAuth(data.payload.account.id)
-        return Promise.resolve(browserHistory.push('/firstProject'))
+        // init websocket and go to first project
+        return dispatch(requestWebsocket())
+          .then(() => Promise.resolve(browserHistory.push('/firstProject')))
       }
       throw new Error(data.payload.status)
     })
-    .then(() => websocketService.initSocket())
     .catch(error => {
       throw new Error(error.message)
     })

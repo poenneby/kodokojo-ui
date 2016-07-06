@@ -20,7 +20,6 @@ import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE, AUTH_RESET } from '../../comm
 // dependencies to mock
 import authService from '../../services/auth.service'
 import ioService from '../../services/io.service'
-import websocketService from '../../services/websocket.service'
 
 // Apply the middleware to the store
 const middlewares = [
@@ -38,7 +37,7 @@ describe('login actions', () => {
     let mapAccountSpy
     let historyPushSpy
     let getProjectConfigAndProjectSpy
-    let websocketServiceInitSpy
+    let requestWebsocketSpy
 
     beforeEach(() => {
       historyPushSpy = sinon.spy()
@@ -46,10 +45,13 @@ describe('login actions', () => {
         push: historyPushSpy
       })
       getProjectConfigAndProjectSpy = sinon.stub().returns({
-        type: 'MOCKED_ACTION'
+        type: 'MOCKED_GET_PROJECTCONFIG_PROJECT'
       })
       actionsRewireApi.__Rewire__('getProjectConfigAndProject', getProjectConfigAndProjectSpy)
-      websocketServiceInitSpy = sinon.stub(websocketService, 'initSocket').returns(Promise.resolve())
+      requestWebsocketSpy = sinon.stub().returns({
+        type: 'MOCKED_WEBSOCKET_REQUEST'
+      })
+      actionsRewireApi.__Rewire__('requestWebsocket', requestWebsocketSpy)
     })
 
     afterEach(() => {
@@ -61,7 +63,7 @@ describe('login actions', () => {
       actionsRewireApi.__ResetDependency__('getProjectConfigAndProject')
       actionsRewireApi.__ResetDependency__('putAuth')
       actionsRewireApi.__ResetDependency__('requestAuthentication')
-      websocketService.initSocket.restore()
+      actionsRewireApi.__ResetDependency__('requestWebsocket')
     })
 
     it('should request auth', (done) => {
@@ -92,7 +94,10 @@ describe('login actions', () => {
           meta: undefined
         },
         {
-          type: 'MOCKED_ACTION'
+          type: 'MOCKED_GET_PROJECTCONFIG_PROJECT'
+        },
+        {
+          type: 'MOCKED_WEBSOCKET_REQUEST'
         }
       ]
       const headers = {
@@ -127,7 +132,7 @@ describe('login actions', () => {
         expect(getProjectConfigAndProjectSpy).to.have.callCount(1)
         expect(historyPushSpy).to.have.callCount(1)
         expect(historyPushSpy).to.have.been.calledWith('/stacks')
-        expect(websocketServiceInitSpy).to.have.callCount(1)
+        expect(requestWebsocketSpy).to.have.callCount(1)
         done()
       }).catch(done)
     })
@@ -142,7 +147,7 @@ describe('login actions', () => {
         projectConfigIds: []
       }
       const requestAuthenticationSpy = sinon.stub().returns({
-        type: 'MOCKED_ACTION',
+        type: 'MOCKED_AUTH_REQUEST',
         payload: {
           account
         }
@@ -153,10 +158,13 @@ describe('login actions', () => {
       const getHeadersSpy = sinon.spy(ioService, 'getHeaders')
       const expectedActions = [
         {
-          type: 'MOCKED_ACTION',
+          type: 'MOCKED_AUTH_REQUEST',
           payload: {
             account
           }
+        },
+        {
+          type: 'MOCKED_WEBSOCKET_REQUEST'
         }
       ]
 
@@ -174,7 +182,7 @@ describe('login actions', () => {
         expect(requestAuthenticationSpy).to.have.callCount(1)
         expect(historyPushSpy).to.have.callCount(1)
         expect(historyPushSpy).to.have.been.calledWith('/firstProject')
-        expect(websocketServiceInitSpy).to.have.callCount(1)
+        expect(requestWebsocketSpy).to.have.callCount(1)
         done()
       }).catch(done)
     })
@@ -232,21 +240,24 @@ describe('login actions', () => {
           expect(setAuthSpy).to.have.been.calledWith(username, password)
           expect(putAuthSpy).to.have.callCount(0)
           expect(getHeadersSpy).to.have.callCount(1)
-          expect(websocketServiceInitSpy).to.have.callCount(0)
+          expect(requestWebsocketSpy).to.have.callCount(0)
           done()
         })
     })
   })
 
   describe('logout', () => {
-    let websocketServiceStopSpy
+    let stopWebsocketSpy
 
     beforeEach(() => {
-      websocketServiceStopSpy = sinon.stub(websocketService, 'stopSocket').returns(Promise.resolve())
+      stopWebsocketSpy = sinon.stub().returns({
+        type: 'MOCKED_WEBSOCKET_STOP'
+      })
+      actionsRewireApi.__Rewire__('stopWebsocket', stopWebsocketSpy)
     })
 
     afterEach(() => {
-      websocketService.stopSocket.restore()
+      actionsRewireApi.__ResetDependency__('stopWebsocket')
     })
 
     it('should reset auth', (done) => {
@@ -254,6 +265,9 @@ describe('login actions', () => {
       const expectedActions = [
         {
           type: AUTH_RESET
+        },
+        {
+          type: 'MOCKED_WEBSOCKET_STOP'
         }
       ]
       const resetAuthSpy = sinon.spy(authService, 'resetAuth')
@@ -266,7 +280,7 @@ describe('login actions', () => {
         .then(() => {
           expect(store.getActions()).to.deep.equal(expectedActions)
           expect(resetAuthSpy).to.have.callCount(1)
-          expect(websocketServiceStopSpy).to.have.callCount(1)
+          expect(stopWebsocketSpy).to.have.callCount(1)
           done()
         }).catch(done)
     })

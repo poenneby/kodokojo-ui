@@ -10,24 +10,23 @@ import utilsTheme from '../../styles/_utils.scss'
 import brickTheme from '../components/brick/brick.scss'
 import Page from '../components/_ui/page/Page.component'
 import Brick from '../components/brick/Brick.component'
-import { mapBrickEvent } from '../services/mapping.service'
-import websocketService from '../services/websocket.service'
 import { setNavVisibility } from '../components/app/app.actions'
 import { updateMenuPath } from '../components/menu/menu.actions'
-import { updateProject } from '../components/project/project.actions'
-import { getProjectConfig } from '../components/projectConfig/projectConfig.actions'
+// import { updateProject } from '../components/project/project.actions'
+import { getProjectConfig, getProjectConfigAndProject } from '../components/projectConfig/projectConfig.actions'
 
 export class StacksPage extends Component {
 
   static propTypes = {
     getProjectConfig: PropTypes.func,
+    getProjectConfigAndProject: PropTypes.func,
     intl: intlShape.isRequired,
     location: PropTypes.object.isRequired,
     projectConfigId: PropTypes.string,
+    projectId: PropTypes.string,
     setNavVisibility: PropTypes.func.isRequired,
     stacks: PropTypes.array,
-    updateMenuPath: PropTypes.func.isRequired,
-    updateProject: PropTypes.func.isRequired
+    updateMenuPath: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -36,13 +35,16 @@ export class StacksPage extends Component {
   }
 
   componentWillMount = () => {
-    const { getProjectConfig, location, projectConfigId, stacks, updateMenuPath } = this.props // eslint-disable-line no-shadow
+    const { getProjectConfig, getProjectConfigAndProject, location, projectConfigId, projectId, stacks, updateMenuPath } = this.props // eslint-disable-line no-shadow
 
     this.initNav()
-    if (!stacks && projectConfigId) {
-      // TODO if project id is defined, getProjectConfigAndProject
-      // TODO add project id into object retuned by getProjectConfig end point
+    if (projectConfigId && !projectId) {
       getProjectConfig(projectConfigId)
+        .then(() => {
+          updateMenuPath(location.pathname)
+        })
+    } else if (projectConfigId && projectId) {
+      getProjectConfigAndProject(projectConfigId, projectId)
         .then(() => {
           updateMenuPath(location.pathname)
         })
@@ -53,38 +55,10 @@ export class StacksPage extends Component {
     }
   }
 
-  componentDidMount = () => {
-    this.initWebsocket()
-  }
-
-  componentWillUnmount = () => {
-    // TODO pass userName to stop method
-    websocketService.stopSocket()
-  }
-
   initNav = () => {
     const { setNavVisibility } = this.props // eslint-disable-line no-shadow
 
     setNavVisibility(true)
-  }
-
-  initWebsocket = () => {
-    const { updateProject } = this.props // eslint-disable-line no-shadow
-    // TODO move this to actions
-    // maybe with https://www.npmjs.com/package/express-ws
-    this.socket = websocketService
-      .getSocket()
-      .then(socket => {
-        this.socket = socket
-        this.socket.onmessage = (socketEvent) => {
-          const socketEventData = JSON.parse(socketEvent.data)
-          if (socketEventData.entity === 'brick' && socketEventData.action === 'updateState') {
-            const mappedEvent = mapBrickEvent(socketEventData)
-            console.log('wsMapEvent', mappedEvent)
-            updateProject(mappedEvent)
-          }
-        }
-      })
   }
 
   render() {
@@ -130,6 +104,7 @@ const mapStateProps = (state, ownProps) => (
   {
     location: ownProps.location,
     projectConfigId: state.projectConfig ? state.projectConfig.id : '',
+    projectId: state.projectConfig && state.projectConfig.project ? state.projectConfig.project.id : '',
     stacks: state.projectConfig.stacks
   }
 )
@@ -139,7 +114,7 @@ const StacksPageContainer = compose(
     mapStateProps,
     {
       getProjectConfig,
-      updateProject,
+      getProjectConfigAndProject,
       setNavVisibility,
       updateMenuPath
     }

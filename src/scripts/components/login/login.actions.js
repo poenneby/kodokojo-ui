@@ -4,13 +4,13 @@ import Promise from 'bluebird'
 
 import api from '../../commons/config'
 // import { user } from '../../commons/schemas'
-import websocketService from '../../services/websocket.service'
 import authService from '../../services/auth.service'
 import storageService from '../../services/storage.service'
 import ioService from '../../services/io.service'
 import { mapAccount } from '../../services/mapping.service'
 import { getProject } from '../project/project.actions'
 import { getProjectConfigAndProject } from '../projectConfig/projectConfig.actions'
+import { requestWebsocket, stopWebsocket } from '../websocket/websocket.actions.js'
 import {
   AUTH_REQUEST,
   AUTH_SUCCESS,
@@ -62,17 +62,17 @@ export function login(username, password) {
             // get project config and project and redirect to project
             return dispatch(
               getProjectConfigAndProject(projectConfig.projectConfigId, projectConfig.projectId))
-                .then(() => websocketService.initSocket())
+                .then(dispatch(requestWebsocket()))
                 .then(Promise.resolve(browserHistory.push('/stacks')))
           }
           if (!projectConfig.projectId) {
             // TODO second case, project config has no project id
             // must redirect to project config stack, with a button to start it
-            return websocketService.initSocket()
+            return dispatch(requestWebsocket())
           }
         }
         // if no ids, redirect to first project
-        return websocketService.initSocket()
+        return dispatch(requestWebsocket())
           .then(() => Promise.resolve(browserHistory.push('/firstProject')))
       }
       throw new Error(data.payload.status)
@@ -95,7 +95,7 @@ export function logout() {
         // reset auth
         authService.resetAuth()
         storageService.clean()
-        return websocketService.stopSocket()
+        return dispatch(stopWebsocket())
           .then(() => Promise.resolve(browserHistory.push('/login')))
       }
       throw new Error(data.payload.status)

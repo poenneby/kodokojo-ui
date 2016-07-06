@@ -5,13 +5,15 @@ import createLogger from 'redux-logger'
 
 import persistenceStore from './persistenceStore'
 import rootReducer from '../commons/reducers'
+import websocketMiddleware from '../middlewares/websocket.middleware'
 
 export default function configureStore(initialState) {
   const finalCreateStore = compose(
       applyMiddleware(
         thunk,
         apiMiddleware,
-        createLogger()
+        createLogger(),
+        websocketMiddleware
       ),
       persistenceStore,
       global.devToolsExtension ? global.devToolsExtension() : f => f

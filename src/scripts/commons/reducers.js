@@ -9,6 +9,7 @@ import menu from '../components/menu/menu.reducer'
 import prefs from '../components/app/app.reducer'
 import projectConfig from '../components/projectConfig/projectConfig.reducer'
 import signup from '../components/signup/signup.reducer'
+import socket from '../components/websocket/websocket.reducer'
 import users from '../components/user/user.reducer'
 
 const rootReducer = combineReducers({
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   prefs,
   projectConfig,
   signup,
+  socket,
   users,
   form: formReducer,
   routing: routerReducer

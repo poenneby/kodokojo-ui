@@ -1,3 +1,5 @@
+/* eslint-disable no-return-assign */
+
 import { jsdom } from 'jsdom'
 
 /**
