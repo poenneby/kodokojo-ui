@@ -2,23 +2,23 @@ import React, { Component, PropTypes } from 'react'
 import { themr } from 'react-css-themr'
 
 // component
-import { PAGE } from '../../../commons/identifiers'
+import { ACTION } from '../../../commons/identifiers'
 import '../../../../styles/_commons.less'
-import pageTheme from './page.scss'
+import actionTheme from './action.scss'
 
 /**
- * UI: Page component
+ * UI: Action component
  *
  */
-export const Page = ({ children, theme }) => (
-  <section
-    className={ theme.page }
+export const Action = ({ children, theme }) => (
+  <div
+    className={ theme.action }
   >
     { children }
-  </section>
+  </div>
 )
 
-Page.propTypes = {
+Action.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.element),
     PropTypes.element
@@ -26,4 +26,4 @@ Page.propTypes = {
   theme: PropTypes.object
 }
 
-export default themr(PAGE, pageTheme)(Page)
+export default themr(ACTION, actionTheme)(Action)

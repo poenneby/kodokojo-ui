@@ -6,10 +6,6 @@
     font-weight: $font-weight-thin;
     font-size: $title-size-1;
     padding-left: 90px;
-    margin-bottom: 50px;
-  }
-  .paragraph {
-    font-weight: $font-weight-thin;
-    margin: 0;
+    margin-bottom: $spacing-small;
   }
 }
