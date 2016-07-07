@@ -51,8 +51,8 @@ describe('<Signup> component', () => {
     messages = {
       'email-label': 'email-label',
       'email-hint-label': 'email-hint-label',
-      'entity-label': 'entity-label',
-      'entity-hint-label': 'entity-hint-label',
+      'company-label': 'company-label',
+      'company-hint-label': 'company-hint-label',
       'signup-label': 'signup-button-label'
     }
     intlProvider = new IntlProvider({ locale: 'en' }, {})
@@ -92,12 +92,12 @@ describe('<Signup> component', () => {
     )
 
     // Then
-    expect(nextProps.intl.formatMessage).to.have.callCount(6)
+    expect(nextProps.intl.formatMessage).to.have.callCount(4)
     expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'email-label' })
     expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'email-hint-label' })
     expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signup-label' })
-    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'entity-label' })
-    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'entity-hint-label' })
+    // expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'company-label' })
+    // expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'company-hint-label' })
   })
 
   it('should set props properly', () => {
