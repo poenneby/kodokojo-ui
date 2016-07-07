@@ -196,6 +196,10 @@
   text-transform: capitalize;
 }
 
+.text-normal {
+  text-transform: none;
+}
+
 .content-gutter--default {
   padding-left: $spacing-larger;
   padding-right: $spacing-large;

@@ -61,7 +61,7 @@ export class ProjectConfigForm extends Component {
     const { bricks, fields: { projectName, projectUsers }, handleSubmit, submitting } = this.props // eslint-disable-line no-shadow
     const { formatMessage } = this.props.intl
 
-    const bricksDetails = bricks && bricks.list && Object.keys(bricks.list).length ? bricks.list : undefined
+    const bricksDetails = bricks && bricks.list && bricks.list.length ? bricks.list : undefined
 
     return (
       <form id="projectForm"
@@ -197,6 +197,7 @@ export class ProjectConfigForm extends Component {
                                         }
                                         <span className={ utilsTheme['text-capitalize'] }>
                                           <FormattedMessage id={ `brick-${getBrickLogo(brick).name}-label` } />
+                                          <span className={ utilsTheme['text-normal']}>{ ` ${brick.version}` }</span>
                                         </span>
                                       </span>
                                     }
