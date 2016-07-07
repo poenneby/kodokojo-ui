@@ -22,12 +22,12 @@
 
 .card-content--default {
   @extend %card-content;
-  padding-left: $spacing-large;
-  padding-right: $spacing-standard;
+  padding-left: $spacing-larger;
+  padding-right: $spacing-large;
   &:first-child {
-    padding-top: $spacing-small / 2;
+    padding-top: $spacing-standard / 2;
   }
-  padding-bottom: $spacing-small;
+  padding-bottom: $spacing-standard;
   p {
     @extend %content-p
   }
@@ -35,13 +35,13 @@
 
 .card-content--standard {
   @extend %card-content;
-  padding-left: $spacing-standard;
-  padding-right: $spacing-standard;
+  padding-left: $spacing-large;
+  padding-right: $spacing-large;
   &:first-child {
-    padding-top: $spacing-standard;
+    padding-top: $spacing-large;
   }
   &:last-child {
-    padding-bottom: $spacing-standard;
+    padding-bottom: $spacing-large;
   }
   p {
     @extend %content-p
@@ -50,8 +50,8 @@
 
 .card-content--small {
   @extend %card-content;
-  padding-left: $spacing-small;
-  padding-right: $spacing-small;
+  padding-left: $spacing-standard;
+  padding-right: $spacing-standard;
   &:first-child {
     padding-top: $spacing-smallest;
   }

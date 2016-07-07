@@ -77,12 +77,12 @@ export class ProjectConfigForm extends Component {
                 style={{ flex: '1 100%', marginBottom: '10px' }}
               >
                 <CardContent
-                  className={ utilsTheme['content-gutter--standard'] }
+                  className={ utilsTheme['content-gutter--large'] }
                   raw
                   row
                 >
                   <div
-                    className={ classNames(utilsTheme['title--default'], utilsTheme['content-spacer--standard']) }
+                    className={ classNames(utilsTheme['title--default'], utilsTheme['content-spacer--large']) }
                     style={{ flex: '0 220px' }}
                   >
                     <span className={ utilsTheme['text-uppercase'] }>
@@ -122,11 +122,11 @@ export class ProjectConfigForm extends Component {
                   style={{ height: '100%', marginRight: '10px' }}
                 >
                   <CardContent
-                    className={ utilsTheme['content-gutter--standard'] }
+                    className={ utilsTheme['content-gutter--large'] }
                     raw
                   >
                     <div
-                      className={ utilsTheme['content-spacer--standard'] }
+                      className={ utilsTheme['content-spacer--large'] }
                       style={{ display: 'flex', flexFlow: 'column wrap', alignItems: 'flex-start' }}
                     >
                       <div
