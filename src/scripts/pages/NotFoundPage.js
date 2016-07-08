@@ -2,19 +2,18 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 // import DocumentMeta from 'react-document-meta'
 
-// UI
-import Paper from 'material-ui/Paper'
-
 // Component
-import { centerPaper } from '../../styles/commons'
+import Card from '../components/_ui/card/Card.component'
+import CardContent from '../components/_ui/card/CardContent.component'
+import CardContainer from '../components/_ui/card/CardContainer.component'
 
 // const metaData = {
 //  title: '404 Page Not Found',
-//  description: 'Homecare',
+//  description: 'KodoKojo',
 //  meta: {
 //    charset: 'utf-8',
 //    name: {
-//      keywords: 'homecare, bla, bla',
+//      keywords: 'test, keyword, other',
 //    }
 //  }
 // }
@@ -22,20 +21,22 @@ import { centerPaper } from '../../styles/commons'
 export class NotFound extends Component {
 
   static propTypes = {
-    dataTypePage: PropTypes.string.isRequired,
+    contentFromRoute: PropTypes.string.isRequired,
     status: PropTypes.number.isRequired
   }
 
   render() {
-    const { status, dataTypePage } = this.props
+    const { status, contentFromRoute } = this.props
     return (
-        <div>
-          <Paper style={ centerPaper } zDepth={1}>
-            {/* <DocumentMeta {...metaData} /> */}
-            <h3>{ status } NotFound</h3>
-            <p>{ dataTypePage }</p>
-          </Paper>
-        </div>
+      <CardContainer>
+        <Card
+          title={ `${status} NotFound` }
+        >
+          <CardContent>
+              <p>{ contentFromRoute }</p>
+          </CardContent>
+        </Card>
+      </CardContainer>
     )
   }
 }
@@ -44,7 +45,7 @@ export class NotFound extends Component {
 const mapStateProps = (state, ownProps) => (
   {
     status: ownProps.route.status,
-    dataTypePage: ownProps.route.dataTypePage
+    contentFromRoute: ownProps.route.contentFromRoute
   }
 )
 
