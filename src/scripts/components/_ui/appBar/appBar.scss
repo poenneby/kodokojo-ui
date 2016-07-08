@@ -3,6 +3,7 @@
 .header-bar {
   display: flex;
   flex-direction: row;
+  flex: 0 0 auto;
   justify-content: space-between;
   background: $color-primary-1;
   height: 70px;
