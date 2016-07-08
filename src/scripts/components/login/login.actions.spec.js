@@ -29,21 +29,25 @@ const middlewares = [
 const mockStore = configureMockStore(middlewares)
 
 describe('login actions', () => {
+  let historyPushSpy
+  beforeEach(() => {
+    historyPushSpy = sinon.spy()
+    actionsRewireApi.__Rewire__('browserHistory', {
+      push: historyPushSpy
+    })
+  })
+
   afterEach(() => {
     nock.cleanAll()
+    actionsRewireApi.__ResetDependency__('browserHistory')
   })
 
   describe('login', () => {
     let mapAccountSpy
-    let historyPushSpy
     let getProjectConfigAndProjectSpy
     let requestWebsocketSpy
 
     beforeEach(() => {
-      historyPushSpy = sinon.spy()
-      actionsRewireApi.__Rewire__('browserHistory', {
-        push: historyPushSpy
-      })
       getProjectConfigAndProjectSpy = sinon.stub().returns({
         type: 'MOCKED_GET_PROJECTCONFIG_PROJECT'
       })
@@ -59,7 +63,6 @@ describe('login actions', () => {
       authService.putAuth.restore()
       ioService.getHeaders.restore()
       actionsRewireApi.__ResetDependency__('mapAccount')
-      actionsRewireApi.__ResetDependency__('browserHistory')
       actionsRewireApi.__ResetDependency__('getProjectConfigAndProject')
       actionsRewireApi.__ResetDependency__('putAuth')
       actionsRewireApi.__ResetDependency__('requestAuthentication')
@@ -281,6 +284,8 @@ describe('login actions', () => {
           expect(store.getActions()).to.deep.equal(expectedActions)
           expect(resetAuthSpy).to.have.callCount(1)
           expect(stopWebsocketSpy).to.have.callCount(1)
+          expect(historyPushSpy).to.have.callCount(1)
+          expect(historyPushSpy).to.have.been.calledWith('/login')
           done()
         }).catch(done)
     })
