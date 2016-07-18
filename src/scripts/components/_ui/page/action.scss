@@ -2,4 +2,11 @@
 
 .action {
   margin-bottom: $spacing-large;
+  text-align: right;
+  button {
+    margin-top: 10px;
+    &:not(first-of-type) {
+      margin-left: 10px;
+    }
+  }
 }
