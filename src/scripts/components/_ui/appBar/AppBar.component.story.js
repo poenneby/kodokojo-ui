@@ -1,9 +1,11 @@
 import React from 'react'
 import { Provider } from 'react-redux'
+import { IntlProvider } from 'react-intl'
 import { storiesOf, action } from '@kadira/storybook'
 
 // contexte
 import configureStore from '../../../store/configureStore'
+import en from '../../../i18n/en'
 
 // component to story
 import AppBar from './AppBar.component'
@@ -13,6 +15,11 @@ const initialState = {}
 const store = configureStore(initialState)
 
 storiesOf('AppBar', module)
+  .addDecorator((story) => (
+    <IntlProvider locale="en" messages={ en }>
+      { story() }
+    </IntlProvider>
+  ))
   .add('with children', () => (
     <AppBar
       store={store}
