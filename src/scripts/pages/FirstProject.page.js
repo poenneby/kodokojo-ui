@@ -18,6 +18,7 @@ export class FirstProjectPage extends Component {
 
   static propTypes = {
     account: PropTypes.object,
+    accountActive: PropTypes.bool,
     bricks: PropTypes.object,
     getBricks: PropTypes.func.isRequired,
     intl: intlShape.isRequired,
@@ -26,7 +27,7 @@ export class FirstProjectPage extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { accountActive: (props.account && props.account.id) }
+    this.state = { accountActive: true }
   }
 
   componentWillMount() {
