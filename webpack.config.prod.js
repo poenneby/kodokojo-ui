@@ -2,6 +2,7 @@
 
 var path = require('path')
 var webpack = require('webpack')
+var CompressionPlugin = require('compression-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 // FIXME to prevent error, node-sass must be specifically 3.4.2
@@ -10,6 +11,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 module.exports = {
   plugins: [
     new ExtractTextPlugin('styles/app.css'),
+    new CompressionPlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
