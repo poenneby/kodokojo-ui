@@ -7,16 +7,12 @@ var webpack = require('webpack')
 // see https://github.com/react-toolbox/react-toolbox-example/issues/19
 
 module.exports = {
-  context: __dirname,
-  devtool: 'cheap-module-eval-source-map',
-  entry: [
-    'eventsource-polyfill',
-    'webpack-hot-middleware/client'
-  ],
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-    new webpack.NormalModuleReplacementPlugin(/^\.\/header/, 'custom-header')
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"production"',
+      'process.env.BABEL_ENV': '"production"'
+    })
   ],
   module: {
     loaders: [
@@ -26,7 +22,7 @@ module.exports = {
         loaders: ['babel'],
         include: [
           path.join(__dirname, 'src'),
-          path.join(__dirname, 'config')
+          path.join(__dirname, 'config/shared')
         ]
       },
       {
@@ -37,7 +33,7 @@ module.exports = {
       {
         test: /(\.scss|\.css)$/,
         loader:
-          'style!css?sourceMap&modules&localIdentName=[name]---[local]---[hash:base64:5]&importLoaders=2!resolve-url!sass?sourceMap'
+          'style!css?modules&localIdentName=[name]---[local]---[hash:base64:5]&importLoaders=2!resolve-url!sass'
       }
     ]
   }
