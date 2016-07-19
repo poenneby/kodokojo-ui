@@ -12,7 +12,7 @@
     "clean": "test -d ./node_modules/ && rm -rf ./node_modules || echo \"no node_modules/ folder, continue\"",
     "styleguide": "start-storybook -p 9001 -c ./styleguide",
     "build:styleguide": "build-storybook -c ./styleguide -o styleguide/dist",
-    "build:dev": "webpack --config webpack.config.dev.js --progress --colors && mustache config/json/index.dev.json src/index.mustache > static/index.html",
+    "build:dev": "webpack --progress --colors && mustache config/json/index.dev.json src/index.mustache > static/index.html",
     "start:dev": "npm run build:dev && node server.js",
     "build:prod": "webpack -p --progress --colors && mustache config/json/index.prod.json src/index.mustache > static/index.html",
     "start:prod": "npm run build:prod && node server.js",
