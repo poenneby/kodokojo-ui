@@ -2,7 +2,7 @@
   "name": "kodokojo-ui",
   "version": "0.1.0",
   "description": "Kodo Kojo UI",
-  "main": "src/app.js",
+  "main": "src/scripts/app.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/kodokojo/kodokojo-ui.git"

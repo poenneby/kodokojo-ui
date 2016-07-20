@@ -9,14 +9,13 @@ var webpack = require('webpack')
 module.exports = {
   entry: {
     app: [
-      './src/app.js',
       'eventsource-polyfill',
       'webpack-hot-middleware/client'
     ]
   },
   output: {
     path: path.join(__dirname, 'static'),
-    filename: '[name].js',
+    filename: 'assets/scripts/[name].js',
     publicPath: '/'
   },
   devtool: 'cheap-module-eval-source-map',

@@ -4,6 +4,14 @@ var path = require('path')
 var AssetsPlugin = require('assets-webpack-plugin')
 
 module.exports = {
+  entry: {
+    app: [
+      './src/scripts/app.js'
+    ],
+    vendors: [ 
+      './src/scripts/vendors.js' 
+    ]
+  },
   resolve: {
     extensions: ['', '.jsx', '.scss', '.js', '.json'],
     modulesDirectories: [
