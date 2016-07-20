@@ -43,7 +43,7 @@ app.use(require('webpack-dev-middleware')(compiler, {
 app.use(require('webpack-hot-middleware')(compiler))
 
 // static content
-app.use('/static', express.static('static'))
+app.use(express.static('static'))
 
 // serve index.html for all get to anything but /api
 app.get(/^(\/(?!api).*)$/, (req, res) => {
