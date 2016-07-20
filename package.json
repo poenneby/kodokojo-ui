@@ -18,6 +18,7 @@
     "start:dev": "npm run build:dev && node server.js",
     "build:prod": "npm run clean:static && webpack -p --progress --colors && npm run build",
     "start:prod": "npm run build:prod && node server.js",
+    "build:docker": "./build.sh",
     "lint": "eslint ./src/ ./api/ ./config/ --ext .js --ext .jsx",
     "test": "BABEL_ENV=test mocha --compilers js:babel-core/register --recursive --require ignore-styles --require intl --require ./test/utils.js -R dot './src/**/*.spec.js'",
     "test:watch": "npm test -- --watch",
