@@ -9,10 +9,21 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 // see https://github.com/react-toolbox/react-toolbox-example/issues/19
 
 module.exports = {
+  entry: {
+    app: [
+      './src/app.js'
+      ]
+  },
+  output: {
+    path: path.join(__dirname, 'static'),
+    filename: '[name]-[hash].js',
+    publicPath: '/'
+  },
   plugins: [
-    new ExtractTextPlugin('styles/app.css'),
     new CompressionPlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
+    new ExtractTextPlugin('styles/app-[hash].css'),
+    // new webpack.optimize.CommonsChunkPlugin({ name:'vendors', fileName: 'vendors-[hash].js' }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
       'process.env.BABEL_ENV': '"production"',

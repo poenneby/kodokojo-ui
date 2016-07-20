@@ -14,10 +14,12 @@ switch (TARGET) {
   default:
   case 'development':
   case 'build:dev':
+  case 'start:dev':
     module.exports = validate(merge.smart(configCommon, configDev))
     break
   case 'production':
   case 'build:prod':
+  case 'start:prod':
     module.exports = validate(merge.smart(configCommon, configProd))
     break
 }

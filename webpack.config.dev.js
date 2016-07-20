@@ -7,12 +7,19 @@ var webpack = require('webpack')
 // see https://github.com/react-toolbox/react-toolbox-example/issues/19
 
 module.exports = {
-  context: __dirname,
+  entry: {
+    app: [
+      './src/app.js',
+      'eventsource-polyfill',
+      'webpack-hot-middleware/client'
+    ]
+  },
+  output: {
+    path: path.join(__dirname, 'static'),
+    filename: '[name].js',
+    publicPath: '/'
+  },
   devtool: 'cheap-module-eval-source-map',
-  entry: [
-    'eventsource-polyfill',
-    'webpack-hot-middleware/client'
-  ],
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),

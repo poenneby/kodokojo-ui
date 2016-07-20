@@ -1,16 +1,9 @@
 'use strict'
 
 var path = require('path')
+var AssetsPlugin = require('assets-webpack-plugin')
 
 module.exports = {
-  entry: [
-    './src/app.js'
-  ],
-  output: {
-    path: path.join(__dirname, 'static'),
-    filename: 'app.js',
-    publicPath: '/'
-  },
   resolve: {
     extensions: ['', '.jsx', '.scss', '.js', '.json'],
     modulesDirectories: [
@@ -18,6 +11,9 @@ module.exports = {
       path.resolve(__dirname, './node_modules')
     ]
   },
+  plugins: [
+    new AssetsPlugin()
+  ],
   module: {
     preLoaders: [
       {
