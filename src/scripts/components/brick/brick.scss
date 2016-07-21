@@ -18,8 +18,7 @@
 }
 
 .brick-header {
-  // FIXME dirty
-  &.brick-header .brick-column {
+  span {
     color: $color-font-4;
     font-weight: $font-weight-thin;
   }

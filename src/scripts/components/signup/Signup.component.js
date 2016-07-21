@@ -70,14 +70,14 @@ export class Signup extends Component {
             required
             type="email"
         />
-        <Input
+        { /* <Input
           { ...entity }
-          hint={ formatMessage({ id: 'entity-hint-label' }) }
+          hint={ formatMessage({ id: 'company-hint-label' }) }
           icon="domain"
-          label={ formatMessage({ id: 'entity-label' }) }
+          label={ formatMessage({ id: 'company-label' }) }
           name="entity"
           type="text"
-        />
+        /> */}
         <Button
             disabled={ submitting }
             label={ formatMessage({ id: 'signup-label' }) }

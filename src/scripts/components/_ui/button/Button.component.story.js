@@ -30,3 +30,24 @@ storiesOf('Button', module)
       primary
     />
   ))
+  .add('accent - (flat)', () => (
+    <Button
+      accent
+      label="BUTTON"
+    />
+  ))
+  .add('accent - icon (flat)', () => (
+    <Button
+      accent
+      icon="add_circle_outline"
+      label="Button"
+    />
+  ))
+  .add('accent - icon disabled (flat)', () => (
+    <Button
+      accent
+      disabled
+      icon="add_circle_outline"
+      label="Button"
+    />
+  ))

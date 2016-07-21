@@ -21,14 +21,25 @@
 }
 
 %button {
+  // fix firefox bug with display: inline-flex
+  display: inline-block;
   font-family: $font-family-primary;
   font-weight: $font-weight-thin;
   font-size: $font-size-normal;
   height: $button-height;
   border: 1px solid $color-primary-4;
-  user-select: none;
+  &::-moz-focus-inner {
+    border: 0;
+  }
   &[disabled] {
-    color: $color-font-2;
+    border: 1px solid $color-primary-1;
+    color: $color-primary-1;
+  }
+  > span:not([data-react-toolbox="tooltip"]) {
+    display: inline-block;
+    line-height: $button-height;
+    vertical-align: middle;
+    //margin-left: -.5rem;
   }
 }
 
@@ -66,5 +77,21 @@
   &.flat:hover {
     color: $color-font-1;
     background: $color-secondary-1;
+  }
+}
+
+.accent:not([disabled]) {
+  border: 1px solid $color-primary-3;
+  &.flat, &.toggle {
+    color: $color-font-6;
+    &:focus:not(:active) {
+      color: $color-font-1;
+      background: $color-primary-7;
+    }
+  }
+
+  &.flat:hover {
+    color: $color-font-1;
+    background: $color-primary-7;
   }
 }

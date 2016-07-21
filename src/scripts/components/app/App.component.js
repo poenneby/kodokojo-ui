@@ -1,15 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { themr } from 'react-css-themr'
-
-// UI
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
-
-import { setTheme, setLocale, setNavVisibility } from './app.actions'
-const lightTheme = getMuiTheme()
-const darkTheme = getMuiTheme(darkBaseTheme)
+import { ThemeProvider, themr } from 'react-css-themr'
 
 // Component
 import { APP } from '../../commons/identifiers'
@@ -24,6 +15,7 @@ import AppHeader from './AppHeader.component'
 import Menu from '../menu/Menu.component'
 import { logout } from '../login/login.actions'
 import { requestWebsocket } from '../websocket/websocket.actions'
+import { setTheme, setLocale, setNavVisibility } from './app.actions'
 
 class App extends Component {
 
@@ -50,12 +42,8 @@ class App extends Component {
 
   render() {
     const { children, isAuthenticated, locale, logout, menu, navigation, setLocale, theme } = this.props // eslint-disable-line no-shadow
-    const currentMuiTheme = (theme === 'light') ? lightTheme : darkTheme
 
     return (
-      // TODO remove MuiThemeProvider after removing all dependency to MUI (replace by custom theme provider)
-      // Replace by themr, see https://github.com/javivelasco/react-css-themr for detail to how implement theme configuration
-      <MuiThemeProvider muiTheme={ currentMuiTheme }>
       <Layout>
         <AppHeader
           isAuthenticated={ isAuthenticated || false }
@@ -76,7 +64,6 @@ class App extends Component {
           </Content>
         </Panel>
       </Layout>
-      </MuiThemeProvider>
     )
   }
 }

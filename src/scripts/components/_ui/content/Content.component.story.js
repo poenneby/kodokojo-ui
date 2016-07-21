@@ -10,7 +10,7 @@ import Content from './Content.component'
 // FIXME
 // shim intl is necessary for safari (v9.1.1), remove later ?
 shimIntl(() =>
-  storiesOf('Content', module)
+  storiesOf('Content component', module)
     .add('default', () => (
       <Content>
         <div>children</div>

@@ -7,6 +7,7 @@ import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 import '../../styles/_commons.less'
 import utilsTheme from '../../styles/_utils.scss'
 import Page from '../components/_ui/page/Page.component'
+import Paragraph from '../components/_ui/page/Paragraph.component'
 import Dialog from '../components/_ui/dialog/Dialog.component'
 import Account from '../components/auth/Account.component.js'
 import ProjectConfigForm from '../components/projectConfig/ProjectConfigForm.component'
@@ -16,6 +17,9 @@ import { getBricks } from '../components/brick/brick.actions'
 export class FirstProjectPage extends Component {
 
   static propTypes = {
+    account: PropTypes.object,
+    accountActive: PropTypes.bool,
+    bricks: PropTypes.object,
     getBricks: PropTypes.func.isRequired,
     intl: intlShape.isRequired,
     setNavVisibility: PropTypes.func.isRequired
@@ -27,7 +31,7 @@ export class FirstProjectPage extends Component {
   }
 
   componentWillMount() {
-    const { getBricks } = this.props // eslint-disable-line no-shadow
+    const { bricks, getBricks } = this.props // eslint-disable-line no-shadow
 
     this.initNav()
 
@@ -59,7 +63,7 @@ export class FirstProjectPage extends Component {
       <h1 className={ utilsTheme['secondary-color--1'] }>
         <FormattedMessage id={'project-create-label'} />
       </h1>
-      <div className="paragraph">
+      <Paragraph>
         <div style={{ display: 'flex', flexFlow: 'row wrap', marginBottom: '10px' }}>
           <Dialog
             actions={[
@@ -74,7 +78,7 @@ export class FirstProjectPage extends Component {
           </Dialog>
         </div>
         <ProjectConfigForm />
-      </div>
+      </Paragraph>
     </Page>
     )
   }

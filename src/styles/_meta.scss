@@ -34,6 +34,7 @@ $color-primary-3: #5D5D66;
 $color-primary-4: #75757F;
 $color-primary-5: #8F8F99;
 $color-primary-6: #808080;
+$color-primary-7: #FFFFFF;
 // secondary
 $color-secondary-1: #60DADF;
 $color-secondary-2: #6CBDEC;
@@ -50,10 +51,13 @@ $color-font-4: #A6A6B2;
 $color-font-5: #C0C0CC;
 $color-font-6: #FFFFFF;
 
-// spaces
+// radius
 $radius-standard: 4px;
-$spacing-standard: 60px;
-$spacing-large: 80px;
-$spacing-small: 50px;
+
+// spaces
+$spacing-larger: 80px;
+$spacing-large: 60px;
+$spacing-standard: 50px;
+$spacing-small: 40px;
 $spacing-smaller: 30px;
 $spacing-smallest: 20px;

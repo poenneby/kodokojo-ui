@@ -67,6 +67,10 @@
   color: $color-primary-6;
 }
 
+.primary-color--7 {
+  color: $color-primary-7;
+}
+
 // secondary colors
 .secondary-color--1 {
   color: $color-secondary-1;
@@ -192,9 +196,18 @@
   text-transform: capitalize;
 }
 
+.text-normal {
+  text-transform: none;
+}
+
 .content-gutter--default {
+  padding-left: $spacing-larger;
+  padding-right: $spacing-large;
+}
+
+.content-gutter--large {
   padding-left: $spacing-large;
-  padding-right: $spacing-standard;
+  padding-right: $spacing-large;
 }
 
 .content-gutter--standard {
@@ -202,19 +215,14 @@
   padding-right: $spacing-standard;
 }
 
-.content-gutter--small {
-  padding-left: $spacing-small;
-  padding-right: $spacing-small;
-}
-
 .content-gutter--smaller {
   padding-left: $spacing-smaller;
   padding-right: $spacing-smaller;
 }
 
-.content-spacer--standard {
-  padding-top: $spacing-standard;
-  padding-bottom: $spacing-standard;
+.content-spacer--large {
+  padding-top: $spacing-large;
+  padding-bottom: $spacing-large;
 }
 
 .content-spacer--small {

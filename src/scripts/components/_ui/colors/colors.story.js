@@ -151,6 +151,10 @@ storiesOf('Colors', module)
           className={ utilsTheme['primary-color--6'] }>
           .primary-color--6
         </div>
+        <div
+          className={ utilsTheme['primary-color--7'] }>
+          .primary-color--7
+        </div>
       </div>
       <div style={{ margin: '30px' }}>
         Secondary colors

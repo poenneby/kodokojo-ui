@@ -12,13 +12,10 @@ chai.use(chaiEnzyme())
 chai.use(sinonChai)
 import merge from '../../../../node_modules/lodash/merge'
 
+// contexte
 import { IntlProvider } from 'react-intl'
-// FIXME add this to pass test, remove if FIXME
-// see https://github.com/callemall/material-ui/issues/4021
-// and https://github.com/callemall/material-ui/pull/3820
-import MuiThemeProvider from '../../../../node_modules/material-ui/styles/MuiThemeProvider'
-import getMuiTheme from '../../../../node_modules/material-ui/styles/getMuiTheme'
 
+// component
 import { Login } from './Login.component.js'
 
 // TODO test error message when login
@@ -107,9 +104,7 @@ describe('<Login> component', () => {
 
     // When
     const component = mount(
-      <MuiThemeProvider muiTheme={getMuiTheme()}>
-        <Login {...nextProps}/>
-      </MuiThemeProvider>
+      <Login {...nextProps}/>
     )
 
     // Then
@@ -139,9 +134,7 @@ describe('<Login> component', () => {
       nextProps.login.resolves()
       const component = mount(
         <IntlProvider locale="en">
-          <MuiThemeProvider muiTheme={getMuiTheme()}>
-            <Login {...nextProps}/>
-          </MuiThemeProvider>
+          <Login {...nextProps}/>
         </IntlProvider>
       )
 
@@ -169,9 +162,7 @@ describe('<Login> component', () => {
       )
       const component = mount(
         <IntlProvider locale="en">
-          <MuiThemeProvider muiTheme={getMuiTheme()}>
-            <Login {...nextProps}/>
-          </MuiThemeProvider>
+          <Login {...nextProps}/>
         </IntlProvider>
       )
 
@@ -198,9 +189,7 @@ describe('<Login> component', () => {
       )
       const component = mount(
         <IntlProvider locale="en">
-          <MuiThemeProvider muiTheme={getMuiTheme()}>
-            <Login {...nextProps}/>
-          </MuiThemeProvider>
+          <Login {...nextProps}/>
         </IntlProvider>
       )
 
@@ -223,9 +212,7 @@ describe('<Login> component', () => {
         }
       )
       const component = mount(
-        <MuiThemeProvider muiTheme={getMuiTheme()}>
-          <Login {...nextProps}/>
-        </MuiThemeProvider>
+        <Login {...nextProps}/>
       )
 
       // When

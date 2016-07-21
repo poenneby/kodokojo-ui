@@ -13,13 +13,10 @@ chai.use(chaiEnzyme())
 chai.use(sinonChai)
 import merge from '../../../../node_modules/lodash/merge'
 
+// contexte
 import { IntlProvider } from 'react-intl'
-// FIXME add this to pass test, remove if FIXME
-// see https://github.com/callemall/material-ui/issues/4021
-// and https://github.com/callemall/material-ui/pull/3820
-import MuiThemeProvider from '../../../../node_modules/material-ui/styles/MuiThemeProvider'
-import getMuiTheme from '../../../../node_modules/material-ui/styles/getMuiTheme'
 
+// component
 import { Signup } from './Signup.component'
 
 describe('<Signup> component', () => {
@@ -51,8 +48,8 @@ describe('<Signup> component', () => {
     messages = {
       'email-label': 'email-label',
       'email-hint-label': 'email-hint-label',
-      'entity-label': 'entity-label',
-      'entity-hint-label': 'entity-hint-label',
+      'company-label': 'company-label',
+      'company-hint-label': 'company-hint-label',
       'signup-label': 'signup-button-label'
     }
     intlProvider = new IntlProvider({ locale: 'en' }, {})
@@ -92,12 +89,12 @@ describe('<Signup> component', () => {
     )
 
     // Then
-    expect(nextProps.intl.formatMessage).to.have.callCount(6)
+    expect(nextProps.intl.formatMessage).to.have.callCount(4)
     expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'email-label' })
     expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'email-hint-label' })
     expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'signup-label' })
-    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'entity-label' })
-    expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'entity-hint-label' })
+    // expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'company-label' })
+    // expect(nextProps.intl.formatMessage).to.have.been.calledWith({ id: 'company-hint-label' })
   })
 
   it('should set props properly', () => {
@@ -117,9 +114,7 @@ describe('<Signup> component', () => {
     // TODO find another way to mock IntlProvider
     const component = mount(
       <IntlProvider locale="en" messages={messages}>
-        <MuiThemeProvider muiTheme={getMuiTheme()}>
-          <Signup {...nextProps}/>
-        </MuiThemeProvider>
+        <Signup {...nextProps}/>
       </IntlProvider>
     )
 
@@ -145,9 +140,7 @@ describe('<Signup> component', () => {
       nextProps.createAccount.resolves()
       const component = mount(
         <IntlProvider locale="en" messages={messages}>
-          <MuiThemeProvider muiTheme={getMuiTheme()}>
-            <Signup {...nextProps}/>
-          </MuiThemeProvider>
+          <Signup {...nextProps}/>
         </IntlProvider>
       )
 
@@ -169,9 +162,7 @@ describe('<Signup> component', () => {
       )
       const component = mount(
         <IntlProvider locale="en" messages={messages}>
-          <MuiThemeProvider muiTheme={getMuiTheme()}>
-            <Signup {...nextProps}/>
-          </MuiThemeProvider>
+          <Signup {...nextProps}/>
         </IntlProvider>
       )
 

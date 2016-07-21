@@ -88,7 +88,7 @@ const initApp = () => {
             />
             <Route
               component={NotFoundPage}
-              dataTypePage="testDataType"
+              contentFromRoute="--"
               path="*"
               status={404}
             />
