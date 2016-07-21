@@ -1,9 +1,18 @@
 
 # Kodo Kojo UI
 
-This is the UI for Kodo Kojo project
+This is the UI for Kodo Kojo project 
 
-[![Join the chat at https://gitter.im/kodokojo/kodokojo](https://badges.gitter.im/kodokojo/kodokojo.svg)](https://gitter.im/kodokojo/kodokojo?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/kodokojo/kodokojo](https://img.shields.io/gitter/room/nwjs/nw.js.svg?maxAge=2592000)](https://gitter.im/kodokojo/kodokojo) 
+
+[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badge/) 
+[![](https://img.shields.io/badge/license-GPLv3-blue.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.en.html)     
+
+[![](https://img.shields.io/badge/version-0.1.0--experimental-orange.svg?style=flat&maxAge=2592000)](https://github.com/ModuloM/kodokojo-ui#kodo-kojo-ui) 
+[![node](https://img.shields.io/badge/node-5.x.x-yellow.svg?style=flat&maxAge=2592000)](https://github.com/ModuloM/kodokojo-ui#kodo-kojo-ui) 
+[![npm](https://img.shields.io/badge/npm-3.x.x-blue.svg?style=flat&maxAge=2592000)](https://github.com/ModuloM/kodokojo-ui#kodo-kojo-ui)  
+
+[![Dependency Status](https://dependencyci.com/github/kodokojo/kodokojo-ui/badge)](https://dependencyci.com/github/kodokojo/kodokojo-ui)
 
 
 ## License
@@ -20,6 +29,15 @@ Please, read following [Contribution page](CONTRIBUTING.md).
 - Consider using nvm to switch node version in development easily.
 - Docker 1.8 or newer.
 - A working build of [kodokojo](https://github.com/kodokojo/kodokojo) project.
+
+## Browser support
+
+The UI is tested on Firefox and Chrome  
+
+| [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/firefox.png" alt="Firefox" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome.png" alt="Chrome" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome |
+| --------- | --------- |
+| last version| last version
+<sub><sub>thanks to @godban for the badge generator</sup></sub>
 
 ## Installation & build
 
@@ -79,6 +97,10 @@ Build production tar.gz release: it build the project, then put static/ content 
 
 
     $ ./build.sh
+    
+or with npm
+
+    $ npm run build:docker
     
 
 :heart: Thanks to all Open source projects which made such project possible!
