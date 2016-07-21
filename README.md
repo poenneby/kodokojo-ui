@@ -89,5 +89,9 @@ Build production tar.gz release: it build the project, then put static/ content 
 
     $ ./build.sh
     
+or with npm
+
+    $ npm run build:docker
+    
 
 :heart: Thanks to all Open source projects which made such project possible!
