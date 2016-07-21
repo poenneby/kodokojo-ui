@@ -21,6 +21,15 @@ Please, read following [Contribution page](CONTRIBUTING.md).
 - Docker 1.8 or newer.
 - A working build of [kodokojo](https://github.com/kodokojo/kodokojo) project.
 
+## Browser support
+
+The UI is tested on Firefox and Chrome  
+
+| [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/firefox.png" alt="Firefox" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome.png" alt="Chrome" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome |
+| --------- | --------- |
+| last version| last version
+<sub><sub>thanks to @godban for the badge generator</sup></sub>
+
 ## Installation & build
 
 ### Development
