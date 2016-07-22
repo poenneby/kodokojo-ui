@@ -51,7 +51,12 @@ export class ProjectConfigForm extends Component {
     if (nextProjectName && nextProjectName.trim()) {
       return createProjectConfig(nextProjectName.trim(), userId)
         .then(Promise.resolve())
-        .catch(err => Promise.reject({ projectName: returnErrorKey('project', 'config-create', err.message) }))
+        .catch(err => Promise.reject({ projectName: returnErrorKey(
+          {
+            component: 'project',
+            code: err.message
+          })
+        }))
     }
     // TODO add default error message
     return Promise.reject()

@@ -34,7 +34,12 @@ export class Login extends Component {
     if (nexUserName && nexUserName.trim() && nexPassword && nexPassword.trim()) {
       return login(nexUserName.trim(), nexPassword.trim())
         .then(Promise.resolve())
-        .catch(err => Promise.reject({ psw: returnErrorKey('login', 'authenticate', err.message) }))
+        .catch(err => Promise.reject({ psw: returnErrorKey(
+          {
+            component: 'login',
+            code: err.message
+          })
+        }))
     }
     // TODO add default error message
     return Promise.reject()

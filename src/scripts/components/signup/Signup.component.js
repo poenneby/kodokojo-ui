@@ -40,7 +40,12 @@ export class Signup extends Component {
     if (nextEmail && nextEmail.trim()) {
       return createAccount(nextEmail.trim())
         .then(Promise.resolve())
-        .catch(err => Promise.reject({ email: returnErrorKey('signup', 'create-account', err.message) }))
+        .catch(err => Promise.reject({ email: returnErrorKey(
+          {
+            component: 'email',
+            code: err.message
+          })
+        }))
     }
     // TODO add default error message
     return Promise.reject()

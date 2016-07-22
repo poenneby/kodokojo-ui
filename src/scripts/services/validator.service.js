@@ -25,7 +25,7 @@ validatorService.emailValidator = composeValidators(
       }
       return null
     },
-    'email-pattern-error'
+    'email-error-pattern'
   )
 )
 
@@ -50,7 +50,7 @@ validatorService.projectNameValidator = composeValidators(
       }
       return null
     },
-    'project-name-pattern-error'
+    'project-name-error-pattern'
   )
 )
 
