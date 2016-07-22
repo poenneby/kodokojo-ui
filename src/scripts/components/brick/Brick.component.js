@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { themr } from 'react-css-themr'
+import { intlShape, injectIntl } from 'react-intl'
 import classNames from 'classnames'
 
 // Component
@@ -14,6 +15,7 @@ export class Brick extends Component {
 
   static propTypes = {
     brick: PropTypes.object,
+    intl: intlShape.isRequired,
     theme: PropTypes.object
   }
 
@@ -23,6 +25,8 @@ export class Brick extends Component {
 
   render() {
     const { brick, theme } = this.props // eslint-disable-line no-shadow
+    const { formatMessage } = this.props.intl
+
     const status = getBrickStatus(brick && brick.state ? brick.state : undefined)
     const brickClasses = classNames(theme.brick, theme['brick-item'])
 
@@ -39,6 +43,7 @@ export class Brick extends Component {
             className={ theme['brick-status'] }
             onLoad={ this.handleLoadStatus }
             src={ status.image }
+            title={ formatMessage({ id: `status-${status.label}-label` }) }
           />
         </div>
         <div className={ theme['brick-version'] }>
@@ -55,4 +60,6 @@ export class Brick extends Component {
   }
 }
 
-export default themr(BRICK, brickTheme)(Brick)
+export default themr(BRICK, brickTheme)(
+  injectIntl(Brick)
+)
