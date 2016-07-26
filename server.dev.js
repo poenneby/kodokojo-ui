@@ -12,11 +12,11 @@ import apiRoutes from './api/api.server.routes'
 const app = express()
 global.__baseDirname = __dirname
 
-// Return error if DOCKER_HOST isn’t set
+// Return error if DOCKER_HOST or API_ENV are not set
 if (config.api.host) {
   logger.info('Docker host', config.api.host)
 } else {
-  logger.error('DOCKER_HOST isn’t set')
+  logger.error('DOCKER_HOST or API_ENV are not set')
   config.api.error = true
 }
 
@@ -63,6 +63,7 @@ if (config.api.error) {
       logger.error(err)
     } else {
       logger.info(`==> 🌍  Listening at http://${host}:${port}`)
+      logger.info(`<== 👾  API is rooted to ${config.api.host}`)
     }
   })
 }

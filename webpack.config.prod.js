@@ -20,8 +20,7 @@ module.exports = {
     new ExtractTextPlugin('assets/styles/app-[hash].css'),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
-      'process.env.BABEL_ENV': '"production"',
-      'process.env.BUILD_ENV': '"production"'
+      'process.env.BABEL_ENV': '"production"'
     })
   ],
   module: {

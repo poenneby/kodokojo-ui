@@ -11,7 +11,9 @@ brickRepository.getBricks = (headers) => {
     method: 'GET',
     uri: `${config.api.host}${config.api.routes.brick}`,
     json: true,
-    headers
+    headers,
+    rejectUnauthorized: false,
+    requestCert: true
   })
 }
 

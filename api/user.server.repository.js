@@ -10,7 +10,9 @@ userRepository.initUser = () => {
   return requestWithLog({
     method: 'POST',
     uri: `${config.api.host}${config.api.routes.user}`,
-    json: true
+    json: true,
+    rejectUnauthorized: false,
+    requestCert: true
   })
 }
 
@@ -22,7 +24,9 @@ userRepository.postUser = (id, email) => {
     json: true,
     body: {
       email
-    }
+    },
+    rejectUnauthorized: false,
+    requestCert: true
   })
 }
 
@@ -34,7 +38,9 @@ userRepository.getUserAccount = (credentials) => {
     headers: {
       Authorization: `${credentials}`
     },
-    json: true
+    json: true,
+    rejectUnauthorized: false,
+    requestCert: true
   })
 }
 
@@ -46,7 +52,9 @@ userRepository.getUser = (credentials, userId) => {
     headers: {
       Authorization: `${credentials}`
     },
-    json: true
+    json: true,
+    rejectUnauthorized: false,
+    requestCert: true
   })
 }
 

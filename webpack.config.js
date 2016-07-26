@@ -8,7 +8,7 @@ var validate = require('webpack-validator')
 var configCommon = require('./webpack.config.common')
 var configDev = require('./webpack.config.dev')
 var configProd = require('./webpack.config.prod')
-var TARGET = process.env.npm_lifecycle_event || process.env.BUILD_ENV
+var TARGET = process.env.npm_lifecycle_event || process.env.NODE_ENV
 
 switch (TARGET) {
   default:

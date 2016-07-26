@@ -8,9 +8,9 @@ This is the UI for Kodo Kojo project
 [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badge/) 
 [![](https://img.shields.io/badge/license-GPLv3-blue.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.en.html)     
 
-[![](https://img.shields.io/badge/version-0.1.0--experimental-orange.svg?style=flat&maxAge=2592000)](https://github.com/ModuloM/kodokojo-ui#kodo-kojo-ui) 
-[![node](https://img.shields.io/badge/node-5.x.x-yellow.svg?style=flat&maxAge=2592000)](https://github.com/ModuloM/kodokojo-ui#kodo-kojo-ui) 
-[![npm](https://img.shields.io/badge/npm-3.x.x-blue.svg?style=flat&maxAge=2592000)](https://github.com/ModuloM/kodokojo-ui#kodo-kojo-ui)  
+[![](https://img.shields.io/badge/version-0.1.0-orange.svg?style=flat&maxAge=2592000)](https://github.com/kodokojo/kodokojo-ui#kodo-kojo-ui) 
+[![node](https://img.shields.io/badge/node-5.x.x-yellow.svg?style=flat&maxAge=2592000)](https://github.com/kodokojo/kodokojo-ui#kodo-kojo-ui) 
+[![npm](https://img.shields.io/badge/npm-3.x.x-blue.svg?style=flat&maxAge=2592000)](https://github.com/kodokojo/kodokojo-ui#kodo-kojo-ui)  
 
 [![Dependency Status](https://dependencyci.com/github/kodokojo/kodokojo-ui/badge)](https://dependencyci.com/github/kodokojo/kodokojo-ui)
 
@@ -44,18 +44,19 @@ The UI is tested on Firefox and Chrome
 ### Development
 
 You have to set two environment variables.
-If you are running Kodo Kojo backend in local mode, set variables as follow:
+If you are running Kodo Kojo backend in **local mode**, set variables as follow:
 
     NODE_ENV=development
     BABEL_ENV=development
-    BUILD_ENV=development
     
-If you are running Kodo Kojo backend that reroute to AWS instance, set variables as follow:  
+If you are running Kodo Kojo backend that reroute to **AWS cluster**, set variables as follow:  
 
     NODE_ENV=development
     BABEL_ENV=production
-    BUILD_ENV=development
 
+You can use `API_ENV` to use an external Kodo Kojo backend api dns.
+
+    API_ENV=kodokojo.mydomaine.com
 
 First install npm packages, build development files into static/, start webpack dev server on localhost:3000.
 
@@ -70,7 +71,6 @@ Then open ui project in browser.
 
 In any case, you will need to run Kodo Kojo backend to be able to test and develop locally, please [refers to proper documentation](https://github.com/kodokojo/kodokojo/blob/master/README.md) for explanation details.
 
-
 ### Local "production"
 
 *If you want to test production build*
@@ -79,7 +79,6 @@ Set environment variables to:
 
     NODE_ENV=development
     BABEL_ENV=production
-    BUILD_ENV=production
 
 Install npm packages, build production files into static/, start webpack dev server on localhost:3000.
 
