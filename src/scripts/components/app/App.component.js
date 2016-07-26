@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { ThemeProvider, themr } from 'react-css-themr'
+import { themr } from 'react-css-themr'
 
 // Component
 import { APP } from '../../commons/identifiers'

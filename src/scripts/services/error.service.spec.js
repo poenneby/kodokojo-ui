@@ -8,7 +8,6 @@ import { returnErrorKey } from './error.service'
 
 describe('error service', () => {
   describe('returnError key', () => {
-
     it('should return default key', () => {
       // Given
       const errorObject = {}

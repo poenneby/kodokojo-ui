@@ -13,7 +13,6 @@ import {
 } from '../commons/constants'
 
 // TODO let the dev backend reroute ws calls
-// TODO move this in actions
 
 export const websocket = {
   socket: undefined,
