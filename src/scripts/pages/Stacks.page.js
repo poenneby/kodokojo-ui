@@ -9,6 +9,7 @@ import '../../styles/_commons.less'
 import utilsTheme from '../../styles/_utils.scss'
 import brickTheme from '../components/brick/brick.scss'
 import Page from '../components/_ui/page/Page.component'
+import Paragraph from '../components/_ui/page/Paragraph.component'
 import Brick from '../components/brick/Brick.component'
 import { setNavVisibility } from '../components/app/app.actions'
 import { updateMenuPath } from '../components/menu/menu.actions'
@@ -70,7 +71,7 @@ export class StacksPage extends Component {
         <h1 className={ utilsTheme['secondary-color--1'] }>
           <FormattedMessage id={'stacks-label'} />
         </h1>
-        <div className="paragraph">
+        <Paragraph>
           <div className={ brickClasses }>
             <div className={ brickTheme['brick-type'] }>
               <FormattedMessage id={ 'type-label' } />
@@ -93,7 +94,7 @@ export class StacksPage extends Component {
               <Brick brick={ brick } key={ index } />
             ))
           }
-        </div>
+        </Paragraph>
       </Page>
     )
   }
