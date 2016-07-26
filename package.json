@@ -12,6 +12,7 @@
     "clean": "test -d ./node_modules/ && rm -rf ./node_modules || echo \"no node_modules/ folder, continue\"",
     "clean:static": "test -d ./static/ && rm -rf ./static || echo \"no static/ folder, continue\"",
     "styleguide": "start-storybook -p 9001 -c ./styleguide",
+    "build:env": "printf '{\"env\":\"%s\"}\n' \"$NODE_ENV\" | mustache - config/shared/api.ip.mustache > config/shared/api.ip.json",
     "build": "mustache webpack-assets.json src/index.mustache > static/index.html",
     "build:styleguide": "build-storybook -c ./styleguide -o styleguide/dist",
     "build:dev": "npm run clean:static && webpack --progress --colors &&  npm run build",
