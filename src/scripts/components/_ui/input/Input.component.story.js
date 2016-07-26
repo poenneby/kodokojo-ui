@@ -75,3 +75,14 @@ storiesOf('Input', module)
       value="some value"
     />
   ))
+  .add('on error - required', () => (
+    <Input
+      error="error in this input"
+      hint="This is a hint"
+      icon="email"
+      label="input label"
+      name="inputValue"
+      required
+      value="some value"
+    />
+  ))

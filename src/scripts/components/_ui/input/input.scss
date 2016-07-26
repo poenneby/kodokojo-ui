@@ -77,7 +77,7 @@ $input-hint-opacity: .8;
   line-height: $font-size-normal;
   top: $font-size-normal - $input-field-padding;
   & > .required {
-    color: $color-secondary-1;
+    color: $color-font-5;
   }
 }
 
@@ -96,7 +96,7 @@ $input-hint-opacity: .8;
     color: $color-ternary-1;
   }
   > .label > .required {
-    color: $color-secondary-1;
+    color: $color-ternary-1;
   }
 }
 
