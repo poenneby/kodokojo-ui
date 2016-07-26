@@ -3,6 +3,7 @@ import { storiesOf } from '@kadira/storybook'
 
 // component to story
 import '../../../../styles/_commons.less'
+import utilsTheme from '../../../../styles/_utils.scss'
 
 storiesOf('Typography', module)
   .add('family & weight', () => (
@@ -24,23 +25,23 @@ storiesOf('Typography', module)
             default
           </div>
           <div
-            className="font-standard--thin">
+            className={ utilsTheme['font-standard--thin'] } >
             .font-standard--thin 100
           </div>
           <div
-            className="font-standard--light">
+            className={ utilsTheme['font-standard--light'] }>
             .font-standard--light 300
           </div>
           <div
-            className="font-standard--normal">
+            className={ utilsTheme['font-standard--normal'] }>
             .font-standard--normal 400
           </div>
           <div
-            className="font-standard--semi-bold">
+            className={ utilsTheme['font-standard--semi-bold'] }>
             .font-standard--semi-bold 600
           </div>
           <div
-            className="font-standard--bold">
+            className={ utilsTheme['font-standard--bold'] }>
             .font-standard--bold 700
           </div>
         </div>
@@ -59,13 +60,13 @@ storiesOf('Typography', module)
       <div style={{ margin: '30px' }}>
         Titles
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <div className="title-size--1">
+          <div className={ utilsTheme['title-size--1'] }>
             .title-size--1
           </div>
-          <div className="title-size--2">
+          <div className={ utilsTheme['title-size--2'] }>
             .title-size--2
           </div>
-          <div className="title-size--3">
+          <div className={ utilsTheme['title-size--3'] }>
             .title-size--3
           </div>
         </div>
@@ -73,22 +74,22 @@ storiesOf('Typography', module)
       <div style={{ margin: '30px' }}>
         fonts
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <div className="font-size--smaller">
+          <div className={ utilsTheme['font-size--smaller'] }>
             .font-size--smaller
           </div>
-          <div className="font-size--small">
+          <div className={ utilsTheme['font-size--small'] }>
             .font-size--small
           </div>
-          <div className="font-size--normal">
+          <div className={ utilsTheme['font-size--normal'] }>
             .font-size--normal
           </div>
-          <div className="font-size--medium">
+          <div className={ utilsTheme['font-size--medium'] }>
             .font-size--medium
           </div>
-          <div className="font-size--large">
+          <div className={ utilsTheme['font-size--large'] }>
             .font-size--large
           </div>
-          <div className="font-size--larger">
+          <div className={ utilsTheme['font-size--larger'] }>
             .font-size--larger
           </div>
         </div>
