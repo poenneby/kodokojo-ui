@@ -40,12 +40,19 @@ export class MembersPage extends Component {
     getProjectConfig: PropTypes.func,
     handleSubmit: PropTypes.func,
     intl: intlShape.isRequired,
+    isFormActive: PropTypes.bool.isRequired,
     location: PropTypes.object.isRequired,
     members: PropTypes.array,
     projectConfigId: PropTypes.string,
+    resetForm: PropTypes.func.isRequired,
     setNavVisibility: PropTypes.func.isRequired,
     submitting: PropTypes.bool.isRequired,
     updateMenuPath: PropTypes.func.isRequired
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = { isFormActive: false }
   }
 
   componentWillMount() {
@@ -71,6 +78,21 @@ export class MembersPage extends Component {
     setNavVisibility(true)
   }
 
+  handleToggleForm = () => {
+    const { isFormActive } = this.state
+
+    this.setState({
+      isFormActive: !isFormActive
+    })
+  }
+
+  handleCancel = () => {
+    const { resetForm } = this.props
+
+    resetForm()
+    this.handleToggleForm()
+  }
+
   handleSubmit = () => {
     const { fields: { email }, addUserToProjectConfig, projectConfigId } = this.props // eslint-disable-line no-shadow
 
@@ -94,7 +116,7 @@ export class MembersPage extends Component {
   }
 
   render() {
-    const { fields: { email }, handleSubmit, submitting, members } = this.props
+    const { fields: { email }, handleSubmit, submitting, members, isFormActive } = this.props
     const { formatMessage } = this.props.intl
 
     const userClasses = classNames(userTheme.user, userTheme['user-header'])
@@ -105,76 +127,83 @@ export class MembersPage extends Component {
           <FormattedMessage id={'members-label'} />
         </h1>
         <Action>
-          <form id="addMemberForm"
-                name="addMemberForm"
-                noValidate
-                onSubmit={ handleSubmit(this.handleSubmit) }
-          >
-            <div className={ userTheme['user-form']}>
-              <div className={ classNames(userTheme.user, userTheme['user-item--form']) }>
-                <div className={ userTheme['user-name--form'] }>
-                  { /* <div className={ userTheme['user-spacer'] }>
-                  </div> */ }
-                  <Avatar>
-                    <div className={ userTheme['user-initials'] }>
-                      ...
-                    </div>
-                  </Avatar>
-                  <Input
-                    disabled
-                    label={ formatMessage({ id: 'name-label' }) }
-                    name="name"
-                  />
-                </div>
-                <div className={ userTheme['user-username--form'] }>
-                  <Input
-                    disabled
-                    label={ formatMessage({ id: 'username-label' }) }
-                    name="username"
-                  />
-                </div>
-                <div className={ userTheme['user-group--form'] }>
-                  { /* TODO change this by a dorpdown */ }
-                  <span
-                    style={{ display: 'flex', flex: '1 1 auto', position: 'relative', height: '50px', justifyContent: 'left', color: '#75757F' }}>
-                    admin
-                  </span>
-                </div>
-                <div className={ userTheme['user-email--form'] }>
-                  <Input
-                    { ...email }
-                    error={
-                      email.touched && email.error ?
-                      formatMessage({ id: email.error }, { fieldName: formatMessage({ id: 'email-input-label' }) }) :
-                      ''
-                    }
-                    hint={ formatMessage({ id: 'email-hint-label' }) }
-                    label={ formatMessage({ id: 'email-label' }) }
-                    name="email"
-                    required
-                    type="email"
-                  />
+          { !isFormActive &&
+            <Button
+              accent
+              disabled={ submitting }
+              icon="add_circle_outline"
+              label={ formatMessage({ id: 'add-member-label' }) }
+              onTouchTap={ handleSubmit(this.handleToggleForm) }
+              type="button"
+            />
+          }
+          { isFormActive &&
+            <form id="addMemberForm"
+                  name="addMemberForm"
+                  noValidate
+                  onSubmit={ handleSubmit(this.handleSubmit) }
+            >
+              <div className={ userTheme['user-form']}>
+                <div className={ classNames(userTheme.user, userTheme['user-item--form']) }>
+                  <div className={ userTheme['user-name--form'] }>
+                    <Avatar>
+                      <div className={ userTheme['user-initials'] }>
+                        ...
+                      </div>
+                    </Avatar>
+                    <Input
+                      disabled
+                      label={ formatMessage({ id: 'name-label' }) }
+                      name="name"
+                    />
+                  </div>
+                  <div className={ userTheme['user-username--form'] }>
+                    <Input
+                      disabled
+                      label={ formatMessage({ id: 'username-label' }) }
+                      name="username"
+                    />
+                  </div>
+                  <div className={ userTheme['user-group--form'] }>
+                    { /* TODO change this by a dropdown */ }
+                    <span
+                      style={{ display: 'flex', flex: '1 1 auto', position: 'relative', height: '50px', justifyContent: 'left', color: '#75757F' }}>
+                      admin
+                    </span>
+                  </div>
+                  <div className={ userTheme['user-email--form'] }>
+                    <Input
+                      { ...email }
+                      error={
+                        email.touched && email.error ?
+                        formatMessage({ id: email.error }, { fieldName: formatMessage({ id: 'email-input-label' }) }) :
+                        ''
+                      }
+                      hint={ formatMessage({ id: 'email-hint-label' }) }
+                      label={ formatMessage({ id: 'email-label' }) }
+                      name="email"
+                      required
+                      type="email"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div>
-              { /* <Button
-                label="Save"
-                primary
-              />
-              <Button
-                label="Cancel"
-              /> */ }
-              <Button
-                accent
-                disabled={ submitting }
-                icon="add_circle_outline"
-                label="Add members"
-                onTouchTap={ handleSubmit(this.handleSubmit) }
-                type="submit"
-              />
-            </div>
-          </form>
+              <div style={{ textAlign: 'right' }}>
+                <Button
+                  disabled={ submitting }
+                  label={ formatMessage({ id: 'cancel-label' })}
+                  onTouchTap={ this.handleCancel }
+                />
+                <Button
+                  disabled={ submitting }
+                  label={ formatMessage({ id: 'save-label' })}
+                  onTouchTap={ handleSubmit(this.handleSubmit) }
+                  primary
+                  type="submit"
+                />
+              </div>
+            </form>
+          }
         </Action>
         <Paragraph>
           <div className={ userClasses }>
@@ -208,10 +237,11 @@ export class MembersPage extends Component {
 }
 
 // StacksPage container
-const mapStateProps = (state) => (
+const mapStateProps = (state, ownProps) => (
   {
     projectConfigId: state.projectConfig.id,
-    members: state.projectConfig.users
+    members: state.projectConfig.users,
+    isFormActive: ownProps.isFormActive
   }
 )
 

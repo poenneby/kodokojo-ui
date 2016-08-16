@@ -84,14 +84,34 @@ const location = {
   pathname: '/members'
 }
 
-const store = configureStore(initialState)
+const initialStore = configureStore(initialState)
+const withformStore = configureStore(
+  Object.assign({},
+    initialState,
+    {
+      isActiveForm: true
+    }
+  )
+)
 
 storiesOf('MembersPage', module)
   .add('with 3 users', () => (
-    <Provider store={store}>
+    <Provider store={initialStore}>
       <IntlProvider locale="en" messages={ en }>
         <App>
           <MembersPage
+            location={ location }
+          />
+        </App>
+      </IntlProvider>
+    </Provider>
+  ))
+  .add('with form opened', () => (
+    <Provider store={withformStore}>
+      <IntlProvider locale="en" messages={ en }>
+        <App>
+          <MembersPage
+            isFormActive
             location={ location }
           />
         </App>

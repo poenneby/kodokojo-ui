@@ -1,5 +1,6 @@
 export default {
   'account-label': 'Account',
+  'add-member-label': 'Add member',
   'app-lang-fr-label': 'Français',
   'app-lang-en-label': 'English',
   'app-nav-home-label': 'Accueil',
@@ -9,6 +10,7 @@ export default {
   'brick-jenkins-label': 'Jenkins',
   'brick-nexus-label': 'Nexus',
   'brick-dockerregistry-label': 'Docker Registry',
+  'cancel-label': 'Cancel',
   'ci-label': 'CI',
   'create-label': 'Create',
   'company-label': 'Company',
@@ -42,6 +44,7 @@ export default {
   'project-name-error-pattern':
     'Name must have between 4 and 20 non special, unaccented characters',
   'projects-label': 'Projects',
+  'save-label': 'Save',
   'scm-label': 'SCM',
   'signup-title-label': 'Don’t have an account?',
   'signup-label': 'S’inscrire',
