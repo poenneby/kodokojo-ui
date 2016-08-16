@@ -26,7 +26,7 @@ export class FirstProjectPage extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { accountActive: true }
+    this.state = { isAccountActive: true }
   }
 
   componentWillMount() {
@@ -50,7 +50,7 @@ export class FirstProjectPage extends Component {
 
   handleClose = () => {
     this.setState({
-      accountActive: false
+      isAccountActive: false
     })
   }
 
@@ -68,7 +68,7 @@ export class FirstProjectPage extends Component {
             actions={[
               { label: 'Close', onClick: this.handleClose }
             ]}
-            active={ this.state.accountActive }
+            active={ this.state.isAccountActive }
             onEscKeyDown={ this.handleClose }
             onOverlayClick={ this.handleClose }
             title={ formatMessage({ id: 'account-label' }) }
