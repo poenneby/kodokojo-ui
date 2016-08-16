@@ -12,6 +12,7 @@ const authService = {}
 authService.checkAuth = (nextState, replaceState) => {
   const isAuthenticated = authService.isAuth()
 
+  // TODO return the targeted url to pass it to login, in order to reroute to it after login
   if (!isAuthenticated) {
     // use react router onEnter callback argument to replace router state
     replaceState({
