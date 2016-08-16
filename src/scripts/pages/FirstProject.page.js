@@ -18,7 +18,6 @@ export class FirstProjectPage extends Component {
 
   static propTypes = {
     account: PropTypes.object,
-    accountActive: PropTypes.bool,
     bricks: PropTypes.object,
     getBricks: PropTypes.func.isRequired,
     intl: intlShape.isRequired,
@@ -31,7 +30,7 @@ export class FirstProjectPage extends Component {
   }
 
   componentWillMount() {
-    const { bricks, getBricks } = this.props // eslint-disable-line no-shadow
+    const { getBricks } = this.props // eslint-disable-line no-shadow
 
     this.initNav()
 

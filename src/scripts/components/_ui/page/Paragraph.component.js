@@ -21,7 +21,8 @@ export const Paragraph = ({ children, theme }) => (
 Paragraph.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.element),
-    PropTypes.element
+    PropTypes.element,
+    PropTypes.node
   ]),
   theme: PropTypes.object
 }
