@@ -3,6 +3,7 @@ import api from '../commons/config'
 import { getWebSocket } from '../services/webSocket.factory.js'
 import { mapBrickEvent } from '../services/mapping.service'
 import { updateProject } from '../components/project/project.actions'
+import apiConf from '../../../config/shared/api.env'
 import {
   successWebsocket,
   failureWebsocket
@@ -12,27 +13,39 @@ import {
   WEBSOCKET_STOP
 } from '../commons/constants'
 
-// TODO let the dev backend reroute ws calls
+// TODO let the dev backend reroute ws calls through express server
 
-export const websocket = {
-  socket: undefined,
-  socketPing: undefined,
-  uri:
-  `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//` +
-  `${window.location.host === 'localhost:3000' ? '192.168.99.100:9080' : window.location.host}${api.event}`
+export const websocketInit = () => {
+  let apiUrl
+  const apiProtocol = `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//`
+
+  if (apiConf.conf.getIp()) {
+    apiUrl = `wss://${apiConf.conf.getIp()}`
+  } else if (window.location.host === 'localhost:3000') {
+    apiUrl = `${apiProtocol}192.168.99.100:9080`
+  } else {
+    apiUrl = `${apiProtocol}${window.location.host}`
+  }
+
+  return {
+    socket: undefined,
+    socketPing: undefined,
+    uri: `${apiUrl}${api.event}`
+  }
 }
 
 const websocketMiddleware = store => next => action => {
+  const ws = websocketInit()
   switch (action.type) {
     case WEBSOCKET_REQUEST:
-      if (!websocket.socket) {
-        websocket.socket = getWebSocket(websocket.uri)
+      if (!ws.socket) {
+        ws.socket = getWebSocket(ws.uri)
 
         // register on open callback
-        websocket.socket.onopen = () => {
+        ws.socket.onopen = () => {
           store.dispatch(successWebsocket())
           // authenticate user to approve socket creation
-          websocket.socket.send(JSON.stringify({
+          ws.socket.send(JSON.stringify({
             entity: 'user',
             action: 'authentication',
             data: {
@@ -41,8 +54,8 @@ const websocketMiddleware = store => next => action => {
           }))
 
           // start to ping to keep socket open
-          websocket.socketPing = setInterval(() => {
-            websocket.socket.send(JSON.stringify({
+          ws.socketPing = setInterval(() => {
+            ws.socket.send(JSON.stringify({
               entity: 'ws',
               action: 'ping'
             }))
@@ -50,7 +63,7 @@ const websocketMiddleware = store => next => action => {
         }
 
         // register on message callback
-        websocket.socket.onmessage = (socketEvent) => {
+        ws.socket.onmessage = (socketEvent) => {
           const socketEventData = JSON.parse(socketEvent.data)
 
           if (socketEventData.entity === 'brick' && socketEventData.action === 'updateState') {
@@ -61,18 +74,18 @@ const websocketMiddleware = store => next => action => {
         }
 
         // register on error callback
-        websocket.socket.onerror = (socketEvent) => {
+        ws.socket.onerror = (socketEvent) => {
           console.log('wsError', socketEvent)
           store.dispatch(failureWebsocket(socketEvent))
         }
       }
       return next(action)
     case WEBSOCKET_STOP:
-      if (websocket.socket) {
-        websocket.socket.close(1000, 'user <user> living')
+      if (ws.socket) {
+        ws.socket.close(1000, 'user <user> living')
       }
-      if (websocket.socketPing) {
-        clearInterval(websocket.socketPing)
+      if (ws.socketPing) {
+        clearInterval(ws.socketPing)
       }
       return next(action)
     // TODO implement SEND_MESSAGE if needed

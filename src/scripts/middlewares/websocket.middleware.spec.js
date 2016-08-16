@@ -8,26 +8,54 @@ import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 chai.use(sinonChai)
 
-import websocketMiddleware, { websocket } from './websocket.middleware'
+import websocketMiddleware, { websocketInit } from './websocket.middleware'
 import api from '../commons/config'
+import apiConf from '../../../config/shared/api.env'
 import {
   WEBSOCKET_REQUEST,
   WEBSOCKET_STOP
 } from '../commons/constants'
 
 describe('websocket middleware', () => {
-  describe('websocket state', () => {
-    it('should init websocket', () => {
+  describe('websocketInit', () => {
+    let apiConfSpy
+    beforeEach(() => {
+      apiConfSpy = sinon.stub(apiConf.conf, 'getIp')
+    })
+    afterEach(() => {
+      apiConf.conf.getIp.restore()
+    })
+
+    it('should init websocket with localhost', () => {
       // Given
+      apiConfSpy.returns('')
 
       // When
+      const websocketDefault = websocketInit()
 
       // Then
-      expect(websocket).to.deep.equal({
+      expect(websocketDefault).to.deep.equal({
         socket: undefined,
         socketPing: undefined,
         uri: `ws://localhost${api.event}`
       })
+      expect(apiConfSpy).to.have.callCount(1)
+    })
+
+    it('should init websocket with dns from env', () => {
+      // Given
+      apiConfSpy.returns('test')
+
+      // When
+      const websocketEnv = websocketInit()
+
+      // Then
+      expect(websocketEnv).to.deep.equal({
+        socket: undefined,
+        socketPing: undefined,
+        uri: `wss://test${api.event}`
+      })
+      expect(apiConfSpy).to.have.callCount(2)
     })
   })
 
