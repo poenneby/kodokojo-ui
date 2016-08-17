@@ -86,11 +86,13 @@ describe('websocket middleware', () => {
         dispatch(action)
         return dispatched
       }
+      sinon.stub(apiConf.conf, 'getIp').returns('')
     })
 
     afterEach(() => {
       websocketMiddleware.__ResetDependency__('getWebSocket')
       websocketMiddleware.__ResetDependency__('websocket')
+      apiConf.conf.getIp.restore()
     })
 
     it('should pass action if not websocket type', () => {
