@@ -30,11 +30,6 @@ export class StacksPage extends Component {
     updateMenuPath: PropTypes.func.isRequired
   }
 
-  constructor(props) {
-    super(props)
-    this.socket = undefined
-  }
-
   componentWillMount = () => {
     const { getProjectConfig, getProjectConfigAndProject, location, projectConfigId, projectId, stacks, updateMenuPath } = this.props // eslint-disable-line no-shadow
 
