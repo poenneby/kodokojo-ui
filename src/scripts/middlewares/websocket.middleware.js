@@ -68,14 +68,14 @@ const websocketMiddleware = store => next => action => {
 
           if (socketEventData.entity === 'brick' && socketEventData.action === 'updateState') {
             const mappedEvent = mapBrickEvent(socketEventData)
-            console.log('wsMapEvent', mappedEvent)
+            console.log('wsMapEvent', mappedEvent) // eslint-disable-line no-console
             store.dispatch(updateProject(mappedEvent))
           }
         }
 
         // register on error callback
         ws.socket.onerror = (socketEvent) => {
-          console.log('wsError', socketEvent)
+          console.log('wsError', socketEvent) // eslint-disable-line no-console
           store.dispatch(failureWebsocket(socketEvent))
         }
       }
