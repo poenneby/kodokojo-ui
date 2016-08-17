@@ -1,9 +1,9 @@
 import { getToken } from '../services/auth.service'
 import api from '../commons/config'
+import apiConf from '../../../config/shared/api.env'
 import { getWebSocket } from '../services/webSocket.factory.js'
 import { mapBrickEvent } from '../services/mapping.service'
 import { updateProject } from '../components/project/project.actions'
-import apiConf from '../../../config/shared/api.env'
 import {
   successWebsocket,
   failureWebsocket
