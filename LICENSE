@@ -1,6 +1,6 @@
 /**
  * Kodo Kojo - Software factory done right
- * Copyright © 2016 Kodo Kojo (infos@kodokojo.io)
+ * Copyright © ${year} Kodo Kojo (infos@kodokojo.io)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,15 +15,3 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
-/**
- * factory for native WebSocket (to be able to mock it)
- *
- */
-export const webSocketFactory = {}
-
-webSocketFactory.getWebSocket = (url) => new WebSocket(url)
-
-export const getWebSocket = webSocketFactory.getWebSocket
-
-export default webSocketFactory
