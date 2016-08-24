@@ -22,17 +22,17 @@
 
 import { expect } from 'chai'
 
-import signupReducer from './signup.reducer'
+import userReducer from './user.reducer'
 import * as ActionsTypes from '../../commons/constants'
 
-describe('signup reducer', () => {
+describe('user reducer', () => {
   it('should return initialState', () => {
     // Given
     const state = undefined
     const action = {}
 
     // When
-    const nextState = signupReducer(state, action)
+    const nextState = userReducer(state, action)
 
     // Then
     expect(nextState).to.deep.equal({
@@ -40,18 +40,18 @@ describe('signup reducer', () => {
     })
   })
 
-  it('should handle ACCOUNT_NEW_ID_REQUEST', () => {
+  it('should handle USER_NEW_ID_REQUEST', () => {
     // Given
     const state = undefined
     const action = {
-      type: ActionsTypes.ACCOUNT_NEW_ID_REQUEST,
+      type: ActionsTypes.USER_NEW_ID_REQUEST,
       payload: {
         email: 'email@test.com'
       }
     }
 
     // When
-    const nextState = signupReducer(state, action)
+    const nextState = userReducer(state, action)
 
     // Then
     expect(nextState).to.deep.equal({
@@ -59,11 +59,11 @@ describe('signup reducer', () => {
     })
   })
 
-  it('should handle ACCOUNT_NEW_ID_SUCCESS', () => {
+  it('should handle USER_NEW_ID_SUCCESS', () => {
     // Given
     const state = {}
     const action = {
-      type: ActionsTypes.ACCOUNT_NEW_ID_SUCCESS,
+      type: ActionsTypes.USER_NEW_ID_SUCCESS,
       payload: {
         account: {
           id: 1
@@ -72,7 +72,7 @@ describe('signup reducer', () => {
     }
 
     // When
-    const nextState = signupReducer(state, action)
+    const nextState = userReducer(state, action)
 
     // Then
     expect(nextState).to.deep.equal({
@@ -80,15 +80,16 @@ describe('signup reducer', () => {
     })
   })
 
-  it('should handle ACCOUNT_NEW_REQUEST', () => {
+  it('should handle USER_NEW_REQUEST', () => {
     // Given
     const state = {}
+
     const action = {
-      type: ActionsTypes.ACCOUNT_NEW_REQUEST
+      type: ActionsTypes.USER_NEW_REQUEST
     }
 
     // When
-    const nextState = signupReducer(state, action)
+    const nextState = userReducer(state, action)
 
     // Then
     expect(nextState).to.deep.equal({
@@ -96,11 +97,11 @@ describe('signup reducer', () => {
     })
   })
 
-  it('should handle ACCOUNT_NEW_SUCCESS', () => {
+  it('should handle USER_NEW_SUCCESS', () => {
     // Given
     const state = {}
     const action = {
-      type: ActionsTypes.ACCOUNT_NEW_SUCCESS,
+      type: ActionsTypes.USER_NEW_SUCCESS,
       payload: {
         account: {
           id: 2,
@@ -115,7 +116,72 @@ describe('signup reducer', () => {
     }
 
     // When
-    const nextState = signupReducer(state, action)
+    const nextState = userReducer(state, action)
+
+    // Then
+    expect(nextState).to.deep.equal({
+      isFetching: false
+    })
+  })
+
+  it('should handle USER_REQUEST', () => {
+    // Given
+    const state = undefined
+    const action = {
+      type: ActionsTypes.USER_REQUEST,
+      payload: {
+        email: 'email@test.com'
+      }
+    }
+
+    // When
+    const nextState = userReducer(state, action)
+
+    // Then
+    expect(nextState).to.deep.equal({
+      isFetching: true
+    })
+  })
+
+  it('should handle USER_SUCCESS', () => {
+    // Given
+    const state = {}
+    const user = {
+      id: 2,
+      name: 'name',
+      userName: 'userName',
+      email: 'email@test.com',
+      password: '',
+      sshKeyPublic: '',
+      sshKeyPrivate: ''
+    }
+    const action = {
+      type: ActionsTypes.USER_SUCCESS,
+      payload: {
+        user
+      }
+    }
+
+    // When
+    const nextState = userReducer(state, action)
+
+    // Then
+    expect(nextState).to.deep.equal({
+      2: user,
+      isFetching: false
+    })
+  })
+
+  it('should handle USER_FAILURE', () => {
+    // Given
+    const state = {}
+    const action = {
+      type: ActionsTypes.USER_FAILURE,
+      payload: {}
+    }
+
+    // When
+    const nextState = userReducer(state, action)
 
     // Then
     expect(nextState).to.deep.equal({

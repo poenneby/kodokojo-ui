@@ -29,18 +29,19 @@ import thunk from 'redux-thunk'
 import { apiMiddleware } from 'redux-api-middleware'
 import configureMockStore from 'redux-mock-store'
 
-// dependencies to mock
-
 import api from '../../commons/config'
-import * as actions from './signup.actions.js'
-import { __RewireAPI__ as actionsRewireApi } from './signup.actions.js'
+import * as actions from './user.actions.js'
+import { __RewireAPI__ as actionsRewireApi } from './user.actions.js'
 import {
-  ACCOUNT_NEW_ID_REQUEST,
-  ACCOUNT_NEW_ID_SUCCESS,
-  ACCOUNT_NEW_ID_FAILURE,
-  ACCOUNT_NEW_REQUEST,
-  ACCOUNT_NEW_SUCCESS,
-  ACCOUNT_NEW_FAILURE
+  USER_NEW_ID_REQUEST,
+  USER_NEW_ID_SUCCESS,
+  USER_NEW_ID_FAILURE,
+  USER_NEW_REQUEST,
+  USER_NEW_SUCCESS,
+  USER_NEW_FAILURE,
+  USER_REQUEST,
+  USER_SUCCESS,
+  USER_FAILURE
 } from '../../commons/constants'
 
 // Apply the middleware to the store
@@ -50,43 +51,27 @@ const middlewares = [
 ]
 const mockStore = configureMockStore(middlewares)
 
-describe('signup actions', () => {
-  describe('create auth', () => {
-    let pushHistorySpy
-    let getHeadersSpy
-    let setAuthSpy
-    let putAuthSpy
-    let mapAccountSpy
-    let requestWebsocketSpy
+describe('user actions', () => {
+  let getHeadersSpy
 
-    beforeEach(() => {
-      pushHistorySpy = sinon.spy()
-      actionsRewireApi.__Rewire__('browserHistory', {
-        push: pushHistorySpy
-      })
-      getHeadersSpy = sinon.spy()
-      actionsRewireApi.__Rewire__('getHeaders', getHeadersSpy)
-      setAuthSpy = sinon.spy()
-      actionsRewireApi.__Rewire__('setAuth', setAuthSpy)
-      putAuthSpy = sinon.spy()
-      actionsRewireApi.__Rewire__('putAuth', putAuthSpy)
-      requestWebsocketSpy = sinon.stub().returns({
-        type: 'MOCKED_WEBSOCKET_REQUEST'
-      })
-      actionsRewireApi.__Rewire__('requestWebsocket', requestWebsocketSpy)
-    })
+  beforeEach(() => {
+    getHeadersSpy = sinon.spy()
+    actionsRewireApi.__Rewire__('getHeaders', getHeadersSpy)
+  })
+
+  afterEach(() => {
+    actionsRewireApi.__ResetDependency__('getHeaders')
+    nock.cleanAll()
+  })
+
+  describe('create user', () => {
+    let mapAccountSpy
 
     afterEach(() => {
-      actionsRewireApi.__ResetDependency__('getHeaders')
-      actionsRewireApi.__ResetDependency__('browserHistory')
-      actionsRewireApi.__ResetDependency__('setAuth')
-      actionsRewireApi.__ResetDependency__('putAuth')
       actionsRewireApi.__ResetDependency__('mapAccount')
-      actionsRewireApi.__ResetDependency__('requestWebsocket')
-      nock.cleanAll()
     })
 
-    it('should create auth', (done) => {
+    it('should create user', (done) => {
       // Given
       const email = 'test@email.com'
       const id = 'idUs3r'
@@ -97,14 +82,14 @@ describe('signup actions', () => {
       }
       const expectedActions = [
         {
-          type: ACCOUNT_NEW_ID_REQUEST,
+          type: USER_NEW_ID_REQUEST,
           payload: {
             email
           },
           meta: undefined
         },
         {
-          type: ACCOUNT_NEW_ID_SUCCESS,
+          type: USER_NEW_ID_SUCCESS,
           payload: {
             account: {
               id
@@ -113,23 +98,20 @@ describe('signup actions', () => {
           meta: undefined
         },
         {
-          type: ACCOUNT_NEW_REQUEST,
+          type: USER_NEW_REQUEST,
           payload: undefined,
           meta: undefined
         },
         {
-          type: ACCOUNT_NEW_SUCCESS,
+          type: USER_NEW_SUCCESS,
           payload: {
             account: {
               id,
-              userName: 'test',
-              password: 'password'
+              userName: account.userName,
+              password: account.password
             }
           },
           meta: undefined
-        },
-        {
-          type: 'MOCKED_WEBSOCKET_REQUEST'
         }
       ]
       nock('http://localhost')
@@ -145,35 +127,28 @@ describe('signup actions', () => {
       const store = mockStore({})
 
       // Then
-      return store.dispatch(actions.createAccount(email))
+      return store.dispatch(actions.createUser(email))
         .then(() => {
           expect(store.getActions()).to.deep.equal(expectedActions)
-          expect(pushHistorySpy).to.have.callCount(1)
-          expect(pushHistorySpy).to.have.been.calledWith('/firstProject')
           expect(getHeadersSpy).to.have.callCount(2)
-          expect(setAuthSpy).to.have.callCount(1)
-          expect(setAuthSpy).to.have.been.calledWith('test', 'password')
-          expect(putAuthSpy).to.have.callCount(1)
-          expect(putAuthSpy).to.have.been.calledWith(id)
-          expect(requestWebsocketSpy).to.have.callCount(1)
           done()
         })
         .catch(done)
     })
 
-    it('should fail to create auth id', (done) => {
+    it('should fail to create user id', (done) => {
       // Given
       const email = 'test@email.com'
       const expectedActions = [
         {
-          type: ACCOUNT_NEW_ID_REQUEST,
+          type: USER_NEW_ID_REQUEST,
           payload: {
             email
           },
           meta: undefined
         },
         {
-          type: ACCOUNT_NEW_ID_FAILURE,
+          type: USER_NEW_ID_FAILURE,
           error: true,
           payload: {
             message: '500 - Internal Server Error',
@@ -201,33 +176,29 @@ describe('signup actions', () => {
       })
 
       // Then
-      return store.dispatch(actions.createAccount(email))
+      return store.dispatch(actions.createUser(email))
         .then(done, () => {
           expect(store.getActions()).to.deep.equal(expectedActions)
-          expect(pushHistorySpy).to.have.callCount(0)
           expect(getHeadersSpy).to.have.callCount(1)
-          expect(setAuthSpy).to.have.callCount(0)
-          expect(putAuthSpy).to.have.callCount(0)
-          expect(requestWebsocketSpy).to.have.callCount(0)
           done()
         })
         .catch(done)
     })
 
-    it('should fail to create auth', (done) => {
+    it('should fail to create user', (done) => {
       // Given
       const email = 'test@email.com'
       const id = 'idUs3r'
       const expectedActions = [
         {
-          type: ACCOUNT_NEW_ID_REQUEST,
+          type: USER_NEW_ID_REQUEST,
           payload: {
             email
           },
           meta: undefined
         },
         {
-          type: ACCOUNT_NEW_ID_SUCCESS,
+          type: USER_NEW_ID_SUCCESS,
           payload: {
             account: {
               id
@@ -236,12 +207,12 @@ describe('signup actions', () => {
           meta: undefined
         },
         {
-          type: ACCOUNT_NEW_REQUEST,
+          type: USER_NEW_REQUEST,
           payload: undefined,
           meta: undefined
         },
         {
-          type: ACCOUNT_NEW_FAILURE,
+          type: USER_NEW_FAILURE,
           error: true,
           payload: {
             message: '500 - Internal Server Error',
@@ -272,17 +243,110 @@ describe('signup actions', () => {
       })
 
       // Then
-      return store.dispatch(actions.createAccount(email))
+      return store.dispatch(actions.createUser(email))
         .then(() => {
           done(new Error('This fail case test passed'))
         })
         .catch(() => {
           expect(store.getActions()).to.deep.equal(expectedActions)
-          expect(pushHistorySpy).to.have.callCount(0)
           expect(getHeadersSpy).to.have.callCount(2)
-          expect(setAuthSpy).to.have.callCount(0)
-          expect(putAuthSpy).to.have.callCount(0)
-          expect(requestWebsocketSpy).to.have.callCount(0)
+          done()
+        })
+    })
+  })
+  describe('get user', () => {
+    let mapUserSpy
+
+    afterEach(() => {
+      actionsRewireApi.__ResetDependency__('mapUser')
+    })
+
+    it('should get user', (done) => {
+      // Given
+      const user = {
+        id: 'idus3r',
+        username: 'test',
+        password: 'password',
+        firstname: 'firstname',
+        lastname: 'lastname',
+        name: 'name',
+        email: 'test@email.com'
+      }
+      const expectedActions = [
+        {
+          type: USER_REQUEST,
+          payload: undefined,
+          meta: undefined
+        },
+        {
+          type: USER_SUCCESS,
+          payload: {
+            user
+          },
+          meta: undefined
+        }
+      ]
+      nock('http://localhost')
+        .get(`${api.user}/${user.id}`)
+        .reply(200, () => user)
+
+      mapUserSpy = sinon.stub().returns(user)
+      actionsRewireApi.__Rewire__('mapUser', mapUserSpy)
+
+      // When
+      const store = mockStore({})
+
+      // Then
+      return store.dispatch(actions.getUser(user.id))
+        .then(() => {
+          expect(store.getActions()).to.deep.equal(expectedActions)
+          expect(getHeadersSpy).to.have.callCount(1)
+          done()
+        })
+        .catch(done)
+    })
+
+    it('should fail to get user', (done) => {
+      // Given
+      const userId = 'idUs3r'
+      const expectedActions = [
+        {
+          type: USER_REQUEST,
+          payload: undefined,
+          meta: undefined
+        },
+        {
+          type: USER_FAILURE,
+          error: true,
+          payload: {
+            message: '500 - Internal Server Error',
+            name: 'ApiError',
+            response: {
+              error: 'error'
+            },
+            status: 500,
+            statusText: 'Internal Server Error'
+          },
+          meta: undefined
+        }
+      ]
+      nock('http://localhost')
+        .get(`${api.user}/${userId}`)
+        .reply(500, {
+          error: 'error'
+        })
+
+      // When
+      const store = mockStore({})
+
+      // Then
+      return store.dispatch(actions.getUser(userId))
+        .then(() => {
+          done(new Error('This fail case test passed'))
+        })
+        .catch(() => {
+          expect(store.getActions()).to.deep.equal(expectedActions)
+          expect(getHeadersSpy).to.have.callCount(1)
           done()
         })
     })
