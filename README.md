@@ -92,14 +92,45 @@ Then open ui project in browser.
 
 ### Build production release
 
-Build production tar.gz release: it build the project, then put static/ content into /delivery/kodokojo-ui-<version>.tar.gz.
-
-
-    $ ./build.sh
-    
-or with npm
+Build production docker image of the front release.    
+Note: works on OSX and Linux. For Windows users you have to run the build.sh script manually.
 
     $ npm run build:docker
     
+It build the project, then put static/ content into /delivery/target/kodokojo-ui-\<version>.tar.gz and finally build the docker image with Nginx server (kodokojo/kodokojo-ui).
+    
+    
+### Run styleguide
+
+Build and run styleguide.
+
+    $ npm run styleguide
+    
+Then open your browser.
+
+    $ open http://localhost:9001
+    
+
+### Add license in source files headers
+
+    $ npm run license
+
+
+### Tests
+
+Run tests.
+
+    $ npm test
+    
+Run tests in watch mode.
+
+    $ npm run test:watch
+    
+Run coverage.
+
+    $ npm run coverage
+    $ open ./coverage/lcov-report/index.html 
+
+
 
 :heart: Thanks to all Open source projects which made such project possible!
