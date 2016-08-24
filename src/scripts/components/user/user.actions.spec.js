@@ -51,7 +51,7 @@ const middlewares = [
 ]
 const mockStore = configureMockStore(middlewares)
 
-describe('user actions', () => {
+describe.skip('user actions', () => {
   let getHeadersSpy
 
   beforeEach(() => {
