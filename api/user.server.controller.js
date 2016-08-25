@@ -26,8 +26,14 @@ export const initUser = (request, response) => {
 }
 
 export const postUser = (request, response) => {
+  const params = {
+    id: request.params.id,
+    email: request.body.email,
+    entity: request.body.entity,
+    credentials: request.headers.authorization
+  }
   userRepository
-      .postUser(request.params.id, request.body.email)
+      .postUser(params)
       .then(data => response.status(201).send(data))
       .catch((err, resp) => response.status(err.response && err.response.statusCode ? err.response.statusCode : 500).send(err))
 }
