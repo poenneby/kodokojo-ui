@@ -101,9 +101,11 @@ const websocketMiddleware = store => next => action => {
     case WEBSOCKET_STOP:
       if (ws.socket) {
         ws.socket.close(1000, 'user <user> living')
+        delete ws.socket
       }
       if (ws.socketPing) {
         clearInterval(ws.socketPing)
+        delete ws.socketPing
       }
       return next(action)
     // TODO implement SEND_MESSAGE if needed

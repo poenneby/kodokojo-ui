@@ -41,59 +41,6 @@ describe('auth reducer', () => {
     })
   })
 
-  it('should handle ACCOUNT_NEW_ID_REQUEST', () => {
-    // Given
-    const state = undefined
-    const action = {
-      type: ActionsTypes.ACCOUNT_NEW_ID_REQUEST,
-      payload: {
-        email: 'email@test.com'
-      }
-    }
-
-    // When
-    const nextState = authReducer(state, action)
-
-    // Then
-    expect(nextState).to.deep.equal({
-      account: {
-        email: 'email@test.com'
-      },
-      isAuthenticated: false,
-      isFetching: true
-    })
-  })
-
-  it('should handle ACCOUNT_NEW_ID_SUCCESS', () => {
-    // Given
-    const state = {
-      account: {
-        email: 'email@test.com'
-      }
-    }
-    const action = {
-      type: ActionsTypes.ACCOUNT_NEW_ID_SUCCESS,
-      payload: {
-        account: {
-          id: 1
-        }
-      }
-    }
-
-    // When
-    const nextState = authReducer(state, action)
-
-    // Then
-    expect(nextState).to.deep.equal({
-      account: {
-        id: 1,
-        email: 'email@test.com'
-      },
-      isAuthenticated: false,
-      isFetching: false
-    })
-  })
-
   it('should handle ACCOUNT_NEW_REQUEST', () => {
     // Given
     const state = {

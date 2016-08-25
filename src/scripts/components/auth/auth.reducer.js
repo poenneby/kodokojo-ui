@@ -18,9 +18,6 @@
 
 import merge from 'lodash/merge'
 import {
-  ACCOUNT_NEW_ID_REQUEST,
-  ACCOUNT_NEW_ID_SUCCESS,
-  ACCOUNT_NEW_ID_FAILURE,
   ACCOUNT_NEW_REQUEST,
   ACCOUNT_NEW_SUCCESS,
   ACCOUNT_NEW_FAILURE,
@@ -36,39 +33,6 @@ const initialState = {
 }
 
 export default function auth(state = initialState, action) {
-  if (action.type === ACCOUNT_NEW_ID_REQUEST) {
-    return {
-      ...state,
-      account: {
-        email: action.payload.email
-      },
-      isAuthenticated: false,
-      isFetching: true
-    }
-  }
-
-  if (action.type === ACCOUNT_NEW_ID_SUCCESS) {
-    return merge(
-      {},
-      state,
-      {
-        account: {
-          id: action.payload.account.id
-        },
-        isAuthenticated: false,
-        isFetching: false
-      }
-    )
-  }
-
-  if (action.type === ACCOUNT_NEW_ID_FAILURE) {
-    return {
-      ...state,
-      isAuthenticated: false,
-      isFetching: false
-    }
-  }
-
   if (action.type === ACCOUNT_NEW_REQUEST) {
     return {
       ...state,

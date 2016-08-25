@@ -76,7 +76,7 @@ export class UserForm extends Component {
   }
 
   handleSubmit = () => {
-    const { fields: { email }, addUserToProjectConfig, projectConfigId } = this.props // eslint-disable-line no-shadow
+    const { fields: { email }, addUserToProjectConfig, projectConfigId, onToggleFormActive } = this.props // eslint-disable-line no-shadow
 
     const nextEmail = email.value
     const error = validate({ email: nextEmail })
@@ -85,7 +85,10 @@ export class UserForm extends Component {
     }
     if (nextEmail && nextEmail.trim()) {
       return addUserToProjectConfig(projectConfigId, nextEmail.trim())
-        .then(Promise.resolve())
+        .then(() => {
+          onToggleFormActive()
+          return Promise.resolve()
+        })
         .catch(err => Promise.reject({ email: returnErrorKey(
           {
             component: 'email',

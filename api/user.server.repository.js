@@ -18,6 +18,7 @@
 
 import config from '../config/config'
 import logger from '../config/logger'
+import merge from 'lodash/merge'
 
 import { requestWithLog } from './utils.server.service'
 
@@ -34,18 +35,40 @@ userRepository.initUser = () => {
   })
 }
 
-userRepository.postUser = (id, email) => {
-  logger.debug('putUser', id, 'Email', email)
-  return requestWithLog({
+userRepository.postUser = ({ id, email, entity, credentials }) => {
+  logger.debug('postUser', id, 'Authorization', credentials, 'Email', email, 'Entity', entity)
+  let req = {
     method: 'POST',
     uri: `${config.api.host}${config.api.routes.user}/${id}`,
     json: true,
     body: {
-      email
+      email,
+      entity
     },
     rejectUnauthorized: false,
     requestCert: true
-  })
+  }
+  if (credentials) {
+    req = merge(
+      req,
+      {
+        headers: {
+          Authorization: `${credentials}`
+        }
+      }
+    )
+  }
+  if (entity) {
+    req = merge(
+      req,
+      {
+        body: {
+          entity: `${entity}`
+        }
+      }
+    )
+  }
+  return requestWithLog(req)
 }
 
 userRepository.getUserAccount = (credentials) => {
@@ -53,10 +76,10 @@ userRepository.getUserAccount = (credentials) => {
   return requestWithLog({
     method: 'GET',
     uri: `${config.api.host}${config.api.routes.user}`,
+    json: true,
     headers: {
       Authorization: `${credentials}`
     },
-    json: true,
     rejectUnauthorized: false,
     requestCert: true
   })

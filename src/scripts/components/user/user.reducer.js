@@ -18,6 +18,12 @@
 
 import merge from 'lodash/merge'
 import {
+  USER_NEW_ID_REQUEST,
+  USER_NEW_ID_SUCCESS,
+  USER_NEW_ID_FAILURE,
+  USER_NEW_REQUEST,
+  USER_NEW_SUCCESS,
+  USER_NEW_FAILURE,
   USER_REQUEST,
   USER_SUCCESS,
   USER_FAILURE
@@ -28,6 +34,49 @@ const initialState = {
 }
 
 export default function users(state = initialState, action) {
+  if (action.type === USER_NEW_ID_REQUEST) {
+    return {
+      ...state,
+      isFetching: true
+    }
+  }
+
+  if (action.type === USER_NEW_ID_SUCCESS) {
+    return {
+      ...state,
+      isFetching: false
+    }
+  }
+
+  if (action.type === USER_NEW_ID_FAILURE) {
+    return {
+      ...state,
+      isFetching: false
+    }
+  }
+
+  if (action.type === USER_NEW_REQUEST) {
+    return {
+      ...state,
+      isFetching: true
+    }
+  }
+
+  // TODO add new user to users list?
+  if (action.type === USER_NEW_SUCCESS) {
+    return {
+      ...state,
+      isFetching: false
+    }
+  }
+
+  if (action.type === USER_NEW_FAILURE) {
+    return {
+      ...state,
+      isFetching: false
+    }
+  }
+
   if (action.type === USER_REQUEST) {
     return {
       ...state,

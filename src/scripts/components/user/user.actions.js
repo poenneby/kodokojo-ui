@@ -33,6 +33,7 @@ import {
   USER_FAILURE
 } from '../../commons/constants'
 
+// TODO remove this when API change for one unique POST with user infos
 export function requestNewUserId(email) {
   return {
     [CALL_API]: {
@@ -103,6 +104,12 @@ export function createUser(email) {
       if (!data.error && data.payload.account && data.payload.account.id) {
         const userId = data.payload.account.id
         return dispatch(requestNewUser(email, userId))
+      }
+      throw new Error(data.payload.status)
+    })
+    .then(data => {
+      if (!data.error) {
+        return Promise.resolve(data)
       }
       throw new Error(data.payload.status)
     })

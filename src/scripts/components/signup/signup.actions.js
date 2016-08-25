@@ -17,92 +17,44 @@
  */
 
 import { browserHistory } from 'react-router'
-import { CALL_API } from 'redux-api-middleware'
 
-import api from '../../commons/config'
-import { getHeaders } from '../../services/io.service'
 import { setAuth, putAuth } from '../../services/auth.service'
-import { mapAccount } from '../../services/mapping.service'
-import { requestWebsocket } from '../websocket/websocket.actions.js'
+import { requestWebsocket } from '../websocket/websocket.actions'
+import { createUser } from '../user/user.actions'
 import {
-  ACCOUNT_NEW_ID_REQUEST,
-  ACCOUNT_NEW_ID_SUCCESS,
-  ACCOUNT_NEW_ID_FAILURE,
   ACCOUNT_NEW_REQUEST,
   ACCOUNT_NEW_SUCCESS,
   ACCOUNT_NEW_FAILURE
 } from '../../commons/constants'
 
-export function requestAccountId(email) {
+export function requestAccountRequest() {
   return {
-    [CALL_API]: {
-      method: 'POST',
-      endpoint:
-        `${window.location.protocol || 'http:'}//` +
-        `${window.location.host || 'localhost'}${api.user}`,
-      headers: getHeaders(),
-      types: [
-        {
-          type: ACCOUNT_NEW_ID_REQUEST,
-          payload: (action, data) => ({
-            email
-          })
-        },
-        {
-          type: ACCOUNT_NEW_ID_SUCCESS,
-          payload: (action, state, res) => res.text()
-            .then(id => (
-              {
-                account: {
-                  id
-                }
-              }
-            ))
-        },
-        ACCOUNT_NEW_ID_FAILURE
-      ]
-
-      // schema: user
-    }
+    type: ACCOUNT_NEW_REQUEST
   }
 }
 
-export function requestAccount(email, data) {
+export function requestAccountSuccess(data) {
   return {
-    [CALL_API]: {
-      method: 'POST',
-      endpoint:
-        `${window.location.protocol || 'http:'}//` +
-        `${window.location.host || 'localhost'}${api.user}/${data.payload.account.id}`,
-      headers: getHeaders(),
-      body: JSON.stringify({
-        email
-      }),
-      types: [
-        ACCOUNT_NEW_REQUEST,
-        {
-          type: ACCOUNT_NEW_SUCCESS,
-          payload: (action, state, res) => res.json()
-            .then(account => (
-              {
-                account: mapAccount(account)
-              }
-            ))
-        },
-        ACCOUNT_NEW_FAILURE
-      ]
+    type: ACCOUNT_NEW_SUCCESS,
+    payload: data
+  }
+}
 
-      // schema: user
-    }
+export function requestAccountFailure(data) {
+  return {
+    type: ACCOUNT_NEW_FAILURE,
+    payload: data
   }
 }
 
 export function createAccount(email) {
-  return dispatch => dispatch(requestAccountId(email))
+  return dispatch => dispatch(requestAccountRequest())
+    .then(data => dispatch(createUser(email)))
     .then(data => {
-      if (!data.error) {
-        return dispatch(requestAccount(email, data))
+      if (!data.error && data.payload) {
+        return dispatch(requestAccountSuccess(data.payload))
       }
+      dispatch(requestAccountFailure(data.payload))
       throw new Error(data.payload.status)
     })
     .then(data => {
