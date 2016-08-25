@@ -23,7 +23,7 @@ This is the UI for Kodo Kojo project
 
 Please, read following [Contribution page](CONTRIBUTING.md).
 
-## Prerequiste
+## Prerequisite
 
 - NodeJS (see package.json file for version).
 - Consider using nvm to switch node version in development easily.
