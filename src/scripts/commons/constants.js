@@ -16,9 +16,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-export const ACCOUNT_NEW_ID_REQUEST = 'ACCOUNT_NEW_ID_REQUEST'
-export const ACCOUNT_NEW_ID_SUCCESS = 'ACCOUNT_NEW_ID_SUCCESS'
-export const ACCOUNT_NEW_ID_FAILURE = 'ACCOUNT_NEW_ID_FAILURE'
 export const ACCOUNT_NEW_REQUEST = 'ACCOUNT_NEW_REQUEST'
 export const ACCOUNT_NEW_SUCCESS = 'ACCOUNT_NEW_SUCCESS'
 export const ACCOUNT_NEW_FAILURE = 'ACCOUNT_NEW_FAILURE'

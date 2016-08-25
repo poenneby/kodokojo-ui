@@ -25,7 +25,7 @@ import { expect } from 'chai'
 import userReducer from './user.reducer'
 import * as ActionsTypes from '../../commons/constants'
 
-describe.skip('user reducer', () => {
+describe('user reducer', () => {
   it('should return initialState', () => {
     // Given
     const state = undefined
