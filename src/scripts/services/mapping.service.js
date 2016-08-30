@@ -81,9 +81,9 @@ mappingService.mapUser = (data) => (
  * @returns {{type: string, name: string, bricks: array<brick>}}
  */
 mappingService.mapStack = (data) => {
-  const bricks = data.brickConfigs || data.brickStates || undefined
+  const bricks = data.brickConfigs || data.brickStates || data.brickStateEvents || undefined
   return {
-    type: data.type,
+    type: data.type || data.stackType,
     name: data.name,
     bricks: bricks && bricks.length > 0 ?
       flatten(mappingService.reorderBricks(bricks)) :
