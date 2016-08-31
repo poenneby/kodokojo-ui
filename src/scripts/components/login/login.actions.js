@@ -67,12 +67,22 @@ export function login(username, password) {
   if (!token && username && password) {
     authService.setAuth(username, password)
   }
-  return dispatch => dispatch(requestAuthentication())
+  return (dispatch, getState) => dispatch(requestAuthentication())
     .then(data => {
       if (!data.error) {
         authService.putAuth(data.payload.account.id, data.payload.account.userName)
 
-        if (data.payload.account.projectConfigIds.length) {
+        const routing = getState().routing
+
+        // TODO TU
+        // if route exist before accessing login, reroute to it
+        if (
+          routing && routing.locationBeforeTransitions &&
+          routing.locationBeforeTransitions.state && routing.locationBeforeTransitions.state.nextPathname
+        ) {
+          return dispatch(requestWebsocket())
+            .then(() => Promise.resolve(browserHistory.push(routing.locationBeforeTransitions.state.nextPathname)))
+        } else if (data.payload.account.projectConfigIds.length) {
           const projectConfig = data.payload.account.projectConfigIds[0]
 
           if (projectConfig.projectId) {
