@@ -16,7 +16,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { browserHistory } from 'react-router'
 import { CALL_API } from 'redux-api-middleware'
 import Promise from 'bluebird'
 

@@ -51,7 +51,7 @@ import MembersPage from './pages/Members.page.js'
 import UsersPage from './pages/Users.page'
 import NotFoundPage from './pages/NotFound.page'
 
-import AuthService from './services/auth.service.js'
+import authService from './services/auth.service.js'
 import { handleHistoryChange } from './services/history.service.js'
 
 // Add the reducer to your store on the `routing` key
@@ -86,22 +86,22 @@ const initApp = () => {
             />
             <Route
               component={FirstProjectPage}
-              onEnter={AuthService.checkAuth}
+              onEnter={authService.checkAuth}
               path="firstProject"
             />
             <Route
               component={StacksPage}
-              onEnter={AuthService.checkAuth}
+              onEnter={authService.checkAuth}
               path="stacks"
             />
             <Route
               component={MembersPage}
-              onEnter={AuthService.checkAuth}
+              onEnter={authService.checkAuth}
               path="members"
             />
             <Route
               component={UsersPage}
-              onEnter={AuthService.checkAuth}
+              onEnter={authService.checkAuth}
               path="users"
             />
             <Route
