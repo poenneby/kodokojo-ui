@@ -23,7 +23,7 @@
     "start:prod": "npm run build:prod && node server.js",
     "build:docker": "./build.sh",
     "lint": "eslint ./src/ ./api/ ./config/ --ext .js --ext .jsx",
-    "test": "npm run build:env && BABEL_ENV=test mocha --compilers js:babel-core/register --recursive --require ignore-styles --require intl --require ./test/utils.js -R dot './src/**/*.spec.js'",
+    "test": "npm run build:env && BABEL_ENV=test mocha --compilers js:./test/compiler.js --recursive --require ignore-styles --require intl --require ./test/utils.js -R dot './src/**/*.spec.js'",
     "test:watch": "npm test -- --watch",
     "coverage": "BABEL_ENV=test babel-node node_modules/isparta/bin/isparta cover _mocha --root src/ --include-all-sources --default-excludes -- --recursive './src/**/*.spec.js' --require ignore-styles --require intl --require ./test/utils.js"
   },
