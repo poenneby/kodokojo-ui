@@ -25,7 +25,7 @@ import { getHeaders } from '../../services/io.service'
 import { mapProjectConfig } from '../../services/mapping.service'
 import { createUser, getUser } from '../user/user.actions'
 import { createProject, getProject } from '../project/project.actions'
-import { initMenu } from '../menu/menu.actions'
+import { updateMenuProject } from '../menu/menu.actions'
 import {
   PROJECT_CONFIG_REQUEST,
   PROJECT_CONFIG_SUCCESS,
@@ -82,7 +82,7 @@ export function getProjectConfig(projectConfigId) {
       if (!data.error) {
         const projectConfigState = getState().projectConfig
         if (projectConfigState && projectConfigState.name) {
-          return Promise.resolve(dispatch(initMenu(projectConfigState.name)))
+          return Promise.resolve(dispatch(updateMenuProject(projectConfigState.name)))
         }
         return Promise.resolve(data)
       }

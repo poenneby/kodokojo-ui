@@ -86,3 +86,39 @@ export const enumBrickLogos = {
 export const getBrickLogo = (state) => (
   find(enumBrickLogos, { name: state.name }) || undefined
 )
+
+export const getMenu = () => (
+  {
+    0: {
+      disabled: true,
+      index: 0,
+      labelKey: 'projects-label',
+      level: 0,
+      // TODO change to real route when page is done
+      route: '#projects',
+      titleText: 'disabled because projects page does not exist'
+    },
+    1: {
+      index: 1,
+      disabled: true,
+      labelText: '',
+      titleText: ''
+    },
+    2: {
+      active: false,
+      index: 2,
+      labelKey: 'stacks-label',
+      level: 1,
+      route: '/stacks',
+      titleKey: 'stacks-label'
+    },
+    3: {
+      active: false,
+      index: 3,
+      labelKey: 'members-label',
+      level: 2,
+      route: '/members',
+      titleKey: 'members-label'
+    }
+  }
+)

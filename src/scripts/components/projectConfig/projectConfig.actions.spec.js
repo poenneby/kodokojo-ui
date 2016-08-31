@@ -151,17 +151,17 @@ describe('project config actions', () => {
   // TODO failure TU
   describe('get project config', () => {
     let getUserSpy
-    let initMenuSpy
+    let updateMenuProjectSpy
 
     beforeEach(() => {
       getUserSpy = sinon.stub().returns({
         type: 'MOCKED_ACTION_USER_GET'
       })
       actionsRewireApi.__Rewire__('getUser', getUserSpy)
-      initMenuSpy = sinon.stub().returns({
-        type: 'MOCKED_ACTION_MENU_INIT'
+      updateMenuProjectSpy = sinon.stub().returns({
+        type: 'MOCKED_ACTION_UPDATE_MENU_PROJECT'
       })
-      actionsRewireApi.__Rewire__('initMenu', initMenuSpy)
+      actionsRewireApi.__Rewire__('updateMenuProject', updateMenuProjectSpy)
     })
 
     afterEach(() => {
@@ -203,7 +203,7 @@ describe('project config actions', () => {
           type: 'MOCKED_ACTION_USER_GET'
         },
         {
-          type: 'MOCKED_ACTION_MENU_INIT'
+          type: 'MOCKED_ACTION_UPDATE_MENU_PROJECT'
         }
       ]
       nock('http://localhost')
@@ -230,8 +230,8 @@ describe('project config actions', () => {
           })
           expect(getUserSpy).to.have.callCount(1)
           expect(getUserSpy).to.have.calledWith('otherUserId')
-          expect(initMenuSpy).to.have.callCount(1)
-          expect(initMenuSpy).to.have.calledWith('Acme')
+          expect(updateMenuProjectSpy).to.have.callCount(1)
+          expect(updateMenuProjectSpy).to.have.calledWith('Acme')
           done()
         })
         .catch(done)

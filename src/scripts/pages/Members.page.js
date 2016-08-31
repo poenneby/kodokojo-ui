@@ -32,7 +32,6 @@ import Action from '../components/_ui/page/Action.component'
 import User from '../components/user/User.component'
 import UserForm from '../components/user/UserForm.component'
 import { setNavVisibility } from '../components/app/app.actions'
-import { updateMenuPath } from '../components/menu/menu.actions'
 import { getProjectConfig } from '../components/projectConfig/projectConfig.actions'
 
 // MembersPage component
@@ -42,11 +41,9 @@ export class MembersPage extends Component {
     addUserToProjectConfig: PropTypes.func,
     getProjectConfig: PropTypes.func,
     intl: intlShape.isRequired,
-    location: PropTypes.object.isRequired,
     members: PropTypes.array,
     projectConfigId: PropTypes.string,
-    setNavVisibility: PropTypes.func.isRequired,
-    updateMenuPath: PropTypes.func.isRequired
+    setNavVisibility: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -55,17 +52,12 @@ export class MembersPage extends Component {
   }
 
   componentWillMount() {
-    const { getProjectConfig, location, members, projectConfigId, updateMenuPath } = this.props // eslint-disable-line no-shadow
+    const { getProjectConfig, members, projectConfigId } = this.props // eslint-disable-line no-shadow
 
     this.initNav()
 
     if (!members && projectConfigId) {
       getProjectConfig(projectConfigId)
-        .then(() => {
-          updateMenuPath(location.pathname)
-        })
-    } else if (members) {
-      updateMenuPath(location.pathname)
     } else if (!projectConfigId) {
       // TODO no projectConfigId case
     }
@@ -144,8 +136,7 @@ const MembersPageContainer = compose(
     mapStateProps,
     {
       getProjectConfig,
-      setNavVisibility,
-      updateMenuPath
+      setNavVisibility
     }
   ),
   injectIntl

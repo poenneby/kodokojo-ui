@@ -29,7 +29,7 @@ import MenuItem from '../_ui/menuItem/MenuItem.component'
 export class Menu extends Component {
 
   static propTypes = {
-    menu: PropTypes.array
+    menu: PropTypes.object
   }
 
   render() {
@@ -37,7 +37,7 @@ export class Menu extends Component {
 
     return (
       <nav role="navigation">
-        { menu.length > 0 &&
+        { Object.keys(menu).length > 0 &&
           sortBy(menu, ['index']).map((menuItem, index) => (
             <MenuItem
               active={ menuItem.active }

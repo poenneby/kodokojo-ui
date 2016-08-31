@@ -18,24 +18,21 @@
 
 import {
   AUTH_RESET,
-  MENU_SET,
+  MENU_INIT,
   MENU_UPDATE
 } from '../../commons/constants'
 import { updateMenu } from '../../services/stateUpdater.service.js'
 
-const stateDefault = []
+const stateDefault = {}
 
+// TODO TU
 export default function menu(state = stateDefault, action) {
-  if (action.type === MENU_SET) {
+  if (action.type === MENU_INIT || action.type === MENU_UPDATE) {
     return action.menu
   }
 
-  if (action.type === MENU_UPDATE) {
-    return updateMenu(state, action.menu)
-  }
-
   if (action.type === AUTH_RESET) {
-    return []
+    return {}
   }
 
   return state

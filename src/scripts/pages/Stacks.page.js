@@ -30,7 +30,6 @@ import Page from '../components/_ui/page/Page.component'
 import Paragraph from '../components/_ui/page/Paragraph.component'
 import Brick from '../components/brick/Brick.component'
 import { setNavVisibility } from '../components/app/app.actions'
-import { updateMenuPath } from '../components/menu/menu.actions'
 // import { updateProject } from '../components/project/project.actions'
 import { getProjectConfig, getProjectConfigAndProject } from '../components/projectConfig/projectConfig.actions'
 
@@ -40,30 +39,20 @@ export class StacksPage extends Component {
     getProjectConfig: PropTypes.func,
     getProjectConfigAndProject: PropTypes.func,
     intl: intlShape.isRequired,
-    location: PropTypes.object.isRequired,
     projectConfigId: PropTypes.string,
     projectId: PropTypes.string,
     setNavVisibility: PropTypes.func.isRequired,
-    stacks: PropTypes.array,
-    updateMenuPath: PropTypes.func.isRequired
+    stacks: PropTypes.array
   }
 
   componentWillMount = () => {
-    const { getProjectConfig, getProjectConfigAndProject, location, projectConfigId, projectId, stacks, updateMenuPath } = this.props // eslint-disable-line no-shadow
+    const { getProjectConfig, getProjectConfigAndProject, projectConfigId, projectId } = this.props // eslint-disable-line no-shadow
 
     this.initNav()
     if (projectConfigId && !projectId) {
       getProjectConfig(projectConfigId)
-        .then(() => {
-          updateMenuPath(location.pathname)
-        })
     } else if (projectConfigId && projectId) {
       getProjectConfigAndProject(projectConfigId, projectId)
-        .then(() => {
-          updateMenuPath(location.pathname)
-        })
-    } else if (stacks) {
-      updateMenuPath(location.pathname)
     } else if (!projectConfigId) {
       // TODO no projectConfigId case
     }
@@ -129,8 +118,7 @@ const StacksPageContainer = compose(
     {
       getProjectConfig,
       getProjectConfigAndProject,
-      setNavVisibility,
-      updateMenuPath
+      setNavVisibility
     }
   ),
   injectIntl

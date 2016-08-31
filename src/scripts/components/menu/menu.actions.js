@@ -16,51 +16,19 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import Promise from 'bluebird'
+import find from 'lodash/find'
+import filter from 'lodash/filter'
 import {
-  MENU_UPDATE,
-  MENU_SET
+  MENU_INIT,
+  MENU_UPDATE
 } from '../../commons/constants'
-import concat from 'lodash/concat'
-import flattenDeep from 'lodash/flattenDeep'
-import findIndex from 'lodash/findIndex'
-import isInteger from 'lodash/isInteger'
 
-export function setMenu(menu) {
+import { getMenu } from '../../services/param.service'
+
+export function initMenu() {
   return {
-    type: MENU_SET,
-    menu
-  }
-}
-
-export function initMenu(projectName) {
-  return dispatch => {
-    const menuRoot = [{
-      disabled: true,
-      index: 0,
-      labelKey: 'projects-label',
-      level: 0,
-      // TODO change to real route when page is done
-      route: '#projects',
-      titleText: 'disabled because projects page does not exist'
-    }]
-
-    const menuProject = [{
-      index: 1,
-      disabled: true,
-      labelText: projectName || '',
-      titleText: projectName || ''
-    }]
-
-
-    let menu
-    if (projectName) {
-      menu = flattenDeep(concat(menuRoot, menuProject))
-    } else {
-      menu = menuRoot
-    }
-
-    return dispatch(setMenu(menu))
+    type: MENU_INIT,
+    menu: getMenu()
   }
 }
 
@@ -71,46 +39,36 @@ export function updateMenu(menu) {
   }
 }
 
+export function updateMenuProject(projectName) {
+  return (dispatch, getState) => {
+    const nextMenu = getState().menu
+
+    nextMenu[1].labelText = projectName
+    nextMenu[1].titleText = projectName
+    return dispatch(updateMenu(nextMenu))
+  }
+}
+
 export function updateMenuPath(path) {
-  return dispatch => {
-    let nextMenu
-    const rootMenu = [{
-      disabled: true,
-      index: 0
-    }]
+  return (dispatch, getState) => {
+    const nextMenu = getState().menu
 
-    const subMenu = [
-      {
-        active: false,
-        index: 2,
-        labelKey: 'stacks-label',
-        level: 1,
-        route: '/stacks',
-        titleKey: 'stacks-label'
-      },
-      {
-        active: false,
-        index: 3,
-        labelKey: 'members-label',
-        level: 2,
-        route: '/members',
-        titleKey: 'members-label'
+    // inactive all menu items
+    const menuItems = Object.keys(nextMenu)
+    menuItems.forEach((key) => {
+      if (nextMenu[key].active !== undefined) {
+        nextMenu[key].active = false
       }
-    ]
+    })
 
-    const selectedSubMenuIndex = findIndex(subMenu, { route: path })
+    // active menu item
+    const selectedSubMenu = find(nextMenu, { route: path })
+    if (selectedSubMenu) {
+      nextMenu[selectedSubMenu.index].active = true
 
-    if (isInteger(selectedSubMenuIndex)) {
-      subMenu[selectedSubMenuIndex].active = true
-      nextMenu = subMenu
-    } else {
-      const selectedMenuIndex = findIndex(rootMenu, { route: path })
-
-      if (isInteger(selectedMenuIndex)) {
-        rootMenu.active = true
-        nextMenu = rootMenu
-      } else {
-        // TODO error
+      // if selected menu is root, remove all other menu items
+      if (selectedSubMenu.index === 0) {
+        filter(nextMenu, (menuItem) => menuItem.index === 0)
       }
     }
 

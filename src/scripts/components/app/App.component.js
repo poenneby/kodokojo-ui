@@ -42,7 +42,7 @@ class App extends Component {
     isAuthenticated: PropTypes.bool.isRequired,
     locale: PropTypes.string.isRequired,
     logout: PropTypes.func.isRequired,
-    menu: PropTypes.array,
+    menu: PropTypes.object,
     navigation: PropTypes.bool,
     requestWebsocket: PropTypes.func.isRequired,
     setLocale: PropTypes.func.isRequired,
