@@ -208,6 +208,65 @@ describe('login actions', () => {
       }).catch(done)
     })
 
+    it('should redirect to origin location', (done) => {
+      // Given
+      const username = 'test'
+      const password = 'psUs3r'
+      const auth = 'cryptedAuth'
+      const account = {
+        id: 'idUs3r',
+        projectConfigIds: []
+      }
+      const requestAuthenticationSpy = sinon.stub().returns({
+        type: 'MOCKED_AUTH_REQUEST',
+        payload: {
+          account
+        }
+      })
+      actionsRewireApi.__Rewire__('requestAuthentication', requestAuthenticationSpy)
+      const setAuthSpy = sinon.stub(authService, 'setAuth').returns(auth)
+      const putAuthSpy = sinon.spy(authService, 'putAuth')
+      const getHeadersSpy = sinon.spy(ioService, 'getHeaders')
+      const expectedActions = [
+        {
+          type: 'MOCKED_AUTH_REQUEST',
+          payload: {
+            account
+          }
+        },
+        {
+          type: 'MOCKED_WEBSOCKET_REQUEST'
+        }
+      ]
+
+      // When
+      const store = mockStore({
+        routing: {
+          locationBeforeTransitions: {
+            state: {
+              nextPathname: '/someprotectedurl'
+            }
+          }
+        }
+      })
+
+      // Then
+      return store.dispatch(actions.login(username, password)).then(() => {
+        expect(store.getActions()).to.deep.equal(expectedActions)
+        expect(setAuthSpy).to.have.callCount(1)
+        expect(setAuthSpy).to.have.been.calledWith(username, password)
+        expect(putAuthSpy).to.have.callCount(1)
+        expect(putAuthSpy).to.have.been.calledWith(account.id)
+        expect(getHeadersSpy).to.have.not.been.called
+        expect(requestAuthenticationSpy).to.have.callCount(1)
+        expect(getProjectConfigAndProjectSpy).to.have.callCount(0)
+        expect(historyPushSpy).to.have.callCount(1)
+        expect(historyPushSpy).to.have.been.calledWith('/someprotectedurl')
+        expect(requestWebsocketSpy).to.have.callCount(1)
+        done()
+      }).catch(done)
+    })
+
     it('should fail to request auth', (done) => {
       // Given
       const username = 'test'
