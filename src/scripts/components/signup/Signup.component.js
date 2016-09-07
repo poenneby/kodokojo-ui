@@ -26,9 +26,12 @@ import { intlShape, injectIntl } from 'react-intl'
 import '../../../styles/_commons.less'
 import Input from '../../components/_ui/input/Input.component'
 import Button from '../../components/_ui/button/Button.component'
+import Captcha from '../../components/captcha/Captcha.component'
 import { createAccount } from './signup.actions.js'
+import { updateCaptcha, resetCaptcha } from '../auth/auth.actions'
 import { emailValidator } from '../../services/validator.service'
 import { returnErrorKey } from '../../services/error.service'
+import { getRecaptchaSitekey } from '../../services/param.service'
 
 // validate function
 const validate = combineValidators({
@@ -40,37 +43,44 @@ export class Signup extends Component {
 
   static propTypes = {
     account: PropTypes.object,
+    captcha: PropTypes.string,
     createAccount: PropTypes.func.isRequired,
     fields: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     intl: intlShape.isRequired,
-    submitting: PropTypes.bool.isRequired
+    locale: PropTypes.string,
+    resetCaptcha: PropTypes.func.isRequired,
+    submitting: PropTypes.bool.isRequired,
+    updateCaptcha: PropTypes.func.isRequired
   }
 
   handleSubmit = () => {
-    const { fields: { email }, createAccount } = this.props // eslint-disable-line no-shadow
+    const { fields: { email }, captcha, createAccount, resetCaptcha } = this.props // eslint-disable-line no-shadow
 
     const nextEmail = email.value
     const error = validate({ email: nextEmail })
     if (error.email) {
       return Promise.reject({ email: error.email })
     }
-    if (nextEmail && nextEmail.trim()) {
-      return createAccount(nextEmail.trim())
+    if (nextEmail && nextEmail.trim() && captcha) {
+      return createAccount(nextEmail.trim(), captcha)
         .then(Promise.resolve())
-        .catch(err => Promise.reject({ email: returnErrorKey(
-          {
-            component: 'email',
-            code: err.message
+        .catch(err => {
+          resetCaptcha()
+          return Promise.reject({ email: returnErrorKey(
+            {
+              component: 'account',
+              code: err.message
+            })
           })
-        }))
+        })
     }
     // TODO add default error message
     return Promise.reject()
   }
 
   render() {
-    const { fields: { email, entity }, handleSubmit, submitting } = this.props // eslint-disable-line no-shadow
+    const { fields: { email, entity }, updateCaptcha, resetCaptcha, handleSubmit, submitting, locale } = this.props // eslint-disable-line no-shadow
     const { formatMessage } = this.props.intl
 
     return (
@@ -101,6 +111,16 @@ export class Signup extends Component {
           name="entity"
           type="text"
         /> */}
+        {/* TODO add a loader when recaptcha is not loaded, disable it on load callback */}
+        {/* TODO add message when user submit without resolving captcha challenge */}
+        <Captcha
+          locale={ locale }
+          onExpiredCallback={ () => { console.log('captcha has expired') } }
+          onLoadCallback={ () => console.log('captcha has loaded') }
+          onVerifyCallback={ updateCaptcha }
+          sitekey={ getRecaptchaSitekey() }
+          theme="dark"
+        />
         <Button
             disabled={ submitting }
             label={ formatMessage({ id: 'signup-label' }) }
@@ -117,7 +137,9 @@ export class Signup extends Component {
 // Signup container
 const mapStateProps = (state) => (
   {
-    account: state.auth.account
+    account: state.auth.account,
+    captcha: state.auth.captcha,
+    locale: state.prefs.locale
   }
 )
 
@@ -131,7 +153,9 @@ const SignupContainer = compose(
     },
     mapStateProps,
     {
-      createAccount
+      createAccount,
+      updateCaptcha,
+      resetCaptcha
     }
   ),
   injectIntl

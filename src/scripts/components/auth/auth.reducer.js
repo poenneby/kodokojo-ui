@@ -24,11 +24,14 @@ import {
   AUTH_REQUEST,
   AUTH_SUCCESS,
   AUTH_FAILURE,
-  AUTH_RESET
+  AUTH_RESET,
+  CAPTCHA_UPDATE,
+  CAPTCHA_RESET
 } from '../../commons/constants'
 
 const initialState = {
   account: {},
+  captcha: '',
   isFetching: false
 }
 
@@ -53,7 +56,11 @@ export default function auth(state = initialState, action) {
 
   if (action.type === ACCOUNT_NEW_FAILURE) {
     // TODO
-    return state
+    return {
+      ...state,
+      isAuthenticated: false,
+      isFetching: false
+    }
   }
 
   if (action.type === AUTH_REQUEST) {
@@ -81,6 +88,21 @@ export default function auth(state = initialState, action) {
       account: {},
       isAuthenticated: false,
       isFetching: false
+    }
+  }
+
+  // TODO TU
+  if (action.type === CAPTCHA_UPDATE) {
+    return {
+      ...state,
+      captcha: action.payload.captcha
+    }
+  }
+
+  if (action.type === CAPTCHA_RESET) {
+    return {
+      ...state,
+      captcha: ''
     }
   }
 

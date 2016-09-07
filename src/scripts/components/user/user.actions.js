@@ -68,14 +68,17 @@ export function requestNewUserId(email) {
   }
 }
 
-export function requestNewUser(email, userId) {
+// TODO update TU
+export function requestNewUser(email, userId, captcha) {
   return {
     [CALL_API]: {
       method: 'POST',
       endpoint:
         `${window.location.protocol || 'http:'}//` +
         `${window.location.host || 'localhost'}${api.user}/${userId}`,
-      headers: getHeaders(),
+      headers: getHeaders({
+        'g-recaptcha-response': captcha
+      }),
       body: JSON.stringify({
         email
       }),
@@ -98,12 +101,12 @@ export function requestNewUser(email, userId) {
   }
 }
 
-export function createUser(email) {
+export function createUser(email, captcha) {
   return dispatch => dispatch(requestNewUserId(email))
     .then(data => {
       if (!data.error && data.payload.account && data.payload.account.id) {
         const userId = data.payload.account.id
-        return dispatch(requestNewUser(email, userId))
+        return dispatch(requestNewUser(email, userId, captcha))
       }
       throw new Error(data.payload.status)
     })

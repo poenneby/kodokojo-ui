@@ -35,8 +35,14 @@ userRepository.initUser = () => {
   })
 }
 
-userRepository.postUser = ({ id, email, entity, credentials }) => {
-  logger.debug('postUser', id, 'Authorization', credentials, 'Email', email, 'Entity', entity)
+userRepository.postUser = ({ id, email, entity, credentials, captcha }) => {
+  logger.debug(
+    'postUser', id,
+    'Email', email,
+    'Entity', entity,
+    'Authorization', credentials,
+    'g-recaptcha-response', captcha
+  )
   let req = {
     method: 'POST',
     uri: `${config.api.host}${config.api.routes.user}/${id}`,
@@ -54,6 +60,16 @@ userRepository.postUser = ({ id, email, entity, credentials }) => {
       {
         headers: {
           Authorization: `${credentials}`
+        }
+      }
+    )
+  }
+  if (captcha) {
+    req = merge(
+      req,
+      {
+        headers: {
+          'g-recaptcha-response': `${captcha}`
         }
       }
     )
