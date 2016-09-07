@@ -47,9 +47,10 @@ export function requestAccountFailure(data) {
   }
 }
 
-export function createAccount(email) {
+// TODO update TU
+export function createAccount(email, captcha) {
   return dispatch => dispatch(requestAccountRequest())
-    .then(data => dispatch(createUser(email)))
+    .then(data => dispatch(createUser(email, captcha)))
     .then(data => {
       if (!data.error && data.payload) {
         return dispatch(requestAccountSuccess(data.payload))

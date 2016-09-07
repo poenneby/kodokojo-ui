@@ -18,6 +18,9 @@
 
 export default {
   'account-label': 'Account',
+  'account-error-409': 'L’email existe déjà',
+  'account-error-412': 'User identifier is not valid',
+  'account-error-428': 'Error during account creation, please retry',
   'add-member-label': 'Add member',
   'app-lang-fr-label': 'Français',
   'app-lang-en-label': 'English',
@@ -37,8 +40,6 @@ export default {
   'email-hint-label': 'your.email@domain.ext',
   'email-input-label': 'Email',
   'email-label': 'Email',
-  'email-error-409': 'L’email existe déjà',
-  'email-error-412': 'User identifier is not valid',
   'email-error-pattern': 'Invalid email address',
   'email-error-required': 'L’email est obligatoire',
   'entity-label': 'Entity',

@@ -30,7 +30,8 @@ export const postUser = (request, response) => {
     id: request.params.id,
     email: request.body.email,
     entity: request.body.entity,
-    credentials: request.headers.authorization
+    credentials: request.headers.authorization,
+    captcha: request.headers['g-recaptcha-response']
   }
   userRepository
       .postUser(params)

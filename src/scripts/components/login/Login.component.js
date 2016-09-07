@@ -18,7 +18,6 @@
 
 import React, { Component, PropTypes } from 'react'
 import { compose } from 'redux'
-import { Link } from 'react-router'
 import { reduxForm } from 'redux-form'
 import { intlShape, injectIntl } from 'react-intl'
 

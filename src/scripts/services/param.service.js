@@ -122,3 +122,5 @@ export const getMenu = () => (
     }
   }
 )
+
+export const getRecaptchaSitekey = () => '6LcGKykTAAAAAFQN1DFXi9rwARB6YUut_HCvs7bT'

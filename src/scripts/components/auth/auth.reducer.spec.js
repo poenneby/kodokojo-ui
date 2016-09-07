@@ -37,6 +37,7 @@ describe('auth reducer', () => {
     // Then
     expect(nextState).to.deep.equal({
       account: {},
+      captcha: '',
       isFetching: false
     })
   })
@@ -47,7 +48,8 @@ describe('auth reducer', () => {
       account: {
         email: 'email@test.com',
         id: 1
-      }
+      },
+      captcha: ''
     }
     const action = {
       type: ActionsTypes.ACCOUNT_NEW_REQUEST
@@ -58,10 +60,7 @@ describe('auth reducer', () => {
 
     // Then
     expect(nextState).to.deep.equal({
-      account: {
-        id: 1,
-        email: 'email@test.com'
-      },
+      ...state,
       isAuthenticated: false,
       isFetching: true
     })
@@ -73,7 +72,8 @@ describe('auth reducer', () => {
       account: {
         email: 'email@test.com',
         id: 1
-      }
+      },
+      captcha: ''
     }
     const action = {
       type: ActionsTypes.ACCOUNT_NEW_SUCCESS,
@@ -95,15 +95,8 @@ describe('auth reducer', () => {
 
     // Then
     expect(nextState).to.deep.equal({
-      account: {
-        id: 2,
-        name: 'name',
-        userName: 'userName',
-        email: 'email@test.com',
-        password: 'password',
-        sshKeyPublic: 'sshPublicKey',
-        sshKeyPrivate: 'privateKey'
-      },
+      ...state,
+      account: action.payload.account,
       isAuthenticated: true,
       isFetching: false
     })
@@ -125,6 +118,7 @@ describe('auth reducer', () => {
     // Then
     expect(nextState).to.deep.equal({
       account: {},
+      captcha: '',
       isAuthenticated: false,
       isFetching: true
     })
@@ -136,7 +130,8 @@ describe('auth reducer', () => {
       account: {
         email: 'email@test.com',
         id: 1
-      }
+      },
+      captcha: ''
     }
     const action = {
       type: ActionsTypes.AUTH_SUCCESS,
@@ -158,15 +153,8 @@ describe('auth reducer', () => {
 
     // Then
     expect(nextState).to.deep.equal({
-      account: {
-        id: 2,
-        name: 'name',
-        userName: 'userName',
-        email: 'email@test.com',
-        password: '',
-        sshKeyPublic: '',
-        sshKeyPrivate: ''
-      },
+      ...state,
+      account: action.payload.account,
       isAuthenticated: true,
       isFetching: false
     })
@@ -186,6 +174,7 @@ describe('auth reducer', () => {
     // Then
     expect(nextState).to.deep.equal({
       account: {},
+      captcha: '',
       isAuthenticated: false,
       isFetching: false
     })
