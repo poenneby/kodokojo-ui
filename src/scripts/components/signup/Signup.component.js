@@ -62,21 +62,20 @@ export class Signup extends Component {
     if (error.email) {
       return Promise.reject({ email: error.email })
     }
-    if (nextEmail && nextEmail.trim() && captcha) {
-      return createAccount(nextEmail.trim(), captcha)
-        .then(Promise.resolve())
-        .catch(err => {
-          resetCaptcha()
-          return Promise.reject({ email: returnErrorKey(
-            {
-              component: 'account',
-              code: err.message
-            })
+    if (!captcha) {
+      return Promise.reject({ email: 'captcha-error-empty' })
+    }
+    return createAccount(nextEmail.trim(), captcha)
+      .then(Promise.resolve())
+      .catch(err => {
+        resetCaptcha()
+        return Promise.reject({ email: returnErrorKey(
+          {
+            component: 'account',
+            code: err.message
           })
         })
-    }
-    // TODO add default error message
-    return Promise.reject()
+      })
   }
 
   render() {

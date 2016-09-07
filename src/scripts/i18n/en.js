@@ -32,6 +32,7 @@ export default {
   'brick-nexus-label': 'Nexus',
   'brick-dockerregistry-label': 'Docker Registry',
   'cancel-label': 'Cancel',
+  'captcha-error-empty': 'Please resolve captcha and retry',
   'ci-label': 'CI',
   'create-label': 'Create',
   'company-label': 'Company',
