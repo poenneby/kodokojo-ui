@@ -74,7 +74,6 @@ export function login(username, password) {
 
         const routing = getState().routing
 
-        // TODO TU
         // if route exist before accessing login, reroute to it
         if (
           routing && routing.locationBeforeTransitions &&

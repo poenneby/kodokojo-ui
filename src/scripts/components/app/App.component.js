@@ -51,7 +51,7 @@ class App extends Component {
   }
 
   componentWillMount = () => {
-    const { isAuthenticated, requestWebsocket } = this.props  // eslint-disable-line no-shadow
+    const { isAuthenticated, requestWebsocket } = this.props // eslint-disable-line no-shadow
 
     if (isAuthenticated) {
       requestWebsocket()
