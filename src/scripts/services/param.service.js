@@ -30,22 +30,31 @@ import brickJenkins from '../../images/brick-jenkins.svg'
 import brickNexus from '../../images/brick-nexus.svg'
 import brickDockerRegistry from '../../images/brick-docker-registry.svg'
 
-export const enumBrickStatus = {
-  CONFIGURING: {
-    label: 'CONFIGURING',
-    image: statusStarting
+export const enumStatus = {
+  FAILURE: {
+    order: 0,
+    label: 'ONFAILURE',
+    image: statusFailure
+  },
+  DEFAULT: {
+    order: 1,
+    label: 'DEFAULT',
+    image: statusDefault
   },
   STARTING: {
+    order: 2,
     label: 'STARTING',
     image: statusStarting
   },
+  CONFIGURING: {
+    order: 3,
+    label: 'CONFIGURING',
+    image: statusStarting
+  },
   RUNNING: {
+    order: 4,
     label: 'RUNNING',
     image: statusRunning
-  },
-  FAILURE: {
-    label: 'ONFAILURE',
-    image: statusFailure
   }
   // ALLREADYEXIST: {
   //   label: 'exist',
@@ -59,6 +68,10 @@ export const enumBrickStatus = {
 
 export const getStatusByState = (state) => (
   find(enumStatus, { label: state }) || enumStatus.DEFAULT
+)
+
+export const getStatusByOrder = (order) => (
+  find(enumStatus, { order }) || enumStatus.DEFAULT
 )
 
 export const enumBrickLogos = {
