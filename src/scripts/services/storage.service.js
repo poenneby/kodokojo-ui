@@ -23,7 +23,7 @@ storageService.put = (key, value, scope = 'local') => window[`${scope}Storage`].
 
 storageService.get = (key, scope = 'local') => {
   const value = window[`${scope}Storage`].getItem(key)
-  return value !== null ? value : undefined
+  return value !== null && value !== 'null' ? value : undefined
 }
 
 storageService.remove = (key, scope = 'local') => window[`${scope}Storage`].removeItem(key)
