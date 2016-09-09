@@ -23,8 +23,8 @@ import { themr } from 'react-css-themr'
 import classNames from 'classnames'
 
 // component
-import { MENU_ITEM } from '../../../commons/identifiers'
-import '../../../../styles/_commons.less'
+import { MENU_ITEM } from '../../commons/identifiers'
+import '../../../styles/_commons.less'
 import menuItemTheme from './menuItem.scss'
 
 /**

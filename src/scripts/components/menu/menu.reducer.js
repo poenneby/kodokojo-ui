@@ -21,7 +21,7 @@ import {
   MENU_INIT,
   MENU_UPDATE
 } from '../../commons/constants'
-import { updateMenu } from '../../services/stateUpdater.service.js'
+import { updateMenu } from '../../services/stateUpdater.service'
 
 const stateDefault = {}
 

@@ -22,7 +22,7 @@ import sortBy from 'lodash/sortBy'
 
 // Component
 import '../../../styles/_commons.less'
-import MenuItem from '../_ui/menuItem/MenuItem.component'
+import MenuItem from './MenuItem.component'
 
 // TODO TU
 // Menu component

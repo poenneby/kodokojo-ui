@@ -24,7 +24,7 @@ import { storiesOf } from '@kadira/storybook'
 import en from '../../i18n/en'
 
 // component to story
-import Menu from './Menu.component.js'
+import Menu from './Menu.component'
 
 const menu = [
   {

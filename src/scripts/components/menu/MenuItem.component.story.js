@@ -22,11 +22,11 @@ import { IntlProvider } from 'react-intl'
 import { storiesOf, linkTo } from '@kadira/storybook'
 
 // contexte
-import configureStore from '../../../store/configureStore'
-import en from '../../../i18n/en'
+import configureStore from '../../store/configureStore'
+import en from '../../i18n/en'
 
 // component to story
-import MenuItem from './MenuItem.component.js'
+import MenuItem from './MenuItem.component'
 
 const initialState = {}
 const store = configureStore(initialState)
