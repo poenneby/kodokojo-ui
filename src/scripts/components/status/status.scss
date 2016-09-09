@@ -1,0 +1,13 @@
+@import '../../../styles/meta';
+
+img.status {
+  width: 26px;
+  height: 17px;
+  opacity: 0;
+  transition: opacity .7s ease-out;
+  vertical-align: sub;
+}
+
+img.status--loaded {
+  opacity: 1;
+}
