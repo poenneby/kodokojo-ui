@@ -17,7 +17,11 @@
  */
 
 import React from 'react'
+import { IntlProvider } from 'react-intl'
 import { storiesOf, action } from '@kadira/storybook'
+
+// contexte
+import en from '../../i18n/en'
 
 // component to story
 import Brick from './Brick.component'
@@ -52,6 +56,11 @@ const brickDefault = {
 }
 
 storiesOf('Brick', module)
+  .addDecorator((story) => (
+    <IntlProvider locale="en" messages={ en } >
+      { story() }
+    </IntlProvider>
+  ))
   .add('running', () => (
     <Brick
       brick={ brickRunning }

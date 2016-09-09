@@ -79,14 +79,3 @@
     text-decoration: underline;
   }
 }
-
-img.brick-status {
-  width: 26px;
-  height: 17px;
-  opacity: 0;
-  transition: opacity .7s ease-out;
-}
-
-img.brick-status--loaded {
-  opacity: 1;
-}

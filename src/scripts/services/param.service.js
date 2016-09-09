@@ -57,11 +57,8 @@ export const enumBrickStatus = {
   // }
 }
 
-export const getBrickStatus = (state) => (
-  find(enumBrickStatus, { label: state }) || {
-    label: 'DEFAULT',
-    image: statusDefault
-  }
+export const getStatusByState = (state) => (
+  find(enumStatus, { label: state }) || enumStatus.DEFAULT
 )
 
 export const enumBrickLogos = {

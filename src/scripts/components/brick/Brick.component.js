@@ -25,7 +25,8 @@ import classNames from 'classnames'
 import { BRICK } from '../../commons/identifiers'
 import '../../../styles/_commons.less'
 import brickTheme from './brick.scss'
-import { getBrickStatus, enumBrickStatus } from '../../services/param.service'
+import Status from '../status/Status.component'
+import { enumStatus, getStatusByState } from '../../services/param.service'
 
 // TODO TU
 // Brick component
@@ -37,15 +38,10 @@ export class Brick extends Component {
     theme: PropTypes.object
   }
 
-  handleLoadStatus(e) {
-    e.target.classList.add(brickTheme['brick-status--loaded'])
-  }
-
   render() {
     const { brick, theme } = this.props // eslint-disable-line no-shadow
-    const { formatMessage } = this.props.intl
 
-    const status = getBrickStatus(brick && brick.state ? brick.state : undefined)
+    const status = getStatusByState(brick && brick.state ? brick.state : undefined)
     const brickClasses = classNames(theme.brick, theme['brick-item'])
 
     return (
@@ -57,18 +53,15 @@ export class Brick extends Component {
           { brick ? brick.name : '-' }
         </div>
         <div className={ theme['brick-state'] }>
-          <img
-            className={ theme['brick-status'] }
-            onLoad={ this.handleLoadStatus }
-            src={ status.image }
-            title={ formatMessage({ id: `status-${status.label}-label` }) }
+          <Status
+            state={ brick ? brick.state : undefined }
           />
         </div>
         <div className={ theme['brick-version'] }>
           { brick ? brick.version : '-' }
         </div>
         <div className={ theme['brick-link'] }>
-          { brick && brick.url && status.label === enumBrickStatus.RUNNING.label ?
+          { brick && brick.url && status.label === enumStatus.RUNNING.label ?
             <a href={ brick.url } target="_blank">{ brick.url }</a> :
             '-'
           }
