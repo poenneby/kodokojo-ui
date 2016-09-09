@@ -20,61 +20,164 @@
 /* eslint-disable no-duplicate-imports */
 /* eslint-disable import/no-duplicates */
 
-import { expect } from 'chai'
+import chai, { expect } from 'chai'
+import sinon from 'sinon'
+import sinonChai from 'sinon-chai'
+chai.use(sinonChai)
 
-import projectConfigReducer from './projectConfig.reducer'
-import * as ActionsTypes from '../../commons/constants'
+// dependencies to mock
+import storageService from '../../services/storage.service'
+
+import projectConfigReducer, { projectConfigReducerInit } from './projectConfig.reducer'
+import { __RewireAPI__ as reducerRewireApi } from './projectConfig.reducer'
+import {
+  PROJECT_CONFIG_NEW_REQUEST,
+  PROJECT_CONFIG_NEW_SUCCESS,
+  PROJECT_CONFIG_NEW_FAILURE
+} from '../../commons/constants'
 
 describe('projectConfig reducer', () => {
-  it('should return initialState', () => {
-    // Given
-    const state = undefined
-    const action = {}
+  describe('initialState', () => {
+    let storageServiceGetSpy
 
-    // When
-    const nextState = projectConfigReducer(state, action)
+    beforeEach(() => {
+      storageServiceGetSpy = sinon.stub(storageService, 'get')
+    })
 
-    // Then
-    expect(nextState).to.deep.equal({
-      isFetching: false
+    afterEach(() => {
+      storageService.get.restore()
+    })
+
+    it('should return initialState', () => {
+      // Given
+      const projectCondifgId = undefined
+      const projectId = undefined
+      storageServiceGetSpy.onCall(0).returns(projectCondifgId)
+      storageServiceGetSpy.onCall(1).returns(projectId)
+
+      // When
+      const initialState = projectConfigReducerInit()
+
+      // Then
+      expect(initialState).to.deep.equal({
+        id: projectCondifgId,
+        isFetching: false
+      })
+      expect(storageServiceGetSpy).to.have.callCount(2)
+      expect(storageServiceGetSpy).to.have.been.calledWith('projectConfigId')
+      expect(storageServiceGetSpy).to.have.been.calledWith('projectId')
+    })
+
+    it('should return initialState with projectConfig id', () => {
+      // Given
+      const projectCondifgId = 'projectConfigId1'
+      const projectId = undefined
+      storageServiceGetSpy.onCall(0).returns(projectCondifgId)
+      storageServiceGetSpy.onCall(1).returns(projectId)
+
+      // When
+      const initialState = projectConfigReducerInit()
+
+      // Then
+      expect(initialState).to.deep.equal({
+        id: projectCondifgId,
+        isFetching: false
+      })
+      expect(storageServiceGetSpy).to.have.callCount(2)
+      expect(storageServiceGetSpy).to.have.been.calledWith('projectConfigId')
+      expect(storageServiceGetSpy).to.have.been.calledWith('projectId')
+    })
+
+    it('should return initialState with projectConfig and project id', () => {
+      // Given
+      const projectCondifgId = 'projectConfigId1'
+      const projectId = 'projectId1'
+      storageServiceGetSpy.onCall(0).returns(projectCondifgId)
+      storageServiceGetSpy.onCall(1).returns(projectId)
+
+      // When
+      const initialState = projectConfigReducerInit()
+
+      // Then
+      expect(initialState).to.deep.equal({
+        id: projectCondifgId,
+        project: {
+          id: projectId
+        },
+        isFetching: false
+      })
+      expect(storageServiceGetSpy).to.have.callCount(2)
+      expect(storageServiceGetSpy).to.have.been.calledWith('projectConfigId')
+      expect(storageServiceGetSpy).to.have.been.calledWith('projectId')
     })
   })
 
-  it('should handle PROJECT_CONFIG_NEW_REQUEST', () => {
-    // Given
-    const state = undefined
-    const action = {
-      type: ActionsTypes.PROJECT_CONFIG_NEW_REQUEST
-    }
+  describe('reducer', () => {
+    let projectConfigReducerInitSpy
 
-    // When
-    const nextState = projectConfigReducer(state, action)
-
-    // Then
-    expect(nextState).to.deep.equal({
-      isFetching: true
+    beforeEach(() => {
+      projectConfigReducerInitSpy = sinon.stub()
+      projectConfigReducerInitSpy.returns({
+        isFetching: false
+      })
+      reducerRewireApi.__Rewire__('projectConfigReducerInit', projectConfigReducerInitSpy)
     })
-  })
 
-  it('should handle PROJECT_CONFIG_NEW_SUCCESS', () => {
-    // Given
-    const state = undefined
-    const action = {
-      type: ActionsTypes.PROJECT_CONFIG_NEW_SUCCESS,
-      payload: {
-        projectConfig: {
-          id: 'projectId'
+    afterEach(() => {
+      reducerRewireApi.__ResetDependency__('projectConfigReducerInit')
+    })
+
+    it('should return initialState', () => {
+      // Given
+      const state = undefined
+      const action = {}
+
+      // When
+      const nextState = projectConfigReducer(state, action)
+
+      // Then
+      expect(nextState).to.deep.equal({
+        isFetching: false
+      })
+      expect(projectConfigReducerInitSpy).to.have.callCount(1)
+    })
+
+    it('should handle PROJECT_CONFIG_NEW_REQUEST', () => {
+      // Given
+      const state = undefined
+      const action = {
+        type: PROJECT_CONFIG_NEW_REQUEST
+      }
+
+      // When
+      const nextState = projectConfigReducer(state, action)
+
+      // Then
+      expect(nextState).to.deep.equal({
+        isFetching: true
+      })
+    })
+
+    it('should handle PROJECT_CONFIG_NEW_SUCCESS', () => {
+      // Given
+      const state = undefined
+      const action = {
+        type: PROJECT_CONFIG_NEW_SUCCESS,
+        payload: {
+          projectConfig: {
+            id: 'projectId'
+          }
         }
       }
-    }
 
-    // When
-    const nextState = projectConfigReducer(state, action)
+      // When
+      const nextState = projectConfigReducer(state, action)
 
-    // Then
-    expect(nextState).to.deep.equal({
-      id: 'projectId',
-      isFetching: false
+      // Then
+      expect(nextState).to.deep.equal({
+        id: 'projectId',
+        isFetching: false
+      })
     })
   })
 })

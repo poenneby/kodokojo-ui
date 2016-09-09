@@ -41,7 +41,6 @@ addLocaleData(fr)
 
 // Application
 import configureStore from './store/configureStore'
-import initialState from './commons/init'
 import App from './components/app/App.component.js'
 import SignupPage from './pages/Signup.page.js'
 import LoginPage from './pages/Login.page.js'
@@ -55,7 +54,7 @@ import authService from './services/auth.service.js'
 import { handleHistoryChange } from './services/history.service.js'
 
 // Add the reducer to your store on the `routing` key
-const store = configureStore(initialState)
+const store = configureStore({})
 
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, store)

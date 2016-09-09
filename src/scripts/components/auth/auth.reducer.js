@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import merge from 'lodash/merge'
+import authService from '../../services/auth.service'
 import {
   ACCOUNT_NEW_REQUEST,
   ACCOUNT_NEW_SUCCESS,
@@ -25,17 +25,34 @@ import {
   AUTH_SUCCESS,
   AUTH_FAILURE,
   AUTH_RESET,
+  CAPTCHA_INIT,
   CAPTCHA_UPDATE,
   CAPTCHA_RESET
 } from '../../commons/constants'
 
+export function authReducerInit() {
+  return {
+    account: authService.isAuth() ? authService.getAccount() : {},
+    captcha: {
+      value: '',
+      reset: false
+    },
+    isAuthenticated: authService.isAuth() || false,
+    isFetching: false
+  }
+}
+
 const initialState = {
   account: {},
-  captcha: '',
+  captcha: {
+    value: '',
+    reset: false
+  },
+  isAuthenticated: false,
   isFetching: false
 }
 
-export default function auth(state = initialState, action) {
+export default function auth(state = authReducerInit(), action) {
   if (action.type === ACCOUNT_NEW_REQUEST) {
     return {
       ...state,
@@ -64,14 +81,11 @@ export default function auth(state = initialState, action) {
   }
 
   if (action.type === AUTH_REQUEST) {
-    return merge(
-      {},
-      state,
-      {
-        isAuthenticated: false,
-        isFetching: true
-      }
-    )
+    return {
+      ...state,
+      isAuthenticated: false,
+      isFetching: true
+    }
   }
 
   if (action.type === AUTH_FAILURE) {
@@ -84,25 +98,37 @@ export default function auth(state = initialState, action) {
   }
 
   if (action.type === AUTH_RESET) {
-    return {
-      account: {},
-      isAuthenticated: false,
-      isFetching: false
-    }
+    return initialState
   }
 
   // TODO TU
+  if (action.type === CAPTCHA_INIT) {
+    return {
+      ...state,
+      captcha: {
+        value: '',
+        reset: false
+      }
+    }
+  }
+
   if (action.type === CAPTCHA_UPDATE) {
     return {
       ...state,
-      captcha: action.payload.captcha
+      captcha: {
+        value: action.payload.captcha,
+        reset: false
+      }
     }
   }
 
   if (action.type === CAPTCHA_RESET) {
     return {
       ...state,
-      captcha: ''
+      captcha: {
+        value: '',
+        reset: true
+      }
     }
   }
 

@@ -18,8 +18,8 @@
 
 import merge from 'lodash/merge'
 
-import { updateBricks } from '../../services/stateUpdater.service.js'
-
+import storageService from '../../services/storage.service'
+import { updateBricks, updateAggregatedStackStatus } from '../../services/stateUpdater.service.js'
 import {
   AUTH_RESET,
   PROJECT_CONFIG_REQUEST,
@@ -35,11 +35,22 @@ import {
   PROJECT_UPDATE
 } from '../../commons/constants'
 
-const initialState = {
-  isFetching: false
+export function projectConfigReducerInit() {
+  const initialState = {
+    id: storageService.get('projectConfigId'),
+    isFetching: false
+  }
+  const project = {
+    id: storageService.get('projectId')
+  }
+  if (project.id) {
+    initialState.project = project
+  }
+
+  return initialState
 }
 
-export default function projectConfig(state = initialState, action) {
+export default function projectConfig(state = projectConfigReducerInit(), action) {
   if (action.type === PROJECT_CONFIG_NEW_REQUEST || action.type === PROJECT_CONFIG_REQUEST) {
     return {
       ...state,
@@ -93,6 +104,7 @@ export default function projectConfig(state = initialState, action) {
 
   if (action.type === PROJECT_SUCCESS) {
     const bricks = updateBricks(state.stacks[0].bricks, action.payload.project.stacks[0].bricks)
+    const aggregatedStackStatus = updateAggregatedStackStatus(bricks)
     return merge(
       {},
       state,
@@ -103,6 +115,7 @@ export default function projectConfig(state = initialState, action) {
         },
         stacks: [
           {
+            aggregatedStackStatus,
             bricks
           }
         ],
@@ -113,12 +126,14 @@ export default function projectConfig(state = initialState, action) {
 
   if (action.type === PROJECT_UPDATE && action.payload.brick.type !== 'LOADBALANCER') {
     const bricks = updateBricks(state.stacks[0].bricks, [action.payload.brick])
+    const aggregatedStackStatus = updateAggregatedStackStatus(bricks)
     return merge(
       {},
       state,
       {
         stacks: [
           {
+            aggregatedStackStatus,
             bricks
           }
         ],
@@ -143,4 +158,11 @@ export default function projectConfig(state = initialState, action) {
   }
 
   return state
+}
+
+export const getAggregatedStackStatus = (state) => {
+  if (state && state.stacks && state.stacks[0]) {
+    return state.stacks[0].aggregatedStackStatus
+  }
+  return undefined
 }
