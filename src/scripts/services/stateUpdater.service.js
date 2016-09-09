@@ -19,7 +19,16 @@
 import cloneDeep from 'lodash/cloneDeep'
 import findIndex from 'lodash/findIndex'
 
+import { getStatusByState, getStatusByOrder } from './param.service'
+
 // TODO TU
+/**
+ * Update bricks, merge previous state with partial state
+ *
+ * @param prevBricks
+ * @param bricks
+ * @returns {Array} bricks updated
+ */
 export const updateBricks = (prevBricks, bricks) => {
   const nextBricks = cloneDeep(prevBricks)
   if (bricks.length > []) {
@@ -31,4 +40,24 @@ export const updateBricks = (prevBricks, bricks) => {
     })
   }
   return nextBricks
+}
+
+// TODO TU
+/**
+ * Aggregate brick state for a given stack
+ *
+ * @param bricks
+ * @returns {Object} status
+ */
+export const updateAggregatedStackStatus = (bricks) => {
+  if (bricks.length) {
+    const stateOrder = bricks.reduce((previous, brick) => {
+      const previousStateOrder = previous.state ? getStatusByState(previous.state).order : previous
+      const currentStateOrder = getStatusByState(brick.state).order
+      const minStateOrder = Math.min(previousStateOrder, currentStateOrder)
+      return minStateOrder
+    })
+    return getStatusByOrder(stateOrder)
+  }
+  return getStatusByState('DEFAULT')
 }

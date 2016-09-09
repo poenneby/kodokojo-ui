@@ -143,3 +143,8 @@ $email-flex: 1 1 25%;
   @extend %user-column--form;
   flex: $email-flex;
 }
+
+.message--info {
+  padding-top: $spacing-smallest;
+  color: $color-ternary-1;
+}

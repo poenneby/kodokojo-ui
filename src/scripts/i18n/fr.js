@@ -54,6 +54,7 @@ export default {
   'logout-label': 'Log out',
   'link-label': 'Link',
   'members-label': 'Members',
+  'members-disabled-add-label': 'Stack is currently not fully running, these actions are disabled until it will be.',
   'name-label': 'Name',
   'password-label': 'Password',
   'project-add-label': 'Add project',

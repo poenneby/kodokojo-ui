@@ -20,7 +20,7 @@ import React, { Component, PropTypes } from 'react'
 import { compose } from 'redux'
 import { reduxForm } from 'redux-form'
 import { combineValidators } from 'revalidate'
-import { intlShape, injectIntl } from 'react-intl'
+import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 import classNames from 'classnames'
 
 // Component
@@ -32,6 +32,7 @@ import Input from '../_ui/input/Input.component'
 import { emailValidator } from '../../services/validator.service'
 import { returnErrorKey } from '../../services/error.service'
 import { addUserToProjectConfig } from '../projectConfig/projectConfig.actions'
+import { getAggregatedStackStatus } from '../../commons/reducers'
 
 // validate function
 const validate = combineValidators({
@@ -46,6 +47,7 @@ export class UserForm extends Component {
     addUserToProjectConfig: PropTypes.func,
     fields: PropTypes.object.isRequired,
     formActive: PropTypes.bool.isRequired,
+    getAggregatedStackStatus: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func,
     intl: intlShape.isRequired,
     onToggleFormActive: PropTypes.func.isRequired,
@@ -101,20 +103,28 @@ export class UserForm extends Component {
   }
 
   render() {
-    const { fields: { email }, handleSubmit, submitting, formActive } = this.props // eslint-disable-line no-shadow
+    const { fields: { email }, handleSubmit, submitting, formActive, getAggregatedStackStatus } = this.props // eslint-disable-line no-shadow
     const { formatMessage } = this.props.intl
 
     return (
       <div>
       { !formActive &&
-        <Button
-          accent
-          disabled={ submitting }
-          icon="add_circle_outline"
-          label={ formatMessage({ id: 'add-member-label' }) }
-          onMouseUp={ this.handleToggleForm }
-          type="button"
-        />
+        <div>
+          { getAggregatedStackStatus && getAggregatedStackStatus.label !== 'RUNNING' &&
+            <div className={ userTheme['message--info'] }>
+              { ' ' }
+              <FormattedMessage id={'members-disabled-add-label'} />
+            </div>
+          }
+          <Button
+            accent
+            disabled={ submitting || getAggregatedStackStatus && getAggregatedStackStatus.label !== 'RUNNING' }
+            icon="add_circle_outline"
+            label={ formatMessage({ id: 'add-member-label' }) }
+            onMouseUp={ this.handleToggleForm }
+            type="button"
+          />
+        </div>
       }
       { formActive &&
         <form id="addMemberForm"
@@ -154,10 +164,10 @@ export class UserForm extends Component {
                 <Input
                   { ...email }
                   error={
-                            email.touched && email.error ?
-                            formatMessage({ id: email.error }, { fieldName: formatMessage({ id: 'email-input-label' }) }) :
-                            ''
-                          }
+                    email.touched && email.error ?
+                    formatMessage({ id: email.error }, { fieldName: formatMessage({ id: 'email-input-label' }) }) :
+                    ''
+                  }
                   hint={ formatMessage({ id: 'email-hint-label' }) }
                   label={ formatMessage({ id: 'email-label' }) }
                   name="email"
@@ -191,7 +201,8 @@ export class UserForm extends Component {
 // UserForm container
 const mapStateProps = (state, ownProps) => (
   {
-    projectConfigId: state.projectConfig.id
+    projectConfigId: state.projectConfig.id,
+    getAggregatedStackStatus: getAggregatedStackStatus(state)
   }
 )
 

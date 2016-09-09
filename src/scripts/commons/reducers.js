@@ -24,7 +24,7 @@ import auth from '../components/auth/auth.reducer.js'
 import bricks from '../components/brick/brick.reducer.js'
 import menu from '../components/menu/menu.reducer'
 import prefs from '../components/app/app.reducer'
-import projectConfig from '../components/projectConfig/projectConfig.reducer'
+import projectConfig, * as fromProjectConfig from '../components/projectConfig/projectConfig.reducer'
 import socket from '../components/_utils/websocket/websocket.reducer'
 import users from '../components/user/user.reducer'
 
@@ -41,3 +41,5 @@ const rootReducer = combineReducers({
 })
 
 export default rootReducer
+
+export const getAggregatedStackStatus = (state) => fromProjectConfig.getAggregatedStackStatus(state.projectConfig)
