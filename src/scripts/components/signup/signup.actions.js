@@ -70,6 +70,6 @@ export function createAccount(email, captcha) {
       throw new Error(data.payload.status)
     })
     .catch(error => {
-      throw new Error(error.message)
+      throw new Error(error.message || error)
     })
 }

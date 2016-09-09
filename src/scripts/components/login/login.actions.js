@@ -104,7 +104,7 @@ export function login(username, password) {
       throw new Error(data.payload.status)
     })
     .catch(error => {
-      throw new Error(error.message)
+      throw new Error(error.message || error)
     })
 }
 
@@ -127,6 +127,6 @@ export function logout() {
       throw new Error(data.payload.status)
     })
     .catch(error => {
-      throw new Error(error.message)
+      throw new Error(error.message || error)
     })
 }

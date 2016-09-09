@@ -89,7 +89,7 @@ export function getProjectConfig(projectConfigId) {
       throw new Error(data.payload.status)
     })
     .catch(error => {
-      throw new Error(error.message)
+      throw new Error(error.message || error)
     })
 }
 
@@ -109,7 +109,7 @@ export function getProjectConfigAndProject(projectConfigId, projectId) {
       throw new Error(data.payload.status)
     })
     .catch(error => {
-      throw new Error(error.message)
+      throw new Error(error.message || error)
     })
 }
 
@@ -166,7 +166,7 @@ export function createProjectConfig(projectConfigName, projectConfigOwner, proje
       throw new Error(data.payload.status)
     })
     .catch(error => {
-      throw new Error(error.message)
+      throw new Error(error.message || error)
     })
 }
 
@@ -205,6 +205,6 @@ export function addUserToProjectConfig(projectConfigId, email) {
       throw new Error(data.payload.status)
     })
     .catch(error => {
-      throw new Error(error.message)
+      throw new Error(error.message || error)
     })
 }

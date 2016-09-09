@@ -67,7 +67,7 @@ export function getProject(projectId) {
       throw new Error(data.payload.status)
     })
     .catch(error => {
-      throw new Error(error.message)
+      throw new Error(error.message || error)
     })
 }
 
@@ -107,7 +107,7 @@ export function createProject(projectConfigId) {
       throw new Error(data.payload.status)
     })
     .catch(error => {
-      throw new Error(error.message)
+      throw new Error(error.message || error)
     })
 }
 
