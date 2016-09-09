@@ -27,7 +27,7 @@ import captchaTheme from './captcha.scss'
 // https://github.com/twobucks/react-gcaptcha
 // thanks!
 
-export class Captcha extends Component {
+class Captcha extends Component {
   static propTypes = {
     className: PropTypes.string,
     elementID: PropTypes.string,
@@ -36,6 +36,7 @@ export class Captcha extends Component {
     onExpiredCallbackName: PropTypes.string,
     onLoadCallback: PropTypes.func,
     onLoadCallbackName: PropTypes.string,
+    onResetCallback: PropTypes.func,
     onVerifyCallback: PropTypes.func,
     render: PropTypes.string,
     reset: PropTypes.bool,
@@ -97,6 +98,9 @@ export class Captcha extends Component {
 
     if (nextProps.locale !== locale) {
       this.injectCaptcha()
+    }
+    if (nextProps.reset) {
+      this.resetCaptcha()
     }
   }
 
@@ -186,4 +190,4 @@ export class Captcha extends Component {
   }
 }
 
-module.exports = Captcha
+export default Captcha

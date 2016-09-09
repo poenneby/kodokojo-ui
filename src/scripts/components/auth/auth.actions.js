@@ -17,11 +17,18 @@
  */
 
 import {
+  CAPTCHA_INIT,
   CAPTCHA_UPDATE,
   CAPTCHA_RESET
 } from '../../commons/constants'
 
 // TODO TU
+export function initCaptcha() {
+  return {
+    type: CAPTCHA_INIT
+  }
+}
+
 export function updateCaptcha(captcha) {
   return {
     type: CAPTCHA_UPDATE,

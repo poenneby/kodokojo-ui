@@ -28,7 +28,7 @@ import Input from '../../components/_ui/input/Input.component'
 import Button from '../../components/_ui/button/Button.component'
 import Captcha from '../../components/captcha/Captcha.component'
 import { createAccount } from './signup.actions.js'
-import { updateCaptcha, resetCaptcha } from '../auth/auth.actions'
+import { initCaptcha, resetCaptcha, updateCaptcha } from '../auth/auth.actions'
 import { updateFieldError } from '../_utils/form/form.actions'
 import { emailValidator } from '../../services/validator.service'
 import { returnErrorKey } from '../../services/error.service'
@@ -44,15 +44,17 @@ export class Signup extends Component {
 
   static propTypes = {
     account: PropTypes.object,
-    captcha: PropTypes.string,
+    captcha: PropTypes.object.isRequired,
     createAccount: PropTypes.func.isRequired,
     fields: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
+    initCaptcha: PropTypes.func.isRequired,
     intl: intlShape.isRequired,
     locale: PropTypes.string,
     resetCaptcha: PropTypes.func.isRequired,
     submitting: PropTypes.bool.isRequired,
-    updateCaptcha: PropTypes.func.isRequired
+    updateCaptcha: PropTypes.func.isRequired,
+    updateFieldError: PropTypes.func.isRequired
   }
 
   handleSubmit = () => {
@@ -63,13 +65,16 @@ export class Signup extends Component {
     if (error.email) {
       return Promise.reject({ email: error.email })
     }
-    if (!captcha) {
+    if (!captcha.value) {
       return Promise.reject({ email: 'captcha-error-empty' })
     }
-    return createAccount(nextEmail.trim(), captcha)
+    return createAccount(nextEmail.trim(), captcha.value)
       .then(Promise.resolve())
       .catch(err => {
-        resetCaptcha()
+        if (err.message === '428') {
+          // if error code is 428, recaptcha challenge could be corrupted
+          resetCaptcha()
+        }
         return Promise.reject({ email: returnErrorKey(
           {
             component: 'account',
@@ -79,8 +84,21 @@ export class Signup extends Component {
       })
   }
 
+  handleCaptchaInit = () => {
+    const { initCaptcha } = this.props // eslint-disable-line no-shadow
+
+    initCaptcha()
+  }
+
+  handleCaptchaUpdate = (nextCaptcha) => {
+    const { updateFieldError, updateCaptcha } = this.props // eslint-disable-line no-shadow
+
+    updateFieldError('signupForm', 'email', '')
+    updateCaptcha(nextCaptcha)
+  }
+
   render() {
-    const { fields: { email, entity }, updateCaptcha, resetCaptcha, handleSubmit, submitting, locale } = this.props // eslint-disable-line no-shadow
+    const { fields: { email, entity }, captcha, handleSubmit, submitting, locale } = this.props // eslint-disable-line no-shadow
     const { formatMessage } = this.props.intl
 
     return (
@@ -117,9 +135,11 @@ export class Signup extends Component {
           locale={ locale }
           onExpiredCallback={ () => { console.log('captcha has expired') } }
           onLoadCallback={ () => console.log('captcha has loaded') }
-          onVerifyCallback={ updateCaptcha }
+          onResetCallback={ this.handleCaptchaInit }
+          onVerifyCallback={ this.handleCaptchaUpdate }
+          reset={ captcha.reset }
           sitekey={ getRecaptchaSitekey() }
-          theme="dark"
+          theme="light"
         />
         <Button
             disabled={ submitting }
@@ -154,7 +174,9 @@ const SignupContainer = compose(
     mapStateProps,
     {
       createAccount,
+      initCaptcha,
       updateCaptcha,
+      updateFieldError,
       resetCaptcha
     }
   ),

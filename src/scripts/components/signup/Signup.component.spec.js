@@ -64,8 +64,15 @@ describe('<Signup> component', () => {
       },
       submitting: false,
       createAccount: () => {},
+      initCaptcha: () => {},
       updateCaptcha: () => {},
-      resetCaptcha: () => {}
+      updateFieldError: () => {},
+      resetCaptcha: () => {},
+      locale: 'fr',
+      captcha: {
+        value: '',
+        reset: false
+      }
     }
     messages = {
       'email-label': 'email-label',
@@ -167,7 +174,9 @@ describe('<Signup> component', () => {
               value: 'email@test.com'
             }
           },
-          captcha: 'captcha',
+          captcha: {
+            value: 'captcha'
+          },
           createAccount: sinon.stub()
         }
       )
@@ -191,7 +200,9 @@ describe('<Signup> component', () => {
       const nextProps = merge(
         props,
         {
-          captcha: 'captcha',
+          captcha: {
+            value: 'captcha'
+          },
           createAccount: sinon.spy()
         }
       )
@@ -213,6 +224,9 @@ describe('<Signup> component', () => {
       const nextProps = merge(
         props,
         {
+          captcha: {
+            value: ''
+          },
           fields: {
             email: {
               value: 'email@test.com'
