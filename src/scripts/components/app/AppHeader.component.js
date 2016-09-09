@@ -20,7 +20,6 @@ import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 
-
 // Component
 import '../../../styles/_commons.less'
 import AppBar from '../_ui/appBar/AppBar.component'
