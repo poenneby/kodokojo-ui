@@ -19,7 +19,7 @@
 import merge from 'lodash/merge'
 
 import storageService from '../../services/storage.service'
-import { updateBricks, updateAggregatedStackStatus } from '../../services/stateUpdater.service.js'
+import { updateBricks, updateAggregatedStackStatus } from '../../services/stateUpdater.service'
 import {
   AUTH_RESET,
   PROJECT_CONFIG_REQUEST,

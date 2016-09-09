@@ -20,9 +20,9 @@ import React from 'react'
 import { storiesOf, action } from '@kadira/storybook'
 
 // component to story
-import Card from './Card.component.js'
-import CardContent from './CardContent.component.js'
-import CardContainer from './CardContainer.component.js'
+import Card from './Card.component'
+import CardContent from './CardContent.component'
+import CardContainer from './CardContainer.component'
 import utils from '../../../../styles/_utils.scss'
 
 storiesOf('Card', module)

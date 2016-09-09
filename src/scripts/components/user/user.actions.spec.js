@@ -30,8 +30,8 @@ import { apiMiddleware } from 'redux-api-middleware'
 import configureMockStore from 'redux-mock-store'
 
 import api from '../../commons/config'
-import * as actions from './user.actions.js'
-import { __RewireAPI__ as actionsRewireApi } from './user.actions.js'
+import * as actions from './user.actions'
+import { __RewireAPI__ as actionsRewireApi } from './user.actions'
 import {
   USER_NEW_ID_REQUEST,
   USER_NEW_ID_SUCCESS,

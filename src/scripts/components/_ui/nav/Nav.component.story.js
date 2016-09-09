@@ -24,7 +24,7 @@ import { storiesOf, action } from '@kadira/storybook'
 import configureStore from '../../../store/configureStore'
 
 // component to story
-import Nav from './Nav.component.js'
+import Nav from './Nav.component'
 
 const initialState = {}
 

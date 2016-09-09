@@ -26,7 +26,7 @@ import configureStore from '../../../store/configureStore'
 // component to story
 import Layout from './Layout.component'
 import Panel from '../panel/Panel.component'
-import Nav from '../nav/Nav.component.js'
+import Nav from '../nav/Nav.component'
 
 const initialState = {}
 

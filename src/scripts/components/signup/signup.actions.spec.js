@@ -31,8 +31,8 @@ import configureMockStore from 'redux-mock-store'
 // dependencies to mock
 
 import api from '../../commons/config'
-import * as actions from './signup.actions.js'
-import { __RewireAPI__ as actionsRewireApi } from './signup.actions.js'
+import * as actions from './signup.actions'
+import { __RewireAPI__ as actionsRewireApi } from './signup.actions'
 import {
   ACCOUNT_NEW_REQUEST,
   ACCOUNT_NEW_SUCCESS,

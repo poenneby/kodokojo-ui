@@ -34,7 +34,7 @@ import merge from '../../../../node_modules/lodash/merge'
 import { IntlProvider } from 'react-intl'
 
 // component
-import { Login } from './Login.component.js'
+import { Login } from './Login.component'
 
 // TODO test error message when login
 describe('<Login> component', () => {

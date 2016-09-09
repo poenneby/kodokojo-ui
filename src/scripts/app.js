@@ -41,17 +41,17 @@ addLocaleData(fr)
 
 // Application
 import configureStore from './store/configureStore'
-import App from './components/app/App.component.js'
-import SignupPage from './pages/Signup.page.js'
-import LoginPage from './pages/Login.page.js'
-import FirstProjectPage from './pages/FirstProject.page.js'
-import StacksPage from './pages/Stacks.page.js'
-import MembersPage from './pages/Members.page.js'
+import App from './components/app/App.component'
+import SignupPage from './pages/Signup.page'
+import LoginPage from './pages/Login.page'
+import FirstProjectPage from './pages/FirstProject.page'
+import StacksPage from './pages/Stacks.page'
+import MembersPage from './pages/Members.page'
 import UsersPage from './pages/Users.page'
 import NotFoundPage from './pages/NotFound.page'
 
-import authService from './services/auth.service.js'
-import { handleHistoryChange } from './services/history.service.js'
+import authService from './services/auth.service'
+import { handleHistoryChange } from './services/history.service'
 
 // Add the reducer to your store on the `routing` key
 const store = configureStore({})

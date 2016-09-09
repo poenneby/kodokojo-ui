@@ -29,7 +29,7 @@ import Card from '../components/_ui/card/Card.component'
 import CardContent from '../components/_ui/card/CardContent.component'
 import CardContainer from '../components/_ui/card/CardContainer.component'
 import Button from '../components/_ui/button/Button.component'
-import Login from '../components/login/Login.component.js'
+import Login from '../components/login/Login.component'
 import { setNavVisibility } from '../components/app/app.actions'
 import { login } from '../components/login/login.actions'
 

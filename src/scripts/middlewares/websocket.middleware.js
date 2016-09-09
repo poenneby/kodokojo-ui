@@ -19,13 +19,13 @@
 import { getToken } from '../services/auth.service'
 import api from '../commons/config'
 import apiConf from '../../../config/shared/api.env'
-import { getWebSocket } from '../services/webSocket.factory.js'
+import { getWebSocket } from '../services/webSocket.factory'
 import { mapBrickEvent } from '../services/mapping.service'
 import { updateProject } from '../components/project/project.actions'
 import {
   successWebsocket,
   failureWebsocket
-} from '../components/_utils/websocket/websocket.actions.js'
+} from '../components/_utils/websocket/websocket.actions'
 import {
   WEBSOCKET_REQUEST,
   WEBSOCKET_STOP
