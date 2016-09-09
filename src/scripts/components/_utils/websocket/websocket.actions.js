@@ -23,7 +23,7 @@ import {
   WEBSOCKET_SUCCESS,
   WEBSOCKET_FAILURE,
   WEBSOCKET_STOP
-} from '../../commons/constants'
+} from '../../../commons/constants'
 
 export function requestWebsocket() {
   return {

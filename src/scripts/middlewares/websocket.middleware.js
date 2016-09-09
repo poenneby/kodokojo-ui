@@ -25,7 +25,7 @@ import { updateProject } from '../components/project/project.actions'
 import {
   successWebsocket,
   failureWebsocket
-} from '../components/websocket/websocket.actions.js'
+} from '../components/_utils/websocket/websocket.actions.js'
 import {
   WEBSOCKET_REQUEST,
   WEBSOCKET_STOP

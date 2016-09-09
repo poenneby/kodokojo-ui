@@ -28,7 +28,7 @@ import ioService from '../../services/io.service'
 import { mapAccount } from '../../services/mapping.service'
 import { getProject } from '../project/project.actions'
 import { getProjectConfigAndProject } from '../projectConfig/projectConfig.actions'
-import { requestWebsocket, stopWebsocket } from '../websocket/websocket.actions.js'
+import { requestWebsocket, stopWebsocket } from '../_utils/websocket/websocket.actions.js'
 import {
   AUTH_REQUEST,
   AUTH_SUCCESS,

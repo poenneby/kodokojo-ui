@@ -32,7 +32,7 @@ import Content from '../_ui/content/Content.component.js'
 import AppHeader from './AppHeader.component'
 import Menu from '../menu/Menu.component'
 import { logout } from '../login/login.actions'
-import { requestWebsocket } from '../websocket/websocket.actions'
+import { requestWebsocket } from '../_utils/websocket/websocket.actions'
 import { setTheme, setLocale, setNavVisibility } from './app.actions'
 
 class App extends Component {

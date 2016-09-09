@@ -19,7 +19,7 @@
 import { browserHistory } from 'react-router'
 
 import { setAuth, putAuth } from '../../services/auth.service'
-import { requestWebsocket } from '../websocket/websocket.actions'
+import { requestWebsocket } from '../_utils/websocket/websocket.actions'
 import { createUser } from '../user/user.actions'
 import {
   ACCOUNT_NEW_REQUEST,
