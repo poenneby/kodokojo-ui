@@ -29,6 +29,7 @@ import userTheme from '../user/user.scss'
 import Avatar from '../_ui/avatar/Avatar.component'
 import Button from '../_ui/button/Button.component'
 import Input from '../_ui/input/Input.component'
+import Status from '../status/Status.component'
 import { emailValidator } from '../../services/validator.service'
 import { returnErrorKey } from '../../services/error.service'
 import { addUserToProjectConfig } from '../projectConfig/projectConfig.actions'
@@ -112,7 +113,9 @@ export class UserForm extends Component {
         <div>
           { getAggregatedStackStatus && getAggregatedStackStatus.label !== 'RUNNING' &&
             <div className={ userTheme['message--info'] }>
-              { ' ' }
+              <Status
+                state={ getAggregatedStackStatus ? getAggregatedStackStatus.label : undefined }
+              />{ ' ' }
               <FormattedMessage id={'members-disabled-add-label'} />
             </div>
           }
