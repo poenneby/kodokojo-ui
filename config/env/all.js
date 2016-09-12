@@ -22,16 +22,14 @@ import api from '../shared/api.endpoints'
  * Set docker host
  */
 let localApiHost
-if (process.env.DOCKER_HOST) {
-  const dockerHost = process.env.DOCKER_HOST
+const dockerHost = process.env.DOCKER_HOST
 
-  if (dockerHost.match(/unix:\/\//) || !dockerHost) {
-    localApiHost = 'http://localhost'
-  }
+if (!dockerHost && !process.env.API_ENV || dockerHost.match(/unix:\/\//)) {
+  localApiHost = 'http://localhost'
+}
 
-  if (dockerHost.match(/^tcp:\/\//)) {
-    localApiHost = `http://${dockerHost.match(/^tcp:\/\/([\d|.]*):\d*/)[1]}`
-  }
+if (dockerHost.match(/^tcp:\/\//)) {
+  localApiHost = `http://${dockerHost.match(/^tcp:\/\/([\d|.]*):\d*/)[1]}`
 }
 
 if (process.env.API_ENV) {
