@@ -22,18 +22,17 @@ import api from '../shared/api.endpoints'
  * Set docker host
  */
 let localApiHost
-const dockerHost = process.env.DOCKER_HOST
-
-if (!dockerHost && !process.env.API_ENV || dockerHost.match(/unix:\/\//)) {
-  localApiHost = 'http://localhost'
-}
-
-if (dockerHost.match(/^tcp:\/\//)) {
-  localApiHost = `http://${dockerHost.match(/^tcp:\/\/([\d|.]*):\d*/)[1]}`
-}
 
 if (process.env.API_ENV) {
   localApiHost = `https://${process.env.API_ENV}`
+} else {
+  const dockerHost = process.env.DOCKER_HOST
+
+  if (dockerHost && dockerHost.match(/^tcp:\/\//)) {
+    localApiHost = `http://${dockerHost.match(/^tcp:\/\/([\d|.]*):\d*/)[1]}`
+  } else {
+    localApiHost = 'http://localhost'
+  }
 }
 
 // TODO set protocol into parameter to serve https or http or ws
