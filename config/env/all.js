@@ -25,7 +25,7 @@ let localApiHost
 if (process.env.DOCKER_HOST) {
   const dockerHost = process.env.DOCKER_HOST
 
-  if (dockerHost.match(/unix\/\//)) {
+  if (dockerHost.match(/unix:\/\//) || !dockerHost) {
     localApiHost = 'http://localhost'
   }
 
