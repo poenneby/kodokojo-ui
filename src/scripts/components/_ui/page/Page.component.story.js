@@ -58,10 +58,12 @@ storiesOf('Page', module)
   .add('action', () => (
     <Page>
       <Action>
-        Some action
+        Default left action
       </Action>
-      <Action>
-        An other action
+      <Action
+        type="right"
+      >
+        Right action
       </Action>
     </Page>
   ))

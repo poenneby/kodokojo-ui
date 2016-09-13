@@ -28,9 +28,13 @@ import actionTheme from './action.scss'
  * UI: Action component
  *
  */
-export const Action = ({ children, theme }) => (
+export const Action = ({
+  children,
+  theme,
+  type = 'left'
+}) => (
   <div
-    className={ theme.action }
+    className={ theme[`action--${type}`] }
   >
     { children }
   </div>
@@ -42,7 +46,8 @@ Action.propTypes = {
     PropTypes.element,
     PropTypes.node
   ]),
-  theme: PropTypes.object
+  theme: PropTypes.object,
+  type: PropTypes.oneOf(['left', 'right'])
 }
 
 export default themr(ACTION, actionTheme)(Action)
