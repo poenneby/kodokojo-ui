@@ -18,19 +18,13 @@
 
 import find from 'lodash/find'
 import filter from 'lodash/filter'
+import cloneDeep from 'lodash/cloneDeep'
 import {
   MENU_INIT,
   MENU_UPDATE
 } from '../../commons/constants'
 
 import { getMenu } from '../../services/param.service'
-
-export function initMenu() {
-  return {
-    type: MENU_INIT,
-    menu: getMenu()
-  }
-}
 
 export function updateMenu(menu) {
   return {
@@ -41,7 +35,7 @@ export function updateMenu(menu) {
 
 export function updateMenuProject(projectName) {
   return (dispatch, getState) => {
-    const nextMenu = getState().menu
+    const nextMenu = cloneDeep(getState().menu)
 
     nextMenu[1].labelText = projectName
     nextMenu[1].titleText = projectName
@@ -74,4 +68,21 @@ export function updateMenuPath(path) {
 
     return dispatch(updateMenu(nextMenu))
   }
+}
+
+export function initMenuDefault() {
+  return {
+    type: MENU_INIT,
+    menu: getMenu()
+  }
+}
+
+export function initMenu(location) {
+  return dispatch => dispatch(initMenuDefault())
+    .then(data => {
+      if (location) {
+        return dispatch(updateMenuPath(location))
+      }
+      return Promise.resolve(data)
+    })
 }

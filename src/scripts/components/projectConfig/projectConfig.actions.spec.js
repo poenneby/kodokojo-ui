@@ -166,7 +166,7 @@ describe('project config actions', () => {
 
     afterEach(() => {
       actionsRewireApi.__ResetDependency__('getUser')
-      actionsRewireApi.__ResetDependency__('initMenu')
+      actionsRewireApi.__ResetDependency__('updateMenuProject')
     })
 
     it('should return project config', (done) => {

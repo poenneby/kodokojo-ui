@@ -48,7 +48,7 @@ export class UserForm extends Component {
     addUserToProjectConfig: PropTypes.func,
     fields: PropTypes.object.isRequired,
     formActive: PropTypes.bool.isRequired,
-    getAggregatedStackStatus: PropTypes.object.isRequired,
+    getAggregatedStackStatus: PropTypes.object,
     handleSubmit: PropTypes.func,
     intl: intlShape.isRequired,
     onToggleFormActive: PropTypes.func.isRequired,

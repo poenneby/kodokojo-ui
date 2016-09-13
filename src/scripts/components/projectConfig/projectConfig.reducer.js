@@ -164,5 +164,5 @@ export const getAggregatedStackStatus = (state) => {
   if (state && state.stacks && state.stacks[0]) {
     return state.stacks[0].aggregatedStackStatus
   }
-  return undefined
+  return {}
 }

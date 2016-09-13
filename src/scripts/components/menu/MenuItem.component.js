@@ -78,8 +78,10 @@ export class MenuItem extends Component {
           &nbsp;
         </div>
         <div className={ theme['menu-label'] }>
-          { labelKey ?
-            formatMessage({ id: labelKey }) :
+          { labelKey &&
+            formatMessage({ id: labelKey })
+          }
+          { labelText && !labelKey &&
             labelText
           }
         </div>

@@ -16,18 +16,21 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+import isEmpty from 'lodash/isEmpty'
+
 import { initMenu, updateMenuPath } from '../components/menu/menu.actions'
 
 const historyService = {}
 
 // TODO could handle analytics in the future
-historyService.handleHistoryChange = (location) => dispatch => {
+historyService.handleHistoryChange = (location) => (dispatch, getState) => {
   console.log('history service detect change: ', location) // eslint-disable-line no-console
 
-  if (location === '/stacks' || location === '/members') {
-    return dispatch(updateMenuPath(location))
+  const prevMenu = getState().menu
+  if (isEmpty(prevMenu)) {
+    return dispatch(initMenu(location))
   }
-  return dispatch(initMenu(location))
+  return dispatch(updateMenuPath(location))
 }
 
 // public API
