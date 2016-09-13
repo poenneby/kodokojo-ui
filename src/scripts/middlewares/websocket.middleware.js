@@ -24,7 +24,8 @@ import { mapBrickEvent } from '../services/mapping.service'
 import { updateProject } from '../components/project/project.actions'
 import {
   successWebsocket,
-  failureWebsocket
+  failureWebsocket,
+  stopWebsocket
 } from '../components/_utils/websocket/websocket.actions'
 import {
   WEBSOCKET_REQUEST,
@@ -96,16 +97,24 @@ const websocketMiddleware = store => next => action => {
           console.log('wsError', socketEvent) // eslint-disable-line no-console
           store.dispatch(failureWebsocket(socketEvent))
         }
+
+        // register on close callback
+        ws.socket.onclose = (socketEvent) => {
+          console.log('wsClose', socketEvent) // eslint-disable-line no-console
+          if (ws.socketPing) {
+            store.dispatch(stopWebsocket())
+          }
+        }
       }
       return next(action)
     case WEBSOCKET_STOP:
-      if (ws.socket) {
-        ws.socket.close(1000, 'user <user> living')
-        delete ws.socket
-      }
       if (ws.socketPing) {
         clearInterval(ws.socketPing)
         delete ws.socketPing
+      }
+      if (ws.socket) {
+        ws.socket.close(1000, 'user <user> living')
+        delete ws.socket
       }
       return next(action)
     // TODO implement SEND_MESSAGE if needed
