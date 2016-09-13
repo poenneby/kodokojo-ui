@@ -21,7 +21,9 @@ This is the UI for Kodo Kojo project
 
 ## Contribute
 
-Please, read following [Contribution page](CONTRIBUTING.md).
+You want to contribute? You are very welcome!  
+Chat with us on Gitter.  
+Please read following [commit message policy](https://github.com/kodokojo/kodokojo-ui/blob/dev/COMMIT.md) and [contributing policy](https://github.com/kodokojo/kodokojo-ui/blob/dev/CONTRIBUTING.md).
 
 ## Prerequisite
 
@@ -39,29 +41,48 @@ The UI is tested on Firefox and Chrome
 | last version| last version
 <sub><sub>thanks to @godban for the badge generator</sup></sub>
 
-## Installation & build
+## Configuration
 
-### Development
+#### Development
 
-You have to set two environment variables.
+You have to set three environment variables.
+
+##### Local mode
 If you are running Kodo Kojo backend in **local mode**, set variables as follow:
 
-    NODE_ENV=development
-    BABEL_ENV=development
-    
+    $ export NODE_ENV=development
+    $ export BABEL_ENV=development
+        
+##### AWS cluster mode
 If you are running Kodo Kojo backend that reroute to **AWS cluster**, set variables as follow:  
 
-    NODE_ENV=development
-    BABEL_ENV=production
+    $ export NODE_ENV=development
+    $ export BABEL_ENV=production
 
+#### API configuration
 You can use `API_ENV` to use an external Kodo Kojo backend api dns.
 
-    API_ENV=kodokojo.mydomaine.com
+    $ export API_ENV=kodokojo.mydomaine.com
+    
+    
+## Installation
 
 First install npm packages, build development files into static/, start webpack dev server on localhost:3000.
 
     $ npm install
+    
+For Mac users with Docker Toolbox, setup DOCKER_HOST environment variable:
+
     $ eval $(docker-machine env default) // mount docker env variables
+    
+For Windows users, you may do something like (not sure of the command, please PR if is not correct):
+
+    > docker-machine env
+
+## Start
+
+#### Development
+
     $ npm run start:dev
     
 Then open ui project in browser.
@@ -69,9 +90,7 @@ Then open ui project in browser.
     $ open http://localhost:3000
 
 
-In any case, you will need to run Kodo Kojo backend to be able to test and develop locally, please [refers to proper documentation](https://github.com/kodokojo/kodokojo/blob/master/README.md) for explanation details.
-
-### Local "production"
+#### Local "production"
 
 *If you want to test production build*
 
@@ -80,7 +99,7 @@ Set environment variables to:
     NODE_ENV=development
     BABEL_ENV=production
 
-Install npm packages, build production files into static/, start webpack dev server on localhost:3000.
+Install npm packages, build production files into static/, start webpack dev server on localhost:3000:
 
     $ npm install
     $ npm run start:prod
@@ -90,7 +109,26 @@ Then open ui project in browser.
     $ open http://localhost:3000
 
 
-### Build production release
+#### Backend
+
+In any case, you will need to run Kodo Kojo backend to be able to test and develop locally
+
+##### Local cluster mode
+
+To start the cluster locally, you have to go to kodokojo/kodokojo folder and start docker-compose:
+
+    $ docker-compose -f src/test/resources/docker/full/docker-compose.yml up -d
+
+##### AWS cluster mode
+
+Then to start cluster located to an AWS, you have to go to kodokojo/kodokojo folder and start docker-compose (please be sure your docker-compose file is properly configured):
+
+    $ docker-compose -f src/test/resources/docker/aws/docker-compose.yml up -d
+
+Please [refers to proper documentation](https://github.com/kodokojo/kodokojo/blob/master/README.md) for explanation details.
+
+
+## Build production release
 
 Build production docker image of the front release.    
 Note: works on OSX and Linux. For Windows users you have to run the build.sh script manually.
@@ -100,7 +138,7 @@ Note: works on OSX and Linux. For Windows users you have to run the build.sh scr
 It build the project, then put static/ content into /delivery/target/kodokojo-ui-\<version>.tar.gz and finally build the docker image with Nginx server (kodokojo/kodokojo-ui).
     
     
-### Run styleguide
+## Run styleguide
 
 Build and run styleguide.
 
@@ -111,12 +149,12 @@ Then open your browser.
     $ open http://localhost:9001
     
 
-### Add license in source files headers
+## Add license in source files headers
 
     $ npm run license
 
 
-### Tests
+## Tests
 
 Run tests.
 
@@ -130,7 +168,5 @@ Run coverage.
 
     $ npm run coverage
     $ open ./coverage/lcov-report/index.html 
-
-
 
 :heart: Thanks to all Open source projects which made such project possible!
