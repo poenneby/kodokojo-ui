@@ -46,9 +46,9 @@ export class UserForm extends Component {
 
   static propTypes = {
     addUserToProjectConfig: PropTypes.func,
+    aggregatedStackStatus: PropTypes.object,
     fields: PropTypes.object.isRequired,
     formActive: PropTypes.bool.isRequired,
-    getAggregatedStackStatus: PropTypes.object,
     handleSubmit: PropTypes.func,
     intl: intlShape.isRequired,
     onToggleFormActive: PropTypes.func.isRequired,
@@ -104,24 +104,24 @@ export class UserForm extends Component {
   }
 
   render() {
-    const { fields: { email }, handleSubmit, submitting, formActive, getAggregatedStackStatus } = this.props // eslint-disable-line no-shadow
+    const { fields: { email }, handleSubmit, submitting, formActive, aggregatedStackStatus } = this.props // eslint-disable-line no-shadow
     const { formatMessage } = this.props.intl
 
     return (
       <div>
       { !formActive &&
         <div>
-          { getAggregatedStackStatus && getAggregatedStackStatus.label !== 'RUNNING' &&
+          { aggregatedStackStatus && aggregatedStackStatus.label !== 'RUNNING' &&
             <div className={ userTheme['message--info'] }>
               <Status
-                state={ getAggregatedStackStatus ? getAggregatedStackStatus.label : undefined }
+                state={ aggregatedStackStatus ? aggregatedStackStatus.label : undefined }
               />{ ' ' }
               <FormattedMessage id={'members-disabled-add-label'} />
             </div>
           }
           <Button
             accent
-            disabled={ submitting || getAggregatedStackStatus && getAggregatedStackStatus.label !== 'RUNNING' }
+            disabled={ submitting || aggregatedStackStatus && aggregatedStackStatus.label !== 'RUNNING' }
             icon="add_circle_outline"
             label={ formatMessage({ id: 'add-member-label' }) }
             onMouseUp={ this.handleToggleForm }
@@ -205,7 +205,7 @@ export class UserForm extends Component {
 const mapStateProps = (state, ownProps) => (
   {
     projectConfigId: state.projectConfig.id,
-    getAggregatedStackStatus: getAggregatedStackStatus(state)
+    aggregatedStackStatus: getAggregatedStackStatus(state)
   }
 )
 
