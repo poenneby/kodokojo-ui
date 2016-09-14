@@ -71,8 +71,8 @@ export class Signup extends Component {
     return createAccount(nextEmail.trim(), captcha.value)
       .then(Promise.resolve())
       .catch(err => {
-        if (err.message === '428') {
-          // if error code is 428, recaptcha challenge could be corrupted
+        // if error code is any 400 or 500, recaptcha must be reset
+        if (err.message && err.message.match(/^(4|5)\d{2}$/)) {
           resetCaptcha()
         }
         return Promise.reject({ email: returnErrorKey(
