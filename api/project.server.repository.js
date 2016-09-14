@@ -25,7 +25,7 @@ import endpoints from '../config/shared/api.endpoints'
 const projectRepository = {}
 
 projectRepository.postProjectConfig = (headers, name, ownerId, userIds) => {
-  logger.debug('postProjectConfig', config.api.routes.projectConfig)
+  logger.debug('postProjectConfig')
   return requestWithLog({
     method: 'POST',
     uri: `${config.api.host}${config.api.routes.projectConfig}`,
@@ -42,7 +42,7 @@ projectRepository.postProjectConfig = (headers, name, ownerId, userIds) => {
 }
 
 projectRepository.getProjectConfig = (headers, projectConfigId) => {
-  logger.debug('getProjectConfig', config.api.routes.projectConfig)
+  logger.debug('getProjectConfig')
   return requestWithLog({
     method: 'GET',
     uri: `${config.api.host}${config.api.routes.projectConfig}/${projectConfigId}`,
@@ -53,21 +53,21 @@ projectRepository.getProjectConfig = (headers, projectConfigId) => {
   })
 }
 
-projectRepository.putUserToProjectConfig = (headers, projectConfigId, users) => {
-  logger.debug('putUserToProjectConfig', config.api.routes.projectConfig)
+projectRepository.putUserToProjectConfig = (headers, projectConfigId, userList) => {
+  logger.debug('putUserToProjectConfig')
   return requestWithLog({
     method: 'PUT',
     uri: `${config.api.host}${config.api.routes.projectConfig}/${projectConfigId}${endpoints.projectConfigUser}`,
     json: true,
     headers,
-    body: users,
+    body: userList,
     rejectUnauthorized: false,
     requestCert: true
   })
 }
 
 projectRepository.postProject = (headers, projectConfigId) => {
-  logger.debug('postProject', config.api.routes.project)
+  logger.debug('postProject')
   return requestWithLog({
     method: 'POST',
     uri: `${config.api.host}${config.api.routes.project}/${projectConfigId}`,
@@ -79,7 +79,7 @@ projectRepository.postProject = (headers, projectConfigId) => {
 }
 
 projectRepository.getProject = (headers, projectId) => {
-  logger.debug('getProject', config.api.routes.project)
+  logger.debug('getProject')
   return requestWithLog({
     method: 'GET',
     uri: `${config.api.host}${config.api.routes.project}/${projectId}`,

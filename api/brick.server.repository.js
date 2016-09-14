@@ -24,7 +24,7 @@ import { requestWithLog } from './utils.server.service'
 const brickRepository = {}
 
 brickRepository.getBricks = (headers) => {
-  logger.debug('getBricks', config.api.routes.brick)
+  logger.debug('getBricks')
   return requestWithLog({
     method: 'GET',
     uri: `${config.api.host}${config.api.routes.brick}`,

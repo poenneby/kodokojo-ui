@@ -25,7 +25,7 @@ import { requestWithLog } from './utils.server.service'
 const userRepository = {}
 
 userRepository.initUser = () => {
-  logger.debug('initUser', config.api.routes.user)
+  logger.debug('initUser')
   return requestWithLog({
     method: 'POST',
     uri: `${config.api.host}${config.api.routes.user}`,
@@ -36,13 +36,7 @@ userRepository.initUser = () => {
 }
 
 userRepository.postUser = ({ id, email, entity, credentials, captcha }) => {
-  logger.debug(
-    'postUser', id,
-    'Email', email,
-    'Entity', entity,
-    'Authorization', credentials,
-    'g-recaptcha-response', captcha
-  )
+  logger.debug('postUser')
   let req = {
     method: 'POST',
     uri: `${config.api.host}${config.api.routes.user}/${id}`,
@@ -88,7 +82,7 @@ userRepository.postUser = ({ id, email, entity, credentials, captcha }) => {
 }
 
 userRepository.getUserAccount = (credentials) => {
-  logger.debug('getUserAccount', credentials)
+  logger.debug('getUserAccount')
   return requestWithLog({
     method: 'GET',
     uri: `${config.api.host}${config.api.routes.user}`,
@@ -102,7 +96,7 @@ userRepository.getUserAccount = (credentials) => {
 }
 
 userRepository.getUser = (credentials, userId) => {
-  logger.debug('getUserAccount', credentials)
+  logger.debug('getUserAccount')
   return requestWithLog({
     method: 'GET',
     uri: `${config.api.host}${config.api.routes.user}/${userId}`,
