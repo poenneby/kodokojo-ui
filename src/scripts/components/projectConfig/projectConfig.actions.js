@@ -23,6 +23,7 @@ import Promise from 'bluebird'
 import api from '../../commons/config'
 import { getHeaders } from '../../services/io.service'
 import { mapProjectConfig } from '../../services/mapping.service'
+import { logout } from '../login/login.actions'
 import { createUser, getUser } from '../user/user.actions'
 import { createProject, getProject } from '../project/project.actions'
 import { updateMenuProject } from '../menu/menu.actions'
@@ -75,6 +76,10 @@ export function getProjectConfig(projectConfigId) {
           return Promise.all(promises)
         }
         return Promise.resolve(data)
+      }
+      // TODO put this to error service?
+      if (data.error && data.payload.status && data.payload.status === 401) {
+        dispatch(logout())
       }
       throw new Error(data.payload.status)
     })
