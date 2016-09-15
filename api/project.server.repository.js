@@ -87,6 +87,26 @@ projectRepository.putUserToProjectConfig = (request) => {
   })
 }
 
+projectRepository.deleteUserFromProjectConfig = (request) => {
+  logger.debug('deleteUserFromProjectConfig')
+
+  const { headers, projectConfigId, userList } = {
+    headers: request.headers,
+    projectConfigId: request.params.projectConfigId,
+    userList: request.body
+  }
+
+  return requestWithLog({
+    method: 'DELETE',
+    uri: `${config.api.protocol}${config.api.host}${config.api.routes.projectConfig}/${projectConfigId}${endpoints.projectConfigUser}`,
+    json: true,
+    headers,
+    body: userList,
+    rejectUnauthorized: false,
+    requestCert: true
+  })
+}
+
 projectRepository.postProject = (request) => {
   logger.debug('postProject')
 
@@ -127,6 +147,7 @@ projectRepository.getProject = (request) => {
 export const postProjectConfig = projectRepository.postProjectConfig
 export const getProjectConfig = projectRepository.getProjectConfig
 export const putUserToProjectConfig = projectRepository.putUserToProjectConfig
+export const deleteUserFromProjectConfig = projectRepository.deleteUserFromProjectConfig
 export const postProject = projectRepository.postProject
 export const getProject = projectRepository.getProject
 

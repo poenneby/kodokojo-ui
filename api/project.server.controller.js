@@ -39,6 +39,13 @@ export const putUserToProjectConfig = (request, response) => {
     .catch((err, resp) => response.status(err.response && err.response.statusCode ? err.response.statusCode : 500).send(err))
 }
 
+export const deleteUserFromProjectConfig = (request, response) => {
+  projectRepository
+    .deleteUserFromProjectConfig(request)
+    .then(data => response.status(200).send(data))
+    .catch((err, resp) => response.status(err.response && err.response.statusCode ? err.response.statusCode : 500).send(err))
+}
+
 export const postProject = (request, response) => {
   projectRepository
     .postProject(request)
