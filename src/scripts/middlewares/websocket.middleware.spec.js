@@ -36,17 +36,21 @@ import {
 
 describe('websocket middleware', () => {
   describe('websocketInit', () => {
-    let apiConfSpy
+    let apiConfProtocolSpy
+    let apiConfHostSpy
     beforeEach(() => {
-      apiConfSpy = sinon.stub(apiConf.conf, 'getIp')
+      apiConfProtocolSpy = sinon.stub(apiConf, 'getProtocol')
+      apiConfHostSpy = sinon.stub(apiConf, 'getHost')
     })
     afterEach(() => {
-      apiConf.conf.getIp.restore()
+      apiConf.getProtocol.restore()
+      apiConf.getHost.restore()
     })
 
     it('should init websocket with localhost', () => {
       // Given
-      apiConfSpy.returns('')
+      apiConfProtocolSpy.returns('')
+      apiConfHostSpy.returns('')
 
       // When
       const websocketDefault = websocketInit()
@@ -57,12 +61,14 @@ describe('websocket middleware', () => {
         socketPing: undefined,
         uri: `ws://localhost${api.event}`
       })
-      expect(apiConfSpy).to.have.callCount(1)
+      expect(apiConfProtocolSpy).to.have.callCount(1)
+      expect(apiConfHostSpy).to.have.callCount(0)
     })
 
     it('should init websocket with dns from env', () => {
       // Given
-      apiConfSpy.returns('test')
+      apiConfProtocolSpy.returns('https://')
+      apiConfHostSpy.returns('test')
 
       // When
       const websocketEnv = websocketInit()
@@ -73,7 +79,8 @@ describe('websocket middleware', () => {
         socketPing: undefined,
         uri: `wss://test${api.event}`
       })
-      expect(apiConfSpy).to.have.callCount(2)
+      expect(apiConfProtocolSpy).to.have.callCount(2)
+      expect(apiConfHostSpy).to.have.callCount(2)
     })
   })
 
@@ -104,13 +111,13 @@ describe('websocket middleware', () => {
         dispatch(action)
         return dispatched
       }
-      sinon.stub(apiConf.conf, 'getIp').returns('')
+      sinon.stub(apiConf, 'getHost').returns('')
     })
 
     afterEach(() => {
       websocketMiddleware.__ResetDependency__('getWebSocket')
       websocketMiddleware.__ResetDependency__('websocket')
-      apiConf.conf.getIp.restore()
+      apiConf.getHost.restore()
     })
 
     it('should pass action if not websocket type', () => {

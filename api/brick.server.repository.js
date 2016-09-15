@@ -23,11 +23,16 @@ import { requestWithLog } from './utils.server.service'
 
 const brickRepository = {}
 
-brickRepository.getBricks = (headers) => {
+brickRepository.getBricks = (request) => {
   logger.debug('getBricks')
+
+  const { headers } = {
+    headers: request.headers
+  }
+
   return requestWithLog({
     method: 'GET',
-    uri: `${config.api.host}${config.api.routes.brick}`,
+    uri: `${config.api.protocol}${config.api.host}${config.api.routes.brick}`,
     json: true,
     headers,
     rejectUnauthorized: false,

@@ -18,10 +18,29 @@
 
 import merge from 'lodash/merge'
 
+import mockConfig from '../../mocks/config.json'
+
 /**
- * Load app configurations
+ * Set api host and protocol from env if provided
  */
-export default merge(
-  require('./env/all').default,
-  require(`./env/${process.env.NODE_ENV}`).default || {}
+let api = {}
+const apiPort = mockConfig.port
+
+if (apiPort) {
+  api = {
+    protocol: 'http://',
+    host: `localhost:${apiPort}`
+  }
+}
+const local = merge(
+  {
+    api
+  },
+  {
+    server: {
+      port: 3000
+    }
+  }
 )
+
+export default local

@@ -24,22 +24,32 @@ import { requestWithLog } from './utils.server.service'
 
 const userRepository = {}
 
-userRepository.initUser = () => {
+userRepository.initUser = (request) => {
   logger.debug('initUser')
+
   return requestWithLog({
     method: 'POST',
-    uri: `${config.api.host}${config.api.routes.user}`,
+    uri: `${config.api.protocol}${config.api.host}${config.api.routes.user}`,
     json: true,
     rejectUnauthorized: false,
     requestCert: true
   })
 }
 
-userRepository.postUser = ({ id, email, entity, credentials, captcha }) => {
+userRepository.postUser = (request) => {
   logger.debug('postUser')
+
+  const { id, email, entity, credentials, captcha } = {
+    id: request.params.id,
+    email: request.body.email,
+    entity: request.body.entity,
+    credentials: request.headers.authorization,
+    captcha: request.headers['g-recaptcha-response']
+  }
+
   let req = {
     method: 'POST',
-    uri: `${config.api.host}${config.api.routes.user}/${id}`,
+    uri: `${config.api.protocol}${config.api.host}${config.api.routes.user}/${id}`,
     json: true,
     body: {
       email,
@@ -81,25 +91,36 @@ userRepository.postUser = ({ id, email, entity, credentials, captcha }) => {
   return requestWithLog(req)
 }
 
-userRepository.getUserAccount = (credentials) => {
+userRepository.getUserAccount = (request) => {
   logger.debug('getUserAccount')
+
+  const { credentials } = {
+    credentials: `${request.headers.authorization}`
+  }
+
   return requestWithLog({
     method: 'GET',
-    uri: `${config.api.host}${config.api.routes.user}`,
+    uri: `${config.api.protocol}${config.api.host}${config.api.routes.user}`,
     json: true,
     headers: {
-      Authorization: `${credentials}`
+      Authorization: credentials
     },
     rejectUnauthorized: false,
     requestCert: true
   })
 }
 
-userRepository.getUser = (credentials, userId) => {
+userRepository.getUser = (request) => {
   logger.debug('getUserAccount')
+
+  const { credentials, userId } = {
+    credentials: request.headers.authorization,
+    userId: request.params.userId
+  }
+
   return requestWithLog({
     method: 'GET',
-    uri: `${config.api.host}${config.api.routes.user}/${userId}`,
+    uri: `${config.api.protocol}${config.api.host}${config.api.routes.user}/${userId}`,
     headers: {
       Authorization: `${credentials}`
     },

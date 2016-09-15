@@ -1,4 +1,3 @@
-
 # Kodo Kojo UI
 
 This is the UI for Kodo Kojo project 
@@ -45,41 +44,24 @@ The UI is tested on Firefox and Chrome
 
 #### Development
 
-You have to set three environment variables.
+You have to set some environment variables.  
+For Mac users with Docker Toolbox, setup DOCKER_HOST environment variable:
 
-##### Local mode
-If you are running Kodo Kojo backend in **local mode**, set variables as follow:
+    $ eval $(docker-machine env default) // mount docker env variables
+    
+For Windows users, you may do something like (not sure of the command, please PR if it is not correct):
 
-    $ export NODE_ENV=development
-    $ export BABEL_ENV=development
-        
-##### AWS cluster mode
-If you are running Kodo Kojo backend that reroute to **AWS cluster**, set variables as follow:  
-
-    $ export NODE_ENV=development
-    $ export BABEL_ENV=production
-
-#### API configuration
-You can use `API_ENV` to use an external Kodo Kojo backend api dns.
-
-    $ export API_ENV=kodokojo.mydomaine.com
+    > docker-machine env
     
     
 ## Installation
 
 First install npm packages, build development files into static/, start webpack dev server on localhost:3000.
 
-    $ npm install
-    
-For Mac users with Docker Toolbox, setup DOCKER_HOST environment variable:
+    $ NODE_ENV=development npm install
 
-    $ eval $(docker-machine env default) // mount docker env variables
-    
-For Windows users, you may do something like (not sure of the command, please PR if is not correct):
 
-    > docker-machine env
-
-## Start
+## Start Frontend
 
 #### Development
 
@@ -94,14 +76,6 @@ Then open ui project in browser.
 
 *If you want to test production build*
 
-Set environment variables to:  
-
-    NODE_ENV=development
-    BABEL_ENV=production
-
-Install npm packages, build production files into static/, start webpack dev server on localhost:3000:
-
-    $ npm install
     $ npm run start:prod
     
 Then open ui project in browser.
@@ -109,9 +83,38 @@ Then open ui project in browser.
     $ open http://localhost:3000
 
 
-#### Backend
+#### Custom remote API configuration
 
-In any case, you will need to run Kodo Kojo backend to be able to test and develop locally
+You can use `API_PROTOCOL_ENV` and `API_HOST_ENV` to use an external Kodo Kojo backend api dns.
+
+    $ export API_PROTOCOL_ENV=https://
+    $ export API_HOST_ENV=kodokojo.mydomaine.com
+    $ npm run start:custom
+
+Then open ui project in browser.
+
+    $ open http://localhost:3000
+    
+#### Mocked API
+
+To connect the frontend to mocked backend (just HTTP, not websocket for now). We use [kodokojo-mocks](https://github.com/kodokojo/kodokojo-mocks) for this. Configurations are in `mocks/` folder.
+
+First start mock server in a terminal:
+    
+    $ npm run start:server:mock
+    
+Then start kodokojo-uiin an other terminal:
+
+    $ npm run start:mock
+
+Finally, open ui project in browser.
+
+    $ open http://localhost:3000
+    
+
+### Start Backend
+
+Except with custom and mock configurations, you will need to run Kodo Kojo backend to be able to test and develop locally.
 
 ##### Local cluster mode
 

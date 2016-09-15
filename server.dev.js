@@ -81,7 +81,7 @@ if (config.api.error) {
       logger.error(err)
     } else {
       logger.info(`==> 🌍  Listening at http://${host}:${port}`)
-      logger.info(`<== 👾  API is rooted to ${config.api.host}`)
+      logger.info(`<== 👾  API is routed to ${config.api.protocol}${config.api.host}`)
     }
   })
 }
