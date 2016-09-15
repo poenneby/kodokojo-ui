@@ -16,14 +16,31 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-// TODO document this use case or delete
-const local = {
-  api: {
-    host: 'http://192.168.99.100:9080'
-  },
-  server: {
-    port: 3000
+import merge from 'lodash/merge'
+
+/**
+ * Set api host and protocl from env if provided
+ */
+let api = {}
+let localApiProtocol
+let localApiHost
+
+if (process.env.API_PROTOCOL_ENV && process.env.API_HOST_ENV) {
+  localApiProtocol = process.env.API_PROTOCOL_ENV
+  localApiHost = process.env.API_HOST_ENV
+  api = {
+    protocol: localApiProtocol || 'http://',
+    host: localApiHost || '192.168.99.100'
   }
 }
+
+const local = merge(
+  api,
+  {
+    server: {
+      port: 3000
+    }
+  }
+)
 
 export default local

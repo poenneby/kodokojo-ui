@@ -19,25 +19,24 @@
 import api from '../shared/api.endpoints'
 
 /**
- * Set docker host
+ * Set docker host to route api io
  */
+let localApiProtocol
 let localApiHost
+const dockerHost = process.env.DOCKER_HOST
 
-if (process.env.API_ENV) {
-  localApiHost = `https://${process.env.API_ENV}`
+if (dockerHost && dockerHost.match(/^tcp:\/\//)) {
+  localApiProtocol = 'http://'
+  localApiHost = `${dockerHost.match(/^tcp:\/\/([\d|.]*):\d*/)[1]}:9080`
 } else {
-  const dockerHost = process.env.DOCKER_HOST
-
-  if (dockerHost && dockerHost.match(/^tcp:\/\//)) {
-    localApiHost = `http://${dockerHost.match(/^tcp:\/\/([\d|.]*):\d*/)[1]}`
-  } else {
-    localApiHost = 'http://localhost'
-  }
+  localApiProtocol = 'http://'
+  localApiHost = 'localhost'
 }
 
 // TODO set protocol into parameter to serve https or http or ws
 const all = {
   api: {
+    protocol: localApiProtocol,
     host: localApiHost,
     routes: {
       brick: `${api.brick}`,

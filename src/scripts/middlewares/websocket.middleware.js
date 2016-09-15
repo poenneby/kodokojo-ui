@@ -35,21 +35,21 @@ import {
 // TODO let the dev backend reroute ws calls through express server
 
 export const websocketInit = () => {
-  let apiUrl
-  const apiProtocol = `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//`
+  let apiProtocol
+  let apiHost
 
-  if (apiConf.conf.getIp()) {
-    apiUrl = `wss://${apiConf.conf.getIp()}`
-  } else if (window.location.host === 'localhost:3000') {
-    apiUrl = `${apiProtocol}192.168.99.100:9080`
+  if (apiConf.getProtocol() && apiConf.getHost()) {
+    apiProtocol = `${apiConf.getProtocol() === 'https://' ? 'wss:' : 'ws:'}//`
+    apiHost = apiConf.getHost()
   } else {
-    apiUrl = `${apiProtocol}${window.location.host}`
+    apiProtocol = `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//`
+    apiHost = `${window.location.host}`
   }
 
   return {
     socket: undefined,
     socketPing: undefined,
-    uri: `${apiUrl}${api.event}`
+    uri: `${apiProtocol}${apiHost}${api.event}`
   }
 }
 

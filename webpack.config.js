@@ -31,8 +31,14 @@ var TARGET = process.env.npm_lifecycle_event || process.env.NODE_ENV
 switch (TARGET) {
   default:
   case 'development':
+  case 'custom':
+  case 'mock':
   case 'build:dev':
   case 'start:dev':
+  case 'build:custom':
+  case 'start:custom':
+  case 'build:mock':
+  case 'start:mock':
     module.exports = validate(merge.smart(configCommon, configDev))
     break
   case 'production':

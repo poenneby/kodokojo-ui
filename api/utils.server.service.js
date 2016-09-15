@@ -40,3 +40,5 @@ export const requestWithLog = (options) => {
       throw error
     })
 }
+
+export const getRequestProtocol = (req) => `${req.protocol}://`

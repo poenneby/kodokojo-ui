@@ -21,6 +21,7 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 import classNames from 'classnames'
+import map from 'lodash/map'
 
 // Component
 import '../../styles/_commons.less'
@@ -31,33 +32,51 @@ import Paragraph from '../components/_ui/page/Paragraph.component'
 import Action from '../components/_ui/page/Action.component'
 import User from '../components/user/User.component'
 import UserForm from '../components/user/UserForm.component'
+import Button from '../components/_ui/button/Button.component'
+import Dialog from '../components/_ui/dialog/Dialog.component'
 import { setNavVisibility } from '../components/app/app.actions'
-import { getProjectConfig } from '../components/projectConfig/projectConfig.actions'
+import {
+  getProjectConfigAndProject,
+  getProjectConfig,
+  deleteUsersFromProjectConfig
+} from '../components/projectConfig/projectConfig.actions'
+import { getAggregatedStackStatus } from '../commons/reducers'
 
+// TODO TU
 // MembersPage component
 export class MembersPage extends Component {
 
   static propTypes = {
     addUserToProjectConfig: PropTypes.func,
+    aggregatedStackStatus: PropTypes.object,
+    deleteUsersFromProjectConfig: PropTypes.func.isRequired,
     getProjectConfig: PropTypes.func,
+    getProjectConfigAndProject: PropTypes.func,
     intl: intlShape.isRequired,
     members: PropTypes.array,
     projectConfigId: PropTypes.string,
+    projectId: PropTypes.string,
     setNavVisibility: PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props)
-    this.state = { isFormActive: false }
+    this.state = {
+      isFormActive: false,
+      isConfirmActive: false,
+      memberList: {}
+    }
   }
 
   componentWillMount() {
-    const { getProjectConfig, members, projectConfigId } = this.props // eslint-disable-line no-shadow
+    const { getProjectConfig, getProjectConfigAndProject, members, projectConfigId, projectId } = this.props // eslint-disable-line no-shadow
 
     this.initNav()
 
-    if (!members && projectConfigId) {
+    if (!members && projectConfigId && !projectId) {
       getProjectConfig(projectConfigId)
+    } else if (!members && projectConfigId && projectId) {
+      getProjectConfigAndProject(projectConfigId, projectId)
     } else if (!projectConfigId) {
       // TODO no projectConfigId case
     }
@@ -73,12 +92,63 @@ export class MembersPage extends Component {
     // NB this method triggers false react setState warnings on dev mode due to webpack dev server
     // but fortunately, this warnings are not thrown in production mode
     this.setState({
+      ...this.state,
       isFormActive: !this.state.isFormActive
     })
   }
 
+  handleToggleSelectUser = (userState) => {
+    // merge existing members with checked or unchecked one from user component
+    this.setState({
+      ...this.state,
+      memberList: {
+        ...this.state.memberList,
+        ...userState
+      }
+    })
+  }
+
+  handleOpenConfirm = () => {
+    this.setState({
+      ...this.state,
+      isConfirmActive: true
+    })
+  }
+
+
+  handleCancelDelete = () => {
+    this.setState({
+      ...this.state,
+      isConfirmActive: false
+    })
+  }
+
+  handleConfirmDelete = () => {
+    const { deleteUsersFromProjectConfig, projectConfigId } = this.props // eslint-disable-line no-shadow
+    const membersToDelete = map(this.state.memberList, (user, key) => {
+      if (user.checked) {
+        return key
+      }
+      return null
+    }).filter((item) => item !== null)
+    deleteUsersFromProjectConfig(projectConfigId, membersToDelete)
+      .then(data => {
+        this.setState({
+          isFormActive: false,
+          isConfirmActive: false,
+          memberList: {}
+        })
+      })
+      .catch(error => {
+        // TODO ad ui toaster to prompt errors
+        console.log(error)
+      })
+  }
+
   render() {
-    const { members } = this.props
+    const { aggregatedStackStatus, members } = this.props // eslint-disable-line no-shadow
+    const { formatMessage } = this.props.intl
+
     const userClasses = classNames(userTheme.user, userTheme['user-header'])
 
     return (
@@ -108,15 +178,41 @@ export class MembersPage extends Component {
             <div className={ userTheme['user-email'] }>
               <FormattedMessage id={'email-label'} />
             </div>
+            <div className={ userTheme['user-delete'] }>
+              <FormattedMessage id={'delete-label'} />
+            </div>
           </div>
-          { members && members.length &&
+          { members && members.length > 0 &&
             members.map((userId, index) => (
               <User
+                // isSelectable={ aggregatedStackStatus && aggregatedStackStatus.label !== 'RUNNING' }
                 key={ index }
+                onUserSelect={ this.handleToggleSelectUser }
                 userId={ userId }
               />
             ))
           }
+          <Action
+            type="right"
+          >
+            <Button
+              // disabled={ aggregatedStackStatus && aggregatedStackStatus.label !== 'RUNNING' }
+              label={ formatMessage({ id: 'delete-action-label' })}
+              onClick={ this.handleOpenConfirm }
+            />
+          </Action>
+          <Dialog
+            actions={[
+              { label: formatMessage({ id: 'cancel-label' }), onClick: this.handleCancelDelete },
+              { label: formatMessage({ id: 'confirm-label' }), onClick: this.handleConfirmDelete }
+            ]}
+            active={ this.state.isConfirmActive }
+            onEscKeyDown={ this.handleCancelDelete }
+            onOverlayClick={ this.handleCancelDelete }
+            title={ formatMessage({ id: 'member-delete-label' }) }
+          >
+            <FormattedMessage id={ 'member-delete-confirm' } />
+          </Dialog>
         </Paragraph>
       </Page>
     )
@@ -127,7 +223,9 @@ export class MembersPage extends Component {
 const mapStateProps = (state) => (
   {
     projectConfigId: state.projectConfig.id,
-    members: state.projectConfig.users
+    projectId: state.projectConfig && state.projectConfig.project ? state.projectConfig.project.id : '',
+    members: state.projectConfig.users,
+    aggregatedStackStatus: getAggregatedStackStatus(state)
   }
 )
 
@@ -135,7 +233,9 @@ const MembersPageContainer = compose(
   connect(
     mapStateProps,
     {
+      deleteUsersFromProjectConfig,
       getProjectConfig,
+      getProjectConfigAndProject,
       setNavVisibility
     }
   ),

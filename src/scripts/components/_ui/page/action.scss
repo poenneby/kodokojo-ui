@@ -18,13 +18,29 @@
 
 @import '../../../../styles/meta';
 
-.action {
+%action {
   margin-bottom: $spacing-large;
-  text-align: left;
   button {
     margin-top: 10px;
+  }
+}
+
+.action--left {
+  @extend %action;
+  text-align: left;
+  button {
     &:not(:first-of-type) {
       margin-left: 10px;
+    }
+  }
+}
+
+.action--right {
+  @extend %action;
+  text-align: right;
+  button {
+    &:not(:last-of-type) {
+      margin-right: 10px;
     }
   }
 }

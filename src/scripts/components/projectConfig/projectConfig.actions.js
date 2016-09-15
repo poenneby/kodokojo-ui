@@ -23,6 +23,7 @@ import Promise from 'bluebird'
 import api from '../../commons/config'
 import { getHeaders } from '../../services/io.service'
 import { mapProjectConfig } from '../../services/mapping.service'
+import { logout } from '../login/login.actions'
 import { createUser, getUser } from '../user/user.actions'
 import { createProject, getProject } from '../project/project.actions'
 import { updateMenuProject } from '../menu/menu.actions'
@@ -35,7 +36,10 @@ import {
   PROJECT_CONFIG_NEW_FAILURE,
   PROJECT_CONFIG_ADD_USER_REQUEST,
   PROJECT_CONFIG_ADD_USER_SUCCESS,
-  PROJECT_CONFIG_ADD_USER_FAILURE
+  PROJECT_CONFIG_ADD_USER_FAILURE,
+  PROJECT_CONFIG_DELETE_USERS_REQUEST,
+  PROJECT_CONFIG_DELETE_USERS_SUCCESS,
+  PROJECT_CONFIG_DELETE_USERS_FAILURE
 } from '../../commons/constants'
 
 export function fetchProjectConfig(projectConfigId) {
@@ -75,6 +79,10 @@ export function getProjectConfig(projectConfigId) {
           return Promise.all(promises)
         }
         return Promise.resolve(data)
+      }
+      // TODO put this to error service?
+      if (data.error && data.payload.status && data.payload.status === 401) {
+        dispatch(logout())
       }
       throw new Error(data.payload.status)
     })
@@ -207,4 +215,40 @@ export function addUserToProjectConfig(projectConfigId, email) {
     .catch(error => {
       throw new Error(error.message || error)
     })
+}
+
+export function requestDeleteMembers(projectConfigId, userIdList) {
+  return {
+    [CALL_API]: {
+      method: 'DELETE',
+      endpoint:
+      `${window.location.protocol || 'http:'}//` +
+      `${window.location.host || 'localhost'}${api.projectConfig}/${projectConfigId}${api.projectConfigUser}`,
+      headers: getHeaders(),
+      body: JSON.stringify(userIdList),
+      types: [
+        PROJECT_CONFIG_DELETE_USERS_REQUEST,
+        {
+          type: PROJECT_CONFIG_DELETE_USERS_SUCCESS,
+          payload: {
+            usersToDelete: userIdList
+          }
+        },
+        PROJECT_CONFIG_DELETE_USERS_FAILURE
+      ]
+
+      // schema: user
+    }
+  }
+}
+
+export function deleteUsersFromProjectConfig(projectConfigId, userIdList) {
+  return dispatch => dispatch(requestDeleteMembers(projectConfigId, userIdList))
+    .then(data => {
+      if (!data.error) {
+        return Promise.resolve()
+      }
+      throw new Error(data.payload.status)
+    })
+    .catch(error => Promise.reject(error.message || error))
 }

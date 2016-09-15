@@ -37,6 +37,8 @@ router.post(`${config.api.routes.projectConfig}/`, project.postProjectConfig)
 
 router.put(`${config.api.routes.projectConfig}/:projectConfigId${endpoints.projectConfigUser}`, project.putUserToProjectConfig)
 
+router.delete(`${config.api.routes.projectConfig}/:projectConfigId${endpoints.projectConfigUser}`, project.deleteUserFromProjectConfig)
+
 router.get(`${config.api.routes.projectConfig}/:projectConfigId`, project.getProjectConfig)
 
 router.post(`${config.api.routes.project}/:projectConfigId`, project.postProject)

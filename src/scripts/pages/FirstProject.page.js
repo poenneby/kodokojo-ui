@@ -84,7 +84,7 @@ export class FirstProjectPage extends Component {
         <div style={{ display: 'flex', flexFlow: 'row wrap', marginBottom: '10px' }}>
           <Dialog
             actions={[
-              { label: 'Close', onClick: this.handleClose }
+              { label: formatMessage({ id: 'close-label' }), onClick: this.handleClose }
             ]}
             active={ this.state.isAccountActive }
             onEscKeyDown={ this.handleClose }

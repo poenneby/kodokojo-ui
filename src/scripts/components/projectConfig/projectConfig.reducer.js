@@ -19,7 +19,7 @@
 import merge from 'lodash/merge'
 
 import storageService from '../../services/storage.service'
-import { updateBricks, updateAggregatedStackStatus } from '../../services/stateUpdater.service'
+import { updateBricks, updateAggregatedStackStatus, removeUsers } from '../../services/stateUpdater.service'
 import {
   AUTH_RESET,
   PROJECT_CONFIG_REQUEST,
@@ -31,6 +31,9 @@ import {
   PROJECT_CONFIG_ADD_USER_REQUEST,
   PROJECT_CONFIG_ADD_USER_SUCCESS,
   PROJECT_CONFIG_ADD_USER_FAILURE,
+  PROJECT_CONFIG_DELETE_USERS_REQUEST,
+  PROJECT_CONFIG_DELETE_USERS_SUCCESS,
+  PROJECT_CONFIG_DELETE_USERS_FAILURE,
   PROJECT_SUCCESS,
   PROJECT_UPDATE
 } from '../../commons/constants'
@@ -102,9 +105,38 @@ export default function projectConfig(state = projectConfigReducerInit(), action
     }
   }
 
+  if (action.type === PROJECT_CONFIG_DELETE_USERS_REQUEST) {
+    return {
+      ...state,
+      isFetching: true
+    }
+  }
+
+  if (action.type === PROJECT_CONFIG_DELETE_USERS_SUCCESS) {
+    let users
+    if (state && state.users) {
+      users = removeUsers(state.users, action.payload.usersToDelete)
+    }
+    return {
+      ...state,
+      users,
+      isFetching: false
+    }
+  }
+
+  if (action.type === PROJECT_CONFIG_DELETE_USERS_FAILURE) {
+    // TODO
+    return {
+      ...state,
+      isFetching: false
+    }
+  }
+
   if (action.type === PROJECT_SUCCESS) {
-    const bricks = updateBricks(state.stacks[0].bricks, action.payload.project.stacks[0].bricks)
-    const aggregatedStackStatus = updateAggregatedStackStatus(bricks)
+    let bricks
+    if (action.payload.project && action.payload.project.stacks && action.payload.project.stacks[0] && action.payload.project.stacks[0].bricks) {
+      bricks = updateBricks(state.stacks[0].bricks, action.payload.project.stacks[0].bricks)
+    }
     return merge(
       {},
       state,
@@ -115,7 +147,6 @@ export default function projectConfig(state = projectConfigReducerInit(), action
         },
         stacks: [
           {
-            aggregatedStackStatus,
             bricks
           }
         ],
@@ -126,14 +157,12 @@ export default function projectConfig(state = projectConfigReducerInit(), action
 
   if (action.type === PROJECT_UPDATE && action.payload.brick.type !== 'LOADBALANCER') {
     const bricks = updateBricks(state.stacks[0].bricks, [action.payload.brick])
-    const aggregatedStackStatus = updateAggregatedStackStatus(bricks)
     return merge(
       {},
       state,
       {
         stacks: [
           {
-            aggregatedStackStatus,
             bricks
           }
         ],
@@ -161,8 +190,8 @@ export default function projectConfig(state = projectConfigReducerInit(), action
 }
 
 export const getAggregatedStackStatus = (state) => {
-  if (state && state.stacks && state.stacks[0]) {
-    return state.stacks[0].aggregatedStackStatus
+  if (state && state.stacks && state.stacks[0] && state.stacks[0].bricks) {
+    return updateAggregatedStackStatus(state.stacks[0].bricks)
   }
   return {}
 }

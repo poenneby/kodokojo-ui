@@ -24,11 +24,19 @@ import endpoints from '../config/shared/api.endpoints'
 
 const projectRepository = {}
 
-projectRepository.postProjectConfig = (headers, name, ownerId, userIds) => {
-  logger.debug('postProjectConfig', config.api.routes.projectConfig)
+projectRepository.postProjectConfig = (request) => {
+  logger.debug('postProjectConfig')
+
+  const { headers, name, ownerId, userIds } = {
+    headers: request.headers,
+    name: request.body.name,
+    ownerId: request.body.ownerIdentifier,
+    userIds: request.body.userIdentifiers
+  }
+
   return requestWithLog({
     method: 'POST',
-    uri: `${config.api.host}${config.api.routes.projectConfig}`,
+    uri: `${config.api.protocol}${config.api.host}${config.api.routes.projectConfig}`,
     json: true,
     headers,
     body: {
@@ -41,11 +49,17 @@ projectRepository.postProjectConfig = (headers, name, ownerId, userIds) => {
   })
 }
 
-projectRepository.getProjectConfig = (headers, projectConfigId) => {
-  logger.debug('getProjectConfig', config.api.routes.projectConfig)
+projectRepository.getProjectConfig = (request) => {
+  logger.debug('getProjectConfig')
+
+  const { headers, projectConfigId } = {
+    headers: request.headers,
+    projectConfigId: request.params.projectConfigId
+  }
+
   return requestWithLog({
     method: 'GET',
-    uri: `${config.api.host}${config.api.routes.projectConfig}/${projectConfigId}`,
+    uri: `${config.api.protocol}${config.api.host}${config.api.routes.projectConfig}/${projectConfigId}`,
     json: true,
     headers,
     rejectUnauthorized: false,
@@ -53,24 +67,57 @@ projectRepository.getProjectConfig = (headers, projectConfigId) => {
   })
 }
 
-projectRepository.putUserToProjectConfig = (headers, projectConfigId, users) => {
-  logger.debug('putUserToProjectConfig', config.api.routes.projectConfig)
+projectRepository.putUserToProjectConfig = (request) => {
+  logger.debug('putUserToProjectConfig')
+
+  const { headers, projectConfigId, userList } = {
+    headers: request.headers,
+    projectConfigId: request.params.projectConfigId,
+    userList: request.body
+  }
+
   return requestWithLog({
     method: 'PUT',
-    uri: `${config.api.host}${config.api.routes.projectConfig}/${projectConfigId}${endpoints.projectConfigUser}`,
+    uri: `${config.api.protocol}${config.api.host}${config.api.routes.projectConfig}/${projectConfigId}${endpoints.projectConfigUser}`,
     json: true,
     headers,
-    body: users,
+    body: userList,
     rejectUnauthorized: false,
     requestCert: true
   })
 }
 
-projectRepository.postProject = (headers, projectConfigId) => {
-  logger.debug('postProject', config.api.routes.project)
+projectRepository.deleteUserFromProjectConfig = (request) => {
+  logger.debug('deleteUserFromProjectConfig')
+
+  const { headers, projectConfigId, userList } = {
+    headers: request.headers,
+    projectConfigId: request.params.projectConfigId,
+    userList: request.body
+  }
+
+  return requestWithLog({
+    method: 'DELETE',
+    uri: `${config.api.protocol}${config.api.host}${config.api.routes.projectConfig}/${projectConfigId}${endpoints.projectConfigUser}`,
+    json: true,
+    headers,
+    body: userList,
+    rejectUnauthorized: false,
+    requestCert: true
+  })
+}
+
+projectRepository.postProject = (request) => {
+  logger.debug('postProject')
+
+  const { headers, projectConfigId } = {
+    headers: request.headers,
+    projectConfigId: request.params.projectConfigId
+  }
+
   return requestWithLog({
     method: 'POST',
-    uri: `${config.api.host}${config.api.routes.project}/${projectConfigId}`,
+    uri: `${config.api.protocol}${config.api.host}${config.api.routes.project}/${projectConfigId}`,
     json: true,
     headers,
     rejectUnauthorized: false,
@@ -78,11 +125,17 @@ projectRepository.postProject = (headers, projectConfigId) => {
   })
 }
 
-projectRepository.getProject = (headers, projectId) => {
-  logger.debug('getProject', config.api.routes.project)
+projectRepository.getProject = (request) => {
+  logger.debug('getProject')
+
+  const { headers, projectId } = {
+    headers: request.headers,
+    projectId: request.params.projectId
+  }
+
   return requestWithLog({
     method: 'GET',
-    uri: `${config.api.host}${config.api.routes.project}/${projectId}`,
+    uri: `${config.api.protocol}${config.api.host}${config.api.routes.project}/${projectId}`,
     json: true,
     headers,
     rejectUnauthorized: false,
@@ -94,6 +147,7 @@ projectRepository.getProject = (headers, projectId) => {
 export const postProjectConfig = projectRepository.postProjectConfig
 export const getProjectConfig = projectRepository.getProjectConfig
 export const putUserToProjectConfig = projectRepository.putUserToProjectConfig
+export const deleteUserFromProjectConfig = projectRepository.deleteUserFromProjectConfig
 export const postProject = projectRepository.postProject
 export const getProject = projectRepository.getProject
 
