@@ -18,6 +18,7 @@
 
 import cloneDeep from 'lodash/cloneDeep'
 import findIndex from 'lodash/findIndex'
+import difference from 'lodash/difference'
 
 import { getStatusByState, getStatusByOrder } from './param.service'
 
@@ -50,7 +51,7 @@ export const updateBricks = (prevBricks, bricks) => {
  * @returns {Object} status
  */
 export const updateAggregatedStackStatus = (bricks) => {
-  if (bricks.length) {
+  if (bricks.length > 0) {
     const stateOrder = bricks.reduce((previous, brick) => {
       const previousStateOrder = previous.state ? getStatusByState(previous.state).order : previous
       const currentStateOrder = getStatusByState(brick.state).order
@@ -60,4 +61,20 @@ export const updateAggregatedStackStatus = (bricks) => {
     return getStatusByOrder(stateOrder)
   }
   return getStatusByState('DEFAULT')
+}
+
+// TODO TU
+/**
+ * Return new array without users to delete
+ *
+ * @param {Array} prevUsers
+ * @param {Array} usersToDelete
+ * @returns {Array} users
+ */
+export const removeUsers = (prevUsers, usersToDelete) => {
+  if (usersToDelete.length > 0) {
+    const nextUsers = cloneDeep(prevUsers)
+    return difference(nextUsers, usersToDelete)
+  }
+  return prevUsers
 }

@@ -33,6 +33,18 @@ import Checkbox from '../_ui/checkbox/Checkbox.component'
 // User component
 export class User extends Component {
 
+  static propTypes = {
+    isSelectable: PropTypes.bool,
+    onUserSelect: PropTypes.func.isRequired,
+    theme: PropTypes.object,
+    user: PropTypes.object,
+    userId: PropTypes.string
+  }
+
+  static defaultProps = {
+    isSelectable: true
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -40,22 +52,16 @@ export class User extends Component {
     }
   }
 
-  static propTypes = {
-    onSelected: PropTypes.func.isRequired,
-    theme: PropTypes.object,
-    user: PropTypes.object
-  }
-
   selectUser = () => {
-    const { userId, onSelected } = this.props
+    const { userId, onUserSelect } = this.props // eslint-disable-line no-shadow
     this.setState({ checked: !this.state.checked })
-    onSelected({
-      [userId]: { checked: this.state.checked }
+    onUserSelect({
+      [userId]: { checked: !this.state.checked }
     })
   }
 
   render() {
-    const { user, theme, onSelected } = this.props // eslint-disable-line no-shadow
+    const { isSelectable, user, theme } = this.props // eslint-disable-line no-shadow
     const userClasses = classNames(theme.user, theme['user-item'])
 
     return (
@@ -84,9 +90,10 @@ export class User extends Component {
         <div className={ theme['user-email'] }>
           { user ? user.email : '-' }
         </div>
-        <div className={ theme['user-selected'] }>
+        <div className={ theme['user-select'] }>
           <Checkbox
             checked={ this.state.checked }
+            disabled={ !isSelectable }
             onChange={ this.selectUser }
           />
         </div>

@@ -156,6 +156,5 @@ export function getUser(userId) {
       }
       throw new Error(data.payload.status)
     })
-    .catch(error => Promise.reject(error.message))
+    .catch(error => Promise.reject(error.message || error))
 }
-

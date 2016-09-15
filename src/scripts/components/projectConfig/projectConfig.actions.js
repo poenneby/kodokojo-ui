@@ -36,7 +36,10 @@ import {
   PROJECT_CONFIG_NEW_FAILURE,
   PROJECT_CONFIG_ADD_USER_REQUEST,
   PROJECT_CONFIG_ADD_USER_SUCCESS,
-  PROJECT_CONFIG_ADD_USER_FAILURE
+  PROJECT_CONFIG_ADD_USER_FAILURE,
+  PROJECT_CONFIG_DELETE_USERS_REQUEST,
+  PROJECT_CONFIG_DELETE_USERS_SUCCESS,
+  PROJECT_CONFIG_DELETE_USERS_FAILURE
 } from '../../commons/constants'
 
 export function fetchProjectConfig(projectConfigId) {
@@ -212,4 +215,40 @@ export function addUserToProjectConfig(projectConfigId, email) {
     .catch(error => {
       throw new Error(error.message || error)
     })
+}
+
+export function requestDeleteMembers(projectConfigId, userIdList) {
+  return {
+    [CALL_API]: {
+      method: 'DELETE',
+      endpoint:
+      `${window.location.protocol || 'http:'}//` +
+      `${window.location.host || 'localhost'}${api.projectConfig}/${projectConfigId}${api.projectConfigUser}`,
+      headers: getHeaders(),
+      body: JSON.stringify(userIdList),
+      types: [
+        PROJECT_CONFIG_DELETE_USERS_REQUEST,
+        {
+          type: PROJECT_CONFIG_DELETE_USERS_SUCCESS,
+          payload: {
+            usersToDelete: userIdList
+          }
+        },
+        PROJECT_CONFIG_DELETE_USERS_FAILURE
+      ]
+
+      // schema: user
+    }
+  }
+}
+
+export function deleteUsersFromProjectConfig(projectConfigId, userIdList) {
+  return dispatch => dispatch(requestDeleteMembers(projectConfigId, userIdList))
+    .then(data => {
+      if (!data.error) {
+        return Promise.resolve()
+      }
+      throw new Error(data.payload.status)
+    })
+    .catch(error => Promise.reject(error.message || error))
 }

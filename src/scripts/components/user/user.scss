@@ -100,8 +100,9 @@
 
 $user-flex: 1 1 35%;
 $username-flex: 1 1 20%;
-$group-flex: 1 1 20%;
-$email-flex: 1 1 25%;
+$group-flex: 1 1 10%;
+$email-flex: 1 1 30%;
+$delete-flex: 1 1 5%;
 
 .user-name {
   @extend %user-column;
@@ -119,7 +120,11 @@ $email-flex: 1 1 25%;
   @extend %user-column;
   flex: $email-flex;
 }
-
+.user-select {
+  @extend %user-column;
+  flex: $delete-flex;
+  justify-content: center;
+}
 .user-spacer {
   display: flex;
   flex: 0 0 40px;
