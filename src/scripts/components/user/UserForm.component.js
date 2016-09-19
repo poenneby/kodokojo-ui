@@ -178,6 +178,7 @@ export class UserForm extends Component {
                   type="email"
                 />
               </div>
+              <div className={ userTheme['user-select--form']}></div>
             </div>
           </div>
           <div style={{ textAlign: 'right' }}>

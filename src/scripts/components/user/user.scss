@@ -94,7 +94,7 @@
   @extend %user-column;
   align-items: baseline;
   input {
-    width: 95%;
+    width: 85%;
   }
 }
 
@@ -102,7 +102,7 @@ $user-flex: 1 1 35%;
 $username-flex: 1 1 20%;
 $group-flex: 1 1 10%;
 $email-flex: 1 1 30%;
-$delete-flex: 1 1 5%;
+$select-flex: 1 1 5%;
 
 .user-name {
   @extend %user-column;
@@ -122,7 +122,7 @@ $delete-flex: 1 1 5%;
 }
 .user-select {
   @extend %user-column;
-  flex: $delete-flex;
+  flex: $select-flex;
   justify-content: center;
 }
 .user-spacer {
@@ -147,6 +147,12 @@ $delete-flex: 1 1 5%;
 .user-email--form {
   @extend %user-column--form;
   flex: $email-flex;
+}
+
+.user-select--form {
+  @extend %user-column--form;
+  flex: $select-flex;
+  justify-content: center;
 }
 
 .message--info {

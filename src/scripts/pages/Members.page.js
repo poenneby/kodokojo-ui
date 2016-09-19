@@ -21,7 +21,6 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 import classNames from 'classnames'
-import map from 'lodash/map'
 
 // Component
 import '../../styles/_commons.less'
@@ -41,6 +40,7 @@ import {
   deleteUsersFromProjectConfig
 } from '../components/projectConfig/projectConfig.actions'
 import { getAggregatedStackStatus } from '../commons/reducers'
+import { filterCheckedMembers } from '../services/stateUpdater.service'
 
 // TODO TU
 // MembersPage component
@@ -125,14 +125,9 @@ export class MembersPage extends Component {
 
   handleConfirmDelete = () => {
     const { deleteUsersFromProjectConfig, projectConfigId } = this.props // eslint-disable-line no-shadow
-    const membersToDelete = map(this.state.memberList, (user, key) => {
-      if (user.checked) {
-        return key
-      }
-      return null
-    }).filter((item) => item !== null)
+    const membersToDelete = filterCheckedMembers(this.state.memberList)
     deleteUsersFromProjectConfig(projectConfigId, membersToDelete)
-      .then(data => {
+      .then(() => {
         this.setState({
           isFormActive: false,
           isConfirmActive: false,
@@ -178,29 +173,31 @@ export class MembersPage extends Component {
             <div className={ userTheme['user-email'] }>
               <FormattedMessage id={'email-label'} />
             </div>
-            <div className={ userTheme['user-delete'] }>
+            <div className={ userTheme['user-select'] }>
               <FormattedMessage id={'delete-label'} />
             </div>
           </div>
           { members && members.length > 0 &&
             members.map((userId, index) => (
               <User
-                // isSelectable={ aggregatedStackStatus && aggregatedStackStatus.label !== 'RUNNING' }
+                isSelectable={ aggregatedStackStatus && aggregatedStackStatus.label !== 'RUNNING' }
                 key={ index }
                 onUserSelect={ this.handleToggleSelectUser }
                 userId={ userId }
               />
             ))
           }
-          <Action
-            type="right"
-          >
-            <Button
-              // disabled={ aggregatedStackStatus && aggregatedStackStatus.label !== 'RUNNING' }
+          { this.state.memberList && filterCheckedMembers(this.state.memberList).length > 0 &&
+            <Action
+              type="right"
+              >
+              <Button
+              disabled={ aggregatedStackStatus && aggregatedStackStatus.label !== 'RUNNING' }
               label={ formatMessage({ id: 'delete-action-label' })}
               onClick={ this.handleOpenConfirm }
-            />
-          </Action>
+              />
+            </Action>
+          }
           <Dialog
             actions={[
               { label: formatMessage({ id: 'cancel-label' }), onClick: this.handleCancelDelete },

@@ -51,6 +51,7 @@ $input-hint-opacity: .8;
   position: relative;
   text-align: left;
   padding: 0 0 ($font-size-normal + 1.2) 0;
+  width: 100%;
   &.withIcon {
     margin-left: $input-padding;
   }

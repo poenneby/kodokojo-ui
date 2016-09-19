@@ -19,6 +19,7 @@
 import cloneDeep from 'lodash/cloneDeep'
 import findIndex from 'lodash/findIndex'
 import difference from 'lodash/difference'
+import map from 'lodash/map'
 
 import { getStatusByState, getStatusByOrder } from './param.service'
 
@@ -78,3 +79,17 @@ export const removeUsers = (prevUsers, usersToDelete) => {
   }
   return prevUsers
 }
+
+// TODO TU
+/**
+ * Filter checked members object, return array
+ *
+ * @param {Object} members
+ * @returns {Array} checked members
+ */
+export const filterCheckedMembers = (members) => map(members, (user, key) => {
+  if (user.checked) {
+    return key
+  }
+  return null
+}).filter((item) => item !== null)
