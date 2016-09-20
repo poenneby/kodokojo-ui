@@ -1,0 +1,14 @@
+platform:
+  npm:
+    jade:
+      tests:
+        deprecated: skip
+    nomnomnomnom:
+      tests:
+        unmaintained: skip
+    react-pure-render:
+      tests:
+        unmaintained: skip
+    isparta:
+      tests:
+        unmaintained: skip
