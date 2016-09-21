@@ -42,6 +42,9 @@ switch (TARGET) {
     module.exports = validate(merge.smart(configCommon, configDev))
     break
   case 'production':
+  case 'local':
+  case 'build:local':
+  case 'start:local':
   case 'build:prod':
   case 'start:prod':
     module.exports = validate(merge.smart(configCommon, configProd))

@@ -17,6 +17,10 @@
  */
 
 const production = {
+  api: {
+    protocol: '',
+    host: ''
+  },
   server: {
     port: 3000
   }

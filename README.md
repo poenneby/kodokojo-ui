@@ -95,6 +95,18 @@ Then open ui project in browser.
 
     $ open http://localhost:3000
     
+
+#### Custom production
+
+Like custom environment (see above) but with production build:
+
+    $ npm run start:local
+    
+Then open ui project in browser.
+
+    $ open http://localhost:3000
+
+
 #### Mocked API
 
 To connect the frontend to mocked backend (just HTTP, not websocket for now). We use [kodokojo-mocks](https://github.com/kodokojo/kodokojo-mocks) for this. Configurations are in `mocks/` folder.
