@@ -33,6 +33,7 @@ projectRepository.postProjectConfig = (request) => {
     ownerId: request.body.ownerIdentifier,
     userIds: request.body.userIdentifiers
   }
+  headers.host = config.api.host
 
   return requestWithLog({
     method: 'POST',
@@ -56,6 +57,7 @@ projectRepository.getProjectConfig = (request) => {
     headers: request.headers,
     projectConfigId: request.params.projectConfigId
   }
+  headers.host = config.api.host
 
   return requestWithLog({
     method: 'GET',
@@ -75,6 +77,7 @@ projectRepository.putUserToProjectConfig = (request) => {
     projectConfigId: request.params.projectConfigId,
     userList: request.body
   }
+  headers.host = config.api.host
 
   return requestWithLog({
     method: 'PUT',
@@ -95,6 +98,7 @@ projectRepository.deleteUserFromProjectConfig = (request) => {
     projectConfigId: request.params.projectConfigId,
     userList: request.body
   }
+  headers.host = config.api.host
 
   return requestWithLog({
     method: 'DELETE',
@@ -114,6 +118,7 @@ projectRepository.postProject = (request) => {
     headers: request.headers,
     projectConfigId: request.params.projectConfigId
   }
+  headers.host = config.api.host
 
   return requestWithLog({
     method: 'POST',
@@ -132,6 +137,7 @@ projectRepository.getProject = (request) => {
     headers: request.headers,
     projectId: request.params.projectId
   }
+  headers.host = config.api.host
 
   return requestWithLog({
     method: 'GET',

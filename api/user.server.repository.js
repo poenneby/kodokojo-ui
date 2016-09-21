@@ -27,10 +27,16 @@ const userRepository = {}
 userRepository.initUser = (request) => {
   logger.debug('initUser')
 
+  const { headers } = {
+    headers: request.headers
+  }
+  headers.host = config.api.host
+
   return requestWithLog({
     method: 'POST',
     uri: `${config.api.protocol}${config.api.host}${config.api.routes.user}`,
     json: true,
+    headers,
     rejectUnauthorized: false,
     requestCert: true
   })
@@ -39,18 +45,19 @@ userRepository.initUser = (request) => {
 userRepository.postUser = (request) => {
   logger.debug('postUser')
 
-  const { id, email, entity, credentials, captcha } = {
+  const { id, email, entity, headers } = {
     id: request.params.id,
     email: request.body.email,
     entity: request.body.entity,
-    credentials: request.headers.authorization,
-    captcha: request.headers['g-recaptcha-response']
+    headers: request.headers
   }
+  headers.host = config.api.host
 
-  let req = {
+  const req = {
     method: 'POST',
     uri: `${config.api.protocol}${config.api.host}${config.api.routes.user}/${id}`,
     json: true,
+    headers,
     body: {
       email,
       entity
@@ -58,53 +65,22 @@ userRepository.postUser = (request) => {
     rejectUnauthorized: false,
     requestCert: true
   }
-  if (credentials) {
-    req = merge(
-      req,
-      {
-        headers: {
-          Authorization: `${credentials}`
-        }
-      }
-    )
-  }
-  if (captcha) {
-    req = merge(
-      req,
-      {
-        headers: {
-          'g-recaptcha-response': `${captcha}`
-        }
-      }
-    )
-  }
-  if (entity) {
-    req = merge(
-      req,
-      {
-        body: {
-          entity: `${entity}`
-        }
-      }
-    )
-  }
   return requestWithLog(req)
 }
 
 userRepository.getUserAccount = (request) => {
   logger.debug('getUserAccount')
 
-  const { credentials } = {
-    credentials: `${request.headers.authorization}`
+  const { headers } = {
+    headers: request.headers
   }
+  headers.host = config.api.host
 
   return requestWithLog({
     method: 'GET',
     uri: `${config.api.protocol}${config.api.host}${config.api.routes.user}`,
     json: true,
-    headers: {
-      Authorization: credentials
-    },
+    headers,
     rejectUnauthorized: false,
     requestCert: true
   })
@@ -113,17 +89,16 @@ userRepository.getUserAccount = (request) => {
 userRepository.getUser = (request) => {
   logger.debug('getUserAccount')
 
-  const { credentials, userId } = {
-    credentials: request.headers.authorization,
+  const { headers, userId } = {
+    headers: request.headers,
     userId: request.params.userId
   }
+  headers.host = config.api.host
 
   return requestWithLog({
     method: 'GET',
     uri: `${config.api.protocol}${config.api.host}${config.api.routes.user}/${userId}`,
-    headers: {
-      Authorization: `${credentials}`
-    },
+    headers,
     json: true,
     rejectUnauthorized: false,
     requestCert: true

@@ -29,6 +29,7 @@ brickRepository.getBricks = (request) => {
   const { headers } = {
     headers: request.headers
   }
+  headers.host = config.api.host
 
   return requestWithLog({
     method: 'GET',
