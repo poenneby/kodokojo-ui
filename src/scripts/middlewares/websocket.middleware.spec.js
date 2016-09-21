@@ -57,6 +57,7 @@ describe('websocket middleware', () => {
 
       // Then
       expect(websocketDefault).to.deep.equal({
+        retry: 0,
         socket: undefined,
         socketPing: undefined,
         uri: `ws://localhost${api.event}`
@@ -75,6 +76,7 @@ describe('websocket middleware', () => {
 
       // Then
       expect(websocketEnv).to.deep.equal({
+        retry: 0,
         socket: undefined,
         socketPing: undefined,
         uri: `wss://test${api.event}`
@@ -97,6 +99,9 @@ describe('websocket middleware', () => {
         close: getWebSocketSpy
       })
       websocketMiddleware.__Rewire__('getWebSocket', getWebSocketSpy)
+      websocketMiddleware.__Rewire__('ws', {
+        uri: `ws://localhost${api.event}`
+      })
 
       createFakeStore = fakeData => ({
         getState() {
@@ -117,6 +122,7 @@ describe('websocket middleware', () => {
     afterEach(() => {
       websocketMiddleware.__ResetDependency__('getWebSocket')
       websocketMiddleware.__ResetDependency__('websocket')
+      websocketMiddleware.__ResetDependency__('ws')
       apiConf.getHost.restore()
     })
 

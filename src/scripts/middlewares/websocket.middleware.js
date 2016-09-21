@@ -23,6 +23,7 @@ import { getWebSocket } from '../services/webSocket.factory'
 import { mapBrickEvent } from '../services/mapping.service'
 import { updateProject } from '../components/project/project.actions'
 import {
+  requestWebsocket,
   successWebsocket,
   failureWebsocket,
   stopWebsocket
@@ -47,14 +48,27 @@ export const websocketInit = () => {
   }
 
   return {
+    retry: 0,
     socket: undefined,
     socketPing: undefined,
     uri: `${apiProtocol}${apiHost}${api.event}`
   }
 }
 
+const websocketClean = (ws) => {
+  if (ws.socketPing) {
+    clearInterval(ws.socketPing)
+    ws.socketPing = undefined // eslint-disable-line no-param-reassign
+  }
+  if (ws.socket) {
+    ws.socket.close(1000, 'user <user> living')
+    ws.socket = undefined // eslint-disable-line no-param-reassign
+  }
+}
+
+const ws = websocketInit()
+
 const websocketMiddleware = store => next => action => {
-  const ws = websocketInit()
   switch (action.type) {
     case WEBSOCKET_REQUEST:
       if (!ws.socket) {
@@ -101,21 +115,20 @@ const websocketMiddleware = store => next => action => {
         // register on close callback
         ws.socket.onclose = (socketEvent) => {
           console.log('wsClose', socketEvent) // eslint-disable-line no-console
-          if (ws.socketPing) {
-            store.dispatch(stopWebsocket())
+          websocketClean(ws)
+          if (ws.retry < 5) {
+            ws.retry++
+            setTimeout(() => {
+              store.dispatch(requestWebsocket())
+            }, 2000)
+          } else {
+            throw new Error('Websocket init reach max retry, closing it.')
           }
         }
       }
       return next(action)
     case WEBSOCKET_STOP:
-      if (ws.socketPing) {
-        clearInterval(ws.socketPing)
-        delete ws.socketPing
-      }
-      if (ws.socket) {
-        ws.socket.close(1000, 'user <user> living')
-        delete ws.socket
-      }
+      websocketClean(ws)
       return next(action)
     // TODO implement SEND_MESSAGE if needed
 
