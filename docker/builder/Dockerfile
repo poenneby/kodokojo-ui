@@ -1,6 +1,6 @@
 FROM node:5.12.0
 
-ENV NODE_ENV development
+ENV NODE_ENV production
 ENV BABEL_ENV production
 
 WORKDIR /src/

@@ -5,12 +5,12 @@ rc=$?
 if [ "$rc" != 0 ]; then
   exit $rc
 fi
-npm i
+NODE_ENV=development npm i
 rc=$?
 if [ "$rc" != 0 ]; then
   exit $rc
 fi
-npm run build:env
+npm run build:prod
 rc=$?
 if [ "$rc" != 0 ]; then
   exit $rc
@@ -25,11 +25,7 @@ rc=$?
 if [ "$rc" != 0 ]; then
   exit $rc
 fi
-npm run build:prod
-rc=$?
-if [ "$rc" != 0 ]; then
-  exit $rc
-fi
+ls -l /src
 tar cvzf /target/kodokojo-ui-${KODOKOJO_UI_VERSION}.tar.gz -C /src/static/ .
 rc=$?
 if [ "$rc" != 0 ]; then
