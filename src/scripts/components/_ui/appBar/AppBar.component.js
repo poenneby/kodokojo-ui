@@ -59,7 +59,7 @@ export class AppBar extends Component {
         fixed={ fixed }
         flat={ flat }
       >
-        <img className={ theme['logo-kodokojo'] } src={logoKodoKojo} />
+        <img className={ theme['logo-kodokojo'] } src={ logoKodoKojo } />
         { children }
         { isAuthenticated &&
           <IconButton
