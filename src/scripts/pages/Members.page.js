@@ -26,15 +26,19 @@ import classNames from 'classnames'
 import '../../styles/_commons.less'
 import utilsTheme from '../../styles/_utils.scss'
 import userTheme from '../components/user/user.scss'
+import messageTheme from '../components/message/message.scss'
 import Page from '../components/_ui/page/Page.component'
-import Paragraph from '../components/_ui/page/Paragraph.component'
 import Action from '../components/_ui/page/Action.component'
-import User from '../components/user/User.component'
-import UserForm from '../components/user/UserForm.component'
 import Button from '../components/_ui/button/Button.component'
 import Dialog from '../components/_ui/dialog/Dialog.component'
+import Paragraph from '../components/_ui/page/Paragraph.component'
+import User from '../components/user/User.component'
+import UserForm from '../components/user/UserForm.component.js'
+import UserAddButton from '../components/user/UserAddButton.component.js'
+import Status from '../components/status/Status.component'
 import { setNavVisibility } from '../components/app/app.actions'
 import {
+  addUserToProjectConfig,
   getProjectConfigAndProject,
   getProjectConfig,
   deleteUsersFromProjectConfig
@@ -62,7 +66,7 @@ export class MembersPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isFormActive: false,
+      isAddUserFormActive: false,
       isConfirmActive: false,
       memberList: {}
     }
@@ -88,16 +92,29 @@ export class MembersPage extends Component {
     setNavVisibility(true)
   }
 
-  handleToggleFormActive = () => {
+  handleToggleMemberAdd = () => {
     // NB this method triggers false react setState warnings on dev mode due to webpack dev server
     // but fortunately, this warnings are not thrown in production mode
     this.setState({
       ...this.state,
-      isFormActive: !this.state.isFormActive
+      isAddUserFormActive: !this.state.isAddUserFormActive
     })
   }
 
-  handleToggleSelectUser = (userState) => {
+  handleToggleUserEdit = (userId) => {
+    this.setState({
+      ...this.state,
+      memberList: {
+        ...this.state.memberList,
+        [userId]: {
+          checked: this.state.memberList[userId].checked,
+          edited: false
+        }
+      }
+    })
+  }
+
+  handleMemberChangeState = (userState) => {
     // merge existing members with checked or unchecked one from user component
     this.setState({
       ...this.state,
@@ -108,13 +125,12 @@ export class MembersPage extends Component {
     })
   }
 
-  handleOpenConfirm = () => {
+  handleOpenConfirmDelete = () => {
     this.setState({
       ...this.state,
       isConfirmActive: true
     })
   }
-
 
   handleCancelDelete = () => {
     this.setState({
@@ -129,7 +145,7 @@ export class MembersPage extends Component {
     deleteUsersFromProjectConfig(projectConfigId, membersToDelete)
       .then(() => {
         this.setState({
-          isFormActive: false,
+          isAddUserFormActive: false,
           isConfirmActive: false,
           memberList: {}
         })
@@ -138,6 +154,16 @@ export class MembersPage extends Component {
         // TODO ad ui toaster to prompt errors
         console.log(error)
       })
+  }
+
+  handleMemberAdd = (email) => {
+    const { projectConfigId } = this.props
+
+    return addUserToProjectConfig(projectConfigId, email)
+  }
+
+  handleMemberUpdate = (email) => {
+    // TODO updateUser action
   }
 
   render() {
@@ -152,10 +178,33 @@ export class MembersPage extends Component {
           <FormattedMessage id={'members-label'} />
         </h1>
         <Action>
-          <UserForm
-            formActive={ this.state.isFormActive }
-            onToggleFormActive={ this.handleToggleFormActive }
-          />
+          { !this.state.isAddUserFormActive &&
+          <div>
+            { aggregatedStackStatus && aggregatedStackStatus.label !== 'RUNNING' &&
+            <div className={ messageTheme['message--info'] }>
+              <Status
+                state={ aggregatedStackStatus ? aggregatedStackStatus.label : undefined }
+              />{ ' ' }
+              <FormattedMessage id={'members-disabled-add-label'} />
+            </div>
+            }
+            <UserAddButton
+              disabled={ aggregatedStackStatus && aggregatedStackStatus.label !== 'RUNNING' }
+              label={ formatMessage({ id: 'add-member-label' }) }
+              onToggleForm={ this.handleToggleMemberAdd }
+            />
+          </div>
+          }
+          { this.state.isAddUserFormActive &&
+            <UserForm
+              onCancel={ this.handleToggleMemberAdd }
+              onSubmit={ (email) => this.handleMemberAdd(email) }
+              onSubmitFailure={ () => {} }
+              onSubmitSuccess={ this.handleToggleMemberAdd }
+              onUserEditCancel={ this.handleMemberChangeState }
+              onUserSelect={ this.handleMemberChangeState }
+            />
+          }
         </Action>
         <Paragraph>
           <div className={ userClasses }>
@@ -176,25 +225,48 @@ export class MembersPage extends Component {
             <div className={ userTheme['user-select'] }>
               <FormattedMessage id={'delete-label'} />
             </div>
+            <div className={ userTheme['user-edit'] }>
+              <FormattedMessage id={'edit-label'} />
+            </div>
           </div>
           { members && members.length > 0 &&
-            members.map((userId, index) => (
-              <User
-                isSelectable={ aggregatedStackStatus && aggregatedStackStatus.label !== 'RUNNING' }
-                key={ index }
-                onUserSelect={ this.handleToggleSelectUser }
-                userId={ userId }
-              />
-            ))
+            members.map((userId, index) => {
+              if (this.state.memberList[userId] && this.state.memberList[userId].edited) {
+                return (
+                  <UserForm
+                    checked={ this.state.memberList[userId] ? this.state.memberList[userId].checked : false }
+                    key={ index }
+                    onCancel={ this.handleToggleUserEdit }
+                    onSubmit={ (email) => this.handleMemberUpdate(email) }
+                    onSubmitFailure={ () => {} }
+                    onSubmitSuccess={ (editedUserId) => this.handleToggleUserEdit(editedUserId) }
+                    onUserEditCancel={ this.handleMemberChangeState }
+                    onUserSelect={ this.handleMemberChangeState }
+                    selectable
+                    userId={ userId }
+                  />
+                )
+              }
+              return (
+                <User
+                  checked={ this.state.memberList[userId] ? this.state.memberList[userId].checked : false }
+                  disabled={ aggregatedStackStatus && aggregatedStackStatus.label !== 'RUNNING' }
+                  key={ index }
+                  onUserEdit={ this.handleMemberChangeState }
+                  onUserSelect={ this.handleMemberChangeState }
+                  userId={ userId }
+                />
+              )
+            })
           }
           { this.state.memberList && filterCheckedMembers(this.state.memberList).length > 0 &&
             <Action
               type="right"
-              >
+            >
               <Button
-              disabled={ aggregatedStackStatus && aggregatedStackStatus.label !== 'RUNNING' }
-              label={ formatMessage({ id: 'delete-action-label' })}
-              onClick={ this.handleOpenConfirm }
+                disabled={ aggregatedStackStatus && aggregatedStackStatus.label !== 'RUNNING' }
+                label={ formatMessage({ id: 'delete-action-label' })}
+                onClick={ this.handleOpenConfirmDelete }
               />
             </Action>
           }

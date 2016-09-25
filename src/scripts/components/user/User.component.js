@@ -16,10 +16,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
+import { compose } from 'redux'
 import capitalise from 'lodash/capitalize'
 import { themr } from 'react-css-themr'
+import { intlShape, injectIntl } from 'react-intl'
 import classNames from 'classnames'
 
 // Component
@@ -28,74 +30,116 @@ import '../../../styles/_commons.less'
 import userTheme from './user.scss'
 import Avatar from '../_ui/avatar/Avatar.component'
 import Checkbox from '../_ui/checkbox/Checkbox.component'
+import IconButton from '../_ui/button/IconButton.component'
+import EditIcon from '../_ui/icons/EditIcon.component'
+import { getUser } from '../../commons/reducers'
 
 // TODO TU
 // User component
-export class User extends Component {
+export class User extends React.Component {
 
   static propTypes = {
-    isSelectable: PropTypes.bool,
-    onUserSelect: PropTypes.func.isRequired,
-    theme: PropTypes.object,
-    user: PropTypes.object,
-    userId: PropTypes.string
+    checked: React.PropTypes.bool,
+    disabled: React.PropTypes.bool,
+    fields: React.PropTypes.object.isRequired,
+    handleSubmit: React.PropTypes.func,
+    intl: intlShape.isRequired,
+    onUserEdit: React.PropTypes.func.isRequired,
+    onUserSelect: React.PropTypes.func.isRequired,
+    resetForm: React.PropTypes.func.isRequired,
+    submitting: React.PropTypes.bool.isRequired,
+    theme: React.PropTypes.object,
+    user: React.PropTypes.object,
+    userId: React.PropTypes.string
   }
 
   static defaultProps = {
-    isSelectable: true
+    disabled: false
   }
 
   constructor(props) {
     super(props)
     this.state = {
-      checked: false
+      checked: this.props.checked || false,
+      edited: false
     }
   }
 
-  selectUser = () => {
+  handleUserSelect = () => {
     const { userId, onUserSelect } = this.props // eslint-disable-line no-shadow
-    this.setState({ checked: !this.state.checked })
+    this.setState({
+      ...this.state,
+      checked: !this.state.checked
+    })
     onUserSelect({
-      [userId]: { checked: !this.state.checked }
+      [userId]: {
+        checked: !this.state.checked,
+        edited: false
+      }
+    })
+  }
+
+  handleUserEdit = () => {
+    const { userId, onUserEdit } = this.props // eslint-disable-line no-shadow
+    this.setState({
+      ...this.state,
+      edited: true
+    })
+    onUserEdit({
+      [userId]: {
+        checked: this.state.checked,
+        edited: true
+      }
     })
   }
 
   render() {
-    const { isSelectable, user, theme } = this.props // eslint-disable-line no-shadow
+    const { disabled, user, theme } = this.props // eslint-disable-line no-shadow
+    // const { formatMessage } = this.props.intl
+
     const userClasses = classNames(theme.user, theme['user-item'])
 
     return (
       <div className={ userClasses }>
-        <div className={ theme['user-name'] }>
-          <Avatar>
-            <div className={ theme['user-initials'] }>
+        <div className={ theme['user-container'] }>
+          <div className={ theme['user-name'] }>
+            <Avatar>
+              <div className={ theme['user-initials'] }>
+                { user &&
+                user.firstName.substr(0, 1).toUpperCase()
+                }
+                { user &&
+                user.lastName.substr(0, 1).toUpperCase()
+                }
+              </div>
+            </Avatar>
             { user &&
-              user.firstName.substr(0, 1).toUpperCase()
-            }
-            { user &&
-              user.lastName.substr(0, 1).toUpperCase()
-            }
-            </div>
-          </Avatar>
-          { user &&
             `${capitalise(user.firstName)} ${capitalise(user.lastName)}`
-          }
-        </div>
-        <div className={ theme['user-username'] }>
-          { user ? user.userName : '-' }
-        </div>
-        <div className={ theme['user-group'] }>
-          { user ? 'admin' : '-' }
-        </div>
-        <div className={ theme['user-email'] }>
-          { user ? user.email : '-' }
-        </div>
-        <div className={ theme['user-select'] }>
-          <Checkbox
-            checked={ this.state.checked }
-            disabled={ !isSelectable }
-            onChange={ this.selectUser }
-          />
+            }
+          </div>
+          <div className={ theme['user-username'] }>
+            { user ? user.userName : '-' }
+          </div>
+          <div className={ theme['user-group'] }>
+            { user ? 'admin' : '-' }
+          </div>
+          <div className={ theme['user-email'] }>
+            { user ? user.email : '-' }
+          </div>
+          <div className={ theme['user-select'] }>
+            <Checkbox
+              checked={ this.state.checked }
+              disabled={ disabled }
+              onChange={ this.handleUserSelect }
+            />
+          </div>
+          <div className={ theme['user-edit'] }>
+            <IconButton
+              disabled={ disabled }
+              icon={ <EditIcon/> }
+              onClick={ this.handleUserEdit }
+            />
+          </div>
         </div>
       </div>
     )
@@ -105,22 +149,16 @@ export class User extends Component {
 // User container
 const mapStateProps = (state, ownProps) => (
   {
-    users: state.users,
-    userId: ownProps.userId
+    user: getUser(ownProps.userId, state)
   }
 )
 
-const mergeProps = (stateProps, dispatchProps, ownProps) => (
-  {
-    ...ownProps,
-    user: stateProps.users[ownProps.userId]
-  }
-)
-
-const UserContainer = themr(USER, userTheme)(connect(
-  mapStateProps,
-  {},
-  mergeProps
+const UserContainer = themr(USER, userTheme)(compose(
+  connect(
+    mapStateProps,
+    {}
+  ),
+  injectIntl
 )(User))
 
 export default UserContainer

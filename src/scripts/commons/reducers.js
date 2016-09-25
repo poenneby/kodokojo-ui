@@ -26,7 +26,7 @@ import menu from '../components/menu/menu.reducer'
 import prefs from '../components/app/app.reducer'
 import projectConfig, * as fromProjectConfig from '../components/projectConfig/projectConfig.reducer'
 import socket from '../components/_utils/websocket/websocket.reducer'
-import users from '../components/user/user.reducer'
+import users, * as fromUser from '../components/user/user.reducer'
 
 const rootReducer = combineReducers({
   auth,
@@ -41,5 +41,7 @@ const rootReducer = combineReducers({
 })
 
 export default rootReducer
+
+export const getUser = (userId, state) => fromUser.getUser(userId, state.users)
 
 export const getAggregatedStackStatus = (state) => fromProjectConfig.getAggregatedStackStatus(state.projectConfig)

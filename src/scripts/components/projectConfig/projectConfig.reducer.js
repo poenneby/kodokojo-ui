@@ -19,7 +19,7 @@
 import merge from 'lodash/merge'
 
 import storageService from '../../services/storage.service'
-import { updateBricks, updateAggregatedStackStatus, removeUsers } from '../../services/stateUpdater.service'
+import { updateBricks, computeAggregatedStackStatus, removeUsers } from '../../services/stateUpdater.service'
 import {
   AUTH_RESET,
   PROJECT_CONFIG_REQUEST,
@@ -191,7 +191,7 @@ export default function projectConfig(state = projectConfigReducerInit(), action
 
 export const getAggregatedStackStatus = (state) => {
   if (state && state.stacks && state.stacks[0] && state.stacks[0].bricks) {
-    return updateAggregatedStackStatus(state.stacks[0].bricks)
+    return computeAggregatedStackStatus(state.stacks[0].bricks)
   }
   return {}
 }

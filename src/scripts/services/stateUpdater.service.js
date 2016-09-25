@@ -46,18 +46,17 @@ export const updateBricks = (prevBricks, bricks) => {
 
 // TODO TU
 /**
- * Aggregate brick state for a given stack
+ * Aggregate brick states for a given stack
  *
  * @param bricks
  * @returns {Object} status
  */
-export const updateAggregatedStackStatus = (bricks) => {
+export const computeAggregatedStackStatus = (bricks) => {
   if (bricks.length > 0) {
     const stateOrder = bricks.reduce((previous, brick) => {
       const previousStateOrder = previous.state ? getStatusByState(previous.state).order : previous
       const currentStateOrder = getStatusByState(brick.state).order
-      const minStateOrder = Math.min(previousStateOrder, currentStateOrder)
-      return minStateOrder
+      return Math.min(previousStateOrder, currentStateOrder)
     })
     return getStatusByOrder(stateOrder)
   }

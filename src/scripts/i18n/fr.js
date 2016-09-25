@@ -42,6 +42,7 @@ export default {
   'dashboard-label': 'Dashboard',
   'delete-label': 'Supprimer',
   'delete-action-label': 'Confirmer les suppressions',
+  'edit-label': 'Edit',
   'email-hint-label': 'your.email@domain.ext',
   'email-input-label': 'Email',
   'email-label': 'Email',

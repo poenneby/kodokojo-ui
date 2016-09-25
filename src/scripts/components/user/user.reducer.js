@@ -104,3 +104,5 @@ export default function users(state = initialState, action) {
 
   return state
 }
+
+export const getUser = (userId, state) => state[userId]

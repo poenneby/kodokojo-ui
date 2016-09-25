@@ -56,6 +56,17 @@
   }
 }
 
+.user-container {
+  display: flex;
+  width: 100%;
+}
+
+.user-container--form {
+  &:not(:first-child) {
+    margin-bottom: 20px;
+  }
+}
+
 .user-form {
   display: flex;
   flex-flow: row;
@@ -79,6 +90,14 @@
   }
 }
 
+.user-actions {
+  margin-top: 10px;
+  text-align: right;
+  button {
+    margin-right: 10px;
+  }
+}
+
 .user-header {
   color: $color-font-4;
   margin-bottom: 10px;
@@ -93,16 +112,20 @@
 %user-column--form {
   @extend %user-column;
   align-items: baseline;
-  input {
+  input[type="text"] {
     width: 85%;
   }
 }
 
-$user-flex: 1 1 35%;
+$user-flex: 1 1 27%;
 $username-flex: 1 1 20%;
 $group-flex: 1 1 10%;
-$email-flex: 1 1 30%;
-$select-flex: 1 1 5%;
+$email-flex: 1 1 27%;
+$select-flex: 1 1 7%;
+$edit-flex: 1 1 7%;
+
+$select-min-width: 31px;
+$edit-min-width: 58px;
 
 .user-name {
   @extend %user-column;
@@ -124,6 +147,13 @@ $select-flex: 1 1 5%;
   @extend %user-column;
   flex: $select-flex;
   justify-content: center;
+  min-width: $select-min-width;
+}
+.user-edit {
+  @extend %user-column;
+  flex: $edit-flex;
+  justify-content: center;
+  min-width: $edit-min-width;
 }
 .user-spacer {
   display: flex;
@@ -148,14 +178,17 @@ $select-flex: 1 1 5%;
   @extend %user-column--form;
   flex: $email-flex;
 }
-
 .user-select--form {
   @extend %user-column--form;
   flex: $select-flex;
   justify-content: center;
+  min-width: $select-min-width;
+  margin-top: -10px;
 }
-
-.message--info {
-  padding-top: $spacing-smallest;
-  color: $color-ternary-1;
+.user-edit--form {
+  @extend %user-column--form;
+  flex: $edit-flex;
+  justify-content: center;
+  min-width: $edit-min-width;
+  margin-top: -10px;
 }

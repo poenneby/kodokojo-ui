@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { compose } from 'redux'
 import { reduxForm } from 'redux-form'
 import { combineValidators } from 'revalidate'
@@ -29,11 +29,13 @@ import userTheme from '../user/user.scss'
 import Avatar from '../_ui/avatar/Avatar.component'
 import Button from '../_ui/button/Button.component'
 import Input from '../_ui/input/Input.component'
-import Status from '../status/Status.component'
+import Checkbox from '../_ui/checkbox/Checkbox.component'
+import IconButton from '../_ui/button/IconButton.component'
+import CloseIcon from '../_ui/icons/CloseIcon.component'
 import { emailValidator } from '../../services/validator.service'
 import { returnErrorKey } from '../../services/error.service'
-import { addUserToProjectConfig } from '../projectConfig/projectConfig.actions'
-import { getAggregatedStackStatus } from '../../commons/reducers'
+import { getUser } from '../../commons/reducers'
+
 
 // validate function
 const validate = combineValidators({
@@ -42,162 +44,193 @@ const validate = combineValidators({
 
 // TODO TU
 // UserForm component
-export class UserForm extends Component {
+export class UserForm extends React.Component {
 
   static propTypes = {
-    addUserToProjectConfig: PropTypes.func,
-    aggregatedStackStatus: PropTypes.object,
-    fields: PropTypes.object.isRequired,
-    formActive: PropTypes.bool.isRequired,
-    handleSubmit: PropTypes.func,
+    addUserToProjectConfig: React.PropTypes.func,
+    aggregatedStackStatus: React.PropTypes.object,
+    checked: React.PropTypes.bool,
+    disabled: React.PropTypes.bool.isRequired,
+    fields: React.PropTypes.object.isRequired,
+    handleSubmit: React.PropTypes.func,
     intl: intlShape.isRequired,
-    onToggleFormActive: PropTypes.func.isRequired,
-    projectConfigId: PropTypes.string,
-    resetForm: PropTypes.func.isRequired,
-    submitting: PropTypes.bool.isRequired,
-    theme: PropTypes.object,
-    user: PropTypes.object
+    onCancel: React.PropTypes.func.isRequired,
+    onSubmit: React.PropTypes.func.isRequired,
+    onSubmitFailure: React.PropTypes.func.isRequired,
+    onSubmitSuccess: React.PropTypes.func.isRequired,
+    onUserEditCancel: React.PropTypes.func.isRequired,
+    onUserSelect: React.PropTypes.func.isRequired,
+    projectConfigId: React.PropTypes.string,
+    resetForm: React.PropTypes.func.isRequired,
+    selectable: React.PropTypes.bool,
+    submitting: React.PropTypes.bool.isRequired,
+    theme: React.PropTypes.object,
+    userId: React.PropTypes.string
   }
 
-  shouldComponentUpdate() {
-    const { formActive } = this.props
-
-    return formActive !== undefined
+  static defaultProps = {
+    selectable: false
   }
 
-  handleToggleForm = () => {
-    const { onToggleFormActive } = this.props
-
-    onToggleFormActive()
+  constructor(props) {
+    super(props)
+    this.state = {
+      checked: this.props.checked || false,
+      edited: true
+    }
   }
 
-  handleCancel = () => {
-    const { onToggleFormActive, resetForm } = this.props
+  handleUserSelect = () => {
+    const { userId, onUserSelect } = this.props // eslint-disable-line no-shadow
+    this.setState({
+      ...this.state,
+      checked: !this.state.checked
+    })
+    onUserSelect({
+      [userId]: {
+        checked: !this.state.checked,
+        edited: true
+      }
+    })
+  }
 
-    onToggleFormActive()
+  handleUserEditCancel = () => {
+    const { userId, onCancel, onUserEditCancel, resetForm } = this.props
+    this.setState({
+      ...this.state,
+      edited: false
+    })
+    onUserEditCancel({
+      [userId]: {
+        checked: this.state.checked,
+        edited: false
+      }
+    })
+
+    onCancel(userId)
     resetForm()
   }
 
-  handleSubmit = () => {
-    const { fields: { email }, addUserToProjectConfig, projectConfigId, onToggleFormActive } = this.props // eslint-disable-line no-shadow
+  handleUserEditSubmit = () => {
+    const {
+      fields: { email, firstName, lasteName, password, sshKeyPublic, sshKeyPrivate },
+      userId, onSubmit, onSubmitSuccess, onSubmitFailure
+    } = this.props // eslint-disable-line no-shadow
 
-    const nextEmail = email.value
+    const nextEmail = email.value ? email.value.trim() : ''
     const error = validate({ email: nextEmail })
     if (error.email) {
       return Promise.reject({ email: error.email })
     }
-    if (nextEmail && nextEmail.trim()) {
-      return addUserToProjectConfig(projectConfigId, nextEmail.trim())
+    if (nextEmail && nextEmail) {
+      return onSubmit(nextEmail)
         .then(() => {
-          onToggleFormActive()
+          onSubmitSuccess(userId)
           return Promise.resolve()
         })
-        .catch(err => Promise.reject({ email: returnErrorKey(
-          {
-            component: 'email',
-            code: err.message
+        .catch(err => {
+          onSubmitFailure(userId)
+          return Promise.reject({ email: returnErrorKey(
+            {
+              component: 'email',
+              code: err.message
+            })
           })
-        }))
+        })
     }
     // TODO add default error message
     return Promise.reject()
   }
 
   render() {
-    const { fields: { email }, handleSubmit, submitting, formActive, aggregatedStackStatus } = this.props // eslint-disable-line no-shadow
+    const { fields: { email }, disabled, handleSubmit, selectable, submitting } = this.props // eslint-disable-line no-shadow
     const { formatMessage } = this.props.intl
 
     return (
-      <div>
-      { !formActive &&
-        <div>
-          { aggregatedStackStatus && aggregatedStackStatus.label !== 'RUNNING' &&
-            <div className={ userTheme['message--info'] }>
-              <Status
-                state={ aggregatedStackStatus ? aggregatedStackStatus.label : undefined }
-              />{ ' ' }
-              <FormattedMessage id={'members-disabled-add-label'} />
+      <form
+        className={ userTheme['user-container--form'] }
+        id="userForm"
+        name="userForm"
+        noValidate
+        onSubmit={ handleSubmit(this.handleUserEditSubmit) }
+      >
+        <div className={ userTheme['user-form']}>
+          <div className={ classNames(userTheme.user, userTheme['user-item--form']) }>
+            <div className={ userTheme['user-name--form'] }>
+              <Avatar>
+                <div className={ userTheme['user-initials'] }>
+                  ...
+                </div>
+              </Avatar>
+              <Input
+                disabled
+                label={ formatMessage({ id: 'name-label' }) }
+                name="name"
+              />
             </div>
-          }
+            <div className={ userTheme['user-username--form'] }>
+              <Input
+                disabled
+                label={ formatMessage({ id: 'username-label' }) }
+                name="username"
+              />
+            </div>
+            <div className={ userTheme['user-group--form'] }>
+              { /* TODO change this by a dropdown */ }
+              <span
+                style={{ display: 'flex', flex: '1 1 auto', position: 'relative', height: '50px', justifyContent: 'left', color: '#75757F' }}>
+                admin
+              </span>
+            </div>
+            <div className={ userTheme['user-email--form'] }>
+              <Input
+                { ...email }
+                error={
+                  email.touched && email.error ?
+                  formatMessage({ id: email.error }, { fieldName: formatMessage({ id: 'email-input-label' }) }) :
+                  ''
+                }
+                hint={ formatMessage({ id: 'email-hint-label' }) }
+                label={ formatMessage({ id: 'email-label' }) }
+                name="email"
+                required
+                type="email"
+              />
+            </div>
+            <div className={ userTheme['user-select--form']}>
+              { selectable &&
+                <Checkbox
+                  checked={ this.props.checked }
+                  disabled={ disabled }
+                  onChange={ this.handleUserSelect }
+                />
+              }
+            </div>
+            <div className={ userTheme['user-edit--form']}>
+              <IconButton
+                className="iconButton"
+                disabled={ disabled }
+                icon={ <CloseIcon/> }
+                onMouseUp={ this.handleUserEditCancel }
+              />
+            </div>
+          </div>
+        </div>
+        <div className={ userTheme['user-actions'] }>
           <Button
-            accent
-            disabled={ submitting || aggregatedStackStatus && aggregatedStackStatus.label !== 'RUNNING' }
-            icon="add_circle_outline"
-            label={ formatMessage({ id: 'add-member-label' }) }
-            onMouseUp={ this.handleToggleForm }
-            type="button"
+            disabled={ submitting || disabled }
+            label={ formatMessage({ id: 'cancel-label' })}
+            onMouseUp={ this.handleUserEditCancel }
+          />
+          <Button
+            disabled={ submitting || disabled }
+            label={ formatMessage({ id: 'save-label' })}
+            onMouseUp={ handleSubmit(this.handleUserEditSubmit) }
+            primary
+            type="submit"
           />
         </div>
-      }
-      { formActive &&
-        <form id="addMemberForm"
-              name="addMemberForm"
-              noValidate
-              onSubmit={ handleSubmit(this.handleSubmit) }
-        >
-          <div className={ userTheme['user-form']}>
-            <div className={ classNames(userTheme.user, userTheme['user-item--form']) }>
-              <div className={ userTheme['user-name--form'] }>
-                <Avatar>
-                  <div className={ userTheme['user-initials'] }>
-                    ...
-                  </div>
-                </Avatar>
-                <Input
-                  disabled
-                  label={ formatMessage({ id: 'name-label' }) }
-                  name="name"
-                />
-              </div>
-              <div className={ userTheme['user-username--form'] }>
-                <Input
-                  disabled
-                  label={ formatMessage({ id: 'username-label' }) }
-                  name="username"
-                />
-              </div>
-              <div className={ userTheme['user-group--form'] }>
-                { /* TODO change this by a dropdown */ }
-                <span
-                  style={{ display: 'flex', flex: '1 1 auto', position: 'relative', height: '50px', justifyContent: 'left', color: '#75757F' }}>
-                  admin
-                </span>
-              </div>
-              <div className={ userTheme['user-email--form'] }>
-                <Input
-                  { ...email }
-                  error={
-                    email.touched && email.error ?
-                    formatMessage({ id: email.error }, { fieldName: formatMessage({ id: 'email-input-label' }) }) :
-                    ''
-                  }
-                  hint={ formatMessage({ id: 'email-hint-label' }) }
-                  label={ formatMessage({ id: 'email-label' }) }
-                  name="email"
-                  required
-                  type="email"
-                />
-              </div>
-              <div className={ userTheme['user-select--form']}></div>
-            </div>
-          </div>
-          <div style={{ textAlign: 'right' }}>
-            <Button
-              disabled={ submitting }
-              label={ formatMessage({ id: 'cancel-label' })}
-              onMouseUp={ this.handleCancel }
-            />
-            <Button
-              disabled={ submitting }
-              label={ formatMessage({ id: 'save-label' })}
-              onMouseUp={ handleSubmit(this.handleSubmit) }
-              primary
-              type="submit"
-            />
-          </div>
-        </form>
-      }
-      </div>
+      </form>
     )
   }
 }
@@ -205,23 +238,27 @@ export class UserForm extends Component {
 // UserForm container
 const mapStateProps = (state, ownProps) => (
   {
-    projectConfigId: state.projectConfig.id,
-    aggregatedStackStatus: getAggregatedStackStatus(state)
+    user: getUser(ownProps.userId, state)
   }
 )
 
 const UserFormContainer = compose(
   reduxForm(
     {
-      form: 'addMemberForm',
-      fields: ['email'],
+      form: 'userForm',
+      fields: [
+        'email',
+        'firstName',
+        'lastName',
+        'password',
+        'sshKeyPublic',
+        'sshKeyPrivate'
+      ],
       touchOnChange: true,
       validate
     },
     mapStateProps,
-    {
-      addUserToProjectConfig
-    }
+    {}
   ),
   injectIntl
 )(UserForm)

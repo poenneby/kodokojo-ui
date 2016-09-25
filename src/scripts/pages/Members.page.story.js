@@ -20,6 +20,7 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import { storiesOf, linkTo } from '@kadira/storybook'
+import merge from 'lodash/merge'
 
 // contexte
 import configureStore from '../store/configureStore'
@@ -103,14 +104,23 @@ const location = {
 }
 
 const initialStore = configureStore(initialState)
-const withformStore = configureStore(
-  Object.assign({},
-    initialState,
-    {
-      isActiveForm: true
+const withformStore = configureStore(merge(
+  {},
+  initialState,
+  {
+    projectConfig: {
+      stacks: [
+        {
+          bricks: [
+            { state: 'RUNNING' },
+            { state: 'RUNNING' },
+            { state: 'RUNNING' }
+          ]
+        }
+      ]
     }
-  )
-)
+  }
+))
 
 storiesOf('MembersPage', module)
   .add('with 3 users', () => (
@@ -124,7 +134,7 @@ storiesOf('MembersPage', module)
       </IntlProvider>
     </Provider>
   ))
-  .add('with form opened', () => (
+  .add('with form not disabled', () => (
     <Provider store={withformStore}>
       <IntlProvider locale="en" messages={ en }>
         <App>
