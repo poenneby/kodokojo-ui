@@ -22,7 +22,7 @@
 $checkbox-size: $font-size-default;
 $checkbox-text-font-size: $font-size-default;
 $checkbox-text-color: $color-font-4;
-$checkbox-disabled-color: $color-font-4;
+$checkbox-disabled-color: $color-font-1;
 $checkbox-color: $color-secondary-1;
 $checkbox-field-margin-bottom: 0;
 
@@ -69,7 +69,7 @@ $checkbox-field-margin-bottom: 0;
 
 .disabled {
   > .text {
-    color: $checkbox-disabled-color;
+    color: $checkbox-text-color;
   }
   > .check {
     cursor: auto;
@@ -78,6 +78,9 @@ $checkbox-field-margin-bottom: 0;
       cursor: auto;
       background-color: $checkbox-disabled-color;
       border-color: $checkbox-disabled-color;
+    }
+    &::after {
+      border-color: $checkbox-text-color;
     }
   }
 }
