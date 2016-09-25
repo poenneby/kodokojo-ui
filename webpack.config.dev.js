@@ -39,8 +39,7 @@ module.exports = {
   devtool: 'cheap-module-eval-source-map',
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-    new webpack.NormalModuleReplacementPlugin(/^\.\/header/, 'custom-header')
+    new webpack.NoErrorsPlugin()
   ],
   module: {
     loaders: [

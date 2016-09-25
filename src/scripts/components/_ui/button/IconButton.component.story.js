@@ -23,6 +23,9 @@ import { storiesOf } from '@kadira/storybook'
 
 // component to story
 import IconButton from './IconButton.component'
+import Card from '../card/Card.component'
+import EditIcon from '../icons/EditIcon.component'
+import CloseIcon from '../icons/CloseIcon.component'
 
 storiesOf('IconButton', module)
   .addDecorator((story) => (
@@ -30,12 +33,26 @@ storiesOf('IconButton', module)
       { story() }
     </div>
   ))
-  .add('default (flat)', () => (
+  .add('default', () => (
     <IconButton
       icon="power_settings_new"
     />
   ))
-  .add('primary (flat)', () => (
+  .add('default - custom icon (edit)', () => (
+    <Card>
+      <IconButton
+        icon={ <EditIcon/> }
+      />
+    </Card>
+  ))
+  .add('default - custom icon (close)', () => (
+    <Card>
+      <IconButton
+        icon={ <CloseIcon/> }
+      />
+    </Card>
+  ))
+  .add('primary', () => (
     <IconButton
       icon="power_settings_new"
       primary

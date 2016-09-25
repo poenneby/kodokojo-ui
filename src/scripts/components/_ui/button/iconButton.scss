@@ -43,6 +43,14 @@
   &[disabled] {
     color: $color-font-2;
     cursor: auto;
+    & span > svg {
+      fill: $color-font-1;
+    }
+  }
+  // hard code fill for custom svg, warning for variants icon button
+  & span > svg {
+    fill: $color-font-4;
+    margin-top: -30%;
   }
 }
 
@@ -64,6 +72,9 @@
   }
   &:hover {
     color: $color-secondary-1;
+    & span > svg {
+      fill: $color-secondary-1;
+    }
   }
 }
 
