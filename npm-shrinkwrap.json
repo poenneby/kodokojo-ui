@@ -2967,7 +2967,8 @@
         },
         "readable-stream": {
           "version": "2.1.5",
-          "from": "readable-stream@>=2.0.1 <3.0.0"
+          "from": "readable-stream@2.1.5",
+          "resolved": "http://registry.npmjs.org/readable-stream/-/readable-stream-2.1.5.tgz"
         }
       }
     },
@@ -6350,7 +6351,8 @@
       "dependencies": {
         "bytes": {
           "version": "2.4.0",
-          "from": "bytes@2.4.0"
+          "from": "bytes@2.4.0",
+          "resolved": "http://registry.npmjs.org/bytes/-/bytes-2.4.0.tgz"
         }
       }
     },
@@ -6472,6 +6474,11 @@
       "version": "1.2.0",
       "from": "react-simple-di@>=1.2.0 <2.0.0",
       "resolved": "http://registry.npmjs.org/react-simple-di/-/react-simple-di-1.2.0.tgz"
+    },
+    "react-svg-inline": {
+      "version": "1.2.0",
+      "from": "react-svg-inline@>=1.2.0 <2.0.0",
+      "resolved": "http://registry.npmjs.org/react-svg-inline/-/react-svg-inline-1.2.0.tgz"
     },
     "react-tap-event-plugin": {
       "version": "1.0.0",
@@ -7146,7 +7153,8 @@
       "dependencies": {
         "isarray": {
           "version": "1.0.0",
-          "from": "isarray@>=1.0.0 <1.1.0"
+          "from": "isarray@1.0.0",
+          "resolved": "http://registry.npmjs.org/isarray/-/isarray-1.0.0.tgz"
         },
         "readable-stream": {
           "version": "2.1.5",
