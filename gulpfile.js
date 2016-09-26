@@ -18,7 +18,7 @@ var year = (new Date()).getFullYear()
 gulp.task('license', function () {
   return gulp.src(files, { base: './' })
     .pipe(changed('./**/*'))
-    .pipe(license(fs.readFileSync('LICENSE', 'utf8'), { year }))
+    .pipe(license(fs.readFileSync('LICENSE-HEADER', 'utf8'), { year }))
     .pipe(gulp.dest(function (file) {
       return file.base
     }))
