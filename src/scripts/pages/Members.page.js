@@ -157,7 +157,7 @@ export class MembersPage extends Component {
   }
 
   handleMemberAdd = (email) => {
-    const { projectConfigId } = this.props
+    const { addUserToProjectConfig, projectConfigId } = this.props // eslint-disable-line no-shadow
 
     return addUserToProjectConfig(projectConfigId, email)
   }
@@ -197,9 +197,10 @@ export class MembersPage extends Component {
           }
           { this.state.isAddUserFormActive &&
             <UserForm
+              key={ 'addMember' }
               onCancel={ this.handleToggleMemberAdd }
-              onSubmit={ (email) => this.handleMemberAdd(email) }
               onSubmitFailure={ () => {} }
+              onSubmitForm={ (email) => this.handleMemberAdd(email) }
               onSubmitSuccess={ this.handleToggleMemberAdd }
               onUserEditCancel={ this.handleMemberChangeState }
               onUserSelect={ this.handleMemberChangeState }
@@ -237,8 +238,8 @@ export class MembersPage extends Component {
                     checked={ this.state.memberList[userId] ? this.state.memberList[userId].checked : false }
                     key={ index }
                     onCancel={ this.handleToggleUserEdit }
-                    onSubmit={ (email) => this.handleMemberUpdate(email) }
                     onSubmitFailure={ () => {} }
+                    onSubmitForm={ (email) => this.handleMemberUpdate(email) }
                     onSubmitSuccess={ (editedUserId) => this.handleToggleUserEdit(editedUserId) }
                     onUserEditCancel={ this.handleMemberChangeState }
                     onUserSelect={ this.handleMemberChangeState }
@@ -302,6 +303,7 @@ const MembersPageContainer = compose(
   connect(
     mapStateProps,
     {
+      addUserToProjectConfig,
       deleteUsersFromProjectConfig,
       getProjectConfig,
       getProjectConfigAndProject,

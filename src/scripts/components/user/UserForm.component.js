@@ -55,8 +55,8 @@ export class UserForm extends React.Component {
     handleSubmit: React.PropTypes.func,
     intl: intlShape.isRequired,
     onCancel: React.PropTypes.func.isRequired,
-    onSubmit: React.PropTypes.func.isRequired,
     onSubmitFailure: React.PropTypes.func.isRequired,
+    onSubmitForm: React.PropTypes.func.isRequired,
     onSubmitSuccess: React.PropTypes.func.isRequired,
     onUserEditCancel: React.PropTypes.func.isRequired,
     onUserSelect: React.PropTypes.func.isRequired,
@@ -114,7 +114,7 @@ export class UserForm extends React.Component {
   handleUserEditSubmit = () => {
     const {
       fields: { email, firstName, lasteName, password, sshKeyPublic, sshKeyPrivate },
-      userId, onSubmit, onSubmitSuccess, onSubmitFailure
+      userId, onSubmitForm, onSubmitSuccess, onSubmitFailure
     } = this.props // eslint-disable-line no-shadow
 
     const nextEmail = email.value ? email.value.trim() : ''
@@ -123,7 +123,7 @@ export class UserForm extends React.Component {
       return Promise.reject({ email: error.email })
     }
     if (nextEmail && nextEmail) {
-      return onSubmit(nextEmail)
+      return onSubmitForm(nextEmail)
         .then(() => {
           onSubmitSuccess(userId)
           return Promise.resolve()
