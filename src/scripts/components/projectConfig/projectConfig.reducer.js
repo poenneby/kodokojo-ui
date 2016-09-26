@@ -172,7 +172,7 @@ export default function projectConfig(state = projectConfigReducerInit(), action
   }
 
   // TODO refactor and DRY this
-  // TODO TU
+  // TODO UT
   if (action.type === AUTH_RESET) {
     const nextProjectConfig = {}
     if (state.id) {

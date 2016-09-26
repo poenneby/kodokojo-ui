@@ -43,7 +43,7 @@ const validate = combineValidators({
   projectName: projectNameValidator('projectName')
 })
 
-// TODO TU
+// TODO UT
 // ProjectConfigForm component
 export class ProjectConfigForm extends Component {
 

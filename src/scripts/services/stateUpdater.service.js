@@ -23,7 +23,7 @@ import map from 'lodash/map'
 
 import { getStatusByState, getStatusByOrder } from './param.service'
 
-// TODO TU
+// TODO UT
 /**
  * Update bricks, merge previous state with partial state
  *
@@ -44,7 +44,7 @@ export const updateBricks = (prevBricks, bricks) => {
   return nextBricks
 }
 
-// TODO TU
+// TODO UT
 /**
  * Aggregate brick states for a given stack
  *
@@ -63,7 +63,7 @@ export const computeAggregatedStackStatus = (bricks) => {
   return getStatusByState('DEFAULT')
 }
 
-// TODO TU
+// TODO UT
 /**
  * Return new array without users to delete
  *
@@ -79,7 +79,7 @@ export const removeUsers = (prevUsers, usersToDelete) => {
   return prevUsers
 }
 
-// TODO TU
+// TODO UT
 /**
  * Filter checked members object, return array
  *

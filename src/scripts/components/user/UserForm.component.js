@@ -42,7 +42,7 @@ const validate = combineValidators({
   email: emailValidator('email')
 })
 
-// TODO TU
+// TODO UT
 // UserForm component
 export class UserForm extends React.Component {
 

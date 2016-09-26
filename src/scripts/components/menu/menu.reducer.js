@@ -25,7 +25,7 @@ import { updateMenu } from '../../services/stateUpdater.service'
 
 const stateDefault = {}
 
-// TODO TU
+// TODO UT
 export default function menu(state = stateDefault, action) {
   if (action.type === MENU_INIT || action.type === MENU_UPDATE) {
     return action.menu

@@ -30,7 +30,7 @@ storageService.remove = (key, scope = 'local') => window[`${scope}Storage`].remo
 
 storageService.clear = (scope = 'local') => window[`${scope}Storage`].clear()
 
-// TODO TU
+// TODO UT
 storageService.clean = () => {
   storageService.remove('projectConfigId')
   storageService.remove('projectId')

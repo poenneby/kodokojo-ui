@@ -101,7 +101,7 @@ export function getProjectConfig(projectConfigId) {
     })
 }
 
-// TODO TU
+// TODO UT
 export function getProjectConfigAndProject(projectConfigId, projectId) {
   return dispatch => dispatch(getProjectConfig(projectConfigId))
     .then(data => {

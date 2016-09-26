@@ -101,7 +101,7 @@ export default function auth(state = authReducerInit(), action) {
     return initialState
   }
 
-  // TODO TU
+  // TODO UT
   if (action.type === CAPTCHA_INIT) {
     return {
       ...state,

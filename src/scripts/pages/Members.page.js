@@ -46,7 +46,7 @@ import {
 import { getAggregatedStackStatus } from '../commons/reducers'
 import { filterCheckedMembers } from '../services/stateUpdater.service'
 
-// TODO TU
+// TODO UT
 // MembersPage component
 export class MembersPage extends Component {
 

@@ -28,7 +28,7 @@ import brickTheme from './brick.scss'
 import Status from '../status/Status.component'
 import { enumStatus, getStatusByState } from '../../services/param.service'
 
-// TODO TU
+// TODO UT
 // Brick component
 export class Brick extends Component {
 

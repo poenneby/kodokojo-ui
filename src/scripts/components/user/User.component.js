@@ -34,7 +34,7 @@ import IconButton from '../_ui/button/IconButton.component'
 import EditIcon from '../_ui/icons/EditIcon.component'
 import { getUser } from '../../commons/reducers'
 
-// TODO TU
+// TODO UT
 // User component
 export class User extends React.Component {
 

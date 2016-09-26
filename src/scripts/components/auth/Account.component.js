@@ -22,7 +22,7 @@ import { connect } from 'react-redux'
 // Account component
 import utilsTheme from '../../../styles/_utils.scss'
 
-// TODO TU
+// TODO UT
 // TODO implement i18n
 export class Account extends Component {
 

@@ -24,7 +24,7 @@ import sortBy from 'lodash/sortBy'
 import '../../../styles/_commons.less'
 import MenuItem from './MenuItem.component'
 
-// TODO TU
+// TODO UT
 // Menu component
 export class Menu extends Component {
 

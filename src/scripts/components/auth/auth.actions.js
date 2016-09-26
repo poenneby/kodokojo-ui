@@ -22,7 +22,7 @@ import {
   CAPTCHA_RESET
 } from '../../commons/constants'
 
-// TODO TU
+// TODO UT
 export function initCaptcha() {
   return {
     type: CAPTCHA_INIT

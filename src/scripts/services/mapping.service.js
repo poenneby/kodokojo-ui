@@ -22,7 +22,7 @@ import groupBy from 'lodash/groupBy'
 
 const mappingService = {}
 
-// TODO TI
+// TODO IT
 
 /**
  * mapping for account
@@ -167,7 +167,7 @@ mappingService.mapBrickEvent = (data) => (
  * @param {Array} data
  * @returns {{bricks: array}} list of brick objects
  */
-// TODO TU
+// TODO UT
 mappingService.mapBricksDetails = (data) => (
   {
     bricks: data.length ? mappingService.reorderBricks(data) : []
@@ -180,7 +180,7 @@ mappingService.mapBricksDetails = (data) => (
  * @param data
  * @returns {Array} reordered array of bricks (SCM / CI / REPOSITORY)
  */
-// TODO TU
+// TODO UT
 mappingService.reorderBricks = (data) => {
   const groupedBricks = mappingService.groupBricks(data)
   return toArray({
@@ -196,7 +196,7 @@ mappingService.reorderBricks = (data) => {
  * @param data
  * @returns {Object} filtered bricks and grouped by type
  */
-// TODO TU
+// TODO UT
 mappingService.groupBricks = (data) => {
   const bricks = data.map(brick => mappingService.mapBrick(brick)).filter(brick => brick !== undefined)
   return groupBy(bricks, 'type')
