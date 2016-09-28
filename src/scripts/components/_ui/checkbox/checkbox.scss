@@ -72,10 +72,10 @@ $checkbox-field-margin-bottom: 0;
     color: $checkbox-text-color;
   }
   > .check {
-    cursor: auto;
+    cursor: not-allowed;
     border-color: $checkbox-disabled-color;
     &.checked {
-      cursor: auto;
+      cursor: not-allowed;
       background-color: $checkbox-disabled-color;
       border-color: $checkbox-disabled-color;
     }

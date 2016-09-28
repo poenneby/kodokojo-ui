@@ -39,10 +39,14 @@
   font-weight: $font-weight-thin;
   font-size: $font-size-normal;
   user-select: none;
+  @include unselectable();
   cursor: pointer;
   &[disabled] {
     color: $color-font-2;
-    cursor: auto;
+    // Note: for the moment, we choose to auto pointer-events to display cursor
+    // disable if blocking pointer events is needed
+    pointer-events: auto;
+    cursor: not-allowed;
     & span > svg {
       fill: $color-font-1;
     }
