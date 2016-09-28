@@ -20,7 +20,7 @@ import React, { Component, PropTypes } from 'react'
 
 // UI library component
 import { Avatar as ToolboxAvatar } from 'react-toolbox'
-import avatarTheme from 'react-toolbox/components/avatar/theme.scss'
+import avatarTheme from './avatar.scss'
 
 // component
 import '../../../../styles/_commons.less'
