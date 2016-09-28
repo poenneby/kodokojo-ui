@@ -36,9 +36,9 @@ export const enumStatus = {
     label: 'ONFAILURE',
     image: statusFailure
   },
-  DEFAULT: {
+  UNKNOWN: {
     order: 1,
-    label: 'DEFAULT',
+    label: 'UNKNOWN',
     image: statusDefault
   },
   STARTING: {
@@ -67,11 +67,11 @@ export const enumStatus = {
 }
 
 export const getStatusByState = (state) => (
-  find(enumStatus, { label: state }) || enumStatus.DEFAULT
+  find(enumStatus, { label: state }) || enumStatus.UNKNOWN
 )
 
 export const getStatusByOrder = (order) => (
-  find(enumStatus, { order }) || enumStatus.DEFAULT
+  find(enumStatus, { order }) || enumStatus.UNKNOWN
 )
 
 export const enumBrickLogos = {
