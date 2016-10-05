@@ -62,9 +62,9 @@ $input-hint-opacity: .8;
   font-weight: $font-weight-thin;
   font-size: $font-size-normal;
   margin-top: 0 !important;
-  color: $color-font-5;
+  color: $color-font-6;
   border-bottom: 1px solid $color-primary-5;
-  &:focus {
+  &:focus:not([disabled]):not([readonly]) {
     ~ .bar:before, ~ .bar:after {
       width: 50%;
     }
@@ -81,7 +81,7 @@ $input-hint-opacity: .8;
       color: $color-secondary-1;
     }
   }
-  &:focus, &.filled, &[type="date"], &[type="time"] {
+  &:focus:not([disabled]):not([readonly]), &.filled, &[type="date"], &[type="time"] {
     ~ .label:not(.fixed) {
       top: -$font-size-small;
       font-size: $font-size-small;
@@ -106,7 +106,7 @@ $input-hint-opacity: .8;
 }
 
 .errored {
-  padding-bottom: .3rem;
+  padding-bottom: .2rem;
   > .inputElement {
     margin-top: 0;
     border-bottom-color: $color-ternary-1;
@@ -133,7 +133,7 @@ $input-hint-opacity: .8;
 }
 
 .disabled > .inputElement {
-  color: $color-font-2;
+  color: $color-font-3;
 }
 
 .disabled label {

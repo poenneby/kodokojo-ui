@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { intlShape, injectIntl } from 'react-intl'
 import { Link } from 'react-router'
 import { themr } from 'react-css-themr'
@@ -31,22 +31,22 @@ import menuItemTheme from './menuItem.scss'
  * UI: MenuItem component
  *
  */
-export class MenuItem extends Component {
+export class MenuItem extends React.Component {
 
   static propTypes = {
-    active: PropTypes.bool,
-    disabled: PropTypes.bool,
-    index: PropTypes.number,
+    active: React.PropTypes.bool,
+    disabled: React.PropTypes.bool,
+    index: React.PropTypes.number,
     intl: intlShape.isRequired,
-    labelKey: PropTypes.string,
-    labelText: PropTypes.string,
-    level: PropTypes.number,
-    number: PropTypes.number,
-    onClick: PropTypes.func,
-    route: PropTypes.string,
-    theme: PropTypes.object,
-    titleKey: PropTypes.string,
-    titleText: PropTypes.string
+    labelKey: React.PropTypes.string,
+    labelText: React.PropTypes.string,
+    level: React.PropTypes.number,
+    number: React.PropTypes.number,
+    onClick: React.PropTypes.func,
+    route: React.PropTypes.string,
+    theme: React.PropTypes.object,
+    titleKey: React.PropTypes.string,
+    titleText: React.PropTypes.string
   }
 
   render() {

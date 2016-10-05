@@ -16,104 +16,100 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { compose } from 'redux'
-import { reduxForm } from 'redux-form'
+import { connect } from 'react-redux'
+import { Field, reduxForm, SubmissionError, propTypes } from 'redux-form'
 import { combineValidators } from 'revalidate'
 import { intlShape, injectIntl } from 'react-intl'
+import Promise from 'bluebird'
 
 // Component
 import '../../../styles/_commons.less'
 import Input from '../../components/_ui/input/Input.component'
 import Button from '../../components/_ui/button/Button.component'
 import Captcha from '../../components/captcha/Captcha.component'
+import ErrorMessage from '../../components/message/ErrorMessage.component'
 import { createAccount } from './signup.actions'
 import { initCaptcha, resetCaptcha, updateCaptcha } from '../auth/auth.actions'
-import { updateFieldError } from '../_utils/form/form.actions'
-import { emailValidator } from '../../services/validator.service'
+import { captchaValidator, emailValidator } from '../../services/validator.service'
 import { returnErrorKey } from '../../services/error.service'
 import { getRecaptchaSitekey } from '../../services/param.service'
 
 // validate function
-const validate = combineValidators({
-  email: emailValidator('email')
-})
+const validate = (values, props) => combineValidators({
+  email: emailValidator('email'),
+  captcha: captchaValidator('captcha')
+})(values)
 
 // Signup component
-export class Signup extends Component {
+export class Signup extends React.Component {
 
   static propTypes = {
-    account: PropTypes.object,
-    captcha: PropTypes.object.isRequired,
-    createAccount: PropTypes.func.isRequired,
-    fields: PropTypes.object.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
-    initCaptcha: PropTypes.func.isRequired,
+    account: React.PropTypes.object,
+    captcha: React.PropTypes.string,
+    captchaReset: React.PropTypes.bool,
+    createAccount: React.PropTypes.func.isRequired,
+    initCaptcha: React.PropTypes.func.isRequired,
     intl: intlShape.isRequired,
-    locale: PropTypes.string,
-    resetCaptcha: PropTypes.func.isRequired,
-    submitting: PropTypes.bool.isRequired,
-    updateCaptcha: PropTypes.func.isRequired,
-    updateFieldError: PropTypes.func.isRequired
+    locale: React.PropTypes.string,
+    resetCaptcha: React.PropTypes.func.isRequired,
+    updateCaptcha: React.PropTypes.func.isRequired,
+    ...propTypes
   }
 
-  handleSubmit = () => {
-    const { fields: { email }, captcha, createAccount, resetCaptcha } = this.props // eslint-disable-line no-shadow
+  handleSubmitSignup = (values) => {
+    const { createAccount, resetCaptcha } = this.props // eslint-disable-line no-shadow
+    
+    const nextEmail = values.email
+    const nexCaptcha = values.captcha
 
-    const nextEmail = email.value
-    const error = validate({ email: nextEmail })
-    if (error.email) {
-      return Promise.reject({ email: error.email })
-    }
-    if (!captcha.value) {
-      return Promise.reject({ email: 'captcha-error-empty' })
-    }
-    return createAccount(nextEmail.trim(), captcha.value)
+    return createAccount(nextEmail.trim(), nexCaptcha)
       .then(Promise.resolve())
       .catch(err => {
+        const error = new SubmissionError(
+          { email: returnErrorKey(
+            {
+              component: 'account',
+              code: err.message
+            })
+          }
+        )
+
         // if error code is any 400 or 500, recaptcha must be reset
         if (err.message && err.message.match(/^(4|5)\d{2}$/)) {
-          resetCaptcha()
+          return resetCaptcha()
+                  .then(() => Promise.reject(error))
         }
-        return Promise.reject({ email: returnErrorKey(
-          {
-            component: 'account',
-            code: err.message
-          })
-        })
+        return Promise.reject(error)
       })
   }
 
   handleCaptchaInit = () => {
     const { initCaptcha } = this.props // eslint-disable-line no-shadow
-
+    
     initCaptcha()
   }
 
   handleCaptchaUpdate = (nextCaptcha) => {
-    const { updateFieldError, updateCaptcha } = this.props // eslint-disable-line no-shadow
+    const { updateCaptcha } = this.props // eslint-disable-line no-shadow
 
-    updateFieldError('signupForm', 'email', '')
     updateCaptcha(nextCaptcha)
   }
 
   render() {
-    const { fields: { email, entity }, captcha, handleSubmit, submitting, locale } = this.props // eslint-disable-line no-shadow
+    const { captchaReset, handleSubmit, submitting, locale } = this.props // eslint-disable-line no-shadow
     const { formatMessage } = this.props.intl
 
     return (
       <form id="signupForm"
             name="signupForm"
             noValidate
-            onSubmit={ handleSubmit(this.handleSubmit) }
+            onSubmit={ handleSubmit(this.handleSubmitSignup) }
       >
-        <Input
-            { ...email }
-            error={
-              email.touched && email.error ?
-              formatMessage({ id: email.error }, { fieldName: formatMessage({ id: 'email-input-label' }) }) :
-              ''
-            }
+        <Field
+            component={ Input }
+            errorKey="email-input-label"
             hint={ formatMessage({ id: 'email-hint-label' }) }
             icon="email"
             label={ formatMessage({ id: 'email-label' }) }
@@ -121,8 +117,8 @@ export class Signup extends Component {
             required
             type="email"
         />
-        { /* <Input
-          { ...entity }
+        { /* <Field
+          component={ Input }
           hint={ formatMessage({ id: 'company-hint-label' }) }
           icon="domain"
           label={ formatMessage({ id: 'company-label' }) }
@@ -130,25 +126,29 @@ export class Signup extends Component {
           type="text"
         /> */}
         {/* TODO add a loader when recaptcha is not loaded, disable it on load callback */}
-        {/* TODO add message when user submit without resolving captcha challenge */}
-        <Captcha
-          locale={ locale }
-          onExpiredCallback={ () => { console.log('captcha has expired') } }
-          onLoadCallback={ () => console.log('captcha has loaded') }
-          onResetCallback={ this.handleCaptchaInit }
-          onVerifyCallback={ this.handleCaptchaUpdate }
-          reset={ captcha.reset }
-          sitekey={ getRecaptchaSitekey() }
-          theme="light"
-        />
+        <div style={{ height: '112px' }}>
+          <Captcha
+            locale={ locale }
+            onExpiredCallback={ () => { console.log('captcha has expired') } }
+            onLoadCallback={ () => console.log('captcha has loaded') }
+            onResetCallback={ this.handleCaptchaInit }
+            onVerifyCallback={ this.handleCaptchaUpdate }
+            reset={ captchaReset }
+            sitekey={ getRecaptchaSitekey() }
+            theme="light"
+          />
+          <Field
+            component={ ErrorMessage }
+            name="captcha"
+          />
+        </div>
         <Button
             disabled={ submitting }
             label={ formatMessage({ id: 'signup-label' }) }
-            onTouchTap={ handleSubmit(this.handleSubmit) }
             primary
             title={ formatMessage({ id: 'signup-label' }) }
             type="submit"
-        /><br/>
+        />
       </form>
     )
   }
@@ -158,29 +158,29 @@ export class Signup extends Component {
 const mapStateProps = (state) => (
   {
     account: state.auth.account,
-    captcha: state.auth.captcha,
+    captcha: state.auth.captcha.value,
+    captchaReset: state.auth.captcha.reset,
     locale: state.prefs.locale
   }
 )
 
 const SignupContainer = compose(
-  reduxForm(
-    {
-      form: 'signupForm',
-      fields: ['email', 'entity'],
-      touchOnChange: true,
-      validate
-    },
+  connect(
     mapStateProps,
     {
       createAccount,
       initCaptcha,
       updateCaptcha,
-      updateFieldError,
       resetCaptcha
     }
   ),
   injectIntl
-)(Signup)
+)(reduxForm(
+  {
+    form: 'signupForm',
+    touchOnChange: true,
+    validate
+  }
+)(Signup))
 
 export default SignupContainer

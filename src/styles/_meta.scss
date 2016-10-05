@@ -80,3 +80,10 @@ $spacing-small: 40px;
 $spacing-smaller: 30px;
 $spacing-smallest: 20px;
 $spacing-atomic: 10px;
+
+// miscellaneous
+@mixin unselectable {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}

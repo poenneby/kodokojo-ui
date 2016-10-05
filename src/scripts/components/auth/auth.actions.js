@@ -21,15 +21,21 @@ import {
   CAPTCHA_UPDATE,
   CAPTCHA_RESET
 } from '../../commons/constants'
+import { change, stopSubmit } from 'redux-form'
 
 // TODO UT
-export function initCaptcha() {
+export function initCaptchaComponent() {
   return {
     type: CAPTCHA_INIT
   }
 }
 
-export function updateCaptcha(captcha) {
+export function initCaptcha() {
+  return dispatch => dispatch(change('signupForm', 'captcha', ''))
+    .then(() => dispatch(initCaptchaComponent()))
+}
+
+export function updateCaptchaComponent(captcha) {
   return {
     type: CAPTCHA_UPDATE,
     payload: {
@@ -38,8 +44,18 @@ export function updateCaptcha(captcha) {
   }
 }
 
-export function resetCaptcha() {
+export function updateCaptcha(captcha) {
+  return dispatch => dispatch(change('signupForm', 'captcha', captcha))
+    .then(() => dispatch(updateCaptchaComponent(captcha)))
+}
+
+export function resetCaptchaComponent() {
   return {
     type: CAPTCHA_RESET
   }
+}
+
+export function resetCaptcha() {
+  return dispatch => dispatch(resetCaptchaComponent())
+    // .then(() => dispatch(change('signupForm', 'captcha', '')))
 }

@@ -24,6 +24,8 @@ function loadStories() {
   require('../src/scripts/pages/FirstProject.page.story')
   require('../src/scripts/components/menu/MenuItem.component.story')
   require('../src/scripts/components/menu/Menu.component.story')
+  require('../src/scripts/pages/Signup.page.story')
+  require('../src/scripts/pages/Login.page.story')
   require('../src/scripts/pages/Members.page.story')
   require('../src/scripts/pages/Stacks.page.story')
 }

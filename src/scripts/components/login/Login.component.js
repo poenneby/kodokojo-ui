@@ -16,10 +16,13 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { compose } from 'redux'
-import { reduxForm } from 'redux-form'
+import { connect } from 'react-redux'
+import { Field, reduxForm, SubmissionError, propTypes } from 'redux-form'
+import { combineValidators, isRequired } from 'revalidate'
 import { intlShape, injectIntl } from 'react-intl'
+import Promise from 'bluebird'
 
 // Component
 import '../../../styles/_commons.less'
@@ -28,38 +31,43 @@ import Button from '../../components/_ui/button/Button.component'
 import { login, logout } from './login.actions'
 import { returnErrorKey } from '../../services/error.service'
 
+// validate function
+const validate = (values, props) => combineValidators({
+  username: isRequired({ message: 'general-input-required-error' }),
+  password: isRequired({ message: 'general-input-required-error' })
+})(values)
+
 // TODO if user already logged in, fetch user id from storage and fetch user from api to store
 // Login component
-export class Login extends Component {
+export class Login extends React.Component {
 
   static propTypes = {
-    fields: PropTypes.object.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
     intl: intlShape.isRequired,
-    isAuthenticated: PropTypes.bool,
-    login: PropTypes.func.isRequired,
-    logout: PropTypes.func.isRequired,
-    submitting: PropTypes.bool.isRequired
+    isAuthenticated: React.PropTypes.bool,
+    login: React.PropTypes.func.isRequired,
+    logout: React.PropTypes.func.isRequired,
+    ...propTypes
   }
 
-  handleSubmit = () => {
-    const { fields: { username, psw }, login } = this.props // eslint-disable-line no-shadow
+  handleSubmitLogin = (values) => {
+    const { login } = this.props // eslint-disable-line no-shadow
 
     // TODO add redux form validation
-    const nexUserName = username.value
-    const nexPassword = psw.value
-    if (nexUserName && nexUserName.trim() && nexPassword && nexPassword.trim()) {
-      return login(nexUserName.trim(), nexPassword.trim())
-        .then(Promise.resolve())
-        .catch(err => Promise.reject({ psw: returnErrorKey(
-          {
-            component: 'login',
-            code: err.message
-          })
-        }))
-    }
-    // TODO add default error message
-    return Promise.reject()
+    const nexUserName = values.username
+    const nexPassword = values.password
+
+    return login(nexUserName.trim(), nexPassword.trim())
+      .then(Promise.resolve())
+      .catch(err => Promise.reject(
+        new SubmissionError(
+          { password: returnErrorKey(
+            {
+              component: 'login',
+              code: err.message
+            })
+          }
+        )
+      ))
   }
 
   handleLogout = (event) => {
@@ -71,7 +79,7 @@ export class Login extends Component {
   }
 
   render() {
-    const { fields: { username, psw }, handleSubmit, submitting, isAuthenticated } = this.props // eslint-disable-line no-shadow
+    const { handleSubmit, submitting, isAuthenticated } = this.props // eslint-disable-line no-shadow
     const { formatMessage } = this.props.intl
 
     return (
@@ -79,10 +87,12 @@ export class Login extends Component {
         { !isAuthenticated &&
           <form id="loginForm"
                 name="loginForm"
-                onSubmit={ handleSubmit(this.handleSubmit) }
+                noValidate
+                onSubmit={ handleSubmit(this.handleSubmitLogin) }
           >
-            <Input
-                { ...username }
+            <Field
+                component={ Input }
+                errorKey="username-label"
                 hint={ formatMessage({ id: 'username-hint-label' }) }
                 icon="account_box"
                 id="username"
@@ -91,20 +101,19 @@ export class Login extends Component {
                 required
                 type="text"
             />
-            <Input
-                { ...psw }
-                error={ psw.touched && psw.error ? formatMessage({ id: psw.error }) : '' }
-                icon="lock_open"
-                id="psw"
-                label={ formatMessage({ id: 'password-label' }) }
-                name="psw"
-                required
-                type="password"
+            <Field
+              component={ Input }
+              errorKey="password-label"
+              icon="lock_open"
+              id="password"
+              label={ formatMessage({ id: 'password-label' }) }
+              name="password"
+              required
+              type="password"
             />
             <Button
                 disabled={ submitting }
                 label={ formatMessage({ id: 'login-label' }) }
-                onTouchTap={ handleSubmit(this.handleSubmit) }
                 primary
                 title={ formatMessage({ id: 'login-label' }) }
                 type="submit"
@@ -116,7 +125,7 @@ export class Login extends Component {
             <p>You are authenticated.</p>
             <Button
               label="Log out"
-              onTouchTap={ this.handleLogout }
+              onMouseUp={ this.handleLogout }
               primary
             />
           </div>
@@ -135,11 +144,7 @@ const mapStateProps = (state) => (
 )
 
 const LoginContainer = compose(
-  reduxForm(
-    {
-      form: 'loginForm',
-      fields: ['username', 'psw']
-    },
+  connect(
     mapStateProps,
     {
       login,
@@ -147,6 +152,12 @@ const LoginContainer = compose(
     }
   ),
   injectIntl
-)(Login)
+)(reduxForm(
+  {
+    form: 'loginForm',
+    touchOnChange: true,
+    validate
+  }
+)(Login))
 
 export default LoginContainer

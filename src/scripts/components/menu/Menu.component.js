@@ -16,8 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
+import React from 'react'
 import sortBy from 'lodash/sortBy'
 
 // Component
@@ -26,10 +25,10 @@ import MenuItem from './MenuItem.component'
 
 // TODO UT
 // Menu component
-export class Menu extends Component {
+export class Menu extends React.Component {
 
   static propTypes = {
-    menu: PropTypes.object
+    menu: React.PropTypes.object
   }
 
   render() {

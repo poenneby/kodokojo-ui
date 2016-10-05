@@ -19,34 +19,44 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { IntlProvider } from 'react-intl'
-import { storiesOf, action } from '@kadira/storybook'
+import { storiesOf, linkTo } from '@kadira/storybook'
 
 // contexte
-import configureStore from '../../store/configureStore'
-import en from '../../i18n/en'
+import configureStore from '../store/configureStore'
+import en from '../i18n/en'
 
 // component to story
-import User from './User.component'
+import App from '../components/app/App.component'
+import SignupPage from './Signup.page'
 
 const initialState = {
-  users: {
-    1: {
-      firstName: 'firstname',
-      lastName: 'lastname',
-      userName: 'username',
-      email: 'username@email.ext'
-    }
-  }
+  auth: {
+    account: {},
+    captcha: {
+      value: '',
+      reset: false
+    },
+    isAuthenticated: false,
+    isFetching: false
+  },
+  menu: {}
 }
 
-const store = configureStore(initialState)
+const location = {
+  pathname: '/members'
+}
 
-storiesOf('User', module)
+const initialStore = configureStore(initialState)
+
+storiesOf('SignupPage', module)
   .add('default', () => (
-    <IntlProvider locale="en" messages={ en }>
-      <User
-        store={store}
-        userId={ '1' }
-      />
-    </IntlProvider>
+    <Provider store={initialStore}>
+      <IntlProvider locale="en" messages={ en }>
+        <App>
+          <SignupPage
+            location={ location }
+          />
+        </App>
+      </IntlProvider>
+    </Provider>
   ))

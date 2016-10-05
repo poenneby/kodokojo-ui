@@ -16,9 +16,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { compose } from 'redux'
-import { reduxForm } from 'redux-form'
+import { connect } from 'react-redux'
+import { Field, reduxForm, SubmissionError, propTypes } from 'redux-form'
 import { combineValidators } from 'revalidate'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 import classNames from 'classnames'
@@ -39,49 +40,43 @@ import { returnErrorKey } from '../../services/error.service'
 import { getBrickLogo } from '../../services/param.service'
 
 // validation function
-const validate = combineValidators({
+const validate = (values, props) => combineValidators({
   projectName: projectNameValidator('projectName')
-})
+})(values)
 
 // TODO UT
 // ProjectConfigForm component
-export class ProjectConfigForm extends Component {
+export class ProjectConfigForm extends React.Component {
 
   static propTypes = {
-    bricks: PropTypes.object,
-    createProjectConfig: PropTypes.func.isRequired,
-    fields: PropTypes.object.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
+    bricks: React.PropTypes.object,
+    createProjectConfig: React.PropTypes.func.isRequired,
     intl: intlShape.isRequired,
-    submitting: PropTypes.bool.isRequired,
-    userId: PropTypes.string.isRequired
+    userId: React.PropTypes.string.isRequired,
+    ...propTypes
   }
 
-  handleSubmit = () => {
-    const { fields: { projectName }, userId, createProjectConfig } = this.props // eslint-disable-line no-shadow
+  handleSubmitProject = (values) => {
+    const { userId, createProjectConfig } = this.props // eslint-disable-line no-shadow
 
-    const nextProjectName = projectName.value
-    const error = validate({ projectName: nextProjectName })
+    const nextProjectName = values.projectName
 
-    if (error.projectName) {
-      return Promise.reject({ projectName: error.email })
-    }
-    if (nextProjectName && nextProjectName.trim()) {
-      return createProjectConfig(nextProjectName.trim(), userId)
-        .then(Promise.resolve())
-        .catch(err => Promise.reject({ projectName: returnErrorKey(
-          {
-            component: 'project',
-            code: err.message
-          })
-        }))
-    }
-    // TODO add default error message
-    return Promise.reject()
+    return createProjectConfig(nextProjectName.trim(), userId)
+      .then(Promise.resolve())
+      .catch(err => Promise.reject(
+        new SubmissionError(
+          { projectName: returnErrorKey(
+            {
+              component: 'project',
+              code: err.message
+            })
+          }
+        )
+      ))
   }
 
   render() {
-    const { bricks, fields: { projectName, projectUsers }, handleSubmit, submitting } = this.props // eslint-disable-line no-shadow
+    const { bricks, onSubmit, handleSubmit, submitting } = this.props // eslint-disable-line no-shadow
     const { formatMessage } = this.props.intl
 
     const bricksDetails = bricks && bricks.list && bricks.list.length ? bricks.list : undefined
@@ -89,10 +84,11 @@ export class ProjectConfigForm extends Component {
     return (
       <form id="projectForm"
             name="projectForm"
-            onSubmit={ handleSubmit(this.handleSubmit) }
+            noValidate
+            onSubmit={ handleSubmit(this.handleSubmitProject) }
       >
         <CardContainer>
-          <div style={{ display: 'block', overflow: 'auto', width: '100%', height: '100%' }}>
+          <div style={{ display: 'block', width: '100%', height: '100%' }}>
             <div style={{ display: 'flex', flexFlow: 'row' }}>
               <Card
                 primary
@@ -116,20 +112,16 @@ export class ProjectConfigForm extends Component {
                     style={{ flex: '0 60%', paddingTop: '20px' }}
                   >
                     <div style={{ width: '50%' }}>
-                      <Input
-                        { ...projectName }
-                        error={
-                          projectName.touched && projectName.error ?
-                          formatMessage({ id: projectName.error }, { fieldName: formatMessage({ id: 'project-name-label' }) }) :
-                          ''
-                        }
+                      <Field
+                        component={ Input }
+                        errorKey="project-name-label"
                         label={ formatMessage({ id: 'project-name-label' }) }
                         name="projectName"
                         required
                         type="text"
                       />
-                      <input
-                        {...projectUsers}
+                      <Field
+                        component="input"
                         id="projectUsers"
                         name="projectUsers"
                         type="hidden"
@@ -262,19 +254,19 @@ const mapStateProps = (state) => (
 )
 
 const ProjectConfigFormContainer = compose(
-  reduxForm(
-    {
-      form: 'projectForm',
-      fields: ['projectName', 'projectUsers'],
-      touchOnChange: true,
-      validate
-    },
+  connect(
     mapStateProps,
     {
       createProjectConfig
     }
   ),
   injectIntl
-)(ProjectConfigForm)
+)(reduxForm(
+  {
+    form: 'projectForm',
+    touchOnChange: true,
+    validate
+  }
+)(ProjectConfigForm))
 
 export default ProjectConfigFormContainer

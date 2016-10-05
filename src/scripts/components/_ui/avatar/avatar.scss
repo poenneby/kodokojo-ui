@@ -16,10 +16,5 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { stopSubmit } from 'redux-form'
-
-export function updateFieldError(form, field, errorMessage) {
-  return dispatch => dispatch(
-    stopSubmit(form, { [field]: errorMessage })
-  )
-}
+@import '~react-toolbox/components/button/theme';
+@import '../../../../styles/meta';

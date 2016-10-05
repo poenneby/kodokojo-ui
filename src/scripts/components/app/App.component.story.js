@@ -38,15 +38,15 @@ const initialState = {
     locale: 'en',
     theme: 'dark'
   },
-  menu: [
-    {
+  menu: {
+    0: {
       index: 0,
       labelKey: 'projects-label',
       level: 0,
       route: '#projects',
       titleKey: 'projects-label'
     }
-  ]
+  }
 }
 
 const initialStateNoNav = initialState

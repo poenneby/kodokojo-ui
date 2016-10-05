@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 
 // Account component
@@ -24,10 +24,10 @@ import utilsTheme from '../../../styles/_utils.scss'
 
 // TODO UT
 // TODO implement i18n
-export class Account extends Component {
+export class Account extends React.Component {
 
   static propTypes = {
-    account: PropTypes.object.isRequired
+    account: React.PropTypes.object.isRequired
   }
 
   render() {

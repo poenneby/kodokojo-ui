@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { Link } from 'react-router'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 
@@ -25,14 +25,14 @@ import '../../../styles/_commons.less'
 import AppBar from '../_ui/appBar/AppBar.component'
 
 // AppHeader
-export class AppHeader extends Component {
+export class AppHeader extends React.Component {
 
   static propTypes = {
     intl: intlShape.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired,
-    languageSelected: PropTypes.string.isRequired,
-    onLanguageChange: PropTypes.func.isRequired,
-    onLogout: PropTypes.func.isRequired
+    isAuthenticated: React.PropTypes.bool.isRequired,
+    languageSelected: React.PropTypes.string.isRequired,
+    onLanguageChange: React.PropTypes.func.isRequired,
+    onLogout: React.PropTypes.func.isRequired
   }
 
   render() {
