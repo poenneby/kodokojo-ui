@@ -16,7 +16,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+// we don't validate propTypes for redux-form because we will have to filter all none used in toolbox component
+// see https://github.com/Hacker0x01/react-datepicker/issues/517#issuecomment-230119718
+/* eslint-disable react/prop-types */
+
+import React from 'react'
+import { intlShape, injectIntl } from 'react-intl'
 
 // UI library component
 import { Input as ToolboxInput } from 'react-toolbox/lib/input'
@@ -29,8 +34,33 @@ import inputTheme from './input.scss'
  * UI: Input component
  *
  */
-const Input = (props) => (
-  <ToolboxInput {...props} theme={ inputTheme } />
-)
+class Input extends React.Component {
+  static propTypes = {
+    intl: intlShape.isRequired
+  }
 
-export default Input
+  render() {
+    const { formatMessage } = this.props.intl
+    const { input, meta, errorKey } = this.props
+    const rest = { ...this.props }
+    delete rest.intl
+    delete rest.input
+    delete rest.meta
+    delete rest.errorKey
+    
+    return (
+      <ToolboxInput
+        {...rest}
+        {...input}
+        error={ 
+          meta && meta.touched && meta.error ?
+          formatMessage({ id: meta.error }, { fieldName: errorKey ? formatMessage({ id: errorKey }) : '' }) :
+          ''
+        }
+        theme={ inputTheme }
+      />
+    )
+  }
+}
+
+export default injectIntl(Input)
