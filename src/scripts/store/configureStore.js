@@ -17,7 +17,7 @@
  */
 
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'local') {
-  module.exports = require('./configureStore.prod')
+  module.exports = require('./configureStore.prod').default
 } else {
-  module.exports = require('./configureStore.dev')
+  module.exports = require('./configureStore.dev').default
 }

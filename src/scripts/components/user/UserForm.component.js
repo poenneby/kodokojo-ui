@@ -17,8 +17,9 @@
  */
 
 import React from 'react'
+import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { reduxForm } from 'redux-form'
+import { Field, reduxForm, SubmissionError, propTypes } from 'redux-form'
 import { combineValidators } from 'revalidate'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 import classNames from 'classnames'
@@ -36,11 +37,10 @@ import { emailValidator } from '../../services/validator.service'
 import { returnErrorKey } from '../../services/error.service'
 import { getUser } from '../../commons/reducers'
 
-
 // validate function
-const validate = combineValidators({
+const validate = (values, props) => combineValidators({
   email: emailValidator('email')
-})
+})(values)
 
 // TODO UT
 // UserForm component
@@ -50,9 +50,7 @@ export class UserForm extends React.Component {
     addUserToProjectConfig: React.PropTypes.func,
     aggregatedStackStatus: React.PropTypes.object,
     checked: React.PropTypes.bool,
-    disabled: React.PropTypes.bool.isRequired,
-    fields: React.PropTypes.object.isRequired,
-    handleSubmit: React.PropTypes.func,
+    disabled: React.PropTypes.bool,
     intl: intlShape.isRequired,
     onCancel: React.PropTypes.func.isRequired,
     onSubmitFailure: React.PropTypes.func.isRequired,
@@ -61,11 +59,11 @@ export class UserForm extends React.Component {
     onUserEditCancel: React.PropTypes.func.isRequired,
     onUserSelect: React.PropTypes.func.isRequired,
     projectConfigId: React.PropTypes.string,
-    resetForm: React.PropTypes.func.isRequired,
     selectable: React.PropTypes.bool,
-    submitting: React.PropTypes.bool.isRequired,
     theme: React.PropTypes.object,
-    userId: React.PropTypes.string
+    user: React.PropTypes.object,
+    userId: React.PropTypes.string,
+    ...propTypes
   }
 
   static defaultProps = {
@@ -95,7 +93,7 @@ export class UserForm extends React.Component {
   }
 
   handleUserEditCancel = () => {
-    const { userId, onCancel, onUserEditCancel, resetForm } = this.props
+    const { userId, onCancel, onUserEditCancel, reset } = this.props
     this.setState({
       ...this.state,
       edited: false
@@ -108,14 +106,14 @@ export class UserForm extends React.Component {
     })
 
     onCancel(userId)
-    resetForm()
+    reset()
   }
 
-  handleUserEditSubmit = () => {
+  handleUserEditSubmit = ({email, firstName, lastName, password, sshKeyPublic}) => {
     const {
-      fields: { email, firstName, lasteName, password, sshKeyPublic, sshKeyPrivate },
       userId, onSubmitForm, onSubmitSuccess, onSubmitFailure
     } = this.props // eslint-disable-line no-shadow
+    const { formatMessage } = this.props.intl // eslint-disable-line no-shadow 
 
     const nextEmail = email.value ? email.value.trim() : ''
     const error = validate({ email: nextEmail })
@@ -130,12 +128,12 @@ export class UserForm extends React.Component {
         })
         .catch(err => {
           onSubmitFailure(userId)
-          return Promise.reject({ email: returnErrorKey(
+          const errorMessageId = returnErrorKey(
             {
               component: 'email',
               code: err.message
             })
-          })
+          throw new SubmissionError(formatMessage({ id: errorMessageId }, { fieldName: formatMessage({ id: 'email-input-label' }) }))
         })
     }
     // TODO add default error message
@@ -143,7 +141,10 @@ export class UserForm extends React.Component {
   }
 
   render() {
-    const { fields: { email }, disabled, handleSubmit, selectable, submitting } = this.props // eslint-disable-line no-shadow
+    const {
+      email, firstName, lastName, userName, password, sshKeyPublic,
+      disabled, handleSubmit, pristine, reset, submitting, selectable, user
+    } = this.props // eslint-disable-line no-shadow
     const { formatMessage } = this.props.intl
 
     return (
@@ -159,20 +160,39 @@ export class UserForm extends React.Component {
             <div className={ userTheme['user-name--form'] }>
               <Avatar>
                 <div className={ userTheme['user-initials'] }>
-                  ...
+                  { user &&
+                    user.firstName.substr(0, 1).toUpperCase()
+                  }
+                  { user &&
+                    user.lastName.substr(0, 1).toUpperCase()
+                  }
                 </div>
               </Avatar>
-              <Input
-                disabled
-                label={ formatMessage({ id: 'name-label' }) }
-                name="name"
-              />
+              <div style={{ display: 'flex', flexFlow: 'column wrap', justifyContent: 'flex-start', width: '100%' }}>
+                <Field
+                  component={ Input }
+                  label={ formatMessage({ id: 'name-first-label' }) }
+                  name="firstName"
+                  required
+                  type="text"
+                />
+                <Field
+                  component={ Input }
+                  label={ formatMessage({ id: 'name-last-label' }) }
+                  name="lastName"
+                  required
+                  type="text"
+                />
+              </div>
             </div>
             <div className={ userTheme['user-username--form'] }>
-              <Input
+              <Field
+                component={ Input }
                 disabled
                 label={ formatMessage({ id: 'username-label' }) }
-                name="username"
+                name="userName"
+                required
+                type="text"
               />
             </div>
             <div className={ userTheme['user-group--form'] }>
@@ -183,13 +203,9 @@ export class UserForm extends React.Component {
               </span>
             </div>
             <div className={ userTheme['user-email--form'] }>
-              <Input
-                { ...email }
-                error={
-                  email.touched && email.error ?
-                  formatMessage({ id: email.error }, { fieldName: formatMessage({ id: 'email-input-label' }) }) :
-                  ''
-                }
+              <Field
+                component={ Input }
+                errorKey="email-input-label"
                 hint={ formatMessage({ id: 'email-hint-label' }) }
                 label={ formatMessage({ id: 'email-label' }) }
                 name="email"
@@ -236,32 +252,32 @@ export class UserForm extends React.Component {
 }
 
 // UserForm container
-const mapStateProps = (state, ownProps) => (
-  {
-    user: getUser(ownProps.userId, state)
+const mapStateProps = (state, ownProps) => {
+  const user = getUser(ownProps.userId, state)
+  return {
+    user,
+    initialValues: {
+      firstName: user ? user.firstName : '',
+      lastName: user ? user.lastName : '',
+      userName: user ? user.userName : '',
+      email: user ? user.email : '',
+      sshKeyPublic: user ? user.sshKeyPublic : ''
+    }
   }
-)
+}
 
 const UserFormContainer = compose(
-  reduxForm(
-    {
-      form: 'userForm',
-      fields: [
-        'email',
-        'firstName',
-        'lastName',
-        'password',
-        'sshKeyPublic',
-        'sshKeyPrivate'
-      ],
-      touchOnChange: true,
-      validate
-    },
+  connect(
     mapStateProps,
     {}
   ),
   injectIntl
-)(UserForm)
-
+)(reduxForm(
+  {
+    form: 'userForm',
+    touchOnChange: true,
+    validate
+  }
+)(UserForm))
 
 export default UserFormContainer

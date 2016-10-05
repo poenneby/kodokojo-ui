@@ -41,13 +41,9 @@ export class User extends React.Component {
   static propTypes = {
     checked: React.PropTypes.bool,
     disabled: React.PropTypes.bool,
-    fields: React.PropTypes.object.isRequired,
-    handleSubmit: React.PropTypes.func,
     intl: intlShape.isRequired,
     onUserEdit: React.PropTypes.func.isRequired,
     onUserSelect: React.PropTypes.func.isRequired,
-    resetForm: React.PropTypes.func.isRequired,
-    submitting: React.PropTypes.bool.isRequired,
     theme: React.PropTypes.object,
     user: React.PropTypes.object,
     userId: React.PropTypes.string
@@ -106,10 +102,10 @@ export class User extends React.Component {
             <Avatar>
               <div className={ theme['user-initials'] }>
                 { user &&
-                user.firstName.substr(0, 1).toUpperCase()
+                  user.firstName.substr(0, 1).toUpperCase()
                 }
                 { user &&
-                user.lastName.substr(0, 1).toUpperCase()
+                  user.lastName.substr(0, 1).toUpperCase()
                 }
               </div>
             </Avatar>

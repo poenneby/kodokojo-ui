@@ -35,7 +35,6 @@
     font-size: $font-size-large;
     background-color: $color-primary-2;
     .user-initials {
-      height: 40px;
       width: 40px;
     }
   }
@@ -71,7 +70,7 @@
   display: flex;
   flex-flow: row;
   align-items: center;
-  height: 100px;
+  height: 170px;
   padding-top: 20px;
   background: $color-primary-3;
   color: $color-font-4;
@@ -113,7 +112,10 @@
   @extend %user-column;
   align-items: baseline;
   input[type="text"] {
-    width: 85%;
+    width: 90%;
+  }
+  input[type="email"] {
+    width: 95%;
   }
 }
 

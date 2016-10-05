@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import classNames from 'classnames'
 
 // component
@@ -27,23 +27,23 @@ import captchaTheme from './captcha.scss'
 // https://github.com/twobucks/react-gcaptcha
 // thanks!
 
-class Captcha extends Component {
+class Captcha extends React.Component {
   static propTypes = {
-    className: PropTypes.string,
-    elementID: PropTypes.string,
-    locale: PropTypes.string,
-    onExpiredCallback: PropTypes.func,
-    onExpiredCallbackName: PropTypes.string,
-    onLoadCallback: PropTypes.func,
-    onLoadCallbackName: PropTypes.string,
-    onResetCallback: PropTypes.func,
-    onVerifyCallback: PropTypes.func,
-    render: PropTypes.string,
-    reset: PropTypes.bool,
-    sitekey: PropTypes.string,
-    size: PropTypes.string,
-    theme: PropTypes.string,
-    type: PropTypes.string
+    className: React.PropTypes.string,
+    elementID: React.PropTypes.string,
+    locale: React.PropTypes.string,
+    onExpiredCallback: React.PropTypes.func,
+    onExpiredCallbackName: React.PropTypes.string,
+    onLoadCallback: React.PropTypes.func,
+    onLoadCallbackName: React.PropTypes.string,
+    onResetCallback: React.PropTypes.func,
+    onVerifyCallback: React.PropTypes.func,
+    render: React.PropTypes.string,
+    reset: React.PropTypes.bool,
+    sitekey: React.PropTypes.string,
+    size: React.PropTypes.string,
+    theme: React.PropTypes.string,
+    type: React.PropTypes.string
   }
 
   static defaultProps = {
@@ -53,6 +53,7 @@ class Captcha extends Component {
     onExpiredCallbackName: 'recaptchaExpired',
     onLoadCallback: () => {},
     onLoadCallbackName: 'recaptchaLoaded',
+    onResetCallback: () => {},
     onVerifyCallback: () => {},
     render: 'explicit',
     reset: undefined,
@@ -64,7 +65,7 @@ class Captcha extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      captcha: {}
+      captcha: ''
     }
   }
 
@@ -150,10 +151,12 @@ class Captcha extends Component {
   }
 
   resetCaptcha() {
+    const { onResetCallback } = this.props
     const { grecaptcha } = window // eslint-disable-line no-shadow
 
     if (typeof grecaptcha !== 'undefined') {
-      grecaptcha.reset(this.captcha)
+      onResetCallback()
+      grecaptcha.reset(this.state.captcha)
     }
   }
 

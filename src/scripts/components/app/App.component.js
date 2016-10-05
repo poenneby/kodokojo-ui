@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { themr } from 'react-css-themr'
 
@@ -35,19 +35,19 @@ import { logout } from '../login/login.actions'
 import { requestWebsocket } from '../_utils/websocket/websocket.actions'
 import { setTheme, setLocale, setNavVisibility } from './app.actions'
 
-class App extends Component {
+class App extends React.Component {
 
   static propTypes = {
-    children: PropTypes.element.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired,
-    locale: PropTypes.string.isRequired,
-    logout: PropTypes.func.isRequired,
-    menu: PropTypes.object,
-    navigation: PropTypes.bool,
-    requestWebsocket: PropTypes.func.isRequired,
-    setLocale: PropTypes.func.isRequired,
-    setNavVisibility: PropTypes.func.isRequired,
-    theme: PropTypes.string.isRequired
+    children: React.PropTypes.element.isRequired,
+    isAuthenticated: React.PropTypes.bool.isRequired,
+    locale: React.PropTypes.string.isRequired,
+    logout: React.PropTypes.func.isRequired,
+    menu: React.PropTypes.object,
+    navigation: React.PropTypes.bool,
+    requestWebsocket: React.PropTypes.func.isRequired,
+    setLocale: React.PropTypes.func.isRequired,
+    setNavVisibility: React.PropTypes.func.isRequired,
+    theme: React.PropTypes.string.isRequired
   }
 
   componentWillMount = () => {

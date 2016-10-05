@@ -48,6 +48,13 @@ validatorService.emailValidator = composeValidators(
 )
 
 /**
+ * Revalidate captcha validator
+ */
+validatorService.captchaValidator = composeValidators(
+  isRequired({ message: 'captcha-error-empty' })
+)
+
+/**
  * Return project name pattern matching
  *
  * @param value
@@ -82,6 +89,7 @@ validatorService.delayStandard = 800
 // public API
 export const email = validatorService.email
 export const emailValidator = validatorService.emailValidator
+export const captchaValidator = validatorService.captchaValidator
 export const projectNameValidator = validatorService.projectNameValidator
 export const delayStandard = validatorService.delayStandard
 

@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
@@ -31,12 +31,12 @@ import Button from '../components/_ui/button/Button.component'
 import Signup from '../components/signup/Signup.component'
 import { setNavVisibility } from '../components/app/app.actions'
 
-class SignupPage extends Component {
+class SignupPage extends React.Component {
 
   static propTypes = {
     intl: intlShape.isRequired,
-    location: PropTypes.object.isRequired,
-    setNavVisibility: PropTypes.func.isRequired
+    location: React.PropTypes.object.isRequired,
+    setNavVisibility: React.PropTypes.func.isRequired
   }
 
   componentWillMount = () => {
