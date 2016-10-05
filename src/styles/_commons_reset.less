@@ -59,8 +59,28 @@ input::-moz-focus-inner {
     background: transparent;
   }
 }
-
 input:-webkit-autofill {
   -webkit-animation-name: autofill;
   -webkit-animation-fill-mode: both;
+}
+
+textarea {
+  resize: none;
+}
+// specific to webkit, have no equivalent of it in firefox
+textarea::-webkit-scrollbar {
+  width: .85em;
+}
+textarea::-webkit-scrollbar-track {
+  background-color: @color-primary-1;
+  border: 2px @color-primary-2 dotted;
+  border-radius: 10px;
+}
+textarea::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  background-color: @color-primary-4;
+  border-radius: 10px;
+}
+textarea::-webkit-resizer {
+  background-color: @color-primary-2;
 }
