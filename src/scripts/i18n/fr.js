@@ -65,7 +65,7 @@ export default {
   'members-label': 'Members',
   'member-delete-label': 'Delete member',
   'member-delete-confirm': 'Are you sure you want to delete these members from the project?',
-  'members-disabled-add-label': 'Stack is currently not fully running, these actions are disabled until it will be.',
+  'members-disabled-add-label': 'Stack is currently not fully running, actions are disabled during processing.',
   'name-label': 'Name',
   'name-first-label': 'First name',
   'name-last-label': 'Last name',

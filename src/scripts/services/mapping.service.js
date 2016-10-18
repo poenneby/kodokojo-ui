@@ -87,7 +87,8 @@ mappingService.mapUserOutput = (data) => (
     lastName: data.lastName,
     name: data.name,
     username: data.userName,
-    email: data.email
+    email: data.email,
+    password: data.password
   }
 )
 
