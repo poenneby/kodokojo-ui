@@ -46,18 +46,18 @@ userRepository.updateUser = (request) => {
   logger.debug('updateUser')
 
   const { identifier, firstname, lastname, password, sshPublicKey, email, headers } = {
-    identifier: request.params.id,
-    firstname: firstname,
-    lastname: lastname,
-    password: password,
-    sshPublicKey: sshPublicKey,
+    identifier: request.params.userId,
+    firstname: request.body.firstname,
+    lastname: request.body.lastname,
+    password: request.body.password,
+    sshPublicKey: request.body.sshPublicKey,
     email: request.body.email,
     headers: request.headers
   }
   headers.host = config.api.host
 
   const req = {
-    method: 'POST',
+    method: 'PATCH',
     uri: `${config.api.protocol}${config.api.host}${config.api.routes.user}/${identifier}`,
     json: true,
     headers,
