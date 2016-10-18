@@ -137,7 +137,7 @@ export class UserForm extends React.Component {
     const { formatMessage } = this.props.intl // eslint-disable-line no-shadow 
 
     const nextUser = {
-      id: user.id,
+      id: user ? user.id : '',
       email: email ? email.trim() : '',
       firstName: firstName ? firstName.trim() : '',
       lastName: lastName ? lastName.trim() : '',
