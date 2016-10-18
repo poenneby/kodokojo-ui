@@ -103,7 +103,8 @@ describe('mapping service', () => {
         lastName: 'lastName',
         name: 'name',
         username: 'userName',
-        email: 'test@email.com'
+        email: 'test@email.com',
+        sshPublicKey: 'ssh-key Public'
       }
 
       // When
@@ -116,7 +117,8 @@ describe('mapping service', () => {
         firstName: 'firstName',
         lastName: 'lastName',
         userName: 'userName',
-        email: 'test@email.com'
+        email: 'test@email.com',
+        sshKeyPublic: 'ssh-key Public'
       })
     })
   })

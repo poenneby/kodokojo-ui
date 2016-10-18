@@ -71,7 +71,8 @@ mappingService.mapUser = (data) => (
     lastName: data.lastName,
     name: data.name,
     userName: data.username,
-    email: data.email
+    email: data.email,
+    sshKeyPublic: data.sshPublicKey
   }
 )
 
@@ -80,6 +81,7 @@ mappingService.mapUser = (data) => (
  * @param data
  * @returns {{identifier: string, firstName: string, lastName: string, name: string, userName: string, email: string}}
  */
+// TODO UT
 mappingService.mapUserOutput = (data) => (
   {
     identifier: data.id,
@@ -88,7 +90,8 @@ mappingService.mapUserOutput = (data) => (
     name: data.name,
     username: data.userName,
     email: data.email,
-    password: data.password
+    password: data.password,
+    sshPublicKey: data.sshKeyPublic
   }
 )
 

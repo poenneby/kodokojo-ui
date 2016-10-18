@@ -175,12 +175,9 @@ export function requestUpdateUser(user) {
         USER_UPDATE_REQUEST,
         {
           type: USER_UPDATE_SUCCESS,
-          payload: (action, state, res) => res.json()
-            .then(data => (
-              {
-                user: user
-              }
-          ))
+          payload: {
+            user
+          }
         },
         USER_UPDATE_FAILURE
       ]

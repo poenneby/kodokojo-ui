@@ -134,7 +134,7 @@ export class UserForm extends React.Component {
     const {
       user, onSubmitUserForm, onSubmitUserSuccess, onSubmitUserFailure
     } = this.props // eslint-disable-line no-shadow
-    const { formatMessage } = this.props.intl // eslint-disable-line no-shadow 
+    const { formatMessage } = this.props.intl // eslint-disable-line no-shadow
 
     const nextUser = {
       id: user ? user.id : '',
