@@ -7,7 +7,7 @@
   "username": "jpthiery",
   "email": "jpthiery@xebia.fr",
   "password": "",
-  "sshPublicKey": "",
+  "sshPublicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYji20blJoetQ7BLDEeRzmf3i49fQDCGSWrTF/i8ANiJufVOs7Q8Ce4+JXuTmQD4Kol7LaKmc7ObhZN8w7PrAd2HM8PqQQaVIww+hlmTXJDWpSMwl5+RyT/wWzO8n+F+F3ZiAL+IqqkAn3G5Q4Aw7lN65geceD57yrMJ9C3xedafHDHEQIuD34ACCbhp53ZXFpBMryDrRmMiYhUloxN0iYcgeYzG3AxXEYLaxp4hr74rEeJ1CRYArE/Z8cT3iyQ4/+oAZHfWq9Mc8ZKHMLz3lK3IkhDNE2Y4eFE/n1YEaw0h/uwCfo0mR6LX8pt7mJmHEjbdf8rHVXH4N4BZ7szMfp jpthiery@xebia.fr",
   "projectConfigurationIds": [
     {
       "projectConfigurationId": "1e25e0ca2fc382f332be16f1342d152eacedb434",

@@ -3,7 +3,7 @@
 
 exports.controller = function(req, res, next) {
   const firstUser = {
-    "identifier": `${req.id}`,
+    "identifier": `${req.params.id}`,
     "entityIdentifier": "15c850471f3add8a0dd937fda85ef0fe27519481",
     "firstName": "jpthiery",
     "lastName": "jpthiery",

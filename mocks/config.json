@@ -23,6 +23,12 @@
       "serve": "data/user.get.json"
     },
     {
+      "path": "/user/:id",
+      "method": "PATCH",
+      "mockType": "func",
+      "serve": "data/user.patch.js"
+    },
+    {
       "path": "/brick",
       "method": "GET",
       "mockType": "file",
@@ -35,7 +41,7 @@
       "serve": "59e860b31588a0a1f2ae3fa75764ce133a6985e3"
     },
     {
-      "path": "/projectconfig/:id",
+      "path": "/projectconfig/:identifier",
       "method": "GET",
       "mockType": "func",
       "serve": "data/projectConfig.get.js"
