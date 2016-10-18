@@ -45,16 +45,18 @@ userRepository.initUser = (request) => {
 userRepository.updateUser = (request) => {
   logger.debug('updateUser')
 
-  const { identifier, firstname, lastname, password, sshPublicKey, email, headers } = {
+  const { identifier, firstName, lastName, password, sshPublicKey, email, headers } = {
     identifier: request.params.userId,
-    firstname: request.body.firstname,
-    lastname: request.body.lastname,
+    firstName: request.body.firstName,
+    lastName: request.body.lastName,
     password: request.body.password,
     sshPublicKey: request.body.sshPublicKey,
     email: request.body.email,
     headers: request.headers
   }
   headers.host = config.api.host
+  delete headers.referer
+  delete headers.origin
 
   const req = {
     method: 'PATCH',
@@ -62,8 +64,8 @@ userRepository.updateUser = (request) => {
     json: true,
     headers,
     body: {
-      firstname,
-      lastname,
+      firstName,
+      lastName,
       email,
       password,
       sshPublicKey
