@@ -19,7 +19,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import capitalise from 'lodash/capitalize'
 import { themr } from 'react-css-themr'
 import { intlShape, injectIntl } from 'react-intl'
 import classNames from 'classnames'
@@ -112,7 +111,7 @@ export class User extends React.Component {
               </div>
             </Avatar>
             { user &&
-            `${capitalise(user.firstName)} ${capitalise(user.lastName)}`
+              `${user.firstName}  ${user.lastName}`
             }
           </div>
           <div className={ theme['user-username'] }>
