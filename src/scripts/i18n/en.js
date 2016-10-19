@@ -99,6 +99,7 @@ export default {
   'status-ONFAILURE-label': 'On failure',
   'type-label': 'Type',
   'user-edit-tooltip-disabled': 'You can’t modify others members',
+  'user-select-tooltip-disabled': 'You can’t delete yourself from project',
   'username-label': 'User name',
   'username-hint-label': 'characters before @email.com',
   'report-label': 'Report',

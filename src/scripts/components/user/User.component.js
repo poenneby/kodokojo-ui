@@ -127,8 +127,9 @@ export class User extends React.Component {
           <div className={ theme['user-select'] }>
             <Checkbox
               checked={ this.state.checked }
-              disabled={ disabled }
+              disabled={ disabled || (userId && userId === userIdConnected) }
               onChange={ this.handleUserSelect }
+              title={ (userId && userId === userIdConnected) ? formatMessage({id: 'user-select-tooltip-disabled'}) : ''}
             />
           </div>
           <div className={ theme['user-edit'] }>
