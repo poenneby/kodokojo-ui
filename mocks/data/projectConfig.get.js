@@ -4,7 +4,7 @@ const uuid = require('uuid')
 var callCount = 0
 
 exports.controller = function(req, res, next) {
-  console.log('call count', callCount++, req.params)
+  console.log('call count to projectConfig GET', callCount++, req.params)
   const projectConfig = {
     "identifier":`${req.params.identifier}`,
     "name":"Acme",

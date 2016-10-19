@@ -1,9 +1,21 @@
 /* eslint-disable quotes */
 /* eslint-disable max-len */
 
+var callCount = 0
+
 exports.controller = function(req, res, next) {
+  console.log('call count to user POST', callCount++, req.params)
+
+  var userId
+
+  if (callCount > 1) {
+    userId = req.params.id
+  } else {
+    userId = '61e8209320eb5c1257e992db84bffe7e14cc7eb1'
+  }
+
   const firstUser = {
-    "identifier": `${req.params.id}`,
+    "identifier": `${userId}`,
     "entityIdentifier": "15c850471f3add8a0dd937fda85ef0fe27519481",
     "firstName": "jpthiery",
     "lastName": "jpthiery",

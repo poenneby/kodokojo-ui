@@ -45,7 +45,8 @@ export class User extends React.Component {
     onUserSelect: React.PropTypes.func.isRequired,
     theme: React.PropTypes.object,
     user: React.PropTypes.object,
-    userId: React.PropTypes.string
+    userId: React.PropTypes.string,
+    userIdConnected: React.PropTypes.string
   }
 
   static defaultProps = {
@@ -89,8 +90,8 @@ export class User extends React.Component {
   }
 
   render() {
-    const { disabled, user, theme } = this.props // eslint-disable-line no-shadow
-    // const { formatMessage } = this.props.intl
+    const { disabled, user, userId, userIdConnected, theme } = this.props // eslint-disable-line no-shadow
+    const { formatMessage } = this.props.intl
 
     const userClasses = classNames(theme.user, theme['user-item'], {
       [userTheme['user-item--disabled']]: disabled
@@ -132,9 +133,10 @@ export class User extends React.Component {
           </div>
           <div className={ theme['user-edit'] }>
             <IconButton
-              disabled={ disabled }
+              disabled={ disabled || (userId && userId !== userIdConnected) }
               icon={ <EditIcon/> }
               onClick={ this.handleUserEdit }
+              title={ (userId && userId !== userIdConnected) ? formatMessage({id: 'user-edit-tooltip-disabled'}) : ''}
             />
           </div>
         </div>
@@ -146,7 +148,8 @@ export class User extends React.Component {
 // User container
 const mapStateProps = (state, ownProps) => (
   {
-    user: getUser(ownProps.userId, state)
+    user: getUser(ownProps.userId, state),
+    userIdConnected: state.auth.account ? state.auth.account.id : ''
   }
 )
 

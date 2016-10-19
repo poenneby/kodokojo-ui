@@ -98,6 +98,7 @@ export default {
   'status-RUNNING-label': 'Running',
   'status-ONFAILURE-label': 'On failure',
   'type-label': 'Type',
+  'user-edit-tooltip-disabled': 'You can’t modify others members',
   'username-label': 'User name',
   'username-hint-label': 'characters before @email.com',
   'report-label': 'Report',
