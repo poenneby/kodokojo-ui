@@ -270,7 +270,8 @@ export class MembersPage extends React.Component {
                   checked={ this.state.memberList[userId] ? this.state.memberList[userId].checked : false }
                   disabled={
                     aggregatedStackStatus && aggregatedStackStatus.label !== 'RUNNING' ||
-                    this.state.isUserFormEditActive
+                    this.state.isUserFormEditActive ||
+                    this.state.isUserFormAddActive
                   }
                   key={ index }
                   onUserEdit={ this.handleMemberChangeState }
@@ -287,7 +288,8 @@ export class MembersPage extends React.Component {
               <Button
                 disabled={
                   aggregatedStackStatus && aggregatedStackStatus.label !== 'RUNNING' ||
-                  this.state.isUserFormEditActive
+                  this.state.isUserFormEditActive ||
+                  this.state.isUserFormAddActive
                 }
                 label={ formatMessage({ id: 'delete-action-label' })}
                 onClick={ this.handleOpenConfirmDelete }
