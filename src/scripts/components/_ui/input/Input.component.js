@@ -47,7 +47,7 @@ class Input extends React.Component {
     delete rest.input
     delete rest.meta
     delete rest.errorKey
-    
+
     return (
       <ToolboxInput
         {...rest}

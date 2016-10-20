@@ -64,7 +64,7 @@ export class ProjectConfigForm extends React.Component {
       brickList: {}
     }
   }
-  
+
   handleChangeBrick = (brickCheckbox, brick) => {
     const brickChecked = {
       [brickCheckbox]: {
