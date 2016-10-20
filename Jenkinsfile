@@ -25,7 +25,7 @@ node() {
             sh "cp -r ${pwd()}/static ${pwd()}/docker/delivery/ && chmod -R 777 ${pwd()}/static/ "
             sh "ls -l ${pwd()}/docker/delivery/static"
         }
-        if (currentBuild.result == 'SUCCESS' && built == 0) {
+        if (currentBuild.result != 'FAILURE' && built == 0) {
             slackSend channel: '#dev', color: 'good', message: "Building job ${env.JOB_NAME} in version $version from branch *${env.BRANCH_NAME}* on commit `${commit}` \n Job ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) *SUCCESS*."
         } else {
             slackSend channel: '#dev', color: 'danger', message: "Building job ${env.JOB_NAME} in version $version from branch *${env.BRANCH_NAME}* on commit `${commit}` \n Job ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) *FAILED*."
