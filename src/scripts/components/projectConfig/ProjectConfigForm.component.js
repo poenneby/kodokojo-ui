@@ -23,6 +23,8 @@ import { Field, reduxForm, SubmissionError, propTypes } from 'redux-form'
 import { combineValidators } from 'revalidate'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 import classNames from 'classnames'
+import filter from 'lodash/filter'
+import size from 'lodash/size'
 
 // component
 import '../../../styles/_commons.less'
@@ -56,12 +58,41 @@ export class ProjectConfigForm extends React.Component {
     ...propTypes
   }
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      brickList: {}
+    }
+  }
+  
+  handleChangeBrick = (brickCheckbox, brick) => {
+    const brickChecked = {
+      [brickCheckbox]: {
+        checked : this.state.brickList[brickCheckbox] !== undefined ? !this.state.brickList[brickCheckbox].checked : true,
+        value: brick
+      }
+    }
+
+    this.setState({
+      brickList: {
+        ...this.state.brickList,
+        ...brickChecked
+      }
+    })
+  }
+
   handleSubmitProject = (values) => {
     const { userId, createProjectConfig } = this.props // eslint-disable-line no-shadow
 
     const nextProjectName = values.projectName
 
-    return createProjectConfig(nextProjectName.trim(), userId)
+    const stackConfiguration = {
+      name: 'build-A',
+      type: 'BUILD',
+      brickConfigs: filter(this.state.brickList, { 'checked': true }).map(brickElement => brickElement.value)
+    }
+
+    return createProjectConfig(nextProjectName.trim(), userId, [userId], stackConfiguration)
       .then(Promise.resolve())
       .catch(err => Promise.reject(
         new SubmissionError(
@@ -76,7 +107,7 @@ export class ProjectConfigForm extends React.Component {
   }
 
   render() {
-    const { bricks, onSubmit, handleSubmit, submitting } = this.props // eslint-disable-line no-shadow
+    const { bricks, handleSubmit, submitting } = this.props // eslint-disable-line no-shadow
     const { formatMessage } = this.props.intl
 
     const bricksDetails = bricks && bricks.list && bricks.list.length ? bricks.list : undefined
@@ -202,9 +233,11 @@ export class ProjectConfigForm extends React.Component {
                                   style={{ display: 'flex', minHeight: '70px', alignItems: 'center' }}
                                 >
                                   <Checkbox
-                                    // TODO wire checkbox value on form when needed (multiple rick choices)
-                                    checked
-                                    disabled={ brickType.length < 2 }
+                                    checked={
+                                      this.state.brickList[`brick${brickTypeIndex}-${brickIndex}`] !== undefined ?
+                                      this.state.brickList[`brick${brickTypeIndex}-${brickIndex}`].checked :
+                                      false
+                                    }
                                     label={
                                       <span style={{ display: 'flex', flexFlow: 'row', alignItems: 'center' }}>
                                         { getBrickLogo(brick).image &&
@@ -216,6 +249,7 @@ export class ProjectConfigForm extends React.Component {
                                         </span>
                                       </span>
                                     }
+                                    onChange={ () => this.handleChangeBrick(`brick${brickTypeIndex}-${brickIndex}`,brick) }
                                   />
                                 </div>
                               ))
@@ -231,7 +265,7 @@ export class ProjectConfigForm extends React.Component {
             </div>
             <div style={{ display: 'flex', flexFlow: 'row wrap', justifyContent: 'flex-end', marginTop: '10px' }}>
               <Button
-                disabled={ submitting }
+                disabled={ submitting || size(filter(this.state.brickList, { 'checked': true })) <= 0  }
                 label={ formatMessage({ id: 'create-label' }) }
                 primary
                 title={ formatMessage({ id: 'create-label' }) }

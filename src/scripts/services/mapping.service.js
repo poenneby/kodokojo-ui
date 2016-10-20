@@ -207,7 +207,7 @@ mappingService.reorderBricks = (data) => {
     SCM: groupedBricks.SCM,
     CI: groupedBricks.CI,
     REPOSITORY: groupedBricks.REPOSITORY
-  })
+  }).filter(brick => brick !== undefined)
 }
 
 /**

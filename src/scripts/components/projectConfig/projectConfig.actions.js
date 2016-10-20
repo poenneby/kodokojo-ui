@@ -121,7 +121,7 @@ export function getProjectConfigAndProject(projectConfigId, projectId) {
     })
 }
 
-export function requestProjectConfig(projectConfigName, projectConfigOwner, projectConfigUsers) {
+export function requestProjectConfig(projectConfigName, projectConfigOwner, projectConfigUsers, stackConfiguration) {
   return {
     [CALL_API]: {
       method: 'POST',
@@ -132,7 +132,10 @@ export function requestProjectConfig(projectConfigName, projectConfigOwner, proj
       body: JSON.stringify({
         name: projectConfigName,
         ownerIdentifier: projectConfigOwner,
-        userIdentifiers: projectConfigUsers
+        userIdentifiers: projectConfigUsers,
+        stackConfigs: [
+          stackConfiguration
+        ]
       }),
       types: [
         PROJECT_CONFIG_NEW_REQUEST,
@@ -153,8 +156,8 @@ export function requestProjectConfig(projectConfigName, projectConfigOwner, proj
   }
 }
 
-export function createProjectConfig(projectConfigName, projectConfigOwner, projectConfigUsers) {
-  return (dispatch, getState) => dispatch(requestProjectConfig(projectConfigName, projectConfigOwner, projectConfigUsers))
+export function createProjectConfig(projectConfigName, projectConfigOwner, projectConfigUsers, stackConfiguration) {
+  return (dispatch, getState) => dispatch(requestProjectConfig(projectConfigName, projectConfigOwner, projectConfigUsers, stackConfiguration))
     .then(data => {
       if (!data.error) {
         return dispatch(getProjectConfig(data.payload.projectConfig.id))
