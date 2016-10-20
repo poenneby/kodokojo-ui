@@ -52,13 +52,16 @@ export const updateBricks = (prevBricks, bricks) => {
  * @returns {Object} status
  */
 export const computeAggregatedStackStatus = (bricks) => {
-  if (bricks.length > 0) {
+  if (bricks.length > 1) {
+    console.log('test', bricks)
     const stateOrder = bricks.reduce((previous, brick) => {
-      const previousStateOrder = previous.state ? getStatusByState(previous.state).order : previous
+      const previousStateOrder = previous.state ? getStatusByState(previous.state).order : 1
       const currentStateOrder = getStatusByState(brick.state).order
       return Math.min(previousStateOrder, currentStateOrder)
     })
     return getStatusByOrder(stateOrder)
+  } else if (bricks.length === 1) {
+    return getStatusByState(bricks[0].state)
   }
   return getStatusByState('DEFAULT')
 }
