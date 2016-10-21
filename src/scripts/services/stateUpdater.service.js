@@ -53,9 +53,8 @@ export const updateBricks = (prevBricks, bricks) => {
  */
 export const computeAggregatedStackStatus = (bricks) => {
   if (bricks.length > 1) {
-    console.log('test', bricks)
     const stateOrder = bricks.reduce((previous, brick) => {
-      const previousStateOrder = previous.state ? getStatusByState(previous.state).order : 1
+      const previousStateOrder = previous.state ? getStatusByState(previous.state).order : previous
       const currentStateOrder = getStatusByState(brick.state).order
       return Math.min(previousStateOrder, currentStateOrder)
     })
