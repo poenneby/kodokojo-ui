@@ -125,14 +125,12 @@ export class User extends React.Component {
             { user ? user.email : '-' }
           </div>
           <div className={ theme['user-select'] }>
-            { (userId && userId === userIdConnected) &&
-              <Checkbox
-                checked={ this.state.checked }
-                disabled={ disabled || (userId && userId === userIdConnected) }
-                onChange={ this.handleUserSelect }
-                title={ (userId && userId === userIdConnected) ? formatMessage({id: 'user-select-tooltip-disabled'}) : ''}
-              />
-            }
+            <Checkbox
+              checked={ this.state.checked }
+              disabled={ disabled || (userId && userId === userIdConnected) }
+              onChange={ this.handleUserSelect }
+              title={ (userId && userId === userIdConnected) ? formatMessage({id: 'user-select-tooltip-disabled'}) : ''}
+            />
           </div>
           <div className={ theme['user-edit'] }>
             <IconButton
