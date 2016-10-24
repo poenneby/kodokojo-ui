@@ -64,8 +64,8 @@ export class AppBar extends Component {
           className={ theme['logo-kodokojo'] }
           src={ logoKodoKojo }
           title={
-            `api\n${version.api.version}\n${version.api.branch}\n${version.api.commit}\n\n` +
-            `ui\n${version.ui.version}\n${version.ui.branch}\n${version.ui.commit}`
+            `${version.api ? `api\nv${version.api.version}\nbranch: ${version.api.branch}\ncommit: ${version.api.commit.substring(0, 7)}\n\n`: ''}` +
+            `${version.ui ? `ui\nv${version.ui.version}\nbranch: ${version.ui.branch}\ncommit: ${version.ui.commit.substring(0, 7)}`: ''}`
           }
         />
         { children }
