@@ -41,7 +41,7 @@
     "test": "BABEL_ENV=test mocha --compilers js:./test/compiler.js --recursive --require ignore-styles --require intl --require ./test/utils.js -R dot './src/**/*.spec.js'",
     "test:watch": "npm test -- --watch",
     "coverage": "BABEL_ENV=test babel-node node_modules/isparta/bin/isparta cover _mocha --root src/ --include-all-sources --default-excludes -- --recursive './src/**/*.spec.js' --require ignore-styles --require intl --require ./test/utils.js",
-    "version": "node ./config/ui.version.js"
+    "version": "node ./config/ui.version.js && mkdir -p ./static/assets/json/ && cp ./config/shared/ui.version.json ./static/assets/json/"
   },
   "pre-commit": [
     "lint",
