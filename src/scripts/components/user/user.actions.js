@@ -35,6 +35,7 @@ import {
   USER_SUCCESS,
   USER_FAILURE
 } from '../../commons/constants'
+import { logout } from '../login/login.actions'
 
 // TODO remove this when API change for one unique POST with user infos
 export function requestNewUserId(email) {
@@ -71,7 +72,7 @@ export function requestNewUserId(email) {
   }
 }
 
-// TODO update TU
+// TODO update UT
 export function requestNewUser(email, userId, captcha) {
   return {
     [CALL_API]: {
@@ -187,10 +188,14 @@ export function requestUpdateUser(user) {
   }
 }
 
+// TODO UT
 export function updateUser(user) {
   return dispatch => dispatch(requestUpdateUser(user))
     .then(data => {
       if (!data.error) {
+        if (user.password) {
+          logout()
+        }
         return Promise.resolve(data)
       }
       throw new Error(data.payload.status)
