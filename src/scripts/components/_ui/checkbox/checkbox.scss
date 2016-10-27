@@ -48,6 +48,19 @@ $checkbox-field-margin-bottom: 0;
   }
 }
 
+.input {
+  &:focus ~ .check {
+    &:before {
+      background-color: $color-secondary-1;
+      opacity: 0.26;
+    }
+    &.checked:before {
+      background-color: $color-secondary-1;
+      opacity: 0.26;
+    }
+  }
+}
+
 .check {
   width: $checkbox-size;
   height: $checkbox-size;
