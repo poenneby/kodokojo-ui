@@ -22,6 +22,7 @@ Possible categories are:
 **[ui]**: add or extend ui component  
 **[styleguide]**: modifications about styleguide  
 **[clean]**: clean formatting, blank lines, unused imports or else  
+**[mock]**: modification about mock server
 
 
 **\<component name or #feature-number>**: (optional) indicate which component is concerned or feature / fix reference.  
