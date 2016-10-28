@@ -200,7 +200,7 @@ export function updateUser(user) {
         // FIXME remove console log
         console.log('user is updated', data, user)
         if (data.payload && data.payload.user && data.payload.user.password) {
-          logout()
+          dispatch(logout())
         }
         return Promise.resolve(data)
       }
