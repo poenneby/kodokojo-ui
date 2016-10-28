@@ -158,6 +158,10 @@ export function getUser(userId) {
       if (!data.error) {
         return Promise.resolve(data)
       }
+      // TODO put this to error service?
+      if (data.error && data.payload.status && data.payload.status === 401) {
+        dispatch(logout())
+      }
       throw new Error(data.payload.status)
     })
     .catch(error => Promise.reject(error.message || error))
@@ -193,7 +197,9 @@ export function updateUser(user) {
   return dispatch => dispatch(requestUpdateUser(user))
     .then(data => {
       if (!data.error) {
-        if (user.password) {
+        // FIXME remove console log
+        console.log('user is updated', data, user)
+        if (data.payload && data.payload.user && data.payload.user.password) {
           logout()
         }
         return Promise.resolve(data)
