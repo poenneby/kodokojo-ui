@@ -25,6 +25,7 @@ import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
 import classNames from 'classnames'
 import filter from 'lodash/filter'
 import size from 'lodash/size'
+import isEmpty from 'lodash/isEmpty'
 
 // component
 import '../../../styles/_commons.less'
@@ -62,6 +63,23 @@ export class ProjectConfigForm extends React.Component {
     super(props)
     this.state = {
       brickList: {}
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (isEmpty(this.state.brickList) && nextProps.bricks && nextProps.bricks.list.length && nextProps.bricks.list.length > 0) {
+      const defaultBricks = {}
+      nextProps.bricks.list.forEach((brickType, brickTypeIndex) => {
+        brickType.forEach((brick, brickIndex) => {
+          defaultBricks[`brick${brickTypeIndex}-${brickIndex}`] = {
+            value: brick,
+            checked: brickIndex === 0
+          }
+        })
+      })
+      this.setState({
+        brickList: defaultBricks
+      })
     }
   }
 
@@ -238,6 +256,7 @@ export class ProjectConfigForm extends React.Component {
                                       this.state.brickList[`brick${brickTypeIndex}-${brickIndex}`].checked :
                                       false
                                     }
+                                    disabled={ isEmpty(this.state.brickList) }
                                     label={
                                       <span style={{ display: 'flex', flexFlow: 'row', alignItems: 'center' }}>
                                         { getBrickLogo(brick).image &&
