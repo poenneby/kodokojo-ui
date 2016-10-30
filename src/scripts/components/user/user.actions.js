@@ -197,8 +197,6 @@ export function updateUser(user) {
   return dispatch => dispatch(requestUpdateUser(user))
     .then(data => {
       if (!data.error) {
-        // FIXME remove console log
-        console.log('user is updated', data, user)
         if (data.payload && data.payload.user && data.payload.user.password) {
           dispatch(logout())
         }
