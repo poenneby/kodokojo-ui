@@ -16,6 +16,7 @@ function loadStories() {
   require('../src/scripts/components/_ui/panel/Panel.component.story')
   require('../src/scripts/components/_ui/nav/Nav.component.story')
   require('../src/scripts/components/_ui/page/Page.component.story')
+  require('../src/scripts/components/_ui/toaster/Toaster.component.story')
   require('../src/scripts/components/_ui/typography/typography.story')
   // components
   require('../src/scripts/components/app/App.component.story')
