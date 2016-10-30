@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 
 // UI library component
 import { IconButton as ToolboxIconButton } from 'react-toolbox/lib/button'

@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { themr } from 'react-css-themr'
 
 // component
@@ -37,11 +37,11 @@ export const Page = ({ children, theme }) => (
 )
 
 Page.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.element),
-    PropTypes.element
+  children: React.PropTypes.oneOfType([
+    React.PropTypes.arrayOf(React.PropTypes.element),
+    React.PropTypes.element
   ]),
-  theme: PropTypes.object
+  theme: React.PropTypes.object
 }
 
 export default themr(PAGE, pageTheme)(Page)

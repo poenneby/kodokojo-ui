@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
@@ -32,14 +32,14 @@ import ProjectConfigForm from '../components/projectConfig/ProjectConfigForm.com
 import { setNavVisibility } from '../components/app/app.actions'
 import { getBricks } from '../components/brick/brick.actions'
 
-export class FirstProjectPage extends Component {
+export class FirstProjectPage extends React.Component {
 
   static propTypes = {
-    account: PropTypes.object,
-    bricks: PropTypes.object,
-    getBricks: PropTypes.func.isRequired,
+    account: React.PropTypes.object,
+    bricks: React.PropTypes.object,
+    getBricks: React.PropTypes.func.isRequired,
     intl: intlShape.isRequired,
-    setNavVisibility: PropTypes.func.isRequired
+    setNavVisibility: React.PropTypes.func.isRequired
   }
 
   constructor(props) {

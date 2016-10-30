@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { themr } from 'react-css-themr'
 import classNames from 'classnames'
 
@@ -29,21 +29,21 @@ import navTheme from './nav.scss'
  * UI: Nav component
  *
  */
-export class Nav extends Component {
+export class Nav extends React.Component {
 
   static propTypes = {
-    active: PropTypes.bool,
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.element),
-      PropTypes.element,
-      PropTypes.string
+    active: React.PropTypes.bool,
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.element),
+      React.PropTypes.element,
+      React.PropTypes.string
     ]),
-    onOverlayClick: PropTypes.func,
-    permanentAt: PropTypes.string,
-    pinned: PropTypes.bool,
-    scrollY: PropTypes.bool,
-    theme: PropTypes.object,
-    width: PropTypes.string
+    onOverlayClick: React.PropTypes.func,
+    permanentAt: React.PropTypes.string,
+    pinned: React.PropTypes.bool,
+    scrollY: React.PropTypes.bool,
+    theme: React.PropTypes.object,
+    width: React.PropTypes.string
   }
 
   render() {

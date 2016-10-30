@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { themr } from 'react-css-themr'
 
 // component
@@ -28,14 +28,14 @@ import layoutTheme from './layout.scss'
  * UI: Layout component
  *
  */
-export class Layout extends Component {
+export class Layout extends React.Component {
 
   static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.element),
-      PropTypes.element
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.element),
+      React.PropTypes.element
     ]),
-    theme: PropTypes.object
+    theme: React.PropTypes.object
   }
 
   render() {

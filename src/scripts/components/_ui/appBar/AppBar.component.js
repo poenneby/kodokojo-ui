@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { intlShape, injectIntl } from 'react-intl'
 import { themr } from 'react-css-themr'
 
@@ -33,20 +33,20 @@ import IconButton from '../../_ui/button/IconButton.component'
 /**
  * UI: AppBar component
  */
-export class AppBar extends Component {
+export class AppBar extends React.Component {
 
   static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.element),
-      PropTypes.element,
-      PropTypes.string
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.element),
+      React.PropTypes.element,
+      React.PropTypes.string
     ]),
-    fixed: PropTypes.bool,
-    flat: PropTypes.bool,
+    fixed: React.PropTypes.bool,
+    flat: React.PropTypes.bool,
     intl: intlShape.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired,
-    onLogout: PropTypes.func.isRequired,
-    theme: PropTypes.object,
+    isAuthenticated: React.PropTypes.bool.isRequired,
+    onLogout: React.PropTypes.func.isRequired,
+    theme: React.PropTypes.object,
     version: React.PropTypes.object
   }
 

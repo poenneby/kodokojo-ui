@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { themr } from 'react-css-themr'
 
 // component
@@ -37,12 +37,12 @@ export const Paragraph = ({ children, theme }) => (
 )
 
 Paragraph.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.element),
-    PropTypes.element,
-    PropTypes.node
+  children: React.PropTypes.oneOfType([
+    React.PropTypes.arrayOf(React.PropTypes.element),
+    React.PropTypes.element,
+    React.PropTypes.node
   ]),
-  theme: PropTypes.object
+  theme: React.PropTypes.object
 }
 
 export default themr(PARAGRAPH, paragraphTheme)(Paragraph)

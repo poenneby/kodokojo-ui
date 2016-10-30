@@ -16,18 +16,18 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { intlShape, injectIntl } from 'react-intl'
 
 // component
 import statusTheme from './status.scss'
 import { getStatusByState } from '../../services/param.service'
 
-export class Status extends Component {
+export class Status extends React.Component {
 
   static propTypes = {
     intl: intlShape.isRequired,
-    state: PropTypes.string
+    state: React.PropTypes.string
   }
 
   render() {
