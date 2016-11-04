@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { themr } from 'react-css-themr'
 import classNames from 'classnames'
 
@@ -29,21 +29,21 @@ import cardTheme from './card.scss'
  * UI: Card component
  *
  */
-export class Card extends Component {
+export class Card extends React.Component {
 
   static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.element),
-      PropTypes.element,
-      PropTypes.string
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.element),
+      React.PropTypes.element,
+      React.PropTypes.string
     ]),
-    className: PropTypes.string,
-    merged: PropTypes.bool,
-    primary: PropTypes.bool,
-    row: PropTypes.bool,
-    style: PropTypes.object,
-    theme: PropTypes.object,
-    title: PropTypes.string
+    className: React.PropTypes.string,
+    merged: React.PropTypes.bool,
+    primary: React.PropTypes.bool,
+    row: React.PropTypes.bool,
+    style: React.PropTypes.object,
+    theme: React.PropTypes.object,
+    title: React.PropTypes.string
   }
 
   render() {

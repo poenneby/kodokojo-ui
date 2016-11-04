@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { themr } from 'react-css-themr'
 import { intlShape, injectIntl } from 'react-intl'
 import classNames from 'classnames'
@@ -30,12 +30,12 @@ import { enumStatus, getStatusByState } from '../../services/param.service'
 
 // TODO UT
 // Brick component
-export class Brick extends Component {
+export class Brick extends React.Component {
 
   static propTypes = {
-    brick: PropTypes.object,
+    brick: React.PropTypes.object,
     intl: intlShape.isRequired,
-    theme: PropTypes.object
+    theme: React.PropTypes.object
   }
 
   render() {

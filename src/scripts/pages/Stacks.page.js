@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
@@ -33,16 +33,16 @@ import { setNavVisibility } from '../components/app/app.actions'
 // import { updateProject } from '../components/project/project.actions'
 import { getProjectConfig, getProjectConfigAndProject } from '../components/projectConfig/projectConfig.actions'
 
-export class StacksPage extends Component {
+export class StacksPage extends React.Component {
 
   static propTypes = {
-    getProjectConfig: PropTypes.func,
-    getProjectConfigAndProject: PropTypes.func,
+    getProjectConfig: React.PropTypes.func,
+    getProjectConfigAndProject: React.PropTypes.func,
     intl: intlShape.isRequired,
-    projectConfigId: PropTypes.string,
-    projectId: PropTypes.string,
-    setNavVisibility: PropTypes.func.isRequired,
-    stacks: PropTypes.array
+    projectConfigId: React.PropTypes.string,
+    projectId: React.PropTypes.string,
+    setNavVisibility: React.PropTypes.func.isRequired,
+    stacks: React.PropTypes.array
   }
 
   componentWillMount = () => {

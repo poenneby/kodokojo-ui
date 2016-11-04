@@ -16,33 +16,24 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React from 'react'
-import { themr } from 'react-css-themr'
+@import '../../../styles/meta';
 
-// component
-import { PARAGRAPH } from '../../../commons/identifiers'
-import '../../../../styles/_commons.less'
-import paragraphTheme from './paragraph.scss'
+.terms-container {
+  display: flex;
+  align-items: center;
+  padding-top: 5px;
+  padding-bottom: 25px;
 
-/**
- * UI: Paragraph component
- *
- */
-export const Paragraph = ({ children, theme }) => (
-  <div
-    className={ theme.paragraph }
-  >
-    { children }
-  </div>
-)
+  div[data-react-toolbox="check"] {
+    border-color: $color-font-5;
+  }
 
-Paragraph.propTypes = {
-  children: React.PropTypes.oneOfType([
-    React.PropTypes.arrayOf(React.PropTypes.element),
-    React.PropTypes.element,
-    React.PropTypes.node
-  ]),
-  theme: React.PropTypes.object
+  span[data-react-toolbox="label"] {
+    color: $color-font-5;
+    text-wrap: normal;
+  }
 }
 
-export default themr(PARAGRAPH, paragraphTheme)(Paragraph)
+.terms-link {
+  color: $color-font-6;
+}

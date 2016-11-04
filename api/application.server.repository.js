@@ -16,33 +16,33 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React from 'react'
-import { themr } from 'react-css-themr'
+import config from '../config/config'
+import logger from '../config/logger'
 
-// component
-import { PARAGRAPH } from '../../../commons/identifiers'
-import '../../../../styles/_commons.less'
-import paragraphTheme from './paragraph.scss'
+import { requestWithLog } from './utils.server.service'
 
-/**
- * UI: Paragraph component
- *
- */
-export const Paragraph = ({ children, theme }) => (
-  <div
-    className={ theme.paragraph }
-  >
-    { children }
-  </div>
-)
+const applicationRepository = {}
 
-Paragraph.propTypes = {
-  children: React.PropTypes.oneOfType([
-    React.PropTypes.arrayOf(React.PropTypes.element),
-    React.PropTypes.element,
-    React.PropTypes.node
-  ]),
-  theme: React.PropTypes.object
+applicationRepository.getVersion = (request) => {
+  logger.debug('getVersion')
+
+  const { headers } = {
+    headers: request.headers
+  }
+  headers.host = config.api.host
+
+  return requestWithLog({
+    method: 'GET',
+    uri: `${config.api.protocol}${config.api.host}${config.api.routes.version}`,
+    json: true,
+    headers,
+    rejectUnauthorized: false,
+    requestCert: true
+  })
 }
 
-export default themr(PARAGRAPH, paragraphTheme)(Paragraph)
+// Public API
+export const getVersion = applicationRepository.getVersion
+
+// Service instance
+export default applicationRepository

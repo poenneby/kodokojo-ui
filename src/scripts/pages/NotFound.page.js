@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 // import DocumentMeta from 'react-document-meta'
 
@@ -36,11 +36,11 @@ import CardContainer from '../components/_ui/card/CardContainer.component'
 //  }
 // }
 
-export class NotFound extends Component {
+export class NotFound extends React.Component {
 
   static propTypes = {
-    contentFromRoute: PropTypes.string.isRequired,
-    status: PropTypes.number.isRequired
+    contentFromRoute: React.PropTypes.string.isRequired,
+    status: React.PropTypes.number.isRequired
   }
 
   render() {

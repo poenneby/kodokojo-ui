@@ -5,6 +5,12 @@
   "path": "mocks",
   "routes":[
     {
+      "path": "/",
+      "method": "GET",
+      "mockType": "file",
+      "serve": "data/api.get.json"
+    },
+    {
       "path": "/user",
       "method": "POST",
       "mockType": "func",

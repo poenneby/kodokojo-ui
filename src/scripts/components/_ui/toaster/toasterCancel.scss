@@ -16,33 +16,25 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React from 'react'
-import { themr } from 'react-css-themr'
+@import '~react-toolbox/components/snackbar/theme';
+@import '../../../../styles/meta';
+@import './toaster';
 
-// component
-import { PARAGRAPH } from '../../../commons/identifiers'
-import '../../../../styles/_commons.less'
-import paragraphTheme from './paragraph.scss'
-
-/**
- * UI: Paragraph component
- *
- */
-export const Paragraph = ({ children, theme }) => (
-  <div
-    className={ theme.paragraph }
-  >
-    { children }
-  </div>
-)
-
-Paragraph.propTypes = {
-  children: React.PropTypes.oneOfType([
-    React.PropTypes.arrayOf(React.PropTypes.element),
-    React.PropTypes.element,
-    React.PropTypes.node
-  ]),
-  theme: React.PropTypes.object
+.snackbar {
+  &.cancel .button {
+    color: $color-font-3;
+    &:hover {
+      color: $color-font-1;
+      border-color: $color-primary-5;
+      background-color: $color-primary-5;
+    }
+  }
 }
 
-export default themr(PARAGRAPH, paragraphTheme)(Paragraph)
+.icon {
+  color: $color-primary-5;
+}
+
+.label {
+  color: $color-font-6;
+}

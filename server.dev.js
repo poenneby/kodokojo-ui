@@ -32,7 +32,18 @@ global.__baseDirname = __dirname
 
 // Return error if DOCKER_HOST or API_ENV are not set
 if (config.api.host) {
-  logger.info('≈≈≈ 🐳  Api Host', config.api.host)
+  let dockerApiHost
+  const dockerHost = process.env.DOCKER_HOST
+  if (dockerHost && dockerHost.match(/^tcp:\/\//)) {
+    dockerApiHost = `http://${dockerHost.match(/^tcp:\/\/([\d|.]*):\d*/)[1]}:9080`
+  } else {
+    dockerApiHost = 'http://localhost'
+  }
+
+  // if Docker is not used for api, don’t log it
+  if (dockerApiHost === `http://${config.api.host}`) {
+    logger.info('≈≈≈ 🐳  Docker Api Host', config.api.host)
+  }
 } else {
   logger.error('DOCKER_HOST or API_ENV are not set')
   config.api.error = true

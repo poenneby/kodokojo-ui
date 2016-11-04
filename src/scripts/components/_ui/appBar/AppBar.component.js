@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { intlShape, injectIntl } from 'react-intl'
 import { themr } from 'react-css-themr'
 
@@ -33,24 +33,25 @@ import IconButton from '../../_ui/button/IconButton.component'
 /**
  * UI: AppBar component
  */
-export class AppBar extends Component {
+export class AppBar extends React.Component {
 
   static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.element),
-      PropTypes.element,
-      PropTypes.string
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.element),
+      React.PropTypes.element,
+      React.PropTypes.string
     ]),
-    fixed: PropTypes.bool,
-    flat: PropTypes.bool,
+    fixed: React.PropTypes.bool,
+    flat: React.PropTypes.bool,
     intl: intlShape.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired,
-    onLogout: PropTypes.func.isRequired,
-    theme: PropTypes.object
+    isAuthenticated: React.PropTypes.bool.isRequired,
+    onLogout: React.PropTypes.func.isRequired,
+    theme: React.PropTypes.object,
+    version: React.PropTypes.object
   }
 
   render() {
-    const { children, fixed, flat, isAuthenticated, onLogout, theme } = this.props // eslint-disable-line no-shadow
+    const { children, fixed, flat, isAuthenticated, onLogout, theme, version } = this.props // eslint-disable-line no-shadow
     const { formatMessage } = this.props.intl
 
     return (
@@ -59,7 +60,14 @@ export class AppBar extends Component {
         fixed={ fixed }
         flat={ flat }
       >
-        <img className={ theme['logo-kodokojo'] } src={ logoKodoKojo } />
+        <img
+          className={ theme['logo-kodokojo'] }
+          src={ logoKodoKojo }
+          title={
+            `${version.api ? `api\nv${version.api.version}\nbranch: ${version.api.branch}\ncommit: ${version.api.commit.substring(0, 7)}\n\n`: ''}` +
+            `${version.ui ? `ui\nv${version.ui.version}\nbranch: ${version.ui.branch}\ncommit: ${version.ui.commit.substring(0, 7)}`: ''}`
+          }
+        />
         { children }
         { isAuthenticated &&
           <IconButton
