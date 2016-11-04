@@ -19,5 +19,7 @@
 export const prefs = {
   theme: 'dark',
   locale: 'en',
-  navigation: false
+  navigation: false,
+  version: {},
+  isFetching: false
 }

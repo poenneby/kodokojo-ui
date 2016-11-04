@@ -17,7 +17,7 @@
  */
 
 // core
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import { compose } from 'redux'
 import { Provider, connect } from 'react-redux'
 

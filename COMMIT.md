@@ -10,7 +10,7 @@ You MUST format commit messages as follow:
 **[type]**: between square brackets, it define commit type.  
 Possible categories are:  
 
-**[feat]**: adding a feature  
+**[feature]**: adding a feature  
 **[refactor]**: code refactoring   
 **[fix]**: bug fixing  
 **[doc]**: add / modify documentation  
@@ -22,7 +22,9 @@ Possible categories are:
 **[ui]**: add or extend ui component  
 **[styleguide]**: modifications about styleguide  
 **[clean]**: clean formatting, blank lines, unused imports or else  
-
+**[mock]**: modification about mock server
+**[release]**: release new version of package
+**[merge]**: merge commit
 
 **\<component name or #feature-number>**: (optional) indicate which component is concerned or feature / fix reference.  
 ex. :  
@@ -52,5 +54,5 @@ Commit messages examples:
   
 add new user form in members page   
 add new ui dropdown component  
-fix issue #73   
---  
+fix issue #73  
+\--  

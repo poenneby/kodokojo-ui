@@ -31,4 +31,7 @@ sitespeed-result
 # webpack info to get assets name
 webpack-assets.json
 
+# config
+config/shared/ui.version.json
+
 stats.json

@@ -16,33 +16,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React from 'react'
-import { themr } from 'react-css-themr'
+import * as applicationRepository from './application.server.repository'
 
-// component
-import { PARAGRAPH } from '../../../commons/identifiers'
-import '../../../../styles/_commons.less'
-import paragraphTheme from './paragraph.scss'
-
-/**
- * UI: Paragraph component
- *
- */
-export const Paragraph = ({ children, theme }) => (
-  <div
-    className={ theme.paragraph }
-  >
-    { children }
-  </div>
-)
-
-Paragraph.propTypes = {
-  children: React.PropTypes.oneOfType([
-    React.PropTypes.arrayOf(React.PropTypes.element),
-    React.PropTypes.element,
-    React.PropTypes.node
-  ]),
-  theme: React.PropTypes.object
+export const getVersion = (request, response) => {
+  applicationRepository
+    .getVersion(request)
+    .then(data => response.status(200).send(data))
+    .catch((err, resp) => response.status(err.response && err.response.statusCode ? err.response.statusCode : 500).send(err))
 }
-
-export default themr(PARAGRAPH, paragraphTheme)(Paragraph)

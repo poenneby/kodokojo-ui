@@ -30,7 +30,6 @@ import 'sinon-as-promised'
 chai.use(chaiEnzyme())
 chai.use(sinonChai)
 import merge from '../../../../node_modules/lodash/merge'
-import { Component } from 'react'
 
 // contexte
 import { IntlProvider } from 'react-intl'
@@ -38,6 +37,7 @@ import { IntlProvider } from 'react-intl'
 // component
 import { Signup, __RewireAPI__ as SignupRewire } from './Signup.component'
 
+// TODO fix tests with mounted component and redux-form
 describe.skip('<Signup> component', () => {
   let props
   let messages
@@ -81,7 +81,7 @@ describe.skip('<Signup> component', () => {
       'signup-label': 'signup-button-label'
     }
     intlProvider = new IntlProvider({ locale: 'en' }, {})
-    captchaMock = class componentCaptchaMock extends Component {
+    captchaMock = class componentCaptchaMock extends React.Component {
       render() {
         return <div id="captcha"></div>
       }

@@ -125,7 +125,7 @@ validatorService.projectNameValidator = composeValidators(
  * @returns {boolean}
  */
 // TODO UT
-validatorService.isPasswordValid = (value) => /^(?:[^\s]{5,256}|\B)$/.test(value)
+validatorService.isPasswordValid = (value) => /^(?:[^\s]{8,256}|\B)$/.test(value)
 
 /**
  * Revalidate password pattern validator

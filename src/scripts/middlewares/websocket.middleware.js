@@ -28,6 +28,7 @@ import {
   failureWebsocket,
   stopWebsocket
 } from '../components/_utils/websocket/websocket.actions'
+import { logout } from '../components/login/login.actions'
 import {
   WEBSOCKET_REQUEST,
   WEBSOCKET_STOP
@@ -116,6 +117,9 @@ const websocketMiddleware = store => next => action => {
         ws.socket.onclose = (socketEvent) => {
           console.log('wsClose', socketEvent) // eslint-disable-line no-console
           websocketClean(ws)
+          if (socketEvent.code === 4401) {
+            store.dispatch(logout())
+          }
           if (ws.retry < 5) {
             ws.retry++
             setTimeout(() => {
